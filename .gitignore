@@ -1,0 +1,7 @@
+# Dirs
+/vendor
+/tests
+
+# files
+composer.lock
+

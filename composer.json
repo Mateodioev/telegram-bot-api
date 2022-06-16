@@ -1,0 +1,16 @@
+{
+    "name": "mateodioev/tgbot",
+    "description": "Libreria para interactuar con los metodos de la api de bots de telegram",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Mateodioev\\Bots\\Telegram\\": "src/"
+        }
+    },
+    "require": {
+        "mateodioev/request": "dev-master",
+        "vlucas/phpdotenv": "^5.4",
+        "mateodioev/utils": "^1.0"
+    }
+}
