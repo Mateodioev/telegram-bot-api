@@ -28,6 +28,11 @@ class Inline
     return $id;
   }
 
+  /**
+   * Add more params for __call Method
+   *
+   * @param array $params Array of params to add in the next method to use
+   */
   public function addParams(array $params)
   {
     $params = array_merge($params, $this->params);

@@ -4,10 +4,7 @@ namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Core;
 use Exception;
-use function is_dir;
-use function mkdir;
-use function error_reporting;
-use function ini_set;
+use function is_dir, mkdir, error_reporting, ini_set, error_log, strtoupper, implode;
 
 class TelegramLogger
 {
@@ -44,6 +41,9 @@ class TelegramLogger
     }
   }
 
+  /**
+   * Send log message to channel and save in log file with format
+   */
   public static function __callStatic($level, $arguments)
   {
     $level = strtoupper($level);
