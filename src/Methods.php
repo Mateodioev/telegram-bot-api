@@ -3,7 +3,8 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Utils\Files;
-use Exception;
+use Mateodioev\Utils\Exceptions\KeyArrayException;
+use function count, json_encode;
 
 /**
  * Pre-defined Telegram bot API methods, `Most used methods`
@@ -85,7 +86,8 @@ class Methods extends Core
    */
   public function answerInlineQuery(string $inline_query_id, array $results)
   {
-    if (count($results) > 50) throw new Exception('No more than 50 results per query are allowed');
+    if (count($results) > 50) throw new KeyArrayException('No more than 50 results per query are allowed');
+
     $payload = ['inline_query_id' => $inline_query_id, 'results' => json_encode($results)];
     return $this->request('answerInlineQuery', $payload);
   }

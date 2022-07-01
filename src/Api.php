@@ -2,13 +2,13 @@
 
 namespace Mateodioev\Bots\Telegram;
 
-use Exception;
+use UnexpectedValueException;
 use Mateodioev\Request\Request;
+use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Strings;
 use stdClass;
 
-use function json_encode;
-use function json_decode;
+use function json_decode, array_merge;
 
 /**
  * Make request to telegram bot-api
@@ -33,13 +33,13 @@ class Api
    */
   public function __construct(string $token, string $api_link = self::URL_BASE)
   {
-    if (empty($token)) throw new Exception('Token empty');
+    if (empty($token)) throw new UnexpectedValueException('Token empty');
     
     $this->token = $token;
     $this->api_link = $api_link . $token . '/';
 
     if (Strings::IsValidUrl($api_link) === false) {
-      throw new Exception("Invalid api link: $api_link");
+      throw new UnexpectedValueException("Invalid api link: $api_link");
     }
     $this->endpoint = $this->api_link;
   }
@@ -52,7 +52,7 @@ class Api
    */
   public function request(string $method, array $datas=[]): stdClass
   {
-    if (empty($method)) throw new Exception('Method cant no be empty');
+    if (empty($method)) throw new UnexpectedValueException('Method cant no be empty');
     
     $this->endpoint = $this->api_link . $method;
 
@@ -64,7 +64,7 @@ class Api
     $res = Request::Run(true);
 
     if (!$res['ok']) {
-      throw new Exception(
+      throw new RequestException(
         'Fail to send method '
         . $method
         . ', error (' . $res['err'] . '): ' . $res['error']

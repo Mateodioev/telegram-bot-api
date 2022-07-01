@@ -4,12 +4,17 @@ namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Core;
 use Exception;
-use function is_dir, mkdir, error_reporting, ini_set, error_log, strtoupper, implode;
+use Mateodioev\Utils\Exceptions\FileException;
+
+use function is_dir, mkdir, error_reporting, ini_set, date, error_log, strtoupper, implode;
 
 class TelegramLogger
 {
+  public string $file_log = '';
+  
   /**
    * Activate internal php log
+   * @throws FileException
    */
   public static function Activate(string $dir = __DIR__)
   {
@@ -17,15 +22,15 @@ class TelegramLogger
       try {
         mkdir($dir, 0777, true);
       } catch (Exception $e) {
-        throw new Exception('Error creating directory ' . $dir);
+        throw new FileException('Error creating directory ' . $dir);
       }
     }
 
     error_reporting(E_ALL);
     ini_set('display_errors', false);
     ini_set('log_errors', true);
-    $file_name = $dir . '/' . date('Y-m-d') . ' -php_error.log';
-    ini_set('error_log', $file_name);
+    self::$file_log = $dir . '/' . date('Y-m-d') . ' -php_error.log';
+    ini_set('error_log', self::$file_log);
   }
 
   /**
