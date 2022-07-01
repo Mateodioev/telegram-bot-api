@@ -2,6 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram;
 
+use function json_encode;
+
 class Buttons
 {
     private array $button = [];

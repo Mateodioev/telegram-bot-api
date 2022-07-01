@@ -2,8 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram;
 
-use function call_user_func_array;
-use function method_exists;
+use function call_user_func_array, method_exists;
 
 /**
  * Create magic methods for Telegram bot API
