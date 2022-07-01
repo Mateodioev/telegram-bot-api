@@ -3,6 +3,7 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Utils\Arrays;
+use function strlen, rand, time, mt_rand, array_merge, strtolower, str_replace;
 
 /**
  * Responds answers inline queries
