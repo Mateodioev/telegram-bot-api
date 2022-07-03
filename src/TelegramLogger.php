@@ -10,7 +10,8 @@ use function is_dir, mkdir, error_reporting, ini_set, date, error_log, strtouppe
 
 class TelegramLogger
 {
-  public string $file_log = '';
+  public static string $file_log = '';
+  public static bool $active = true;
   
   /**
    * Activate internal php log
@@ -51,6 +52,8 @@ class TelegramLogger
    */
   public static function __callStatic($level, $arguments)
   {
+    if (!self::$active) return;
+    
     $level = strtoupper($level);
     $msg = implode(PHP_EOL, $arguments);
     error_log('[' . $level . '] ' . $msg);
