@@ -30,7 +30,7 @@ class TelegramLogger
     error_reporting(E_ALL);
     ini_set('display_errors', false);
     ini_set('log_errors', true);
-    self::$file_log = $dir . '/' . date('Y-m-d') . ' -php_error.log';
+    self::$file_log = $dir . DIRECTORY_SEPARATOR . date('Y-m-d') . ' -php_error.log';
     ini_set('error_log', self::$file_log);
   }
 
