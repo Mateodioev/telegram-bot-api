@@ -9,7 +9,7 @@
         }
     },
     "require": {
-        "mateodioev/request": "^1.0",
+        "mateodioev/request": "^2.0",
         "vlucas/phpdotenv": "^5.4",
         "mateodioev/utils": "^1.1"
     }

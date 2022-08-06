@@ -57,20 +57,18 @@ class Api
     $this->endpoint = $this->api_link . $method;
 
     $datas = array_merge($datas, $this->opt);
-    Request::Init($this->endpoint);
-    Request::addBody($datas);
-    Request::setMethod('POST');
-    Request::AddOpt(CURLOPT_TIMEOUT, $this->timeout);
-    $res = Request::Run(true);
 
-    if (!$res['ok']) {
-      throw new RequestException(
-        'Fail to send method '
-        . $method
-        . ', error (' . $res['err'] . '): ' . $res['error']
-      );
+    $request = Request::post($this->endpoint);
+    $request->addOpts([CURLOPT_TIMEOUT => $this->timeout, CURLOPT_POSTFIELDS => $datas]);
+
+    $res = $request->Run(null);
+    $res->toJson(true);
+    if ($res->isError()) {
+      throw new RequestException('Fail to send method ' . $method . '. ' . $request->error->msg);
     }
-    $this->result = json_decode($res['response']);
+
+    
+    $this->result = $res->getBody();
     $this->opt = []; // reset opt
     return $this->result;
   }
