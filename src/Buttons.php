@@ -49,4 +49,9 @@ class Buttons
     {
       return json_encode($this->button);
     }
+    
+    public function get(): array
+    {
+      return $this->button;
+    }
 }
