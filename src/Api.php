@@ -5,6 +5,7 @@ namespace Mateodioev\Bots\Telegram;
 use UnexpectedValueException;
 use Mateodioev\Request\Request;
 use Mateodioev\Utils\Exceptions\RequestException;
+use Mateodioev\Utils\Network;
 use Mateodioev\Utils\Strings;
 use stdClass;
 
@@ -16,9 +17,10 @@ use function json_decode, array_merge;
 class Api
 {
   public const VERSION  = '6.0';
-  public const URL_BASE = 'https://api.telegram.org/bot';
+  public const URL_BASE = 'https://api.telegram.org/';
   public int $timeout = 5;
   private string $api_link;
+  private string $file_link; // File to download
   private string $token;
 
   public array $opt = [];
@@ -34,13 +36,16 @@ class Api
   public function __construct(string $token, string $api_link = self::URL_BASE)
   {
     if (empty($token)) throw new UnexpectedValueException('Token empty');
-    
-    $this->token = $token;
-    $this->api_link = $api_link . $token . '/';
 
-    if (Strings::IsValidUrl($api_link) === false) {
+    if (Network::IsValidUrl($api_link) === false) {
       throw new UnexpectedValueException("Invalid api link: $api_link");
     }
+    
+    $this->token = $token;
+    $this->api_link = $api_link . 'bot' . $token . '/';
+    $this->file_link = $api_link . 'file/bot' . $token . '/';
+
+    
     $this->endpoint = $this->api_link;
   }
 
@@ -73,6 +78,29 @@ class Api
     return $this->result;
   }
 
+  /**
+   * Download file sended to the bot
+   *
+   * @param string $file_path Use `$this->request('getFile', ['file_id' => 'bot-file_id'])` to get file path
+   * @param string $destination Document name to save the file
+   */
+  public function download(string $file_path, string $destination, int $timeout = 30): bool
+  {
+    $fh = fopen($destination, 'w');
+
+    $req = Request::get($this->file_link, [
+      CURLOPT_FILE => $fh,
+      CURLOPT_TIMEOUT => $timeout
+    ]);
+
+    try {
+      $req->Run($file_path);
+      return true;
+    } catch (\Mateodioev\Utils\Exceptions\RequestException $e) {
+      return false;
+    }
+  }
+  
   /**
    * Get the api link
    */
