@@ -20,16 +20,16 @@ require __DIR__ . 'path/to/vendor/autoload.php';
 Make request to telegram api
 ```php
 use Mateodioev\Bots\Telegram\Api;
-$api = new Api($bot_token, $endpoint);
+$api = new Api($botToken, $endpoint);
 $api->request('methodName', $params=[]);
 ```
-`$enpoint` Is optional parameter, can be telegram bot api url or custom bot api
+`$endpoint` Is optional parameter, can be telegram bot api url or custom bot api
 
 ### Core
 Add magic methods `__call` and `__callStatic`
 ```php
 use Mateodioev\Bots\Telegram\Core;
-$core = new Core($bot_token);
+$core = new Core($botToken);
 // https://core.telegram.org/bots/api#available-methods
 $core->sendMessage($params);
 ```
@@ -48,7 +48,7 @@ use Mateodioev\Bots\Telegram\{Inline, Methods};
 $methods = new Methods($token);
 $inline = new Inline;
 
-$result = $methods->answerInlineQuery($inline_id, [
+$result = $methods->answerInlineQuery($inlineId, [
   // https://core.telegram.org/bots/api#inlinequeryresult
   $inline->Article([
     'title' => 'The world ends in 2030!!',
@@ -68,7 +68,7 @@ Default methods
 ```php
 use Mateodioev\Bots\Telegram\Methods;
 $methods = new Methods($token);
-$methods->method_name($params);
+$methods->methodName($params);
 ```
 
 ### Buttons
@@ -77,9 +77,9 @@ Create [keyboards](https://core.telegram.org/bots#keyboards)
 ```php
 use Mateodioev\Bots\Telegram\Buttons;
 $button = Buttons::create()
-->addCeil(['text' => 'Button 1', 'callback_data' => 'test'])
-->addCeil(['text' => "I'm link", 'url' => 'https://t.me/'])
-->AddLine()->addCeil(['text' => 'Button in new line', 'url' => 'https://t.me']);
+    ->addCeil(['text' => 'Button 1', 'callback_data' => 'test'])
+    ->addCeil(['text' => "I'm link", 'url' => 'https://t.me/'])
+    ->AddLine()->addCeil(['text' => 'Button in new line', 'url' => 'https://t.me']);
 
 echo $button; // Return JSON object string
 ```
