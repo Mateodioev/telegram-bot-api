@@ -4,12 +4,12 @@ namespace Mateodioev\Bots\Telegram;
 
 use UnexpectedValueException;
 use Mateodioev\Request\Request;
+use Mateodioev\Request\ResponseException;
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
-use Mateodioev\Utils\Strings;
 use stdClass;
 
-use function json_decode, array_merge;
+use function array_merge;
 
 /**
  * Make request to telegram bot-api
@@ -40,13 +40,25 @@ class Api
     if (Network::IsValidUrl($api_link) === false) {
       throw new UnexpectedValueException("Invalid api link: $api_link");
     }
-    
+
     $this->token = $token;
     $this->api_link = $api_link . 'bot' . $token . '/';
     $this->file_link = $api_link . 'file/bot' . $token . '/';
 
-    
     $this->endpoint = $this->api_link;
+  }
+
+  /**
+   * Enable test environments
+   */
+  public function setTestEnviroment(bool $isTestEnviroment = false)
+  {
+    if ($isTestEnviroment) {
+      $this->api_link .= 'test/';
+      $this->file_link .= 'test/';
+    }
+
+    return $this;
   }
 
   /**
@@ -58,7 +70,7 @@ class Api
   public function request(string $method, array $datas=[]): stdClass
   {
     if (empty($method)) throw new UnexpectedValueException('Method cant no be empty');
-    
+
     $this->endpoint = $this->api_link . $method;
 
     $datas = array_merge($datas, $this->opt);
@@ -72,7 +84,6 @@ class Api
       throw new RequestException('Fail to send method ' . $method . '. ' . $request->error->msg);
     }
 
-    
     $this->result = $res->getBody();
     $this->opt = []; // reset opt
     return $this->result;
@@ -94,13 +105,16 @@ class Api
     ]);
 
     try {
-      $req->Run($file_path);
-      return true;
-    } catch (\Mateodioev\Utils\Exceptions\RequestException $e) {
+      $res = $req->Run($file_path);
+
+      return ($res->toJson(true) != $res);
+    } catch (RequestException | ResponseException) {
       return false;
+    } finally {
+      fclose($fh);
     }
   }
-  
+
   /**
    * Get the api link
    */
