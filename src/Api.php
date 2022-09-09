@@ -78,10 +78,11 @@ class Api
     $request = Request::post($this->endpoint);
     $request->addOpts([CURLOPT_TIMEOUT => $this->timeout, CURLOPT_POSTFIELDS => $datas]);
 
-    $res = $request->Run(null);
-    $res->toJson(true);
-    if ($res->isError()) {
-      throw new RequestException('Fail to send method ' . $method . '. ' . $request->error->msg);
+    try {
+      $res = $request->Run(null);
+      $res->toJson(true);
+    } catch (RequestException $th) {
+      throw new RequestException('Fail to send method ' . $method . '. ' . $th->getMessage());
     }
 
     $this->result = $res->getBody();
