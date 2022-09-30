@@ -68,7 +68,12 @@ Default methods
 ```php
 use Mateodioev\Bots\Telegram\Methods;
 $methods = new Methods($token);
-$methods->methodName($params);
+$methods->methodName($param1, $param2, $othersParams);
+
+
+$methods->sendMessage($chat_id, $text, [
+  'reply_to_message_id' => $message_id
+]);
 ```
 
 ### Buttons

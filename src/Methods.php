@@ -20,10 +20,10 @@ class Methods extends Core
    * @param string $text Text of the message to be sent
    * @link https://core.telegram.org/bots/api#sendmessage
    */
-  public function sendMessage(string|int $chat_id, string $text)
+  public function sendMessage(string|int $chat_id, string $text, array $params = [])
   {
     $payload = ['chat_id' => $chat_id, 'text' => $text];
-    return $this->request('sendMessage', $payload);
+    return $this->AddOpt($params)->request('sendMessage', $payload);
   }
 
   /**
@@ -34,10 +34,10 @@ class Methods extends Core
    * @param string $caption Photo caption
    * @link https://core.telegram.org/bots/api#sendphoto
    */
-  public function sendPhoto(string|int $chat_id, $photo, string $caption='')
+  public function sendPhoto(string|int $chat_id, $photo, string $caption='', array $params = [])
   {
     $payload = ['chat_id' => $chat_id, 'photo' => Files::tryOpen($photo), 'caption' => $caption];
-    return $this->request('sendPhoto', $payload);
+    return $this->AddOpt($params)->request('sendPhoto', $payload);
   }
 
   /**
@@ -48,10 +48,10 @@ class Methods extends Core
    * @param string $text New text of the message, 1-4096 characters after entities parsing
    * @link https://core.telegram.org/bots/api#editmessagetext
    */
-  public function editMessageText(string|int $chat_id, string $msg_id, string $text)
+  public function editMessageText(string|int $chat_id, string $msg_id, string $text, array $params = [])
   {
     $payload = ['chat_id' => $chat_id, 'message_id' => $msg_id, 'text' => $text];
-    return $this->request('editMessageText', $payload);
+    return $this->AddOpt($params)->request('editMessageText', $payload);
   }
 
   /**
@@ -61,20 +61,20 @@ class Methods extends Core
    * @param string $msg_id Identifier of the message to delete
    * @link https://core.telegram.org/bots/api#deletemessage
    */
-  public function deleteMessage(string|int $chat_id, string $msg_id)
+  public function deleteMessage(string|int $chat_id, string $msg_id, array $params = [])
   {
     $payload = ['chat_id' => $chat_id, 'message_id' => $msg_id];
-    return $this->request('deleteMessage', $payload);
+    return $this->AddOpt($params)->request('deleteMessage', $payload);
   }
 
   /**
    * Send chat action
    * @link https://core.telegram.org/bots/api#sendchataction
    */
-  public function sendAction(string $chat_id, string $action)
+  public function sendAction(string $chat_id, string $action, array $params = [])
   {
     $payload = ['chat_id' => $chat_id, 'action' => $action];
-    return $this->request('sendChatAction', $payload);
+    return $this->AddOpt($params)->request('sendChatAction', $payload);
   }
 
   /**
@@ -84,11 +84,11 @@ class Methods extends Core
    * @param array $results A JSON-serialized array of results for the inline query
    * @link https://core.telegram.org/bots/api#answerinlinequery
    */
-  public function answerInlineQuery(string $inline_query_id, array $results)
+  public function answerInlineQuery(string $inline_query_id, array $results, array $params = [])
   {
     if (count($results) > 50) throw new KeyArrayException('No more than 50 results per query are allowed');
 
     $payload = ['inline_query_id' => $inline_query_id, 'results' => json_encode($results)];
-    return $this->request('answerInlineQuery', $payload);
+    return $this->AddOpt($params)->request('answerInlineQuery', $payload);
   }
 }
