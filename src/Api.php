@@ -3,11 +3,9 @@
 namespace Mateodioev\Bots\Telegram;
 
 use UnexpectedValueException;
-use Mateodioev\Request\Request;
-use Mateodioev\Request\ResponseException;
+use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
-use Mateodioev\Utils\Network;
-use stdClass;
+use Mateodioev\Utils\{Network, fakeStdClass};
 
 use function array_merge;
 
@@ -67,7 +65,7 @@ class Api
    * @param string $method Telegram api method
    * @param array $datas Telegram api method params
    */
-  public function request(string $method, array $datas=[]): stdClass
+  public function request(string $method, array $datas=[]): fakeStdClass
   {
     if (empty($method)) throw new UnexpectedValueException('Method cant no be empty');
 
