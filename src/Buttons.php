@@ -2,6 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram;
 
+use Mateodioev\Utils\Arrays;
+
 use function json_encode;
 
 class Buttons
@@ -21,10 +23,25 @@ class Buttons
       }
     }
 
-
+    /**
+     * @param string $type inline_keyboard, keyboard
+     * @param array $others_params
+     * 
+     */
     public static function create(string $type = 'inline_keyboard', array $others_params = [])
     {
       return new self($type, $others_params);
+    }
+
+    /**
+     * remove reply keyboard
+     */
+    public static function replyKeyboardRemove(bool $selective = false)
+    {
+      return new self('', [
+        'remove_keyboard' => true,
+        'selective' => $selective
+      ]);
     }
 
     /**
@@ -42,6 +59,30 @@ class Buttons
     public function addCeil(array $params): Buttons
     {
       $this->button[$this->type][$this->line][] = $params;
+      return $this;
+    }
+
+    /**
+     * add new keyboard ceil
+     */
+    public function addKeyboard(
+      string $text,
+      bool $request_contact = false,
+      bool $request_location = false,
+      mixed $request_poll = null,
+      object $web_app = null
+    ): Buttons
+    {
+      $payload = [
+        'text' => $text,
+        'request_contact' => $request_contact,
+        'request_location' => $request_location,
+        'request_poll' => $request_poll,
+        'web_app' => $web_app
+      ];
+
+      Arrays::DeleteEmptyKeys($payload);
+      $this->button[$this->type][$this->line][] = $payload;
       return $this;
     }
 
