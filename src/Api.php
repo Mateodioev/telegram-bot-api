@@ -3,6 +3,7 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\{Network, fakeStdClass};
@@ -29,13 +30,14 @@ abstract class Api implements TelegramInterface
    * @param string $token Telegram bot token
    * @param string $endpoint Telegram(support local bot api server) bot endpoint
    * @throws \Mateodioev\Bots\Telegram\TelegramApiException
+   * @throws \Mateodioev\Bots\Telegram\TelegramParamException
    */
   public function __construct(string $token, string $endpoint = self::URL_BASE)
   {
-    if (empty($token)) throw new TelegramApiException('Token empty');
+    if (empty($token)) throw new TelegramParamException('Token empty');
 
     if (Network::IsValidUrl($endpoint) === false) {
-      throw new TelegramApiException("Invalid api link: $endpoint");
+      throw new TelegramParamException("Invalid api link: $endpoint");
     }
 
     $this->token = $token;
@@ -67,7 +69,7 @@ abstract class Api implements TelegramInterface
    */
   public function request(string $method, array $datas=[]): fakeStdClass
   {
-    if (empty($method)) throw new TelegramApiException('Method cant no be empty');
+    if (empty($method)) throw new TelegramParamException('Method cant no be empty');
 
     $this->endpoint = $this->api_link . $method;
 
@@ -80,7 +82,7 @@ abstract class Api implements TelegramInterface
       $res = $request->Run();
       $res->toJson(true);
     } catch (RequestException $th) {
-      throw new RequestException('Fail to send method ' . $method . '. ' . $th->getMessage());
+      throw new TelegramApiException('Fail to send method ' . $method . '. ' . $th->getMessage());
     }
 
     $this->result = $res->getBody();
