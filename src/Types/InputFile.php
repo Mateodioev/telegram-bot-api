@@ -16,13 +16,13 @@ class InputFile implements TypesInterface
     $this->file = $file;
   }
 
-  public static function fromLocal(string $filePath): InputFile
+  public static function fromLocal(string $filePath, ?string $fileName = ''): InputFile
   {
     if (!Files::isFile($filePath)) {
       throw new InvalidFileException('Can\'t find file "' . basename($filePath) . '"');
     }
 
-    $file = new CurlFile($filePath);
+    $file = new CurlFile($filePath, posted_filename: $fileName);
     return new self($file);
   }
 
