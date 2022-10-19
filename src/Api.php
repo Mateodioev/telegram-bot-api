@@ -2,6 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram;
 
+use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
 use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\{Network, fakeStdClass};
@@ -11,7 +12,7 @@ use function array_merge;
 /**
  * Make request to telegram bot-api
  */
-class Api implements TelegramInterface
+abstract class Api implements TelegramInterface
 {
   public const URL_BASE = 'https://api.telegram.org/';
   public int $timeout = 5;
