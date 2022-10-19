@@ -2,7 +2,6 @@
 
 namespace Mateodioev\Bots\Telegram;
 
-use UnexpectedValueException;
 use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\{Network, fakeStdClass};
@@ -12,36 +11,35 @@ use function array_merge;
 /**
  * Make request to telegram bot-api
  */
-class Api
+class Api implements TelegramInterface
 {
-  public const VERSION  = '6.0';
   public const URL_BASE = 'https://api.telegram.org/';
   public int $timeout = 5;
-  private string $api_link;
-  private string $file_link; // File to download
-  private string $token;
+
+  protected string $api_link;
+  protected string $file_link; // File to download
+  protected string $token;
 
   public array $opt = [];
   public string $endpoint;
   public $result;
 
   /**
-   * Constructor
-   * 
    * @param string $token Telegram bot token
    * @param string $endpoint Telegram(support local bot api server) bot endpoint
+   * @throws \Mateodioev\Bots\Telegram\TelegramApiException
    */
-  public function __construct(string $token, string $api_link = self::URL_BASE)
+  public function __construct(string $token, string $endpoint = self::URL_BASE)
   {
-    if (empty($token)) throw new UnexpectedValueException('Token empty');
+    if (empty($token)) throw new TelegramApiException('Token empty');
 
-    if (Network::IsValidUrl($api_link) === false) {
-      throw new UnexpectedValueException("Invalid api link: $api_link");
+    if (Network::IsValidUrl($endpoint) === false) {
+      throw new TelegramApiException("Invalid api link: $endpoint");
     }
 
     $this->token = $token;
-    $this->api_link = $api_link . 'bot' . $token . '/';
-    $this->file_link = $api_link . 'file/bot' . $token . '/';
+    $this->api_link = $endpoint . 'bot' . $token . '/';
+    $this->file_link = $endpoint . 'file/bot' . $token . '/';
 
     $this->endpoint = $this->api_link;
   }
@@ -64,10 +62,11 @@ class Api
    * 
    * @param string $method Telegram api method
    * @param array $datas Telegram api method params
+   * @throws \Mateodioev\Utils\Exceptions\RequestException
    */
   public function request(string $method, array $datas=[]): fakeStdClass
   {
-    if (empty($method)) throw new UnexpectedValueException('Method cant no be empty');
+    if (empty($method)) throw new TelegramApiException('Method cant no be empty');
 
     $this->endpoint = $this->api_link . $method;
 
@@ -77,7 +76,7 @@ class Api
     $request->addOpts([CURLOPT_TIMEOUT => $this->timeout, CURLOPT_POSTFIELDS => $datas]);
 
     try {
-      $res = $request->Run(null);
+      $res = $request->Run();
       $res->toJson(true);
     } catch (RequestException $th) {
       throw new RequestException('Fail to send method ' . $method . '. ' . $th->getMessage());
@@ -117,15 +116,15 @@ class Api
   /**
    * Get the api link
    */
-  public function GetApiLink(): string
+  public function getApiLink(): string
   {
     return $this->api_link;
   }
 
   /**
-   * Get the token
+   * Get bot token
    */
-  public function GetToken(): string
+  public function getToken(): string
   {
     return $this->token;
   }
@@ -133,7 +132,7 @@ class Api
   /** 
    * Add new options params to the actual method
    */
-  public function AddOpt(array $opts)
+  public function addOpt(array $opts)
   {
     $this->opt = array_merge($this->opt, $opts);
     return $this;
