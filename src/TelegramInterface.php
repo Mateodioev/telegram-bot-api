@@ -2,11 +2,11 @@
 
 namespace Mateodioev\Bots\Telegram;
 
-use Mateodioev\Utils\fakeStdClass;
+use stdClass;
 
 interface TelegramInterface
 {
-  public function request(string $method, array $datas=[]): fakeStdClass;
+  public function request(string $method, array $datas=[]): stdClass;
 
   public function download(string $file_path, string $destination, int $timeout = 30): bool;
 

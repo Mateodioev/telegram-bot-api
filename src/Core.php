@@ -2,13 +2,13 @@
 
 namespace Mateodioev\Bots\Telegram;
 
-use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
-use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
+use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
-use Mateodioev\Utils\{Network, fakeStdClass};
+use Mateodioev\Utils\Network;
+use stdClass;
 
-use function array_merge;
+use function array_merge, json_decode;
 
 /**
  * Make request to telegram bot-api
@@ -67,7 +67,7 @@ abstract class Core implements TelegramInterface
    * @param array $datas Telegram api method params
    * @throws \Mateodioev\Utils\Exceptions\RequestException
    */
-  public function request(string $method, array $datas=[]): fakeStdClass
+  public function request(string $method, array $datas=[]): stdClass
   {
     if (empty($method)) throw new TelegramParamException('Method cant no be empty');
 
@@ -80,12 +80,11 @@ abstract class Core implements TelegramInterface
 
     try {
       $res = $request->Run();
-      $res->toJson(true);
+      $this->result = json_decode($res->getBody());
     } catch (RequestException $th) {
       throw new TelegramApiException('Fail to send method ' . $method . '. ' . $th->getMessage());
     }
 
-    $this->result = $res->getBody();
     $this->opt = []; // reset opt
     return $this->result;
   }
