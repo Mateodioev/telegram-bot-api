@@ -4,7 +4,7 @@ namespace Mateodioev\Bots\Telegram\Types;
 
 use function json_encode;
 
-class MaskPosition implements TypesInterface
+class MaskPosition extends TypesBase implements TypesInterface
 {
   protected string $point;
   protected float $scale;
@@ -41,12 +41,7 @@ class MaskPosition implements TypesInterface
   public function get()
   {
     try {
-      return json_encode([
-        'point'   => $this->point,
-        'scale'   => $this->scale,
-        'x_shift' => $this->x,
-        'y_shift' => $this->y
-      ]);
+      return json_encode($this->getProperties($this));
     } catch (\Throwable $_) {
       return null;
     }
