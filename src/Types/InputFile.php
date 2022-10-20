@@ -6,7 +6,7 @@ use CURLFile;
 use Mateodioev\Bots\Telegram\Exception\InvalidFileException;
 use Mateodioev\Utils\{Network, Files};
 
-use function basename;
+use function basename, realpath, mime_content_type;
 
 class InputFile implements TypesInterface
 {
@@ -28,7 +28,7 @@ class InputFile implements TypesInterface
       throw new InvalidFileException('Can\'t find file "' . basename($filePath) . '"');
     }
 
-    $file = new CurlFile($filePath, posted_filename: $fileName);
+    $file = new CurlFile(realpath($filePath), mime_content_type($filePath), $fileName);
     return new self($file);
   }
 
