@@ -4,4 +4,4 @@
 
 # files
 composer.lock
-
+.env
