@@ -1,6 +1,6 @@
 <?php 
 
-namespace Mateodioev\Bots\Telegram;
+namespace Mateodioev\Bots\Telegram\Interfaces;
 
 use stdClass;
 

@@ -1,6 +1,6 @@
 <?php 
 
-namespace Mateodioev\Bots\Telegram\Types;
+namespace Mateodioev\Bots\Telegram\Interfaces;
 
 interface TypesInterface
 {

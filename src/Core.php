@@ -3,6 +3,7 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
+use Mateodioev\Bots\Telegram\Interfaces\TelegramInterface;
 use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
