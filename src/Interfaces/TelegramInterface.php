@@ -6,7 +6,7 @@ use stdClass;
 
 interface TelegramInterface
 {
-  public function request(string $method, array $datas=[]): stdClass;
+  public function request(MethodInterface $method): stdClass;
 
   public function download(string $file_path, string $destination, int $timeout = 30): bool;
 
