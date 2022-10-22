@@ -2,7 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
-use Mateodioev\Bots\Telegram\Types\{MaskPosition, sendInputFile};
+use Mateodioev\Bots\Telegram\Types\sendInputFile;
+use Mateodioev\Bots\Telegram\Types\{File, MaskPosition, Sticker, StickerSet};
 use stdClass;
 
 /**
@@ -12,19 +13,23 @@ trait Stickers
 {
   public function sendSticker(string|int $chatId, sendInputFile $sticker, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'sticker' => $sticker, ...$params];
-
-    return $this->request('sendSticker', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'sticker' => $sticker, ...$params])
+      ->setMethod('sendSticker')
+      ->setReturnType(Message::class));
   }
 
   public function getStickerSet(string $name): stdClass
   {
-    return $this->request('getStickerSet', ['name' => $name]);
+    return $this->request(Method::create(['name' => $name])
+      ->setMethod('getStickerSet')
+      ->setReturnType(StickerSet::class));
   }
 
   public function getCustomEmojiStickers(array $customIds): stdClass
   {
-    return $this->request('getCustomEmojiStickers', ['custom_emoji_ids' => $customIds]);
+    return $this->request(Method::create(['custom_emoji_ids' => $customIds])
+      ->setMethod('getCustomEmojiStickers')
+      ->setReturnType(Sticker::class, true));
   }
 
   /**
@@ -34,14 +39,15 @@ trait Stickers
   {
     $payload = ['user_id' => $userId, 'png_sticker' => $pngSticker->get()];
 
-    return $this->request('uploadStickerFile', $payload);
+    return $this->request(Method::create()
+      ->setMethod('uploadStickerFile')
+      ->setReturnType(File::class));
   }
 
   public function createNewStickerSet(int $userId, string $name, string $title, array $params = []): stdClass
   {
-    $payload = ['user_id' => $userId, 'name' => $name, 'title' => $title, ...$params];
-
-    return $this->request('createNewStickerSet', $payload);
+    return $this->request(Method::create(['user_id' => $userId, 'name' => $name, 'title' => $title, ...$params])
+      ->setMethod('createNewStickerSet'));
   }
 
   public function addStickerToSet(int $userId, string $name, string $emojis, ?sendInputFile $pngSticker = null, ?sendInputFile $tgSticker=null, ?sendInputFile $webmSticker=null, ?MaskPosition $maskPosition=null): stdClass
@@ -53,19 +59,19 @@ trait Stickers
     if ($webmSticker) $payload['webm_sticker']  = $webmSticker->get();
     if ($maskPosition) $payload['maskPosition'] = $maskPosition->get();
 
-    return $this->request('addStickerToSet', $payload);
+    return $this->request(Method::create($payload)
+      ->setMethod('addStickerToSet'));
   }
 
   public function deleteStickerFromSet(string $sticker): stdClass
   {
-    return $this->request('deleteStickerFromSet', ['sticker' => $sticker]);
+    return $this->request(Method::create(['sticker' => $sticker])
+      ->setMethod('deleteStickerFromSet'));
   }
 
   public function setStickerSetThumb(string $name, int $userId, sendInputFile $thumb): stdClass
   {
-    $payload = ['name' => $name, 'user_Id' => $userId, 'thumb' => $thumb]; 
-    
-    return $this->request('setStickerSetThumb', $payload);
+    return $this->request(Method::create(['name' => $name, 'user_Id' => $userId, 'thumb' => $thumb->get()])
+      ->setMethod('setStickerSetThumb'));
   }
 }
-

@@ -3,7 +3,7 @@
 namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
-use Mateodioev\Bots\Telegram\Types\sendInputFile;
+use Mateodioev\Bots\Telegram\Types\{sendInputFile, Update, User, WebhookInfo};
 use Mateodioev\Utils\Network;
 use stdClass;
 
@@ -23,7 +23,9 @@ trait Updates
       'allowed_updates' => json_encode($allowedUpdates)
     ];
 
-    return $this->request('getUpdates', $payload);
+    return $this->request(Method::create($payload)
+      ->setMethod('getUpdates')
+      ->setReturnType(Update::class, true));
   }
 
   public function setWebhook(string $url, ?sendInputFile $certificate = null, array $params = []): stdClass
@@ -32,36 +34,37 @@ trait Updates
       throw new TelegramParamException('Invalid webhook URL');
     }
 
-    $payload = ['url' => $url, 'certificate' => $certificate, ...$params];
-
-    return $this->request('setWebhook', $payload);
+    return $this->request(Method::create(['url' => $url, 'certificate' => $certificate, ...$params])
+      ->setMethod('setWebhook'));
   }
 
   public function deleteWebhook(bool $dropUpdates = false): stdClass
   {
-    return $this->request('deleteWebhook', [
-      'drop_pending_updates' => $dropUpdates
-    ]);
+    return $this->request(Method::create(['drop_pending_updates' => $dropUpdates])
+      ->setMethod('deleteWebhook'));
   }
 
   public function getWebhookInfo(): stdClass
   {
-    return $this->request('getWebhookInfo');
+    return $this->request(Method::create()
+      ->setMethod('getWebhookInfo')
+      ->setReturnType(WebhookInfo::class));
   }
 
   public function getMe(): stdClass
   {
-    return $this->request('getMe');
+    return $this->request(Method::create([], 'getMe')
+      ->setReturnType(User::class));
   }
 
   public function logOut(): stdClass
   {
-    return $this->request('logOut');
+    return $this->request(Method::create([], 'logOut'));
   }
 
   public function close(): stdClass
   {
-    return $this->request('close');
+    return $this->request(Method::create([], 'close'));
   }
 }
 

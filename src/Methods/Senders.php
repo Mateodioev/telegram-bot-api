@@ -3,6 +3,8 @@
 namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Types\{sendInputFile, sendPoll};
+use Mateodioev\Bots\Telegram\Types\{Message};
+
 use stdClass;
 
 /**
@@ -13,115 +15,114 @@ trait Senders
 
   /**
    * Use this method to send text messages.
-   *
-   * @param string|integer $chatId Unique identifier for the target chat or username of the target channel
-   * @param string $text Text of the message to be sent, 1-4096 characters after entities parsing
-   * @param array ...$params Others params
    * @see https://core.telegram.org/bots/api#sendmessage
    */
   public function sendMessage(string|int $chatId, string $text, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'text' => $text, ...$params];
-
-    return $this->request('sendMessage', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'text' => $text, ...$params])
+      ->setMethod('sendMessage')
+      ->setReturnType(Message::class));
   }
 
   public function sendPhoto(string|int $chatId, sendInputFile $photo, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'photo' => $photo->get(), ...$params];
-
-    return $this->request('sendPhoto', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'photo' => $photo->get(), ...$params])
+      ->setMethod('sendPhoto')
+      ->setReturnType(Message::class));
   }
 
   public function sendAudio(string|int $chatId, sendInputFile $audio, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'audio' => $audio->get(), ...$params];
-
-    return $this->request('sendAudio', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'audio' => $audio->get(), ...$params])
+      ->setMethod('sendAudio')
+      ->setReturnType(Message::class));
   }
 
   public function sendDocument(string|int $chatId, sendInputFile $document, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'document' => $document->get(), ...$params];
-
-    return $this->request('sendDocument', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'document' => $document->get(), ...$params])
+      ->setMethod('sendDocument')
+      ->setReturnType(Message::class));
   }
 
   public function sendVideo(string|int $chatId, sendInputFile $video, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'document' => $video->get(), ...$params];
-
-    return $this->request('sendVideo', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'document' => $video->get(), ...$params])
+        ->setMethod('sendVideo')
+        ->setReturnType(Message::class));
   }
 
   public function sendAnimation(string|int $chatId, sendInputFile $animation, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'animation' => $animation->get(), ...$params];
-
-    return $this->request('sendAnimation', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'animation' => $animation->get(), ...$params])
+      ->setMethod('sendAnimation')
+      ->setReturnType(Message::class));
   }
 
   public function sendVoice(string|int $chatId, sendInputFile $voice, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'voice' => $voice->get(), ...$params];
-
-    return $this->request('sendVoice', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'voice' => $voice->get(), ...$params])
+      ->setMethod('sendVoice')
+      ->setReturnType(Message::class));
   }
 
   public function sendVideoNote(string|int $chatId, sendInputFile $videoNote, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'video_note' => $videoNote->get(), ...$params];
-
-    return $this->request('sendVideoNote', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'video_note' => $videoNote->get(), ...$params])
+      ->setMethod('sendVideoNote')
+      ->setReturnType(Message::class));
   }
 
   public function sendMediaGroup(string|int $chatId, array $media, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'media' => $media, ...$params];
-
-    return $this->request('sendMediaGroup', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'media' => $media, ...$params])
+      ->setMethod('sendMediaGroup')
+      ->setReturnType(Message::class, true));
   }
 
   public function sendLocation(string|int $chatId, float $latitude, float $longitude, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'latitude' => $latitude, 'longitude' => $longitude, ...$params];
-
-    return $this->request('sendLocation', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'latitude' => $latitude, 'longitude' => $longitude, ...$params])
+      ->setMethod('sendLocation')
+      ->setReturnType(Message::class));
   }
 
   public function sendVenue(string|int $chatId, float $latitude, float $longitude, string $title, string $address, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'latitude' => $latitude, 'longitude' => $longitude, 'title' => $title, 'address' => $address, ...$params];
-
-    return $this->request('sendVenue', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'latitude' => $latitude, 'longitude' => $longitude, 'title' => $title, 'address' => $address, ...$params])
+      ->setMethod('sendVenue')
+      ->setReturnType(Message::class));
   }
 
   public function sendContact(string|int $chatId, string $phoneNumber, string $firstName, string $lastName, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'phone_number' => $phoneNumber, 'first_name' => $firstName, 'last_name' => $lastName, ...$params];
-
-    return $this->request('sendContact', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'phone_number' => $phoneNumber, 'first_name' => $firstName, 'last_name' => $lastName, ...$params])
+      ->setMethod('sendContact')
+      ->setReturnType(Message::class));
   }
 
   public function sendPoll(string|int $chatId, string $question, sendPoll $options, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'question' => $question, 'options' => $options->get(), ...$params];
-
     if ($options->getCorrectId() !== null) {
       $payload['correct_option_id'] = $options->getCorrectId();
     }
-    return $this->request('sendPoll');
+    
+    return $this->request(Method::create($payload)
+      ->setMethod('sendPoll')
+      ->setReturnType(Message::class));
   }
 
   public function sendDice(string|int $chatId, string $emoji, array $params = []): stdClass
   {
-    $payload = ['chat_id' => $chatId, 'emoji' => $emoji, ...$params];
-
-    return $this->request('sendDice', $payload);
+    return $this->request(Method::create(['chat_id' => $chatId, 'emoji' => $emoji, ...$params])
+      ->setMethod('sendDice')
+      ->setReturnType(Message::class));
   }
 
   public function sendChatAction(string|int $chatId, string $action): stdClass
   {
-    return $this->request('sendChatAction', ['chat_id' => $chatId, 'action' => $action]);
+    return $this->request(Method::create(['chat_id' => $chatId, 'action' => $action])
+      ->setMethod('sendChatAction'));
   }
 }
