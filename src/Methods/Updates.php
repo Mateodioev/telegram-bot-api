@@ -3,7 +3,7 @@
 namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
-use Mateodioev\Bots\Telegram\Types\InputFile;
+use Mateodioev\Bots\Telegram\Types\sendInputFile;
 use Mateodioev\Utils\Network;
 use stdClass;
 
@@ -26,7 +26,7 @@ trait Updates
     return $this->request('getUpdates', $payload);
   }
 
-  public function setWebhook(string $url, ?InputFile $certificate = null, array $params = []): stdClass
+  public function setWebhook(string $url, ?sendInputFile $certificate = null, array $params = []): stdClass
   {
     if (!Network::IsValidUrl($url)) {
       throw new TelegramParamException('Invalid webhook URL');
@@ -52,6 +52,16 @@ trait Updates
   public function getMe(): stdClass
   {
     return $this->request('getMe');
+  }
+
+  public function logOut(): stdClass
+  {
+    return $this->request('logOut');
+  }
+
+  public function close(): stdClass
+  {
+    return $this->request('close');
   }
 }
 

@@ -2,7 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
-use Mateodioev\Bots\Telegram\Types\{MaskPosition, InputFile};
+use Mateodioev\Bots\Telegram\Types\{MaskPosition, sendInputFile};
 use stdClass;
 
 /**
@@ -10,7 +10,7 @@ use stdClass;
  */
 trait Stickers
 {
-  public function sendSticker(string|int $chatId, InputFile $sticker, array $params = []): stdClass
+  public function sendSticker(string|int $chatId, sendInputFile $sticker, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'sticker' => $sticker, ...$params];
 
@@ -30,7 +30,7 @@ trait Stickers
   /**
    * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times).
    */
-  public function uploadStickerFile(int $userId, InputFile $pngSticker): stdClass
+  public function uploadStickerFile(int $userId, sendInputFile $pngSticker): stdClass
   {
     $payload = ['user_id' => $userId, 'png_sticker' => $pngSticker->get()];
 
@@ -44,7 +44,7 @@ trait Stickers
     return $this->request('createNewStickerSet', $payload);
   }
 
-  public function addStickerToSet(int $userId, string $name, string $emojis, ?InputFile $pngSticker = null, ?InputFile $tgSticker=null, ?InputFile $webmSticker=null, ?MaskPosition $maskPosition=null): stdClass
+  public function addStickerToSet(int $userId, string $name, string $emojis, ?sendInputFile $pngSticker = null, ?sendInputFile $tgSticker=null, ?sendInputFile $webmSticker=null, ?MaskPosition $maskPosition=null): stdClass
   {
     $payload = ['user_id' => $userId, 'name' => $name, 'emojis' => $emojis];
 
@@ -61,7 +61,7 @@ trait Stickers
     return $this->request('deleteStickerFromSet', ['sticker' => $sticker]);
   }
 
-  public function setStickerSetThumb(string $name, int $userId, InputFile $thumb): stdClass
+  public function setStickerSetThumb(string $name, int $userId, sendInputFile $thumb): stdClass
   {
     $payload = ['name' => $name, 'user_Id' => $userId, 'thumb' => $thumb]; 
     

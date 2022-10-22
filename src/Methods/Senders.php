@@ -2,7 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
-use Mateodioev\Bots\Telegram\Types\{InputFile, Poll};
+use Mateodioev\Bots\Telegram\Types\{sendInputFile, sendPoll};
 use stdClass;
 
 /**
@@ -26,49 +26,49 @@ trait Senders
     return $this->request('sendMessage', $payload);
   }
 
-  public function sendPhoto(string|int $chatId, InputFile $photo, array $params = []): stdClass
+  public function sendPhoto(string|int $chatId, sendInputFile $photo, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'photo' => $photo->get(), ...$params];
 
     return $this->request('sendPhoto', $payload);
   }
 
-  public function sendAudio(string|int $chatId, InputFile $audio, array $params = []): stdClass
+  public function sendAudio(string|int $chatId, sendInputFile $audio, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'audio' => $audio->get(), ...$params];
 
     return $this->request('sendAudio', $payload);
   }
 
-  public function sendDocument(string|int $chatId, InputFile $document, array $params = []): stdClass
+  public function sendDocument(string|int $chatId, sendInputFile $document, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'document' => $document->get(), ...$params];
 
     return $this->request('sendDocument', $payload);
   }
 
-  public function sendVideo(string|int $chatId, InputFile $video, array $params = []): stdClass
+  public function sendVideo(string|int $chatId, sendInputFile $video, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'document' => $video->get(), ...$params];
 
     return $this->request('sendVideo', $payload);
   }
 
-  public function sendAnimation(string|int $chatId, InputFile $animation, array $params = []): stdClass
+  public function sendAnimation(string|int $chatId, sendInputFile $animation, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'animation' => $animation->get(), ...$params];
 
     return $this->request('sendAnimation', $payload);
   }
 
-  public function sendVoice(string|int $chatId, InputFile $voice, array $params = []): stdClass
+  public function sendVoice(string|int $chatId, sendInputFile $voice, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'voice' => $voice->get(), ...$params];
 
     return $this->request('sendVoice', $payload);
   }
 
-  public function sendVideoNote(string|int $chatId, InputFile $videoNote, array $params = []): stdClass
+  public function sendVideoNote(string|int $chatId, sendInputFile $videoNote, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'video_note' => $videoNote->get(), ...$params];
 
@@ -103,7 +103,7 @@ trait Senders
     return $this->request('sendContact', $payload);
   }
 
-  public function sendPoll(string|int $chatId, string $question, Poll $options, array $params = []): stdClass
+  public function sendPoll(string|int $chatId, string $question, sendPoll $options, array $params = []): stdClass
   {
     $payload = ['chat_id' => $chatId, 'question' => $question, 'options' => $options->get(), ...$params];
 
