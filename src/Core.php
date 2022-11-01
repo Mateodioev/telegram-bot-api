@@ -3,7 +3,7 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
-use Mateodioev\Bots\Telegram\Interfaces\TelegramInterface;
+use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface};
 use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
@@ -63,18 +63,17 @@ abstract class Core implements TelegramInterface
 
   /**
    * Call telegram api method
-   * 
-   * @param string $method Telegram api method
-   * @param array $datas Telegram api method params
    * @throws \Mateodioev\Utils\Exceptions\RequestException
    */
-  public function request(string $method, array $datas=[]): stdClass
+  public function request(MethodInterface $method): stdClass
   {
-    if (empty($method)) throw new TelegramParamException('Method cant no be empty');
+    if (empty($method->getMethod())) {
+      throw new TelegramParamException('Method can\'t be empty');
+    }
 
-    $this->endpoint = $this->api_link . $method;
+    $this->endpoint = $this->api_link . $method->getMethod();
 
-    $datas = array_merge($datas, $this->opt);
+    $datas = array_merge($method->getParams(), $this->opt);
 
     $request = Request::post($this->endpoint);
     $request->addOpts([CURLOPT_TIMEOUT => $this->timeout, CURLOPT_POSTFIELDS => $datas]);
