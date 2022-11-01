@@ -2,12 +2,13 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use stdClass;
-
-use function is_null, array_map;
 
 /**
  * Telegram user or bot
+ * 
+ * @see https://core.telegram.org/bots/api#user
  */
 class User extends TypesBase implements TypesInterface
 {
@@ -26,29 +27,15 @@ class User extends TypesBase implements TypesInterface
   public function __construct(stdClass $up) {
     $this->setId($up->id ?? 0)
     ->setIsBot($up->is_bot ?? false)
-    ->setUsername($up->username ?? null)
-    ->setLastName($up->last_name ?? null)
-    ->setIsPremium($up->is_premium ?? null)
+    ->setUsername($up->username ?? self::DEFAULT_PARAM)
+    ->setLastName($up->last_name ?? self::DEFAULT_PARAM)
+    ->setIsPremium($up->is_premium ?? self::DEFAULT_PARAM)
     ->setFirstName($up->first_name ?? '')
-    ->setLanguageCode($up->language_code ?? null)
-    ->setCanJoinGroups($up->can_join_groups ?? null)
-    ->setSupportInlineQueries($up->supports_inline_queries ?? null)
-    ->setAddedToAttachmentMenu($up->added_to_attachment_menu ?? null)
-    ->setCanReadAllGroupMessages($up->can_read_all_group_messages ?? null);
-  }
-
-  public static function create(?stdClass $user): ?User
-  {
-    if (is_null($user)) return null;
-
-    return new self($user);
-  }
-
-  public static function createUsers(?array $users): ?array
-  {
-    if (is_null($users)) return null;
-    
-    return array_map(['self', 'create'], $users);
+    ->setLanguageCode($up->language_code ?? self::DEFAULT_PARAM)
+    ->setCanJoinGroups($up->can_join_groups ?? self::DEFAULT_PARAM)
+    ->setSupportInlineQueries($up->supports_inline_queries ?? self::DEFAULT_PARAM)
+    ->setAddedToAttachmentMenu($up->added_to_attachment_menu ?? self::DEFAULT_PARAM)
+    ->setCanReadAllGroupMessages($up->can_read_all_group_messages ?? self::DEFAULT_PARAM);
   }
 
   public function setId(int $id): User

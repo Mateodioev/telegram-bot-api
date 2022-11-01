@@ -2,7 +2,10 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use stdClass;
+
+// terminado
 
 /**
  * This object represents one size of a photo or a file / sticker thumbnail.
@@ -13,27 +16,13 @@ class PhotoSize extends TypesBase implements TypesInterface
   public string $file_unique_id;
   public int $width;
   public int $height;
-  public int $file_size;
+  public ?int $file_size;
 
   public function __construct(stdClass $up) {
     $this->setFileId($up->file_id)
     ->setWidth($up->width)
     ->setHeight($up->height)
-    ->setFileSize($up->file_size);
-  }
-
-  public static function create(?stdClass $up): ?PhotoSize
-  {
-    if (is_null($up)) null;
-
-    return new self($up);
-  }
-
-  public static function createPhotoSizes(?array $photoSizes): ?array
-  {
-    if (is_null($photoSizes)) return null;
-
-    return array_map(['self', 'create'], $photoSizes);
+    ->setFileSize($up->file_size ?? self::DEFAULT_PARAM);
   }
 
   public function setFileId(string $fileId): PhotoSize
@@ -60,7 +49,7 @@ class PhotoSize extends TypesBase implements TypesInterface
     return $this;
   }
 
-  public function setFileSize(int $fileSize): PhotoSize
+  public function setFileSize(?int $fileSize): PhotoSize
   {
     $this->file_size = $fileSize;
     return $this;
