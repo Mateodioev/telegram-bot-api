@@ -8,6 +8,8 @@ interface TypesInterface
 {
   public function get();
 
+  public function __call($name, $arguments);
+
   /**
    * create new instance
    */

@@ -11,6 +11,15 @@ abstract class TypesBase
   public const DEFAULT_PARAM = null;
   public const DEFAULT_BOOL  = false;
 
+  public function __call($name, $arguments)
+  {
+    $param = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', substr($name, 3)));
+    
+    if (empty($arguments) && property_exists($this, $param)) {
+      return $this->$param;
+    }
+  }
+
   protected function getProperties(TypesInterface $type)
   {
     $obj = new ReflectionClass($type);
