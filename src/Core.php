@@ -6,7 +6,7 @@ use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
 use Mateodioev\Bots\Telegram\Types\Error;
-use Mateodioev\Request\{Request, ResponseException};
+use Mateodioev\Request\{Request, RequestResponse, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
@@ -66,6 +66,7 @@ abstract class Core implements TelegramInterface
   /**
    * Call telegram api method
    * @throws \Mateodioev\Utils\Exceptions\RequestException
+   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramApiException
    */
   public function request(MethodInterface $method): TypesInterface|stdClass
   {
@@ -90,6 +91,11 @@ abstract class Core implements TelegramInterface
     $this->opt = []; // reset opt
     $this->result;
 
+    return $this->parseRequestResult($method);
+  }
+
+  private function parseRequestResult(MethodInterface $method): TypesInterface|stdClass
+  {
     $return = $method->getReturn();
     $methodName = $return[1] ? 'bulkCreate' : 'create';
 
@@ -97,14 +103,17 @@ abstract class Core implements TelegramInterface
 
     if ($this->result->ok) {
       return $return[0]::$methodName($this->result->result);
-    } else {
-      $error = new Error($this->result);
-      if (TypesConfig::$throwOnFail) {
-        $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
-        throw new TelegramApiException($message, $error->error_code);
-      }
-      return new Error($this->result);
+
     }
+    $error = new Error($this->result);
+
+    if (TypesConfig::$throwOnFail) {
+      $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
+      throw new TelegramApiException($message, $error->error_code);
+
+    }
+
+    return new Error($this->result);
   }
 
   /**
