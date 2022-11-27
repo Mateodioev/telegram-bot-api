@@ -14,6 +14,17 @@
         "mateodioev/utils": "^1.1"
     },
     "require-dev": {
-        "mateodioev/php-easy-cli": "*"
+        "mateodioev/php-easy-cli": "*",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Tests\\": "tests/"
+      }
+    },
+    "scripts": {
+        "test": "phpunit --testdox tests/ --colors=always",
+        "test-report": "phpunit --testdox tests/ --colors=always --testdox-html docs/report.html",
+        "coverage": "phpunit --coverage-html docs/coverage --coverage-text --colors=always"
     }
 }
