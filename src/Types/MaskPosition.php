@@ -2,14 +2,28 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
+use stdClass;
+
 use function json_encode;
 
+/**
+ * This object describes the position on faces where a mask should be placed by default.
+ * @see https://core.telegram.org/bots/api#maskposition
+ */
 class MaskPosition extends TypesBase implements TypesInterface
 {
-  protected string $point;
-  protected float $scale;
-  protected float $x;
-  protected float $y;
+  public string $point;
+  public float $scale;
+  public float $x;
+  public float $y;
+
+  public function __construct(stdClass $up) {
+    $this->setPoint($up->point)
+      ->setScale($up->scale)
+      ->setXshift($up->x_shift)
+      ->setYshift($up->y_shift);
+  }
 
   /**
    * @param string $point `forehead`, `eyes`, `mouth`, or `chin`.

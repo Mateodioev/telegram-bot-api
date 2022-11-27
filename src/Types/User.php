@@ -26,16 +26,16 @@ class User extends TypesBase implements TypesInterface
 
   public function __construct(stdClass $up) {
     $this->setId($up->id ?? 0)
-    ->setIsBot($up->is_bot ?? false)
-    ->setUsername($up->username ?? self::DEFAULT_PARAM)
-    ->setLastName($up->last_name ?? self::DEFAULT_PARAM)
-    ->setIsPremium($up->is_premium ?? self::DEFAULT_PARAM)
-    ->setFirstName($up->first_name ?? '')
-    ->setLanguageCode($up->language_code ?? self::DEFAULT_PARAM)
-    ->setCanJoinGroups($up->can_join_groups ?? self::DEFAULT_PARAM)
-    ->setSupportInlineQueries($up->supports_inline_queries ?? self::DEFAULT_PARAM)
-    ->setAddedToAttachmentMenu($up->added_to_attachment_menu ?? self::DEFAULT_PARAM)
-    ->setCanReadAllGroupMessages($up->can_read_all_group_messages ?? self::DEFAULT_PARAM);
+      ->setIsBot($up->is_bot ?? self::DEFAULT_BOOL)
+      ->setUsername($up->username ?? self::DEFAULT_PARAM)
+      ->setLastName($up->last_name ?? self::DEFAULT_PARAM)
+      ->setIsPremium($up->is_premium ?? self::DEFAULT_PARAM)
+      ->setFirstName($up->first_name ?? '')
+      ->setLanguageCode($up->language_code ?? self::DEFAULT_PARAM)
+      ->setCanJoinGroups($up->can_join_groups ?? self::DEFAULT_PARAM)
+      ->setSupportInlineQueries($up->supports_inline_queries ?? self::DEFAULT_PARAM)
+      ->setAddedToAttachmentMenu($up->added_to_attachment_menu ?? self::DEFAULT_PARAM)
+      ->setCanReadAllGroupMessages($up->can_read_all_group_messages ?? self::DEFAULT_PARAM);
   }
 
   public function setId(int $id): User

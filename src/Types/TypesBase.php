@@ -8,6 +8,7 @@ use ReflectionClass, ReflectionProperty, stdClass;
 abstract class TypesBase
 {
   public const DEFAULT_PARAM = null;
+  public const DEFAULT_BOOL  = false;
 
   protected function getProperties(TypesInterface $type)
   {
@@ -31,14 +32,14 @@ abstract class TypesBase
 
   public static function create(?stdClass $up): ?static
   {
-    if (is_null($up)) return null;
+    if (is_null($up)) return self::DEFAULT_PARAM;
 
     return new static($up);
   }
 
   public static function bulkCreate(?array $up): ?array
   {
-    if (is_null($up)) return null;
+    if (is_null($up)) return self::DEFAULT_PARAM;
     
     return array_map(['static', 'create'], $up);
   }
