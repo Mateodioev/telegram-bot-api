@@ -3,7 +3,8 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
-use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface};
+use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
+use Mateodioev\Bots\Telegram\Types\Error;
 use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
@@ -65,7 +66,7 @@ abstract class Core implements TelegramInterface
    * Call telegram api method
    * @throws \Mateodioev\Utils\Exceptions\RequestException
    */
-  public function request(MethodInterface $method): stdClass
+  public function request(MethodInterface $method): TypesInterface|stdClass
   {
     if (empty($method->getMethod())) {
       throw new TelegramParamException('Method can\'t be empty');
@@ -86,7 +87,18 @@ abstract class Core implements TelegramInterface
     }
 
     $this->opt = []; // reset opt
-    return $this->result;
+    $this->result;
+
+    $return = $method->getReturn();
+    $methodName = $return[1] ? 'bulkCreate' : 'create';
+
+    if ($return[0] === null) return $this->result;
+
+    if ($this->result->ok) {
+      return $return[0]::$methodName($this->result->result);
+    } else {
+      return new Error($this->result->result);
+    }
   }
 
   /**

@@ -2,6 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\Types as TypeConfig;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use ReflectionClass, ReflectionProperty, stdClass;
 
@@ -23,6 +24,9 @@ abstract class TypesBase
 
       if ($value instanceof TypesInterface) {
         $value = $value->get() ?? self::DEFAULT_PARAM;
+      }
+      if (TypeConfig::$returnNullParams === false && $value === self::DEFAULT_PARAM) {
+        continue;
       }
       $params[$key] = $value;
     }

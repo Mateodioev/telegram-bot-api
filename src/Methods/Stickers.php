@@ -2,30 +2,30 @@
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
+use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\sendInputFile;
 use Mateodioev\Bots\Telegram\Types\{File, MaskPosition, Sticker, StickerSet};
-use stdClass;
 
 /**
  * Stickers
  */
 trait Stickers
 {
-  public function sendSticker(string|int $chatId, sendInputFile $sticker, array $params = []): stdClass
+  public function sendSticker(string|int $chatId, sendInputFile $sticker, array $params = []): TypesInterface
   {
     return $this->request(Method::create(['chat_id' => $chatId, 'sticker' => $sticker, ...$params])
       ->setMethod('sendSticker')
       ->setReturnType(Message::class));
   }
 
-  public function getStickerSet(string $name): stdClass
+  public function getStickerSet(string $name): TypesInterface
   {
     return $this->request(Method::create(['name' => $name])
       ->setMethod('getStickerSet')
       ->setReturnType(StickerSet::class));
   }
 
-  public function getCustomEmojiStickers(array $customIds): stdClass
+  public function getCustomEmojiStickers(array $customIds): TypesInterface
   {
     return $this->request(Method::create(['custom_emoji_ids' => $customIds])
       ->setMethod('getCustomEmojiStickers')
@@ -35,7 +35,7 @@ trait Stickers
   /**
    * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times).
    */
-  public function uploadStickerFile(int $userId, sendInputFile $pngSticker): stdClass
+  public function uploadStickerFile(int $userId, sendInputFile $pngSticker): TypesInterface
   {
     $payload = ['user_id' => $userId, 'png_sticker' => $pngSticker->get()];
 
@@ -44,13 +44,13 @@ trait Stickers
       ->setReturnType(File::class));
   }
 
-  public function createNewStickerSet(int $userId, string $name, string $title, array $params = []): stdClass
+  public function createNewStickerSet(int $userId, string $name, string $title, array $params = []): TypesInterface
   {
     return $this->request(Method::create(['user_id' => $userId, 'name' => $name, 'title' => $title, ...$params])
       ->setMethod('createNewStickerSet'));
   }
 
-  public function addStickerToSet(int $userId, string $name, string $emojis, ?sendInputFile $pngSticker = null, ?sendInputFile $tgSticker=null, ?sendInputFile $webmSticker=null, ?MaskPosition $maskPosition=null): stdClass
+  public function addStickerToSet(int $userId, string $name, string $emojis, ?sendInputFile $pngSticker = null, ?sendInputFile $tgSticker=null, ?sendInputFile $webmSticker=null, ?MaskPosition $maskPosition=null): TypesInterface
   {
     $payload = ['user_id' => $userId, 'name' => $name, 'emojis' => $emojis];
 
@@ -63,13 +63,13 @@ trait Stickers
       ->setMethod('addStickerToSet'));
   }
 
-  public function deleteStickerFromSet(string $sticker): stdClass
+  public function deleteStickerFromSet(string $sticker): TypesInterface
   {
     return $this->request(Method::create(['sticker' => $sticker])
       ->setMethod('deleteStickerFromSet'));
   }
 
-  public function setStickerSetThumb(string $name, int $userId, sendInputFile $thumb): stdClass
+  public function setStickerSetThumb(string $name, int $userId, sendInputFile $thumb): TypesInterface
   {
     return $this->request(Method::create(['name' => $name, 'user_Id' => $userId, 'thumb' => $thumb->get()])
       ->setMethod('setStickerSetThumb'));

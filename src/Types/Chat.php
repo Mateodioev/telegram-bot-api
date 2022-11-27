@@ -61,8 +61,9 @@ class Chat extends TypesBase implements TypesInterface
       ->setPermissions(ChatPermissions::create($up->permissions ?? self::DEFAULT_PARAM))
       ->setSlowModeDelay($up->slow_mode_delay ?? self::DEFAULT_PARAM)
       ->setMessageAutoDeleteTime($up->message_auto_delete_time ?? self::DEFAULT_PARAM)
-      ->setHasProtectedContent($up->has_protected_content ?? self::DEFAULT_PARAM)
+      ->setHasProtectedContent($up->has_protected_content ?? self::DEFAULT_BOOL)
       ->setStickerSetName($up->sticker_set_name ?? self::DEFAULT_PARAM)
+      ->setCanSetStickerSet($up->can_set_sticker_set ?? self::DEFAULT_BOOL)
       ->setLinkedChatId($up->linked_chat_id ?? self::DEFAULT_PARAM)
       ->setLocation(ChatLocation::create($up->location ?? self::DEFAULT_PARAM));
   }
