@@ -2,6 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram;
 
+use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
 use Mateodioev\Bots\Telegram\Types\Error;
@@ -97,7 +98,12 @@ abstract class Core implements TelegramInterface
     if ($this->result->ok) {
       return $return[0]::$methodName($this->result->result);
     } else {
-      return new Error($this->result->result);
+      $error = new Error($this->result);
+      if (TypesConfig::$throwOnFail) {
+        $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
+        throw new TelegramApiException($message, $error->error_code);
+      }
+      return new Error($this->result);
     }
   }
 
