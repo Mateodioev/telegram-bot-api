@@ -4,12 +4,11 @@ namespace Mateodioev\Bots\Telegram\Types;
 
 use CURLFile;
 use Mateodioev\Bots\Telegram\Exception\InvalidFileException;
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Utils\{Network, Files};
 
 use function basename, realpath, mime_content_type;
 
-class sendInputFile implements TypesInterface
+class sendInputFile
 {
   public CURLFile|string $file;
   public array $files;
@@ -18,6 +17,19 @@ class sendInputFile implements TypesInterface
   public function __construct($file) {
     $this->file = $file;
     $this->files[] = $this;
+  }
+
+  public static function create(string $file)
+  {
+    if (Files::isFile($file)) {
+      return self::fromLocal($file);
+    } elseif (Network::IsValidUrl($file)) {
+      return self::fromUrl($file);
+    } elseif (!empty($file)) {
+      return self::fromId($file);
+    } else {
+      throw new InvalidFileException('Invalid file');
+    }
   }
 
   /**

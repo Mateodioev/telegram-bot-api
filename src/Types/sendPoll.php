@@ -3,11 +3,13 @@
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 
 use function strlen, count, json_encode;
 
-class sendPoll implements TypesInterface
+/**
+ * Create new poll
+ */
+class sendPoll
 {
   public array $answers = [];
   public ?int $correctOption = null;
