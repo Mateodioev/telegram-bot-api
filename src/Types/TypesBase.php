@@ -14,13 +14,16 @@ abstract class TypesBase
 
   public function __call($name, $arguments)
   {
+    if (strpos($name, 'get') === false) {
+      throw new TelegramParamException("Method $name not found");
+    }
+
     $param = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', substr($name, 3)));
     
     if (empty($arguments) && property_exists($this, $param)) {
       return $this->$param;
-    } else {
-      throw new TelegramParamException("Param {$param} not found");
     }
+    throw new TelegramParamException("Param {$param} not found");
   }
 
   protected function getProperties(TypesInterface $type)
