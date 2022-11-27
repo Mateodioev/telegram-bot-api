@@ -3,6 +3,7 @@
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypeConfig;
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use ReflectionClass, ReflectionProperty, stdClass;
 
@@ -17,6 +18,8 @@ abstract class TypesBase
     
     if (empty($arguments) && property_exists($this, $param)) {
       return $this->$param;
+    } else {
+      throw new TelegramParamException("Param {$param} not found");
     }
   }
 
