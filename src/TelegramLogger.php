@@ -2,8 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram;
 
-use Mateodioev\Bots\Telegram\Core;
 use Exception;
+use Mateodioev\Bots\Telegram\Methods\Method;
 use Mateodioev\Utils\Exceptions\FileException;
 
 use function is_dir, mkdir, error_reporting, ini_set, date, error_log, strtoupper, implode;
@@ -30,7 +30,7 @@ class TelegramLogger
     error_reporting(E_ALL);
     ini_set('display_errors', false);
     ini_set('log_errors', true);
-    self::$file_log = $dir . DIRECTORY_SEPARATOR . date('Y-m-d') . ' -php_error.log';
+    self::$file_log = $dir . DIRECTORY_SEPARATOR . date('Y-m-d') . '-php_error.log';
     ini_set('error_log', self::$file_log);
   }
 
@@ -40,7 +40,7 @@ class TelegramLogger
   private static function Send(string $content, string $level, ?string $channel=null)
   {
     $payload = ['chat_id' => $channel ?? $_ENV['CHANNEL_LOG'], 'text' => $level . ' log: ' . $content ];
-    $res = Core::FromEnv()->sendMessage($payload);
+    $res = Api::FromEnv()->request(Method::create($payload, 'sendMessage'));
 
     if (!$res->ok) {
       error_log('Fail to log "' . $content . '", error: ' . $res->description);

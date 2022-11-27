@@ -30,8 +30,8 @@ abstract class Core implements TelegramInterface
   /**
    * @param string $token Telegram bot token
    * @param string $endpoint Telegram(support local bot api server) bot endpoint
-   * @throws \Mateodioev\Bots\Telegram\TelegramApiException
-   * @throws \Mateodioev\Bots\Telegram\TelegramParamException
+   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramApiException
+   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramParamException
    */
   public function __construct(string $token, string $endpoint = self::URL_BASE)
   {
