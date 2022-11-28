@@ -14,7 +14,7 @@ use function json_encode;
  */
 trait Updates
 {
-  public function getUpdates(int $offset = 0, int $limit = 100, $timeout = 0, array $allowedUpdates = []): TypesInterface
+  public function getUpdates(int $offset = 0, int $limit = 100, $timeout = 0, array $allowedUpdates = []): TypesInterface|array
   {
     $payload = [
       'offset'          => $offset,
@@ -28,7 +28,7 @@ trait Updates
       ->setReturnType(Update::class, true));
   }
 
-  public function setWebhook(string $url, ?sendInputFile $certificate = null, array $params = []): TypesInterface
+  public function setWebhook(string $url, ?sendInputFile $certificate = null, array $params = []): TypesInterface|array
   {
     if (!Network::IsValidUrl($url)) {
       throw new TelegramParamException('Invalid webhook URL');
@@ -38,31 +38,31 @@ trait Updates
       ->setMethod('setWebhook'));
   }
 
-  public function deleteWebhook(bool $dropUpdates = false): TypesInterface
+  public function deleteWebhook(bool $dropUpdates = false): TypesInterface|array
   {
     return $this->request(Method::create(['drop_pending_updates' => $dropUpdates])
       ->setMethod('deleteWebhook'));
   }
 
-  public function getWebhookInfo(): TypesInterface
+  public function getWebhookInfo(): TypesInterface|array
   {
     return $this->request(Method::create()
       ->setMethod('getWebhookInfo')
       ->setReturnType(WebhookInfo::class));
   }
 
-  public function getMe(): TypesInterface
+  public function getMe(): TypesInterface|array
   {
     return $this->request(Method::create([], 'getMe')
       ->setReturnType(User::class));
   }
 
-  public function logOut(): TypesInterface
+  public function logOut(): TypesInterface|array
   {
     return $this->request(Method::create([], 'logOut'));
   }
 
-  public function close(): TypesInterface
+  public function close(): TypesInterface|array
   {
     return $this->request(Method::create([], 'close'));
   }

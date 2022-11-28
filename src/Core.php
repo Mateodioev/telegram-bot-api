@@ -78,7 +78,7 @@ abstract class Core implements TelegramInterface
    * @throws \Mateodioev\Utils\Exceptions\RequestException
    * @throws \Mateodioev\Bots\Telegram\Exception\TelegramApiException
    */
-  public function request(MethodInterface $method): TypesInterface|stdClass
+  public function request(MethodInterface $method): TypesInterface|stdClass|array
   {
     if (empty($method->getMethod())) {
       throw new TelegramParamException('Method can\'t be empty');
@@ -103,7 +103,7 @@ abstract class Core implements TelegramInterface
     return $this->parseRequestResult($method);
   }
 
-  private function parseRequestResult(MethodInterface $method): TypesInterface|stdClass
+  private function parseRequestResult(MethodInterface $method): mixed
   {
     $return = $method->getReturn();
     $methodName = $return[1] ? 'bulkCreate' : 'create';
