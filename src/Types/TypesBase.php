@@ -12,18 +12,22 @@ abstract class TypesBase
   public const DEFAULT_PARAM = null;
   public const DEFAULT_BOOL  = false;
 
+  private function getProperty(string $property)
+  {
+    if (property_exists($this, $property)) {
+      return $this->$property;
+    }
+    return self::DEFAULT_PARAM;
+  }
+
   public function __call($name, $arguments)
   {
-    if (strpos($name, 'get') === false) {
-      throw new TelegramParamException("Method $name not found");
-    }
-
-    $param = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', substr($name, 3)));
+    $name = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name));
+    $param = substr($name, 3);
     
-    if (empty($arguments) && property_exists($this, $param)) {
-      return $this->$param;
-    }
-    throw new TelegramParamException("Param {$param} not found");
+    return $this->getProperty($param)
+      ?? $this->getProperty($name)
+      ?? throw new TelegramParamException("Param {$name} not found");
   }
 
   protected function getProperties(TypesInterface $type)
