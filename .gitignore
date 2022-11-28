@@ -1,8 +1,7 @@
 # Dirs
 /vendor
-/tests
 
 # files
-composer.lock
 .env
 app.php
+*.cache

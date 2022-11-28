@@ -1,0 +1,12 @@
+<phpunit
+  bootstrap="vendor/autoload.php"
+  colors="true" >
+
+<testsuites>
+  <testsuite name="Telegram"><directory suffix=".php">tests/Telegram</directory></testsuite>
+</testsuites>
+
+<php>
+  <env name="BOT_TOKEN" value="YOUR_BOT_TOKEN"/>
+</php>
+</phpunit>
