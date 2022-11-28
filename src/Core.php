@@ -37,7 +37,7 @@ abstract class Core implements TelegramInterface
    */
   public function __construct(string $token, string $endpoint = self::URL_BASE)
   {
-    if (empty($token)) throw new TelegramParamException('Token empty');
+    $this->setToken($token);
 
     if (Network::IsValidUrl($endpoint) === false) {
       throw new TelegramParamException("Invalid api link: $endpoint");
@@ -50,6 +50,16 @@ abstract class Core implements TelegramInterface
     $this->endpoint = $this->api_link;
   }
 
+  /**
+   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramParamException
+   */
+  public function setToken(string $token)
+  {
+    if (empty($token)) throw new TelegramParamException('Token empty');
+
+    $this->token = $token;
+    return $this;
+  }
   /**
    * Enable test environments
    */
@@ -85,7 +95,7 @@ abstract class Core implements TelegramInterface
       $res = $request->Run();
       $this->result = json_decode($res->getBody());
     } catch (RequestException $th) {
-      throw new TelegramApiException('Fail to send method ' . $method . '. ' . $th->getMessage());
+      throw new TelegramApiException('Fail to send method ' . $method->getMethod() . '. ' . $th->getMessage());
     }
 
     $this->opt = []; // reset opt
