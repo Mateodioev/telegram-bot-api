@@ -6,8 +6,6 @@ use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\{sendInputFile, sendPoll};
 use Mateodioev\Bots\Telegram\Types\{Message};
 
-use stdClass;
-
 /**
  * Methods for send
  */

@@ -10,13 +10,13 @@ class Response extends TypesBase implements TypesInterface
   public bool $ok = false;
   public ?int $error_code;
   public ?string $description;
-  public null|array|bool $result;
+  public mixed $result;
 
   public function __construct(stdClass $up) {
     $this->setOk($up->ok ?? self::DEFAULT_BOOL)
       ->setErrorCode($up->error_code ?? self::DEFAULT_PARAM)
       ->setDescripion($up->description ?? self::DEFAULT_PARAM)
-      ->setResult(Update::bulkCreate($up->result ?? self::DEFAULT_PARAM));
+      ->setResult($this->result ?? self::DEFAULT_PARAM);
   }
 
   public function setOk(bool $ok): Response
@@ -37,7 +37,7 @@ class Response extends TypesBase implements TypesInterface
     return $this;
   }
 
-  public function setResult(null|array|bool $result): Response
+  public function setResult(mixed $result): Response
   {
     if (empty($result)) $result = self::DEFAULT_PARAM;
     $this->result = $result;

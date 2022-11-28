@@ -99,7 +99,6 @@ abstract class Core implements TelegramInterface
     }
 
     $this->opt = []; // reset opt
-    $this->result;
 
     return $this->parseRequestResult($method);
   }
@@ -129,7 +128,7 @@ abstract class Core implements TelegramInterface
   /**
    * Download file sended to the bot
    *
-   * @param string $file_path Use `$this->request('getFile', ['file_id' => 'bot-file_id'])` to get file path
+   * @param string $file_path Use `$this->request(Method::create(['file_id' => 'bot-file_id'], 'getFile')->setReturnType(File::class))` to get file path
    * @param string $destination Document name to save the file
    */
   public function download(string $file_path, string $destination, int $timeout = 30): bool
