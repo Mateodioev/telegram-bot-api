@@ -24,7 +24,14 @@ class WebhookInfo extends TypesBase implements TypesInterface
 
   public function __construct(stdClass $up) {
     $this->setUrl($up->url)
-      ->setHasCustomCertificate($up->has_custom_certificate);
+      ->setHasCustomCertificate($up->has_custom_certificate)
+      ->setPendingUpdateCount($up->pending_update_count)
+      ->setIpAddress($up->ip_address ?? self::DEFAULT_PARAM)
+      ->setLastErrorDate($up->last_error_date ?? self::DEFAULT_PARAM)
+      ->setLasErrorMessage($up->last_error_message ?? self::DEFAULT_PARAM)
+      ->setLastSynchronizationErrorDate($up->last_synchronization_error_date ?? self::DEFAULT_PARAM)
+      ->setMaxConnections($up->max_connections ?? self::DEFAULT_PARAM)
+      ->setAllowedUpdates($up->allowed_updates ?? self::DEFAULT_PARAM);
   }
 
   public function setUrl(string $url): WebhookInfo
