@@ -5,8 +5,6 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use stdClass;
 
-// TODO: terminado
-
 /**
  * This object represents a point on the map.
  * 

@@ -5,8 +5,6 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use stdClass;
 
-// TODO: terminado
-
 /**
  * Describes a Web App.
  * 

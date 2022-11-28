@@ -5,8 +5,6 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use stdClass;
 
-// TODO: 
-
 /**
  * This object represents a service message about a video chat ended in the chat.
  * 
