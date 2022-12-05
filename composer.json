@@ -3,6 +3,12 @@
     "description": "Libreria para interactuar con los metodos de la api de bots de telegram",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+      "telegram",
+      "bot",
+      "api",
+      "telegram-bot-api"
+    ],
     "autoload": {
         "psr-4": {
             "Mateodioev\\Bots\\Telegram\\": "src/"

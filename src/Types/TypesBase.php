@@ -24,10 +24,16 @@ abstract class TypesBase
   {
     $name = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name));
     $param = substr($name, 3);
-    
-    return $this->getProperty($param)
+
+    $property = $this->getProperty($param)
       ?? $this->getProperty($name)
-      ?? throw new TelegramParamException("Param {$name} not found");
+      ?? null;
+    
+      if ($property === null && TypeConfig::$returnNullParams === false) {
+        throw new TelegramParamException("Param {$name} not found");
+      }
+
+      return $property;
   }
 
   protected function getProperties(TypesInterface $type)
