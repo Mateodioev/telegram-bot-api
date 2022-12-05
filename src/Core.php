@@ -111,9 +111,13 @@ abstract class Core implements TelegramInterface
     if ($return[0] === null) return $this->result;
 
     if ($this->result->ok) {
-      return $return[0]::$methodName($this->result->result);
-
+      try {
+        return $return[0]::$methodName($this->result->result);
+      } catch (\Throwable $e) {
+        return $return[0]::$methodName($this->result);
+      }
     }
+
     $error = new Error($this->result);
 
     if (TypesConfig::$throwOnFail) {
