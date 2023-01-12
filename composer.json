@@ -14,7 +14,6 @@
             "Mateodioev\\Bots\\Telegram\\": "src/"
         }
     },
-    "minimum-stability": "dev",
     "require": {
         "php": ">=8.1",
         "mateodioev/request": "^2.0",

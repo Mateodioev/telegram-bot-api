@@ -4,4 +4,5 @@
 # files
 .env
 app.php
+composer.lock
 *.cache

@@ -88,8 +88,8 @@ abstract class Core implements TelegramInterface
 
     $datas = array_merge($method->getParams(), $this->opt);
 
-    $request = Request::post($this->endpoint);
-    $request->addOpts([CURLOPT_TIMEOUT => $this->timeout, CURLOPT_POSTFIELDS => $datas]);
+	$request = Request::POST($this->endpoint, $datas)
+		->addOpt(CURLOPT_TIMEOUT, $this->timeout);
 
     try {
       $res = $request->Run();
@@ -113,7 +113,7 @@ abstract class Core implements TelegramInterface
     if ($this->result->ok) {
       try {
         return $return[0]::$methodName($this->result->result);
-      } catch (\Throwable $e) {
+      } catch (\Throwable $_) {
         return $return[0]::$methodName($this->result);
       }
     }
@@ -139,10 +139,11 @@ abstract class Core implements TelegramInterface
   {
     $fh = fopen($destination, 'w');
 
-    $req = Request::get($this->file_link, [
-      CURLOPT_FILE => $fh,
-      CURLOPT_TIMEOUT => $timeout
-    ]);
+	$req = Request::GET($this->file_link)
+		->addOpts([
+			CURLOPT_FILE => $fh,
+			CURLOPT_TIMEOUT => $timeout
+		  ]);
 
     try {
       $res = $req->Run($file_path);
