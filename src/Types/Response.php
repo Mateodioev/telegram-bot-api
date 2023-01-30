@@ -16,7 +16,7 @@ class Response extends TypesBase implements TypesInterface
     $this->setOk($up->ok ?? self::DEFAULT_BOOL)
       ->setErrorCode($up->error_code ?? self::DEFAULT_PARAM)
       ->setDescripion($up->description ?? self::DEFAULT_PARAM)
-      ->setResult($this->result ?? self::DEFAULT_PARAM);
+      ->setResult(up->result ?? self::DEFAULT_PARAM);
   }
 
   public function setOk(bool $ok): Response
