@@ -6,7 +6,7 @@ use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
 use Mateodioev\Bots\Telegram\Types\Error;
-use Mateodioev\Request\{Request, RequestResponse, ResponseException};
+use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
@@ -106,14 +106,19 @@ abstract class Core implements TelegramInterface
   private function parseRequestResult(MethodInterface $method): mixed
   {
     $return = $method->getReturn();
+    $returnType = $return[0] ?? Response::class;
     $methodName = $return[1] ? 'bulkCreate' : 'create';
 
     if ($return[0] === null) return $this->result;
 
     if ($this->result->ok) {
       try {
-        return $return[0]::$methodName($this->result->result);
-      } catch (\Throwable $_) {
+        if ($returnType === Response::class) {
+	  return $returnType::$methodName($this->result);
+	}
+        return $returnType::$methodName($this->result->result);
+
+      } catch (\Throwable) {
         return $return[0]::$methodName($this->result);
       }
     }
