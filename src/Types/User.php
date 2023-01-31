@@ -12,7 +12,7 @@ use stdClass;
  */
 class User extends TypesBase implements TypesInterface
 {
-  public int $id                            = 0;
+  public int $id;
   public bool $is_bot                       = false;
   public ?bool $is_premium                  = false;
   public ?bool $can_join_groups             = true;
