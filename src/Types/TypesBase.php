@@ -70,6 +70,6 @@ abstract class TypesBase
   {
     if (is_null($up)) return self::DEFAULT_PARAM;
     
-    return array_map(['static', 'create'], $up);
+    return array_map(self::create(...), $up);
   }
 }
