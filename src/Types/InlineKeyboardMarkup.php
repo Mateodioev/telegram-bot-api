@@ -12,10 +12,18 @@ use stdClass;
  */
 class InlineKeyboardMarkup extends TypesBase implements TypesInterface
 {
+  /**
+   * @var array<InlineKeyboardButton[]>
+   */
   public array $inline_keyboard;
 
   public function __construct(stdClass $up) {
-    $this->setInlineKeyboard(InlineKeyboardButton::bulkCreate($up->inline_keyboard));
+    $keyboard = [];
+    // Support for array in arrays
+    foreach ($up->inline_keyboard as $i => $inline_keyboard) {
+      $keyboard[$i][] = InlineKeyboardButton::bulkCreate($inline_keyboard);
+    }
+    $this->setInlineKeyboard($keyboard);
   }
 
   public function setInlineKeyboard(array $inline_keyboard): InlineKeyboardMarkup
