@@ -20,8 +20,8 @@ class InlineKeyboardMarkup extends TypesBase implements TypesInterface
   public function __construct(stdClass $up) {
     $keyboard = [];
     // Support for array in arrays
-    foreach ($up->inline_keyboard as $i => $inline_keyboard) {
-      $keyboard[$i][] = InlineKeyboardButton::bulkCreate($inline_keyboard);
+    foreach ($up->inline_keyboard as $inline_keyboard) {
+      $keyboard[] = InlineKeyboardButton::bulkCreate($inline_keyboard);
     }
     $this->setInlineKeyboard($keyboard);
   }
