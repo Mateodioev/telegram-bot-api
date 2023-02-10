@@ -5,10 +5,10 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use stdClass;
 
-// terminado
-
 /**
  * This object represents one size of a photo or a file / sticker thumbnail.
+ *
+ * @see https://core.telegram.org/bots/api#photosize
  */
 class PhotoSize extends TypesBase implements TypesInterface
 {
@@ -20,9 +20,10 @@ class PhotoSize extends TypesBase implements TypesInterface
 
   public function __construct(stdClass $up) {
     $this->setFileId($up->file_id)
-    ->setWidth($up->width)
-    ->setHeight($up->height)
-    ->setFileSize($up->file_size ?? self::DEFAULT_PARAM);
+      ->setFileUniqueId($up->file_unique_id)
+      ->setWidth($up->width)
+      ->setHeight($up->height)
+      ->setFileSize($up->file_size ?? self::DEFAULT_PARAM);
   }
 
   public function setFileId(string $fileId): PhotoSize
