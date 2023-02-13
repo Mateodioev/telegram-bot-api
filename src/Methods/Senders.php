@@ -23,6 +23,19 @@ trait Senders
       ->setReturnType(Message::class));
   }
 
+  /**
+   * @see sendMessage
+   * @see https://core.telegram.org/bots/api#sendmessage
+   */
+  public function replyTo(string|int $chatId, string $text, int $replyToMessageId, string $parseMode = 'html', array $params = []): TypesInterface
+  {
+    return $this->sendMessage($chatId, $text, [
+      'reply_to_message_id' => $replyToMessageId,
+      'parse_mode' => $parseMode,
+      ...$params
+    ]);
+  }
+
   public function sendPhoto(string|int $chatId, sendInputFile $photo, array $params = []): TypesInterface
   {
     return $this->request(Method::create(['chat_id' => $chatId, 'photo' => $photo->get(), ...$params])
