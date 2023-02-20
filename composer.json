@@ -19,7 +19,8 @@
         "mateodioev/request": "^2.0",
         "vlucas/phpdotenv": "^5.4",
         "mateodioev/utils": "^1.1",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "mateodioev/php-easy-cli": "*",

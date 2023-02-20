@@ -8,6 +8,9 @@ use Mateodioev\Utils\{Network, Files};
 
 use function basename, realpath, mime_content_type;
 
+/**
+ * @see https://core.telegram.org/bots/api#sending-files
+ */
 class sendInputFile
 {
   public CURLFile|string $file;
@@ -19,7 +22,7 @@ class sendInputFile
     $this->files[] = $this;
   }
 
-  public static function create(string $file)
+  public static function create(string $file): sendInputFile
   {
     if (Files::isFile($file)) {
       return self::fromLocal($file);
@@ -80,7 +83,7 @@ class sendInputFile
     return $this->files;
   }
 
-  public function get()
+  public function get(): CURLFile|string
   {
     return $this->file;
   }
