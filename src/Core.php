@@ -3,6 +3,7 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
+use Mateodioev\Bots\Telegram\Types\Response;
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
 use Mateodioev\Bots\Telegram\Types\Error;
@@ -32,8 +33,8 @@ abstract class Core implements TelegramInterface
   /**
    * @param string $token Telegram bot token
    * @param string $endpoint Telegram(support local bot api server) bot endpoint
-   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramApiException
-   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramParamException
+   * @throws TelegramApiException
+   * @throws TelegramParamException
    */
   public function __construct(string $token, string $endpoint = self::URL_BASE)
   {
@@ -51,21 +52,22 @@ abstract class Core implements TelegramInterface
   }
 
   /**
-   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramParamException
+   * @throws TelegramParamException
    */
-  public function setToken(string $token)
+  public function setToken(string $token): static
   {
     if (empty($token)) throw new TelegramParamException('Token empty');
 
     $this->token = $token;
     return $this;
   }
+
   /**
    * Enable test environments
    */
-  public function setTestEnviroment(bool $isTestEnviroment = false)
+  public function setTestEnvironment(bool $isTestEnvironment = false): static
   {
-    if ($isTestEnviroment) {
+    if ($isTestEnvironment) {
       $this->api_link .= 'test/';
       $this->file_link .= 'test/';
     }
@@ -75,8 +77,8 @@ abstract class Core implements TelegramInterface
 
   /**
    * Call telegram api method
-   * @throws \Mateodioev\Utils\Exceptions\RequestException
-   * @throws \Mateodioev\Bots\Telegram\Exception\TelegramApiException
+   * @throws RequestException
+   * @throws TelegramApiException
    */
   public function request(MethodInterface $method): TypesInterface|stdClass|array
   {
@@ -135,7 +137,7 @@ abstract class Core implements TelegramInterface
   }
 
   /**
-   * Download file sended to the bot
+   * Download file sent to the bot
    *
    * @param string $file_path Use `$this->request(Method::create(['file_id' => 'bot-file_id'], 'getFile')->setReturnType(File::class))` to get file path
    * @param string $destination Document name to save the file
@@ -153,7 +155,7 @@ abstract class Core implements TelegramInterface
     try {
       $res = $req->Run($file_path);
 
-      return ($res->toJson(true) != $res);
+      return ($res->toJson(true) !== $res);
     } catch (RequestException | ResponseException) {
       return false;
     } finally {
@@ -180,7 +182,7 @@ abstract class Core implements TelegramInterface
   /** 
    * Add new options params to the actual method
    */
-  public function addOpt(array $opts)
+  public function addOpt(array $opts): static
   {
     $this->opt = array_merge($this->opt, $opts);
     return $this;
