@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpEntryPointsManager">
+    <entry_point>
+      <entry_point TYPE="phpMethod" FQNAME="\Mateodioev\Bots\Telegram\Methods\Stickers setStickerSetThumb" />
+      <entry_point TYPE="phpClass" FQNAME="\Mateodioev\Bots\Telegram\Methods\Stickers" />
+    </entry_point>
+    <pattern value="\Mateodioev\Bots\Telegram\Methods\Stickers" member="setStickerSetThumb" />
+    <pattern value="\Mateodioev\Bots\Telegram\Methods\Stickers" />
+  </component>
+</project>
