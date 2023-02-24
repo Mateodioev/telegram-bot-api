@@ -32,7 +32,7 @@ class File extends TypesBase implements TypesInterface
 
   public function setFileUniqueId(string $fileUniqueId): File
   {
-    return $this->file_unique_id = $fileUniqueId;
+    $this->file_unique_id = $fileUniqueId;
     return $this;
   }
 
