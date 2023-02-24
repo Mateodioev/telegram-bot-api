@@ -116,8 +116,8 @@ abstract class Core implements TelegramInterface
     if ($this->result->ok) {
       try {
         if ($returnType === Response::class) {
-	  return $returnType::$methodName($this->result);
-	}
+	      return $returnType::$methodName($this->result);
+        }
         return $returnType::$methodName($this->result->result);
 
       } catch (\Throwable) {
@@ -130,7 +130,6 @@ abstract class Core implements TelegramInterface
     if (TypesConfig::$throwOnFail) {
       $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
       throw new TelegramApiException($message, $error->error_code);
-
     }
 
     return new Error($this->result);
@@ -150,7 +149,7 @@ abstract class Core implements TelegramInterface
 		->addOpts([
 			CURLOPT_FILE => $fh,
 			CURLOPT_TIMEOUT => $timeout
-		  ]);
+        ]);
 
     try {
       $res = $req->Run($file_path);
