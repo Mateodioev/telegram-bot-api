@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
@@ -6,69 +6,69 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\{sendInputFile, Update, User, WebhookInfo};
 use Mateodioev\Utils\Network;
-
 use function json_encode;
 
 /**
  * Getting Updates
+ * @see https://core.telegram.org/bots/api#getting-updates
  */
 trait Updates
 {
-  public function getUpdates(int $offset = 0, int $limit = 100, $timeout = 0, array $allowedUpdates = []): TypesInterface|array
-  {
-    $payload = [
-      'offset'          => $offset,
-      'limit'           => $limit,
-      'timeout'         => $timeout,
-      'allowed_updates' => json_encode($allowedUpdates)
-    ];
+    public function getUpdates(int $offset = 0, int $limit = 100, $timeout = 0, array $allowedUpdates = []): TypesInterface|array
+    {
+        $payload = [
+            'offset' => $offset,
+            'limit' => $limit,
+            'timeout' => $timeout,
+            'allowed_updates' => json_encode($allowedUpdates)
+        ];
 
-    $oldTimeout = $this->timeout;
-    $this->timeout = $timeout;
-    $result = $this->request(Method::create($payload)
-      ->setMethod('getUpdates')
-      ->setReturnType(Update::class, true));
-    $this->timeout = $oldTimeout;
-    return $result;
-  }
-
-  public function setWebhook(string $url, ?sendInputFile $certificate = null, array $params = []): TypesInterface
-  {
-    if (!Network::IsValidUrl($url)) {
-      throw new TelegramParamException('Invalid webhook URL');
+        $oldTimeout = $this->timeout;
+        $this->timeout = $timeout;
+        $result = $this->request(Method::create($payload)
+            ->setMethod('getUpdates')
+            ->setReturnType(Update::class, true));
+        $this->timeout = $oldTimeout;
+        return $result;
     }
 
-    return $this->request(Method::create(['url' => $url, 'certificate' => $certificate, ...$params])
-      ->setMethod('setWebhook'));
-  }
+    public function setWebhook(string $url, ?sendInputFile $certificate = null, array $params = []): TypesInterface
+    {
+        if (!Network::IsValidUrl($url)) {
+            throw new TelegramParamException('Invalid webhook URL');
+        }
 
-  public function deleteWebhook(bool $dropUpdates = false): TypesInterface
-  {
-    return $this->request(Method::create(['drop_pending_updates' => $dropUpdates])
-      ->setMethod('deleteWebhook'));
-  }
+        return $this->request(Method::create(['url' => $url, 'certificate' => $certificate, ...$params])
+            ->setMethod('setWebhook'));
+    }
 
-  public function getWebhookInfo(): TypesInterface
-  {
-    return $this->request(Method::create()
-      ->setMethod('getWebhookInfo')
-      ->setReturnType(WebhookInfo::class));
-  }
+    public function deleteWebhook(bool $dropUpdates = false): TypesInterface
+    {
+        return $this->request(Method::create(['drop_pending_updates' => $dropUpdates])
+            ->setMethod('deleteWebhook'));
+    }
 
-  public function getMe(): TypesInterface
-  {
-    return $this->request(Method::create([], 'getMe')
-      ->setReturnType(User::class));
-  }
+    public function getWebhookInfo(): TypesInterface
+    {
+        return $this->request(Method::create()
+            ->setMethod('getWebhookInfo')
+            ->setReturnType(WebhookInfo::class));
+    }
 
-  public function logOut(): TypesInterface
-  {
-    return $this->request(Method::create([], 'logOut'));
-  }
+    public function getMe(): TypesInterface
+    {
+        return $this->request(Method::create([], 'getMe')
+            ->setReturnType(User::class));
+    }
 
-  public function close(): TypesInterface
-  {
-    return $this->request(Method::create([], 'close'));
-  }
+    public function logOut(): TypesInterface
+    {
+        return $this->request(Method::create([], 'logOut'));
+    }
+
+    public function close(): TypesInterface
+    {
+        return $this->request(Method::create([], 'close'));
+    }
 }
 
