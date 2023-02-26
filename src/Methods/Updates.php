@@ -10,7 +10,7 @@ use Mateodioev\Utils\Network;
 use function json_encode;
 
 /**
- * Gettings Updates
+ * Getting Updates
  */
 trait Updates
 {
@@ -23,9 +23,13 @@ trait Updates
       'allowed_updates' => json_encode($allowedUpdates)
     ];
 
-    return $this->request(Method::create($payload)
+    $oldTimeout = $this->timeout;
+    $this->timeout = $timeout;
+    $result = $this->request(Method::create($payload)
       ->setMethod('getUpdates')
       ->setReturnType(Update::class, true));
+    $this->timeout = $oldTimeout;
+    return $result;
   }
 
   public function setWebhook(string $url, ?sendInputFile $certificate = null, array $params = []): TypesInterface
