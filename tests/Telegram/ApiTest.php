@@ -42,4 +42,12 @@ class ApiTest extends TestCase
     $res = self::$api->request($this->getInvalidMethod());
     $this->assertInstanceOf(Error::class, $res);
   }
+
+  public function testAsyncClient()
+  {
+    $me = self::$api->setAsync(true)
+      ->getMe();
+    
+    $this->assertInstanceOf(User::class, $me);
+  }
 }
