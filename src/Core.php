@@ -3,11 +3,15 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
+use Mateodioev\Bots\Telegram\Http\AsyncClient;
+use Mateodioev\Bots\Telegram\Http\HttpException;
+use Mateodioev\Bots\Telegram\Http\SyncClient;
 use Mateodioev\Bots\Telegram\Types\Response;
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
 use Mateodioev\Bots\Telegram\Types\Error;
 use Mateodioev\Request\{Request, ResponseException};
+use Mateodioev\Bots\Telegram\Http\Request as HttpClient;
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
@@ -21,10 +25,12 @@ abstract class Core implements TelegramInterface
 {
   public const URL_BASE = 'https://api.telegram.org/';
   public int $timeout = 5;
+  public bool $async = false;
 
   protected string $api_link;
   protected string $file_link; // File to download
   protected string $token;
+  protected ?HttpClient $client = null;
 
   public array $opt = [];
   public string $endpoint;
@@ -76,6 +82,27 @@ abstract class Core implements TelegramInterface
   }
 
   /**
+   * Enable/Disable async request
+   */
+  public function setAsync(bool $async = true): static
+  {
+    $this->async = $async;
+    return $this;
+  }
+
+
+  public function getClient(): HttpClient
+  {
+    if ($this->client instanceof HttpClient) {
+      return $this->client;
+    }
+
+    return $this->client = ($this->async)
+      ? new AsyncClient
+      : new SyncClient;
+  }
+
+  /**
    * Call telegram api method
    * @throws RequestException
    * @throws TelegramApiException
@@ -90,14 +117,13 @@ abstract class Core implements TelegramInterface
 
     $datas = array_merge($method->getParams(), $this->opt);
 
-	$request = Request::POST($this->endpoint, $datas)
-		->addOpt(CURLOPT_TIMEOUT, $this->timeout);
+    $request = $this->getClient()->new($this->endpoint, $datas)
+      ->setTimeout($this->timeout);
 
     try {
-      $res = $request->Run();
-      $this->result = json_decode($res->getBody());
-    } catch (RequestException $th) {
-      throw new TelegramApiException('Fail to send method ' . $method->getMethod() . '. ' . $th->getMessage());
+      $this->result = $request->run()->toStdClass();
+    } catch (HttpException $th) {
+      throw new TelegramApiException('Fail to send method ' . $method->getMethod() . '. ' . $th->getMessage(), previous: $th);
     }
 
     $this->opt = []; // reset opt

@@ -35,3 +35,11 @@ $message = $api->sendMessage('chat_id', 'Text', $others_params);
 var_dump($message->get());
 var_dump($message instanceof Message::class);
 ```
+
+## Enable async mode
+
+Note: This use `amp/http-client`
+
+```php
+$api->setAsync(true);
+```

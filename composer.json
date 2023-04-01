@@ -20,7 +20,8 @@
         "vlucas/phpdotenv": "^5.4",
         "mateodioev/utils": "^1.1",
         "ext-curl": "*",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "amphp/http-client": "^5"
     },
     "require-dev": {
         "mateodioev/php-easy-cli": "*",
@@ -35,5 +36,6 @@
         "test": "phpunit --testdox tests/ --colors=always",
         "test-report": "phpunit --testdox tests/ --colors=always --testdox-html docs/report.html",
         "coverage": "phpunit --coverage-html docs/coverage --coverage-text --colors=always"
-    }
+    },
+    "minimum-stability": "beta"
 }
