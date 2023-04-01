@@ -38,7 +38,7 @@ var_dump($message instanceof Message::class);
 
 ## Enable async mode
 
-Note: This use `amp/http-client`
+Note: This use `amphp/http-client`
 
 ```php
 $api->setAsync(true);
