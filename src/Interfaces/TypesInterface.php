@@ -8,6 +8,7 @@ interface TypesInterface
 {
   /**
    * Get all properties
+   * @return array
    */
   public function get();
 

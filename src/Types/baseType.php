@@ -7,8 +7,6 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use stdClass;
 
-use function PHPUnit\Framework\throwException;
-
 /**
  * Summary of baseType
  */
@@ -77,6 +75,14 @@ abstract class baseType implements TypesInterface
         }
 
         $valueType = gettype($value);
+        $fieldData = $this->getField($key);
+
+
+        if (is_array($fieldData)) {
+            $this->__set($key, $value);
+            return $this;
+        }
+
         $fieldType = $this->getFieldType($key);
 
         // Check scalar values
@@ -90,7 +96,13 @@ abstract class baseType implements TypesInterface
             return $this;
         }
 
-        throw new TelegramParamException("Invalid value for property {$key}");
+        $format = 'Invalid value for property %s, expected %s given %s.';
+        throw new TelegramParamException(sprintf(
+            $format,
+            $key,
+            $fieldType,
+            $valueType
+        ));
     }
 
     /**
@@ -132,9 +144,10 @@ abstract class baseType implements TypesInterface
         $params = [];
 
         foreach ($this->properties as $key => $value) {
-            
-            if ($value instanceof TypesInterface)
+
+            if ($value instanceof TypesInterface) {
                 $value = $value->get() ?? self::DEFAULT_PARAM;
+            }
             if (TypeConfig::$returnNullParams === false && $value === self::DEFAULT_PARAM) {
                 continue;
             }
@@ -156,6 +169,26 @@ abstract class baseType implements TypesInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Iterate for all elements and use method get if is instance of TypesInterface
+     */
+    protected function recursiveGet(): array
+    {
+        $props = $this->getProperties();
+        foreach ($props as $key => $value) {
+            if (is_array($value)) {
+                $value = array_map(function ($val) {
+                    if ($val instanceof TypesInterface)
+                        $val = $val->get();
+
+                    return $val;
+                }, $value);
+            }
+            $props[$key] = $value;
+        }
+        return $props;
     }
 
     public static function create(?stdClass $up)
