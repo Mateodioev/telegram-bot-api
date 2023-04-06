@@ -1,5 +1,6 @@
 # Dirs
 /vendor
+/.idea/
 
 # files
 .env
