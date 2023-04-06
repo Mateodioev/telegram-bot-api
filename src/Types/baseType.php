@@ -245,6 +245,8 @@ abstract class baseType implements TypesInterface
                 return self::create($update);
             } elseif (is_array($update) || is_null($update)) {
                 return self::createFromArray($update);
+            } elseif($update instanceof TypesInterface) {
+                return self::createFromType($update);
             } else {
                 throw new TelegramParamException('Invalid update');
             }
