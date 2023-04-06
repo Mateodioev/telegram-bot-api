@@ -28,7 +28,7 @@ abstract class baseType implements TypesInterface
      */
     protected array $fields = [];
 
-    public function &__get($key) {
+    public function __get($key) {
         return $this->properties[$key] ?? self::DEFAULT_PARAM;
     }
 
@@ -110,7 +110,7 @@ abstract class baseType implements TypesInterface
      */
     private function getter($key): mixed
     {
-        $param = substr($key, 3);
+        $param = substr($key, 4);
         $property = $this->getProperty($key)
             ?? $this->getProperty($param);
         
@@ -169,6 +169,11 @@ abstract class baseType implements TypesInterface
         }
 
         return $this;
+    }
+
+    public function get()
+    {
+        return $this->getProperties();
     }
 
     /**
