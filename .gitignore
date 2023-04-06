@@ -1,6 +1,7 @@
 # Dirs
 /vendor
 /.idea/
+/fn-tests/
 
 # files
 .env
