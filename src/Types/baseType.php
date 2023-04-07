@@ -165,10 +165,16 @@ abstract class baseType implements TypesInterface
     public function cloneFields(): static
     {
         foreach ($this->fields as $key => $_) {
-            $this->properties[$key] = self::DEFAULT_PARAM;
+            $this->properties[$key] = ($this->getFieldType($key) == 'boolean')
+                ? self::DEFAULT_BOOL
+                : self::DEFAULT_PARAM;
         }
 
         return $this;
+    }
+
+    public function __construct() {
+        $this->cloneFields();
     }
 
     public function get()
@@ -212,7 +218,7 @@ abstract class baseType implements TypesInterface
     {
         if (is_null($up)) return self::DEFAULT_PARAM;
 
-        $instance = (new static)->cloneFields(); // only use here
+        $instance = new static; // only use here
 
         foreach ($up as $key => $value) {
             // only for scalar, check
