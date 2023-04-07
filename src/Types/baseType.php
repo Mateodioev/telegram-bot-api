@@ -223,11 +223,11 @@ abstract class baseType implements TypesInterface
 
                 if (is_array($field)) {
                     // create new object
-                    $value = $field[0]::bulkCreate($value);
+                    $value = $field[0]::bulkCreate((array) $value);
                 } elseif ($value instanceof TypesInterface) {
                     $value = $field::createFromType($value);
                 } else {
-                    $value = $field::createFromArray($value);
+                    $value = $field::createFromArray((array) $value);
                 }
             }
             $instance->fluentSetter($key, $value);
