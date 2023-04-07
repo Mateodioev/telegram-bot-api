@@ -126,8 +126,8 @@ abstract class baseType implements TypesInterface
         $fieldName = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name));
 
         // set new field
-        if (strpos($fieldName, 'set')) {
-            $fieldName = substr($$fieldName, 3);
+        if (strpos($fieldName, 'set') === 0) {
+            $fieldName = substr($fieldName, 4);
 
             return $this->fluentSetter($fieldName, $values[0]);
         }
