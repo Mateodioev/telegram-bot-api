@@ -4,6 +4,7 @@
 
 <testsuites>
   <testsuite name="Telegram"><directory suffix=".php">tests/Telegram</directory></testsuite>
+  <testsuite name="Telegram types"><directory suffix=".php">tests/Types</directory></testsuite>
 </testsuites>
 
 <php>
