@@ -4,6 +4,7 @@ namespace Tests\Types;
 
 use Mateodioev\Bots\Telegram\Types\User;
 use PHPUnit\Framework\TestCase;
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use TypeError;
 
 class ObjectsTest extends TestCase
@@ -48,7 +49,7 @@ class ObjectsTest extends TestCase
     {
         $data = [...compact('id', 'is_bot', 'first_name'), 'invalid_property' => 'invalid value'];
         
-        $this->expectException(TypeError::class);
+        $this->expectException(TelegramParamException::class);
         User::createFromArray($data);
     }
 
