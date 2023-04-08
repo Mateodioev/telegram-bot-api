@@ -89,8 +89,10 @@ abstract class Core implements TelegramInterface
 
   public function getClient(): HttpClient
   {
-    // TODO: add method in HttpClient to know is async or no
-    if ($this->client instanceof HttpClient) {
+    if (
+      $this->client instanceof HttpClient
+      && $this->async === $this->client->isAsync() // create new client if $async is changed
+    ) {
       return $this->client;
     }
 

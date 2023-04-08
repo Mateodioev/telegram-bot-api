@@ -71,4 +71,9 @@ class AsyncClient implements Request
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
+
+    public function isAsync(): bool
+    {
+        return true;
+    }
 }

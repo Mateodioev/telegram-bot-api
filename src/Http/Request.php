@@ -22,4 +22,9 @@ interface Request
      * @throws HttpException
      */
     public function run(): Response;
+
+    /**
+     * Return true if is async client
+     */
+    public function isAsync(): bool;
 }

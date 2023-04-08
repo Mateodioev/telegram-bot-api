@@ -2,6 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram\Http;
 
+use function json_decode;
+
 class Response
 {
     public function __construct(protected string $body) {}
