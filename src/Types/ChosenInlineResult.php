@@ -1,63 +1,37 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * Represents a result of an inline query that was chosen by the user and sent to their chat partner.
  * 
+ * @property string    $result_id The unique identifier for the result that was chosen
+ * @property User      $from The user that chose the result
+ * @property ?Location $location Optional. Sender location, only for bots that require user location
+ * @property ?string   $inline_message_id Optional. Identifier of the sent inline message. Available only if there is an [inline keyboard](https://core.telegram.org/bots/api#inlinekeyboardmarkup) attached to the message. Will be also received in [callback queries](https://core.telegram.org/bots/api#callbackquery) and can be used to [edit](https://core.telegram.org/bots/api#updating-messages) the message.
+ * @property string    $query The query that was used to obtain the result
+ * 
+ * @method string    resultId()
+ * @method User      from()
+ * @method ?Location location()
+ * @method ?string   inlineMessageId()
+ * @method string    query()
+ * 
+ * @method static setResultId(string $resultId)
+ * @method static setFrom(User $from)
+ * @method static setLocation(Location $location)
+ * @method static setInlineMessageId(string $inlineMessageId)
+ * @method static setQuery(string $query)
+ * 
  * @see https://core.telegram.org/bots/api#choseninlineresult
  */
-class ChosenInlineResult extends TypesBase implements TypesInterface
+class ChosenInlineResult extends baseType
 {
-  public string $result_id;
-  public User $from;
-  public ?Location $location;
-  public ?string $inline_message_id;
-  public string $query;
-
-  public function __construct(stdClass $up) {
-    $this->setResultId($up->result_id)
-      ->setFrom(User::create($up->from))
-      ->setLocation(Location::create($up->location ?? self::DEFAULT_PARAM))
-      ->setInlineMessageId($up->inline_message_id ?? self::DEFAULT_PARAM)
-      ->setQuery($up->query);
-  }
-
-  public function setResultId(string $resultId): ChosenInlineResult
-  {
-    $this->result_id = $resultId;
-    return $this;
-  }
-  
-  public function setFrom(User $from): ChosenInlineResult
-  {
-    $this->from = $from;
-    return $this;
-  }
-
-  public function setLocation(?Location $location): ChosenInlineResult
-  {
-    $this->location = $location;
-    return $this;
-  }
-
-  public function setInlineMessageId(?string $inlineMessageId): ChosenInlineResult
-  {
-    $this->inline_message_id = $inlineMessageId;
-    return $this;
-  }
-
-  public function setQuery(string $query): ChosenInlineResult
-  {
-    $this->query = $query;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'result_id'         => 'string',
+        'from'              => User::class,
+        'location'          => Location::class,
+        'inline_message_id' => 'string',
+        'query'             => 'string',
+    ];
 }

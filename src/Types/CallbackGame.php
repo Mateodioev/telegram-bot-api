@@ -10,13 +10,7 @@ use stdClass;
  * 
  * @see https://core.telegram.org/bots/api#callbackgame
  */
-class CallbackGame extends TypesBase implements TypesInterface
+class CallbackGame extends baseType
 {
-  public function __construct(stdClass $up) {
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    // 
 }

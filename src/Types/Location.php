@@ -2,70 +2,40 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * This object represents a point on the map.
  * 
+ * @property double   $longitude              Longitude as defined by sender
+ * @property double   $latitude               Latitude as defined by sender
+ * @property ?double  $horizontal_accuracy    Optional. The radius of uncertainty for the location, measured in meters; 0-1500
+ * @property ?integer $live_period            Optional. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.
+ * @property ?integer $heading                Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.
+ * @property ?integer $proximity_alert_radius Optional. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
+ * 
+ * @method double   longitude()
+ * @method double   latitude()
+ * @method ?double  horizontalAccuracy()
+ * @method ?integer livePeriod()
+ * @method ?integer heading()
+ * @method ?integer proximityAlertRadius()
+ * 
+ * @method static setLongitude(double $longitude)
+ * @method static setLatitude(double $latitude)
+ * @method static setHorizontalAccuracy(double $horizontalAccuracy)
+ * @method static setLivePeriod(integer $livePeriod)
+ * @method static setHeading(integer $heading)
+ * @method static setProximityAlertRadius(integer $proximityAlertRadius)
+ * 
  * @see https://core.telegram.org/bots/api#location
  */
-class Location extends TypesBase implements TypesInterface
+class Location extends baseType
 {
-  public float $longitude;
-  public float $latitude;
-  public float|int|null $horizontal_accuracy;
-  public ?int $live_period;
-  public ?int $heading;
-  public ?int $proximity_alert_radius;
-
-  public function __construct(stdClass $up) {
-    $this->setLongitude($up->longitude ?? 0.0)
-      ->setLatitude($up->latitude ?? 0.0)
-      ->setHorizontalAccuracy($up->horizontal_accuracy ?? self::DEFAULT_PARAM)
-      ->setLivePeriod($up->live_period ?? self::DEFAULT_PARAM)
-      ->setHeading($up->heading ?? self::DEFAULT_PARAM)
-      ->setProximityAlertRadious($up->proximity_alert_radius ?? self::DEFAULT_PARAM);
-  }
-
-  public function setLongitude(float $longitude): Location
-  {
-    $this->longitude = $longitude;
-    return $this;
-  }
-
-  public function setLatitude(float $latitude): Location
-  {
-    $this->latitude = $latitude;
-    return $this;
-  }
-
-  public function setHorizontalAccuracy($horizontal_accuracy): Location
-  {
-    $this->horizontal_accuracy = $horizontal_accuracy;
-    return $this;
-  }
-
-  public function setLivePeriod(?int $livePeriod): Location
-  {
-    $this->live_period = $livePeriod;
-    return $this;
-  }
-
-  public function setHeading(?int $heading): Location
-  {
-    $this->heading = $heading;
-    return $this;
-  }
-
-  public function setProximityAlertRadious(?int $proximityAlertRadious): Location
-  {
-    $this->proximity_alert_radius = $proximityAlertRadious;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'longitude'              => 'double', // float
+        'latitude'               => 'double', // float
+        'horizontal_accuracy'    => 'double', // float
+        'live_period'            => 'integer',
+        'heading'                => 'integer',
+        'proximity_alert_radius' => 'integer',
+    ];
 }

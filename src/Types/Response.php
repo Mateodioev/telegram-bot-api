@@ -2,50 +2,33 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
-class Response extends TypesBase implements TypesInterface
+/**
+ * 
+ * @property boolean $ok 
+ * @property integer $error_code 
+ * @property string  $description 
+ * @property mixed   $result 
+ * 
+ * @method boolean ok()
+ * @method integer errorCode()
+ * @method string  description()
+ * @method mixed   result()
+ * 
+ * @method static setOk(boolean $ok)
+ * @method static setErrorCode(integer $errorCode)
+ * @method static setDescription(string $description)
+ * @method static setResult(mixed $result)
+ */
+class Response extends baseType
 {
-  public bool $ok = false;
-  public ?int $error_code;
-  public ?string $description;
-  public mixed $result;
+    protected array $fields = [
+        'ok'          => 'boolean',
+        'error_code'  => 'integer',
+        'description' => 'string',
+        'result'      => 'mixed',
+    ];
 
-  public function __construct(stdClass $up) {
-    $this->setOk($up->ok ?? self::DEFAULT_BOOL)
-      ->setErrorCode($up->error_code ?? self::DEFAULT_PARAM)
-      ->setDescripion($up->description ?? self::DEFAULT_PARAM)
-      ->setResult($up->result ?? self::DEFAULT_PARAM);
-  }
-
-  public function setOk(bool $ok): Response
-  {
-    $this->ok = $ok;
-    return $this;
-  }
-
-  public function setErrorCode(?int $errorCode): Response
-  {
-    $this->error_code = $errorCode;
-    return $this;
-  }
-
-  public function setDescripion(?string $description): Response
-  {
-    $this->description = $description;
-    return $this;
-  }
-
-  public function setResult(mixed $result): Response
-  {
-    if (empty($result)) $result = self::DEFAULT_PARAM;
-    $this->result = $result;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    public function get() {
+        return $this->recursiveGet();
+    }
 }

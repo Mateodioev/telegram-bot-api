@@ -2,94 +2,52 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * Represents an invite link for a chat.
  * 
+ * @property string  $invite_link                The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
+ * @property User    $creator                    Creator of the link
+ * @property boolean $create_join_request        True, if users joining the chat via the link need to be approved by chat administrators
+ * @property boolean $is_primary                 True, if the link is primary
+ * @property boolean $is_revoked                 True, if the link is revoked
+ * @property string  $name                       Optional. Invite link name
+ * @property integer $expire_date                Optional. Point in time (Unix timestamp) when the link will expire or has been expired
+ * @property integer $member_limit               Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+ * @property integer $pending_join_request_count Optional. Number of pending join requests created using this link
+ * 
+ * @method string   inviteLink()
+ * @method User     creator()
+ * @method boolean  createJoinRequest()
+ * @method boolean  isPrimary()
+ * @method boolean  isRevoked()
+ * @method ?string  name()
+ * @method ?integer expireDate()
+ * @method ?integer memberLimit()
+ * @method ?integer pendingJoinRequestCount()
+ * 
+ * @method static setinviteLink(string $inviteLink)
+ * @method static setCreator(User $creator)
+ * @method static setCreateJoinRequest(boolean $createJoinRequest)
+ * @method static setIsPrimary(boolean $isPrimary)
+ * @method static setIsRevoked(boolean $isRevoked)
+ * @method static setName(string $name)
+ * @method static setExpireDate(integer $expireDate)
+ * @method static setMemberLimit(integer $memberLimit)
+ * @method static setPendingJoinRequestCount(integer $pendingJoinRequestCount)
+ * 
  * @see https://core.telegram.org/bots/api#chatinvitelink
  */
-class ChatInviteLink extends TypesBase implements TypesInterface
+class ChatInviteLink extends baseType
 {
-  public string $invite_link;
-  public User $creator;
-  public bool $create_join_request = self::DEFAULT_BOOL;
-  public bool $is_primary = self::DEFAULT_BOOL;
-  public bool $is_revoked = self::DEFAULT_BOOL;
-  public ?string $name;
-  public ?int $expire_date;
-  public ?int $member_limit;
-  public ?int $pending_join_request_count;
-
-  public function __construct(stdClass $up) {
-    $this->setInviteLink($up->invite_link)
-      ->setCreator(User::create($up->creator ?? self::DEFAULT_PARAM))
-      ->setCreateJoinRequest($up->create_join_request ?? self::DEFAULT_BOOL)
-      ->setIsPrimary($up->is_primary ?? self::DEFAULT_BOOL)
-      ->setIsRevoked($up->is_revoked ?? self::DEFAULT_BOOL)
-      ->setName($up->name ?? self::DEFAULT_PARAM)
-      ->setExpireDate($up->expire_date ?? self::DEFAULT_PARAM)
-      ->setMemberLimit($up->member_limit ?? self::DEFAULT_PARAM)
-      ->setPendingJoinRequestCount($up->pending_join_request_count ?? self::DEFAULT_PARAM);
-  }
-
-  public function setInviteLink(string $inviteLink): ChatInviteLink
-  {
-    $this->invite_link = $inviteLink;
-    return $this;
-  }
-
-  public function setCreator(User $creator): ChatInviteLink
-  {
-    $this->creator = $creator;
-    return $this;
-  }
-
-  public function setCreateJoinRequest(bool $createJoinRequest): ChatInviteLink
-  {
-    $this->create_join_request = $createJoinRequest;
-    return $this;
-  }
-
-  public function setIsPrimary(bool $isPrimary): ChatInviteLink
-  {
-    $this->is_primary = $isPrimary;
-    return $this;
-  }
-
-  public function setIsRevoked(bool $isRevoked): ChatInviteLink
-  {
-    $this->is_revoked = $isRevoked;
-    return $this;
-  }
-
-  public function setName(?string $name): ChatInviteLink
-  {
-    $this->name = $name;
-    return $this;
-  }
-
-  public function setExpireDate(?int $expireDate): ChatInviteLink
-  {
-    $this->expire_date = $expireDate;
-    return $this;
-  }
-
-  public function setMemberLimit(?int $memberLimit): ChatInviteLink
-  {
-    $this->member_limit = $memberLimit;
-    return $this;
-  }
-
-  public function setPendingJoinRequestCount(?int $pendingJoinRequestCount): ChatInviteLink
-  {
-    $this->pending_join_request_count = $pendingJoinRequestCount;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'invite_link'                => 'string',
+        'creator'                    => User::class,
+        'create_join_request'        => 'boolean',
+        'is_primary'                 => 'boolean',
+        'is_revoked'                 => 'boolean',
+        'name'                       => 'string',
+        'expire_date'                => 'integer',
+        'member_limit'               => 'integer',
+        'pending_join_request_count' => 'integer',
+    ];
 }

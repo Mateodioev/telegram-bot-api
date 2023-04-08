@@ -1,47 +1,34 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents one shipping option.
  * 
+ * @property string         $id     Shipping option identifier
+ * @property string         $title  Option title
+ * @property LabeledPrice[] $prices List of price portions
+ * 
+ * @method string         id()
+ * @method string         title()
+ * @method LabeledPrice[] prices()
+ * 
+ * @method static setId(string $id)
+ * @method static setTitle(string $title)
+ * @method static setPrices(LabeledPrice[] $prices)
+ * 
  * @see https://core.telegram.org/bots/api#shippingoption
  */
-class ShippingOption extends TypesBase implements TypesInterface
+class ShippingOption extends baseType
 {
-  public string $id;
-  public string $title;
-  public array  $prices;
+    protected array $fields = [
+        'id' => 'string',
+        'title' => 'string',
+        'prices' => [LabeledPrice::class],
+    ];
 
-  public function __construct(stdClass $up) {
-    $this->setId($up->id)
-      ->setTitle($up->title)
-      ->setPrices(LabeledPrice::bulkCreate($up->prices));
-  }
-
-  public function setId(string $id): ShippingOption
-  {
-    $this->id = $id;
-    return $this;
-  }
-  
-  public function setTitle(string $title): ShippingOption
-  {
-    $this->title = $title;
-    return $this;
-  }
-  
-  public function setPrices(array $prices): ShippingOption
-  {
-    $this->prices = $prices;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    public function get()
+    {
+        return $this->recursiveGet();
+    }
 }

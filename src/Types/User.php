@@ -2,110 +2,60 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
- * Telegram user or bot
+ * This object represents a Telegram user or bot.
+ * 
+ * @property integer  $id                          Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+ * @property boolean  $is_bot                      True, if this user is a bot
+ * @property string   $first_name                  User's or bot's first name
+ * @property string   $last_name                   Optional. User's or bot's last name
+ * @property ?string  $username                    Optional. User's or bot's username
+ * @property ?string  $language_code               Optional. [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) of the user's language
+ * @property ?boolean $is_premium                  Optional. True, if this user is a Telegram Premium user
+ * @property ?boolean $added_to_attachment_menu    Optional. True, if this user added the bot to the attachment menu
+ * @property ?boolean $can_join_groups             Optional. True, if the bot can be invited to groups. Returned only in [getMe](https://core.telegram.org/bots/api#getme).
+ * @property ?boolean $can_read_all_group_messages Optional. True, if [privacy mode](https://core.telegram.org/bots/features#privacy-mode) is disabled for the bot. Returned only in [getMe](https://core.telegram.org/bots/api#getme).
+ * @property ?boolean $supports_inline_queries     Optional. True, if the bot supports inline queries. Returned only in [getMe](https://core.telegram.org/bots/api#getme).
+ * 
+ * @method integer  id()
+ * @method boolean  isBot()
+ * @method string   firstName()
+ * @method string   lastName()
+ * @method ?string  username()
+ * @method ?string  languageCode()
+ * @method ?boolean isPremium()
+ * @method ?boolean addedToAttachmentMenu()
+ * @method ?boolean canJoinGroups()
+ * @method ?boolean canReadAllGroupMessages()
+ * @method ?boolean supportsInlineQueries()
+ * 
+ * @method static setId(integer $id)
+ * @method static setIsBot(boolean $isBot)
+ * @method static setFirstName(string $firstName)
+ * @method static setLastName(string $lastName)
+ * @method static setUsername(string $username)
+ * @method static setLanguageCode(string $languageCode)
+ * @method static setIsPremium(boolean $isPremium)
+ * @method static setAddedToAttachmentMenu(boolean $addedToAttachmentMenu)
+ * @method static setCanJoinGroups(boolean $canJoinGroups)
+ * @method static setCanReadAllGroupMessages(boolean $canReadAllGroupMessages)
+ * @method static setSupportsInlineQueries(boolean $supportsInlineQueries)
  * 
  * @see https://core.telegram.org/bots/api#user
  */
-class User extends TypesBase implements TypesInterface
+class User extends baseType
 {
-  public int $id;
-  public bool $is_bot                       = false;
-  public ?bool $is_premium                  = false;
-  public ?bool $can_join_groups             = true;
-  public ?bool $supports_inline_queries     = false;
-  public ?bool $added_to_attachment_menu    = false;
-  public ?bool $can_read_all_group_messages = false;
-  public ?string $username                  = null;
-  public ?string $last_name                 = '';
-  public string $first_name                 = '';
-  public ?string $language_code             = 'en';
-
-  public function __construct(stdClass $up) {
-    $this->setId($up->id ?? 0)
-      ->setIsBot($up->is_bot ?? self::DEFAULT_BOOL)
-      ->setUsername($up->username ?? self::DEFAULT_PARAM)
-      ->setLastName($up->last_name ?? self::DEFAULT_PARAM)
-      ->setIsPremium($up->is_premium ?? self::DEFAULT_PARAM)
-      ->setFirstName($up->first_name ?? '')
-      ->setLanguageCode($up->language_code ?? self::DEFAULT_PARAM)
-      ->setCanJoinGroups($up->can_join_groups ?? self::DEFAULT_PARAM)
-      ->setSupportInlineQueries($up->supports_inline_queries ?? self::DEFAULT_PARAM)
-      ->setAddedToAttachmentMenu($up->added_to_attachment_menu ?? self::DEFAULT_PARAM)
-      ->setCanReadAllGroupMessages($up->can_read_all_group_messages ?? self::DEFAULT_PARAM);
-  }
-
-  public function setId(int $id): User
-  {
-    $this->id = $id;
-    return $this;
-  }
-
-  public function setIsBot(bool $bot): User
-  {
-    $this->is_bot = $bot;
-    return $this;
-  }
-
-  public function setIsPremium(?bool $isPremium): User
-  {
-    $this->is_premium = $isPremium;
-    return $this;
-  }
-
-  public function setCanJoinGroups(?bool $canJoinGroups): User
-  {
-    $this->can_join_groups = $canJoinGroups;
-    return $this;
-  }
-
-  public function setSupportInlineQueries(?bool $support): User
-  {
-    $this->supports_inline_queries = $support;
-    return $this;
-  }
-
-  public function setAddedToAttachmentMenu(?bool $added): User
-  {
-    $this->added_to_attachment_menu = $added;
-    return $this;
-  }
-
-  public function setCanReadAllGroupMessages(?bool $canReadAllGroupMessages): User
-  {
-    $this->can_read_all_group_messages = $canReadAllGroupMessages;
-    return $this;
-  }
-
-  public function setUsername(?string $username): User
-  {
-    $this->username = $username;
-    return $this;
-  }
-
-  public function setLastName(?string $lastName): User
-  {
-    $this->last_name = $lastName;
-    return $this;
-  }
-
-  public function setFirstName(string $firstName): User
-  {
-    $this->first_name = $firstName;
-    return $this;
-  }
-
-  public function setLanguageCode(?string $languageCode): User
-  {
-    $this->language_code = $languageCode;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'id'                          => 'integer',
+        'is_bot'                      => 'boolean',
+        'first_name'                  => 'string',
+        'last_name'                   => 'string',
+        'username'                    => 'string',
+        'language_code'               => 'string',
+        'is_premium'                  => 'boolean',
+        'added_to_attachment_menu'    => 'boolean',
+        'can_join_groups'             => 'boolean',
+        'can_read_all_group_messages' => 'boolean',
+        'supports_inline_queries'     => 'boolean',
+    ];
 }

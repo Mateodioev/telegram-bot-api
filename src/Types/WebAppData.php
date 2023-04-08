@@ -1,39 +1,25 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
- * Describes data sent from a Web App to the bot.
+ * Describes data sent from a [Web App](https://core.telegram.org/bots/webapps) to the bot.
+ * 
+ * @property string $data        The data. Be aware that a bad client can send arbitrary data in this field.
+ * @property string $button_text Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.
+ * 
+ * @method string data()
+ * @method string buttonText()
+ * 
+ * @method static setData(string $data)
+ * @method static setButtonText(string $buttonText)
  * 
  * @see https://core.telegram.org/bots/api#webappdata
  */
-class WebAppData extends TypesBase implements TypesInterface
+class WebAppData extends baseType
 {
-  public string $data;
-  public string $button_text;
-
-  public function __construct(stdClass $up) {
-    $this->setData($up->data)
-      ->setButtonText($up->button_text);
-  }
-
-  public function setData(string $data): WebAppData
-  {
-    $this->data = $data;
-    return $this;
-  }
-
-  public function setButtonText(string $buttonText): WebAppData
-  {
-    $this->button_text = $buttonText;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'data'        => 'string',
+        'button_text' => 'string',
+    ];
 }

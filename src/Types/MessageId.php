@@ -1,31 +1,21 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents a unique message identifier.
  * 
+ * @property integer $message_id Unique message identifier
+ * 
+ * @method integer messageId()
+ * 
+ * @method static setMessageId(integer $messageId)
+ * 
  * @see https://core.telegram.org/bots/api#messageid
  */
-class MessageId extends TypesBase implements TypesInterface
+class MessageId extends baseType
 {
-  public int $message_id;
-
-  public function __construct(stdClass $up) {
-    $this->setMessageId($up->message_id);
-  }
-
-  public function setMessageId(int $messageId): MessageId
-  {
-    $this->message_id = $messageId;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'message_id' => 'integer',
+    ];
 }

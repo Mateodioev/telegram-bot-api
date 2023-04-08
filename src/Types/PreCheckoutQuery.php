@@ -1,79 +1,45 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object contains information about an incoming pre-checkout query.
  * 
+ * @property string     $id                 Unique query identifier
+ * @property User       $from               User who sent the query
+ * @property string     $currency           Three-letter ISO 4217 [currency](https://core.telegram.org/bots/payments#supported-currencies) code
+ * @property integer    $total_amount       Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in [currencies.json](https://core.telegram.org/bots/payments/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+ * @property string     $invoice_payload    Bot specified invoice payload
+ * @property ?string    $shipping_option_id Optional. Identifier of the shipping option chosen by the user
+ * @property ?OrderInfo $order_info         Optional. Order information provided by the user
+ * 
+ * @method string     id()
+ * @method User       from()
+ * @method string     currency()
+ * @method integer    totalAmount()
+ * @method string     invoicePayload()
+ * @method ?string    shippingOptionId()
+ * @method ?OrderInfo orderInfo()
+ * 
+ * @method static setId(string $id)
+ * @method static setFrom(User $from)
+ * @method static setCurrency(string $currency)
+ * @method static setTotalAmount(integer $totalAmount)
+ * @method static setInvoicePayload(string $invoicePayload)
+ * @method static setShippingOptionId(string $shippingOptionId)
+ * @method static setOrderInfo(OrderInfo $orderInfo)
+ * 
  * @see https://core.telegram.org/bots/api#precheckoutquery
  */
-class PreCheckoutQuery extends TypesBase implements TypesInterface
+class PreCheckoutQuery extends baseType
 {
-  public string $id;
-  public User $from;
-  public string $currency;
-  public int $total_amount;
-  public string $invoice_payload;
-  public ?string $shipping_option_id;
-  public ?OrderInfo $order_info;
-
-  public function __construct(stdClass $up) {
-    $this->setId($up->id)
-      ->setFrom(User::create($up->from))
-      ->setCurrency($up->currency)
-      ->setTotalAmount($up->total_amount)
-      ->setInvoicePayload($up->invoice_payload)
-      ->setShippingOptionId($up->shipping_option_id ?? self::DEFAULT_PARAM)
-      ->setOrderInfo(OrderInfo::create($up->order_info ?? self::DEFAULT_PARAM));
-  }
-
-  public function setId(string $id): PreCheckoutQuery
-  {
-    $this->id = $id;
-    return $this;
-  }
-
-  public function setFrom(User $from): PreCheckoutQuery
-  {
-    $this->from = $from;
-    return $this;
-  }
-
-  public function setCurrency(string $currency): PreCheckoutQuery
-  {
-    $this->currency = $currency;
-    return $this;
-  }
-
-  public function setTotalAmount(int $totalAmount): PreCheckoutQuery
-  {
-    $this->total_amount = $totalAmount;
-    return $this;
-  }
-
-  public function setInvoicePayload(string $invoicePayload): PreCheckoutQuery
-  {
-    $this->invoice_payload = $invoicePayload;
-    return $this;
-  }
-
-  public function setShippingOptionId(?string $shippingOptionId): PreCheckoutQuery
-  {
-    $this->shipping_option_id = $shippingOptionId;
-    return $this;
-  }
-
-  public function setOrderInfo(?OrderInfo $orderInfo): PreCheckoutQuery
-  {
-    $this->order_info = $orderInfo;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'id'                 => 'string',
+        'from'               => User::class,
+        'currency'           => 'string',
+        'total_amount'       => 'integer',
+        'invoice_payload'    => 'string',
+        'shipping_option_id' => 'string',
+        'order_info'         => OrderInfo::class,
+    ];
 }

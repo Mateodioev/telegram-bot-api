@@ -1,72 +1,41 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents changes in the status of a chat member.
  * 
+ * @property Chat           $chat                  Chat the user belongs to
+ * @property User           $from                  Performer of the action, which resulted in the change
+ * @property integer        $date                  Date the change was done in Unix time
+ * @property ChatMember     $old_chat_member       Previous information about the chat member
+ * @property ChatMember     $new_chat_member       New information about the chat member
+ * @property ChatInviteLink $invite_link Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.
+ * 
+ * @method Chat chat()
+ * @method User from()
+ * @method integer date()
+ * @method ChatMember oldChatMember()
+ * @method ChatMember newChatMember()
+ * @method ChatInviteLink inviteLink()
+ * 
+ * @method static setChat(Chat $chat)
+ * @method static setFrom(User $from)
+ * @method static setDate(integer $date)
+ * @method static setOldChatMember(ChatMember $oldChatMember)
+ * @method static setNewChatMember(ChatMember $newChatMember)
+ * @method static setInviteLink(ChatInviteLink $inviteLink)
+ * 
  * @see https://core.telegram.org/bots/api#chatmemberupdated
  */
-class ChatMemberUpdated extends TypesBase implements TypesInterface
+class ChatMemberUpdated extends baseType
 {
-  public Chat $chat;
-  public User $from;
-  public int $date;
-  public ChatMember $old_chat_member;
-  public ChatMember $new_chat_member;
-  public ?ChatInviteLink $invite_link;
-
-  public function __construct(stdClass $up)
-  {
-    $this->setChat(Chat::create($up->chat))
-      ->setFrom(User::create($up->from))
-      ->setDate($up->date)
-      ->setOldChatMember(ChatMember::create($up->old_chat_member))
-      ->setNewChatMember(ChatMember::create($up->new_chat_member))
-      ->setInviteLink(ChatInviteLink::create($up->invite_link ?? self::DEFAULT_PARAM));
-  }
-
-  public function setChat(Chat $chat): ChatMemberUpdated
-  {
-    $this->chat = $chat;
-    return $this;
-  }
-
-  public function setFrom(User $from): ChatMemberUpdated
-  {
-    $this->from = $from;
-    return $this;
-  }
-
-  public function setDate(int $date): ChatMemberUpdated
-  {
-    $this->date = $date;
-    return $this;
-  }
-
-  public function setOldChatMember(ChatMember $old_chat_member): ChatMemberUpdated
-  {
-    $this->old_chat_member = $old_chat_member;
-    return $this;
-  }
-
-  public function setNewChatMember(ChatMember $new_chat_member): ChatMemberUpdated
-  {
-    $this->new_chat_member = $new_chat_member;
-    return $this;
-  }
-
-  public function setInviteLink(ChatInviteLink $invite_link): ChatMemberUpdated
-  {
-    $this->invite_link = $invite_link;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'chat'            => Chat::class,
+        'from'            => User::class,
+        'date'            => 'integer',
+        'old_chat_member' => ChatMember::class,
+        'new_chat_member' => ChatMember::class,
+        'invite_link'     => ChatInviteLink::class,
+    ];
 }

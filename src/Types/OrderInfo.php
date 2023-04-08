@@ -1,55 +1,33 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents information about an order.
  * 
+ * @property ?string          $name             Optional. User name
+ * @property ?string          $phone_number     Optional. User's phone number
+ * @property ?string          $email            Optional. User email
+ * @property ?ShippingAddress $shipping_address Optional. User shipping address
+ * 
+ * @method ?string          name()
+ * @method ?string          phoneNumber()
+ * @method ?string          email()
+ * @method ?ShippingAddress shippingAddress()
+ * 
+ * @method static setName(string $name)
+ * @method static setPhoneNumber(string $phoneNumber)
+ * @method static setEmail(string $email)
+ * @method static setShippingAddress(ShippingAddress $shippingAddress)
+ * 
  * @see https://core.telegram.org/bots/api#orderinfo
  */
-class OrderInfo extends TypesBase implements TypesInterface
+class OrderInfo extends baseType
 {
-  public ?string $name;
-  public ?string $phoneNumber;
-  public ?string $email;
-  public ?ShippingAddress $shippingAddress;
-
-  public function __construct(stdClass $up) {
-    $this->setName($up->name ?? self::DEFAULT_PARAM)
-      ->setPhoneNumber($up->phone_number ?? self::DEFAULT_PARAM)
-      ->setEmail($up->email ?? self::DEFAULT_PARAM)
-      ->setShippingAddress(ShippingAddress::create($up->shipping_address ?? self::DEFAULT_PARAM));
-  }
-  public function setName(?string $name): OrderInfo
-  {
-    $this->name = $name;
-    return $this;
-  }
-  
-  public function setPhoneNumber(?string $phoneNumber): OrderInfo
-  {
-    $this->phoneNumber = $phoneNumber;
-    return $this;
-  }
-
-
-  public function setEmail(?string $email): OrderInfo
-  {
-    $this->email = $email;
-    return $this;
-  }
-
-  public function setShippingAddress(?ShippingAddress $shippingAddress): OrderInfo
-  {
-    $this->shippingAddress = $shippingAddress;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'name'         => 'string',
+        'phone_number' => 'string',
+        'email'        => 'string',
+        'shipping_address' => ShippingAddress::class,
+    ];
 }

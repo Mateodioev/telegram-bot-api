@@ -2,70 +2,40 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
- * This object represents a general file (as opposed to photos, voice messages and audio files).
+ * This object represents a general file (as opposed to [photos](https://core.telegram.org/bots/api#photosize), [voice messages](https://core.telegram.org/bots/api#voice) and [audio files](https://core.telegram.org/bots/api#audio)).
+ * 
+ * @property string $file_id Identifier for this file, which can be used to download or reuse the file
+ * @property string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+ * @property ?PhotoSize $thumbnail Optional. Document thumbnail as defined by sender
+ * @property ?string $file_name Optional. Original filename as defined by sender
+ * @property ?string $mime_type Optional. MIME type of the file as defined by sender
+ * @property ?integer $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+ * 
+ * @method string fileId()
+ * @method string fileUniqueId()
+ * @method ?PhotoSize thumbnail()
+ * @method ?string fileName()
+ * @method ?string mimeType()
+ * @method ?integer fileSize()
+ * 
+ * @method static setFileId(string $fileId)
+ * @method static setFileUniqueId(string $fileUniqueId)
+ * @method static setThumbnail(PhotoSize $thumbnail)
+ * @method static setFileName(string $fileName)
+ * @method static setMimeType(string $mimeType)
+ * @method static setFileSize(integer $fileSize)
  * 
  * @see https://core.telegram.org/bots/api#document
  */
-class Document extends TypesBase implements TypesInterface
+class Document extends baseType
 {
-  public string $file_id;
-  public string $file_unique_id;
-  public ?PhotoSize $thumb;
-  public ?string $file_name;
-  public ?string $mime_type;
-  public ?int $file_size;
-
-  public function __construct(?stdClass $up) {
-    $this->setFileId($up->file_id)
-      ->setFileUniqueId($up->file_unique_id)
-      ->setThumb(PhotoSize::create($up->thumb ?? self::DEFAULT_PARAM))
-      ->setFileName($up->file_name ?? self::DEFAULT_PARAM)
-      ->setMimeType($up->mime_type ?? self::DEFAULT_PARAM)
-      ->setFileSize($up->file_size ?? self::DEFAULT_PARAM);
-  }
-
-  public function setFileId(string $fileId): Document
-  {
-    $this->file_id = $fileId;
-    return $this;
-  }
-
-  public function setFileUniqueId(string $fileUniqueId): Document
-  {
-    $this->file_unique_id = $fileUniqueId;
-    return $this;
-  }
-
-  public function setThumb(?PhotoSize $thumb): Document
-  {
-    $this->thumb = $thumb;
-    return $this;
-  }
-
-  public function setFileName(?string $fileName): Document
-  {
-    $this->file_name = $fileName;
-    return $this;
-  }
-
-  public function setMimeType(?string $mimeType): Document
-  {
-    $this->mime_type = $mimeType;
-    return $this;
-  }
-
-  public function setFileSize(?string $fileSize): Document
-  {
-    $this->file_size = $fileSize;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'file_id'        => 'string',
+        'file_unique_id' => 'string',
+        'thumbnail'      => PhotoSize::class,
+        'file_name'      => 'string',
+        'mime_type'      => 'string',
+        'file_size'      => 'integer',
+    ];
 }

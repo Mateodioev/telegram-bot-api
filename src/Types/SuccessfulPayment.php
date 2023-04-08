@@ -1,79 +1,45 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object contains basic information about a successful payment.
  * 
+ * @property string     $currency                   Three-letter ISO 4217 [currency](https://core.telegram.org/bots/payments#supported-currencies) code
+ * @property integer    $total_amount               Total price in the smallest units of the currency (integer, not float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the exp parameter in [currencies.json](https://core.telegram.org/bots/payments/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+ * @property string     $invoice_payload            Bot specified invoice payload
+ * @property ?string    $shipping_option_id         Optional. Identifier of the shipping option chosen by the user
+ * @property ?OrderInfo $order_info                 Optional. Order information provided by the user
+ * @property string     $telegram_payment_charge_id Telegram payment identifier
+ * @property string     $provider_payment_charge_id Provider payment identifier
+ * 
+ * @method string     currency()
+ * @method integer    totalAmount()
+ * @method string     invoicePayload()
+ * @method ?string    shippingOptionId()
+ * @method ?OrderInfo orderInfo()
+ * @method string     telegramPaymentChargeId()
+ * @method string     providerPaymentChargeId()
+ * 
+ * @method static setCurrency(string $currency)
+ * @method static setTotalAmount(integer $totalAmount)
+ * @method static setInvoicePayload(string $invoicePayload)
+ * @method static setShippingOptionId(string $shippingOptionId)
+ * @method static setOrderInfo(OrderInfo $orderInfo)
+ * @method static setTelegramPaymentChargeId(string $telegramPaymentChargeId)
+ * @method static setProviderPaymentChargeId(string $providerPaymentChargeId)
+ * 
  * @see https://core.telegram.org/bots/api#successfulpayment
  */
-class SuccessfulPayment extends TypesBase implements TypesInterface
+class SuccessfulPayment extends baseType
 {
-  public string $currency;
-  public int $total_amount;
-  public string $invoice_payload;
-  public ?string $shipping_option_id;
-  public ?OrderInfo $order_info;
-  public string $telegram_payment_charge_id;
-  public string $provider_payment_charge_id;
-
-
-  public function __construct(stdClass $up) {
-    $this->setCurrency($up->currency)
-      ->setTotalAmount($up->total_amount)
-      ->setInvoicePayload($up->invoice_payload)
-      ->setShippingOptionId($up->shipping_option_id ?? self::DEFAULT_PARAM)
-      ->setOrderInfo(OrderInfo::create($up->order_info ?? self::DEFAULT_PARAM))
-      ->setTelegramPaymentChargeId($up->telegram_payment_charge_id)
-      ->setProviderPaymentChargeId($up->provider_payment_charge_id);
-  }
-  public function setCurrency(string $currency): SuccessfulPayment
-  {
-    $this->currency = $currency;
-    return $this;
-  }
-  
-  public function setTotalAmount(int $totalAmount): SuccessfulPayment
-  {
-    $this->total_amount = $totalAmount;
-    return $this;
-  }
-  
-  public function setInvoicePayload(string $invoicePayload): SuccessfulPayment
-  {
-    $this->invoice_payload = $invoicePayload;
-    return $this;
-  }
-
-  public function setShippingOptionId(?string $shippingOptionId): SuccessfulPayment
-  {
-    $this->shipping_option_id = $shippingOptionId;
-    return $this;
-  }
-
-  public function setOrderInfo(?OrderInfo $orderInfo): SuccessfulPayment
-  {
-    $this->order_info = $orderInfo;
-    return $this;
-  }
-
-  public function setTelegramPaymentChargeId(string $telegramPaymentChargeId): SuccessfulPayment
-  {
-    $this->telegram_payment_charge_id = $telegramPaymentChargeId;
-    return $this;
-  }
-
-  public function setProviderPaymentChargeId(string $providerPaymentChargeId): SuccessfulPayment
-  {
-    $this->provider_payment_charge_id = $providerPaymentChargeId;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'currency'                   => 'string',
+        'total_amount'               => 'integer',
+        'invoice_payload'            => 'string',
+        'shipping_option_id'         => 'string',
+        'order_info'                 => OrderInfo::class,
+        'telegram_payment_charge_id' => 'string',
+        'provider_payment_charge_id' => 'string',
+    ];
 }

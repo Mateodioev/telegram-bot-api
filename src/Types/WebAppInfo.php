@@ -1,31 +1,21 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
- * Describes a Web App.
+ * Describes a [Web App](https://core.telegram.org/bots/webapps).
+ * 
+ * @property string $url An HTTPS URL of a Web App to be opened with additional data as specified in [Initializing Web Apps](https://core.telegram.org/bots/webapps#initializing-web-apps)
+ * 
+ * @method string url()
+ * 
+ * @method static setUrl(string $url)
  * 
  * @see https://core.telegram.org/bots/api#webappinfo
  */
-class WebAppInfo extends TypesBase implements TypesInterface
+class WebAppInfo extends baseType
 {
-  public string $url;
-
-  public function __construct(stdClass $up) {
-    $this->setUrl($up->url);
-  }
-
-  public function setUrl(string $url): WebAppInfo
-  {
-    $this->url = $url;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'url' => 'string',
+    ];
 }

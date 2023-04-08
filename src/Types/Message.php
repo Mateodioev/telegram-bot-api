@@ -2,518 +2,269 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * This object represents a message.
  * 
+ * @property integer                        $message_id
+ * @property ?User                          $from
+ * @property ?Chat                          $sender_chat
+ * @property integer                        $date
+ * @property Chat                           $chat
+ * @property ?User                          $forward_from
+ * @property ?Chat                          $forward_from_chat
+ * @property ?integer                       $forward_from_message_id
+ * @property ?string                        $forward_signature
+ * @property ?string                        $forward_sender_name
+ * @property ?integer                       $forward_date
+ * @property ?boolean                       $is_automatic_forward
+ * @property ?Message                       $reply_to_message
+ * @property ?User                          $via_bot
+ * @property ?integer                       $edit_date
+ * @property ?boolean                       $has_protected_content
+ * @property ?string                        $media_group_id
+ * @property ?string                        $author_signature
+ * @property ?string                        $text
+ * @property ?MessageEntity[]               $entities
+ * @property ?Animation                     $animation
+ * @property ?Audio                         $audio
+ * @property ?Document                      $document
+ * @property ?PhotoSize[]                   $photo
+ * @property ?Sticker                       $sticker
+ * @property ?Video                         $video
+ * @property ?VideoNote                     $video_note
+ * @property ?Voice                         $voice
+ * @property ?string                        $caption
+ * @property ?MessageEntity[]               $caption_entities
+ * @property ?Contact                       $contact
+ * @property ?Dice                          $dice
+ * @property ?Game                          $game
+ * @property ?Poll                          $poll
+ * @property ?Venue                         $venue
+ * @property ?Location                      $location
+ * @property ?User[]                        $new_chat_members
+ * @property ?User                          $left_chat_member
+ * @property ?string                        $new_chat_title
+ * @property ?PhotoSize[]                   $new_chat_photo
+ * @property ?boolean                       $delete_chat_photo
+ * @property ?boolean                       $group_chat_created
+ * @property ?boolean                       $supergroup_chat_created
+ * @property ?boolean                       $channel_chat_created
+ * @property ?MessageAutoDeleteTimerChanged $message_auto_delete_timer_changed
+ * @property ?integer                       $migrate_to_chat_id
+ * @property ?integer                       $migrate_from_chat_id
+ * @property ?Message                       $pinned_message
+ * @property ?Message                       $invoice
+ * @property ?SuccessfulPayment             $successful_payment
+ * @property ?string                        $connected_website
+ * @property ?PassportData                  $passport_data
+ * @property ?ProximityAlertTriggered       $proximity_alert_triggered
+ * @property ?ForumTopicCreated             $forum_topic_created
+ * @property ?ForumTopicClosed              $forum_topic_closed
+ * @property ?ForumTopicReopened            $forum_topic_reopened
+ * @property ?VideoChatScheduled            $video_chat_scheduled
+ * @property ?VideoChatStarted              $video_chat_started
+ * @property ?VideoChatEnded                $video_chat_ended
+ * @property ?VideoChatParticipantsInvited  $video_chat_participants_invited
+ * @property ?WebAppData                    $web_app_data
+ * @property ?InlineKeyboardMarkup          $reply_markup
+ * 
+ * @method integer                        messageId()
+ * @method ?User                          from()
+ * @method ?Chat                          senderChat()
+ * @method integer                        date()
+ * @method Chat                           chat()
+ * @method ?User                          forwardFrom()
+ * @method ?Chat                          forwardFromChat()
+ * @method ?integer                       forwardFromMessageId()
+ * @method ?string                        forwardSignature()
+ * @method ?string                        forwardSenderName()
+ * @method ?integer                       forwardDate()
+ * @method ?boolean                       isAutomaticForward()
+ * @method ?Message                       replyToMessage()
+ * @method ?User                          viaBot()
+ * @method ?integer                       editDate()
+ * @method ?boolean                       hasProtectedContent()
+ * @method ?string                        mediaGroupId()
+ * @method ?string                        authorSignature()
+ * @method ?string                        text()
+ * @method ?MessageEntity[]               entities()
+ * @method ?Animation                     animation()
+ * @method ?Audio                         audio()
+ * @method ?Document                      document()
+ * @method ?PhotoSize[]                   photo()
+ * @method ?Sticker                       sticker()
+ * @method ?Video                         video()
+ * @method ?VideoNote                     videoNote()
+ * @method ?Voice                         voice()
+ * @method ?string                        caption()
+ * @method ?MessageEntity[]               captionEntities()
+ * @method ?Contact                       contact()
+ * @method ?Dice                          dice()
+ * @method ?Game                          game()
+ * @method ?Poll                          poll()
+ * @method ?Venue                         venue()
+ * @method ?Location                      location()
+ * @method ?User[]                        newChatMembers()
+ * @method ?User                          leftChatMember()
+ * @method ?string                        newChatTitle()
+ * @method ?PhotoSize[]                   newChatPhoto()
+ * @method ?boolean                       deleteChatPhoto()
+ * @method ?boolean                       groupChatCreated()
+ * @method ?boolean                       supergroupChatCreated()
+ * @method ?boolean                       channelChatCreated()
+ * @method ?MessageAutoDeleteTimerChanged messageAutoDeleteTimerChanged()
+ * @method ?integer                       migrateToChatId()
+ * @method ?integer                       migrateFromChatId()
+ * @method ?Message                       pinnedMessage()
+ * @method ?Message                       invoice()
+ * @method ?SuccessfulPayment             successfulPayment()
+ * @method ?string                        connectedWebsite()
+ * @method ?PassportData                  passportData()
+ * @method ?ProximityAlertTriggered       proximityAlertTriggered()
+ * @method ?ForumTopicCreated             forumTopicCreated()
+ * @method ?ForumTopicClosed              forumTopicClosed()
+ * @method ?ForumTopicReopened            forumTopicReopened()
+ * @method ?VideoChatScheduled            videoChatScheduled()
+ * @method ?VideoChatStarted              videoChatStarted()
+ * @method ?VideoChatEnded                videoChatEnded()
+ * @method ?VideoChatParticipantsInvited  videoChatParticipantsInvited()
+ * @method ?WebAppData                    webAppData()
+ * @method ?InlineKeyboardMarkup          replyMarkup()
+ * 
+ * @method static setMessageId(integer $messageId)
+ * @method static setFrom(User $from)
+ * @method static setSenderChat(Chat $senderChat)
+ * @method static setDate(integer $date)
+ * @method static setChat(Chat $chat)
+ * @method static setForwardFrom(User $forwardFrom)
+ * @method static setForwardFromChat(Chat $forwardFromChat)
+ * @method static setForwardFromMessageId(integer $forwardFromMessageId)
+ * @method static setForwardSignature(string $forwardSignature)
+ * @method static setForwardSenderName(string $forwardSenderName)
+ * @method static setForwardDate(integer $forwardDate)
+ * @method static setIsAutomaticForward(boolean $isAutomaticForward)
+ * @method static setReplyToMessage(Message $replyToMessage)
+ * @method static setViaBot(User $viaBot)
+ * @method static setEditDate(integer $editDate)
+ * @method static setHasProtectedContent(boolean $hasProtectedContent)
+ * @method static setMediaGroupId(string $mediaGroupId)
+ * @method static setAuthorSignature(string $authorSignature)
+ * @method static setText(string $text)
+ * @method static setEntities(array $entities)
+ * @method static setAnimation(Animation $animation)
+ * @method static setAudio(Audio $audio)
+ * @method static setDocument(Document $document)
+ * @method static setPhoto(array $photo)
+ * @method static setSticker(Sticker $sticker)
+ * @method static setVideo(Video $video)
+ * @method static setVideoNote(VideoNote $videoNote)
+ * @method static setVoice(Voice $voice)
+ * @method static setCaption(string $caption)
+ * @method static setCaptionEntities(array $captionEntities)
+ * @method static setContact(Contact $contact)
+ * @method static setDice(Dice $dice)
+ * @method static setGame(Game $game)
+ * @method static setPoll(Poll $poll)
+ * @method static setVenue(Venue $venue)
+ * @method static setLocation(Location $location)
+ * @method static setNewChatMembers(array $newChatMembers)
+ * @method static setLeftChatMember(User $leftChatMember)
+ * @method static setNewChatTitle(string $newChatTitle)
+ * @method static setNewChatPhoto(array $newChatPhoto)
+ * @method static setDeleteChatPhoto(boolean $deleteChatPhoto)
+ * @method static setGroupChatCreated(boolean $groupChatCreated)
+ * @method static setSupergroupChatCreated(boolean $supergroupChatCreated)
+ * @method static setChannelChatCreated(boolean $channelChatCreated)
+ * @method static setMessageAutoDeleteTimerChanged(MessageAutoDeleteTimerChanged $messageAutoDeleteTimerChanged)
+ * @method static setMigrateToChatId(integer $migrateToChatId)
+ * @method static setMigrateFromChatId(integer $migrateFromChatId)
+ * @method static setPinnedMessage(Message $pinnedMessage)
+ * @method static setInvoice(Message $invoice)
+ * @method static setSuccessfulPayment(SuccessfulPayment $successfulPayment)
+ * @method static setConnectedWebsite(string $connectedWebsite)
+ * @method static setPassportData(PassportData $passportData)
+ * @method static setProximityAlertTriggered(ProximityAlertTriggered $proximityAlertTriggered)
+ * @method static setForumTopicCreated(ForumTopicCreated $forumTopicCreated)
+ * @method static setForumTopicClosed(ForumTopicClosed $forumTopicClosed)
+ * @method static setForumTopicReopened(ForumTopicReopened $forumTopicReopened)
+ * @method static setVideoChatScheduled(VideoChatScheduled $videoChatScheduled)
+ * @method static setVideoChatStarted(VideoChatStarted $videoChatStarted)
+ * @method static setVideoChatEnded(VideoChatEnded $videoChatEnded)
+ * @method static setVideoChatParticipantsInvited(VideoChatParticipantsInvited $videoChatParticipantsInvited)
+ * @method static setWebAppData(WebAppData $webAppData)
+ * @method static setReplyMarkup(InlineKeyboardMarkup $replyMarkup)
+ * 
  * @see https://core.telegram.org/bots/api#message
  */
-class Message extends TypesBase implements TypesInterface
+class Message extends baseType
 {
-  public int $message_id;
-  public ?User $from;
-  public ?Chat $sender_chat;
-  public int $date;
-  public Chat $chat;
-  public ?User $forward_from;
-  public ?Chat $forward_from_chat;
-  public ?int $forward_from_message_id;
-  public ?string $forward_signature;
-  public ?string $forward_sender_name;
-  public ?int $forward_date;
-  public ?bool $is_automatic_forward = false;
-  public ?Message $reply_to_message;
-  public ?User $via_bot;
-  public ?int $edit_date;
-  public ?bool $has_protected_content = false;
-  public ?string $media_group_id;
-  public ?string $author_signature;
-  public ?string $text;
-  public ?array $entities;
-  public ?Animation $animation;
-  public ?Audio $audio;
-  public ?Document $document;
-  public ?array $photo;
-  public ?Sticker $sticker;
-  public ?Video $video;
-  public ?VideoNote $video_note;
-  public ?Voice $voice;
-  public ?string $caption;
-  public ?array $caption_entities;
-  public ?Contact $contact;
-  public ?Dice $dice;
-  public ?Game $game;
-  public ?Poll $poll;
-  public ?Venue $venue;
-  public ?Location $location;
-  public ?array $new_chat_members;
-  public ?User $left_chat_member;
-  public ?string $new_chat_title;
-  public ?array $new_chat_photo;
-  public ?bool $delete_chat_photo;
-  public ?bool $group_chat_created;
-  public ?bool $supergroup_chat_created;
-  public ?bool $channel_chat_created;
-  public ?MessageAutoDeleteTimerChanged $message_auto_delete_timer_changed;
-  public ?int $migrate_to_chat_id;
-  public ?int $migrate_from_chat_id;
-  public ?Message $pinned_message;
-  public ?Invoice $invoice;
-  public ?SuccessfulPayment $successful_payment;
-  public ?string $connected_website;
-  public ?PassportData $passport_data;
-  public ?ProximityAlertTriggered $proximity_alert_triggered;
-  public ?ForumTopicCreated $forum_topic_created;
-  public ?ForumTopicClosed $forum_topic_closed;
-  public ?ForumTopicReopened $forum_topic_reopened;
-  public ?VideoChatScheduled $video_chat_scheduled;
-  public ?VideoChatStarted $video_chat_started;
-  public ?VideoChatEnded $video_chat_ended;
-  public ?VideoChatParticipantsInvited $video_chat_participants_invited;
-  public ?WebAppData $web_app_data;
-  public ?InlineKeyboardMarkup $reply_markup;
+    protected array $fields = [
+        'message_id'                        => 'integer',
+        'from'                              => User::class,
+        'sender_chat'                       => Chat::class,
+        'date'                              => 'integer',
+        'chat'                              => Chat::class,
+        'forward_from'                      => User::class,
+        'forward_from_chat'                 => Chat::class,
+        'forward_from_message_id'           => 'integer',
+        'forward_signature'                 => 'string',
+        'forward_sender_name'               => 'string',
+        'forward_date'                      => 'integer',
+        'is_automatic_forward'              => 'boolean',
+        'reply_to_message'                  => Message::class,
+        'via_bot'                           => User::class,
+        'edit_date'                         => 'integer',
+        'has_protected_content'             => 'boolean',
+        'media_group_id'                    => 'string',
+        'author_signature'                  => 'string',
+        'text'                              => 'string',
+        'entities'                          => [MessageEntity::class],
+        'animation'                         => Animation::class,
+        'audio'                             => Audio::class,
+        'document'                          => Document::class,
+        'photo'                             => [PhotoSize::class],
+        'sticker'                           => Sticker::class,
+        'video'                             => Video::class,
+        'video_note'                        => VideoNote::class,
+        'voice'                             => Voice::class,
+        'caption'                           => 'string',
+        'caption_entities'                  => [MessageEntity::class],
+        'contact'                           => Contact::class,
+        'dice'                              => Dice::class,
+        'game'                              => Game::class,
+        'poll'                              => Poll::class,
+        'venue'                             => Venue::class,
+        'location'                          => Location::class,
+        'new_chat_members'                  => [User::class],
+        'left_chat_member'                  => User::class,
+        'new_chat_title'                    => 'string',
+        'new_chat_photo'                    => [PhotoSize::class],
+        'delete_chat_photo'                 => 'boolean',
+        'group_chat_created'                => 'boolean',
+        'supergroup_chat_created'           => 'boolean',
+        'channel_chat_created'              => 'boolean',
+        'message_auto_delete_timer_changed' => MessageAutoDeleteTimerChanged::class,
+        'migrate_to_chat_id'                => 'integer',
+        'migrate_from_chat_id'              => 'integer',
+        'pinned_message'                    => Message::class,
+        'invoice'                           => Message::class,
+        'successful_payment'                => SuccessfulPayment::class,
+        'connected_website'                 => 'string',
+        'passport_data'                     => PassportData::class,
+        'proximity_alert_triggered'         => ProximityAlertTriggered::class,
+        'forum_topic_created'               => ForumTopicCreated::class,
+        'forum_topic_closed'                => ForumTopicClosed::class,
+        'forum_topic_reopened'              => ForumTopicReopened::class,
+        'video_chat_scheduled'              => VideoChatScheduled::class,
+        'video_chat_started'                => VideoChatStarted::class,
+        'video_chat_ended'                  => VideoChatEnded::class,
+        'video_chat_participants_invited'   => VideoChatParticipantsInvited::class,
+        'web_app_data'                      => WebAppData::class,
+        'reply_markup'                      => InlineKeyboardMarkup::class,
+    ];
 
-  public function __construct(stdClass $up) {
-    $this->setMessageId($up->message_id)
-      ->setFrom(User::create($up->from ?? self::DEFAULT_PARAM))
-      ->setSenderChat(Chat::create($up->sender_chat ?? self::DEFAULT_PARAM))
-      ->setDate($up->date)
-      ->setChat(Chat::create($up->chat))
-      ->setForwardFrom(User::create($up->forward_from ?? self::DEFAULT_PARAM))
-      ->setForwardFromChat(Chat::create($up->forward_from_chat ?? self::DEFAULT_PARAM))
-      ->setForwardFromMessageId($up->forward_from_message_id ?? self::DEFAULT_PARAM)
-      ->setForwardSignature($up->forward_signature ?? self::DEFAULT_PARAM)
-      ->setForwardSenderName($up->forward_sender_name ?? self::DEFAULT_PARAM)
-      ->setForwardDate($up->forward_date ?? self::DEFAULT_PARAM)
-      ->setIsAutomaticForward($up->is_automatic_forward ?? false)
-      ->setReplyToMessage(Message::create($up->reply_to_message ?? self::DEFAULT_PARAM))
-      ->setViaBot(User::create($up->via_bot ?? self::DEFAULT_PARAM))
-      ->setEditDate($up->edit_date ?? self::DEFAULT_PARAM)
-      ->setHasProtectedContent($up->has_protected_content ?? false)
-      ->setMediaGroupId($up->media_group_id ?? self::DEFAULT_PARAM)
-      ->setAuthorSignature($up->author_signature ?? self::DEFAULT_PARAM)
-      ->setText($up->text ?? self::DEFAULT_PARAM)
-      ->setEntities(MessageEntity::bulkCreate($up->entities ?? self::DEFAULT_PARAM))
-      ->setAnimation(Animation::create($up->animation ?? self::DEFAULT_PARAM))
-      ->setAudio(Audio::create($up->audio ?? self::DEFAULT_PARAM))
-      ->setDocument(Document::create($up->document ?? self::DEFAULT_PARAM))
-      ->setPhoto(PhotoSize::bulkCreate($up->photo ?? self::DEFAULT_PARAM))
-      ->setSticker(Sticker::create($up->sticker ?? self::DEFAULT_PARAM))
-      ->setVideo(Video::create($up->video ?? self::DEFAULT_PARAM))
-      ->setVideoNote(VideoNote::create($up->video_note ?? self::DEFAULT_PARAM))
-      ->setVoice(Voice::create($up->voice ?? self::DEFAULT_PARAM))
-      ->setCaption($up->caption ?? self::DEFAULT_PARAM)
-      ->setCaptionEntities(MessageEntity::bulkCreate($up->caption_entities ?? self::DEFAULT_PARAM))
-      ->setContact(Contact::create($up->contact ?? self::DEFAULT_PARAM))
-      ->setDice(Dice::create($up->dice ?? self::DEFAULT_PARAM))
-      ->setGame(Game::create($up->game ?? self::DEFAULT_PARAM))
-      ->setPoll(Poll::create($up->poll ?? self::DEFAULT_PARAM))
-      ->setVenue(Venue::create($up->venue ?? self::DEFAULT_PARAM))
-      ->setLocation(Location::create($up->location ?? self::DEFAULT_PARAM))
-      ->setNewChatMembers(User::bulkCreate($up->new_chat_members ?? self::DEFAULT_PARAM))
-      ->setLeftChatMember(User::create($up->left_chat_member ?? self::DEFAULT_PARAM))
-      ->setNewChatTitle($up->new_chat_title ?? self::DEFAULT_PARAM)
-      ->setNewChatPhoto(PhotoSize::bulkCreate($up->new_chat_photo ?? self::DEFAULT_PARAM))
-      ->setDeleteChatPhoto($up->delete_chat_photo ?? self::DEFAULT_PARAM)
-      ->setGroupChatCreated($up->group_chat_created ?? self::DEFAULT_PARAM)
-      ->setSupergroupChatCreated($up->supergroup_chat_created ?? self::DEFAULT_PARAM)
-      ->setChannelChatCreated($up->channel_chat_created ?? self::DEFAULT_PARAM)
-      ->setMessageAutoDeleteTimerChanged(MessageAutoDeleteTimerChanged::create($up->message_auto_delete_timer_changed ?? self::DEFAULT_PARAM))
-      ->setMigrateToChatId($up->migrate_to_chat_id ?? self::DEFAULT_PARAM)
-      ->setMigrateFromChatId($up->migrate_from_chat_id ?? self::DEFAULT_PARAM)
-      ->setPinnedMessage(Message::create($up->pinned_message ?? self::DEFAULT_PARAM))
-      ->setInvoice(Invoice::create($up->invoice ?? self::DEFAULT_PARAM))
-      ->setSuccessfulPayment(SuccessfulPayment::create($up->successful_payment ?? self::DEFAULT_PARAM))
-      ->setConnectedWebsite($up->connected_website ?? self::DEFAULT_PARAM)
-      ->setPassportData(PassportData::create($up->passport_data ?? self::DEFAULT_PARAM))
-      ->setProximityAlertTriggered(ProximityAlertTriggered::create($up->proximity_alert_triggered ?? self::DEFAULT_PARAM))
-      ->setForumTopicCreated(ForumTopicCreated::create($up->forum_topic_created ?? self::DEFAULT_PARAM))
-      ->setForumTopicClosed(ForumTopicClosed::create($up->forum_topic_closed ?? self::DEFAULT_PARAM))
-      ->setForumTopicReopened(ForumTopicReopened::create($up->forum_topic_reopened ?? self::DEFAULT_PARAM))
-      ->setVideoChatScheduled(VideoChatScheduled::create($up->video_chat_scheduled ?? self::DEFAULT_PARAM))
-      ->setVideoChatStarted(VideoChatStarted::create($up->video_chat_started ?? self::DEFAULT_PARAM))
-      ->setVideoChatEnded(VideoChatEnded::create($up->video_chat_ended ?? self::DEFAULT_PARAM))
-      ->setVideoChatParticipantsInvited(VideoChatParticipantsInvited::create($up->video_chat_participants_invited ?? self::DEFAULT_PARAM))
-      ->setWebbAppData(WebAppData::create($up->webb_app_data ?? self::DEFAULT_PARAM))
-      ->setReplyMarkup(InlineKeyboardMarkup::create($up->reply_markup ?? self::DEFAULT_PARAM));
-  }
-
-  public function setMessageId(int $messageId): Message
-  {
-    $this->message_id = $messageId;
-    return $this;
-  }
-
-  public function setFrom(?User $from): Message
-  {
-    $this->from = $from;
-    return $this;
-  }
-
-  public function setSenderChat(?Chat $senderChat): Message
-  {
-    $this->sender_chat = $senderChat;
-    return $this;
-  }
-
-  public function setDate(int $date): Message
-  {
-    $this->date = $date;
-    return $this;
-  }
-
-  public function setChat(Chat $chat): Message
-  {
-    $this->chat = $chat;
-    return $this;
-  }
-
-  public function setForwardFrom(?User $forwardFrom): Message
-  {
-    $this->forward_from = $forwardFrom;
-    return $this;
-  }
-
-  public function setForwardFromChat(?Chat $forwardFromChat): Message
-  {
-    $this->forward_from_chat = $forwardFromChat;
-    return $this;
-  }
-
-  public function setForwardFromMessageId(?int $forwardFromMessageId): Message
-  {
-    $this->forward_from_message_id = $forwardFromMessageId;
-    return $this;
-  }
-
-  public function setForwardSignature(?string $forwardSignature): Message
-  {
-    $this->forward_signature = $forwardSignature;
-    return $this;
-  }
-
-  public function setForwardSenderName(?string $forwardSenderName): Message
-  {
-    $this->forward_sender_name = $forwardSenderName;
-    return $this;
-  }
-
-  public function setForwardDate(?int $forwardDate): Message
-  {
-    $this->forward_date = $forwardDate;
-    return $this;
-  }
-
-  public function setIsAutomaticForward(bool $isAutomaticForward): Message
-  {
-    $this->is_automatic_forward = $isAutomaticForward;
-    return $this;
-  }
-
-  public function setReplyToMessage(?Message $replyToMessage): Message
-  {
-    $this->reply_to_message = $replyToMessage;
-    return $this;
-  }
-
-  public function setViaBot(?User $viaBot): Message
-  {
-    $this->via_bot = $viaBot;
-    return $this;
-  }
-
-  public function setEditDate(?int $editDate): Message
-  {
-    $this->edit_date = $editDate;
-    return $this;
-  }
-
-  public function setHasProtectedContent(?bool $hasProtectedContent = true): Message
-  {
-    $this->has_protected_content = $hasProtectedContent;
-    return $this;
-  }
-
-  public function setMediaGroupId(?int $mediaGroupId): Message
-  {
-    $this->media_group_id = $mediaGroupId;
-    return $this;
-  }
-
-  public function setAuthorSignature(?string $authorSignature): Message
-  {
-    $this->author_signature = $authorSignature;
-    return $this;
-  }
-
-  public function setText(?string $text): Message
-  {
-    $this->text = $text;
-    return $this;
-  }
-
-  public function setEntities(?array $entities): Message
-  {
-    $this->entities = $entities;
-    return $this;
-  }
-
-  public function setAnimation(?Animation $animation): Message
-  {
-    $this->animation = $animation;
-    return $this;
-  }
-
-  public function setAudio(?Audio $audio): Message
-  {
-    $this->audio = $audio;
-    return $this;
-  }
-
-  public function setDocument(?Document $document): Message
-  {
-    $this->document = $document;
-    return $this;
-  }
-
-  public function setPhoto(?array $photo): Message
-  {
-    $this->photo = $photo;
-    return $this;
-  }
-
-  public function setSticker(?Sticker $sticker): Message
-  {
-    $this->sticker = $sticker;
-    return $this;
-  }
-
-  public function setVideo(?Video $video): Message
-  {
-    $this->video = $video;
-    return $this;
-  }
-
-  public function setVideoNote(?VideoNote $videoNote): Message
-  {
-    $this->video_note = $videoNote;
-    return $this;
-  }
-
-  public function setVoice(?Voice $voice): Message
-  {
-    $this->voice = $voice;
-    return $this;
-  }
-
-  public function setCaption(?string $caption): Message
-  {
-    $this->caption = $caption;
-    return $this;
-  }
-
-  public function setCaptionEntities(?array $captionEntities): Message
-  {
-    $this->caption_entities = $captionEntities;
-    return $this;
-  }
-
-  public function setContact(?Contact $contact): Message
-  {
-    $this->contact = $contact;
-    return $this;
-  }
-
-  public function setDice(?Dice $dice): Message
-  {
-    $this->dice = $dice;
-    return $this;
-  }
-
-  public function setGame(?Game $game): Message
-  {
-    $this->game = $game;
-    return $this;
-  }
-
-  public function setPoll(?Poll $poll): Message
-  {
-    $this->poll = $poll;
-    return $this;
-  }
-
-  public function setVenue(?Venue $venue): Message
-  {
-    $this->venue = $venue;
-    return $this;
-  }
-
-  public function setLocation(?Location $location): Message
-  {
-    $this->location = $location;
-    return $this;
-  }
-
-  public function setNewChatMembers(?array $newChatMembers): Message
-  {
-    $this->new_chat_members = $newChatMembers;
-    return $this;
-  }
-
-  public function setLeftChatMember(?User $leftChatMember): Message
-  {
-    $this->left_chat_member = $leftChatMember;
-    return $this;
-  }
-
-  public function setNewChatTitle(?string $newChatTitle): Message
-  {
-    $this->new_chat_title = $newChatTitle;
-    return $this;
-  }
-
-  public function setNewChatPhoto(?array $newChatPhoto): Message
-  {
-    $this->new_chat_photo = $newChatPhoto;
-    return $this;
-  }
-
-  public function setDeleteChatPhoto(?bool $deleteChatPhoto = true): Message
-  {
-    $this->delete_chat_photo = $deleteChatPhoto;
-    return $this;
-  }
-
-  public function setGroupChatCreated(?bool $groupChatCreated = true): Message
-  {
-    $this->group_chat_created = $groupChatCreated;
-    return $this;
-  }
-
-  public function setSupergroupChatCreated(?bool $supergroupChatCreated = true): Message
-  {
-    $this->supergroup_chat_created = $supergroupChatCreated;
-    return $this;
-  }
-
-  public function setChannelChatCreated(?bool $channelChatCreated = true): Message
-  {
-    $this->channel_chat_created = $channelChatCreated;
-    return $this;
-  }
-
-  public function setMessageAutoDeleteTimerChanged(?MessageAutoDeleteTimerChanged $messageAutoDeleteTimerChanged): Message
-  {
-    $this->message_auto_delete_timer_changed = $messageAutoDeleteTimerChanged;
-    return $this;
-  }
-
-  public function setMigrateToChatId(?int $migrateToChatId): Message
-  {
-    $this->migrate_to_chat_id = $migrateToChatId;
-    return $this;
-  }
-
-  public function setMigrateFromChatId(?int $migrateFromChatId): Message
-  {
-    $this->migrate_from_chat_id = $migrateFromChatId;
-    return $this;
-  }
-
-  public function setPinnedMessage(?Message $pinnedMessage): Message
-  {
-    $this->pinned_message = $pinnedMessage;
-    return $this;
-  }
-
-  public function setInvoice(?Invoice $invoice): Message
-  {
-    $this->invoice = $invoice;
-    return $this;
-  }
-
-  public function setSuccessfulPayment(?SuccessfulPayment $successfulPayment): Message
-  {
-    $this->successful_payment = $successfulPayment;
-    return $this;
-  }
-
-  public function setConnectedWebsite(?string $connectedWebsite): Message
-  {
-    $this->connected_website = $connectedWebsite;
-    return $this;
-  }
-
-  public function setPassportData(?PassportData $passportData): Message
-  {
-    $this->passport_data = $passportData;
-    return $this;
-  }
-
-  public function setProximityAlertTriggered(?ProximityAlertTriggered $proximityAlertTriggered): Message
-  {
-    $this->proximity_alert_triggered = $proximityAlertTriggered;
-    return $this;
-  }
-
-  public function setForumTopicCreated(?ForumTopicCreated $forumTopicCreated): Message
-  {
-    $this->forum_topic_created = $forumTopicCreated;
-    return $this;
-  }
-
-  public function setForumTopicClosed(?ForumTopicClosed $forumTopicClosed): Message
-  {
-    $this->forum_topic_closed = $forumTopicClosed;
-    return $this;
-  }
-
-  public function setForumTopicReopened(?ForumTopicReopened $forumTopicReopened): Message
-  {
-    $this->forum_topic_reopened = $forumTopicReopened;
-    return $this;
-  }
-
-  public function setVideoChatScheduled(?VideoChatScheduled $videoChatScheduled): Message
-  {
-    $this->video_chat_scheduled = $videoChatScheduled;
-    return $this;
-  }
-  
-  public function setVideoChatStarted(?VideoChatStarted $videoChatStarted): Message
-  {
-    $this->video_chat_started = $videoChatStarted;
-    return $this;
-  }
-
-  public function setVideoChatEnded(?VideoChatEnded $videoChatEnded): Message
-  {
-    $this->video_chat_ended = $videoChatEnded;
-    return $this;
-  }
-
-  public function setVideoChatParticipantsInvited(?VideoChatParticipantsInvited $videoChatParticipantsInvited): Message
-  {
-    $this->video_chat_participants_invited = $videoChatParticipantsInvited;
-    return $this;
-  }
-
-  public function setWebbAppData(?WebAppData $webAppData): Message
-  {
-    $this->web_app_data = $webAppData;
-    return $this;
-  }
-
-  public function setReplyMarkUp(?InlineKeyboardMarkup $replyMarkup): Message
-  {
-    $this->reply_markup = $replyMarkup;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    public function get()
+    {
+        return $this->recursiveGet();
+    }
 }

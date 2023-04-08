@@ -1,103 +1,61 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * Describes documents or other Telegram Passport elements shared with the bot by the user.
  * 
+ * @property string          $type Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.
+ * @property ?string         $data Optional. Base64-encoded encrypted Telegram Passport element data provided by the user, available for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying [EncryptedCredentials](https://core.telegram.org/bots/api#encryptedcredentials).
+ * @property ?string         $phone_number Optional. User's verified phone number, available only for “phone_number” type
+ * @property ?string         $email Optional. User's verified email address, available only for “email” type
+ * @property ?PassportFile[] $files Optional. Array of encrypted files with documents provided by the user, available for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying [EncryptedCredentials](https://core.telegram.org/bots/api#encryptedcredentials).
+ * @property ?PassportFile   $fron_side Optional. Encrypted file with the front side of the document, provided by the user. Available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying [EncryptedCredentials](https://core.telegram.org/bots/api#encryptedcredentials).
+ * @property ?PassportFile   $reverse_side Optional. Encrypted file with the reverse side of the document, provided by the user. Available for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying [EncryptedCredentials](https://core.telegram.org/bots/api#encryptedcredentials).
+ * @property ?PassportFile   $selfie Optional. Encrypted file with the selfie of the user holding a document, provided by the user; available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying [EncryptedCredentials](https://core.telegram.org/bots/api#encryptedcredentials).
+ * @property ?PassportFile[] $translation Optional. Array of encrypted files with translated versions of documents provided by the user. Available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying [EncryptedCredentials](https://core.telegram.org/bots/api#encryptedcredentials).
+ * @property ?string         $hash Base64-encoded element hash for using in [PassportElementErrorUnspecified](https://core.telegram.org/bots/api#passportelementerrorunspecified).
+ * 
+ * @method string          type()
+ * @method ?string         data()
+ * @method ?string         phoneNumber()
+ * @method ?string         email()
+ * @method ?PassportFile[] files()
+ * @method ?PassportFile   fronSide()
+ * @method ?PassportFile   reverseSide()
+ * @method ?PassportFile   selfie()
+ * @method ?PassportFile[] translation()
+ * @method ?string         hash()
+ * 
+ * @method static setType(string $type)
+ * @method static setData(string $data)
+ * @method static setPhoneNumber(string $phoneNumber)
+ * @method static setEmail(string $email)
+ * @method static setFiles(PassportFile[] $files)
+ * @method static setFronSide(PassportFile $fronSide)
+ * @method static setReverseSide(PassportFile $reverseSide)
+ * @method static setSelfie(PassportFile $selfie)
+ * @method static setTranslation(PassportFile[] $translation)
+ * @method static setHash(string $hash)
+ * 
  * @see https://core.telegram.org/bots/api#encryptedpassportelement
  */
-class EncryptedPassportElement extends TypesBase implements TypesInterface
+class EncryptedPassportElement extends baseType
 {
-  public string $type;
-  public ?string $data;
-  public ?string $phone_number;
-  public ?string $email;
-  public ?array $files;
-  public ?PassportFile $front_side;
-  public ?PassportFile $reverse_side;
-  public ?PassportFile $selfie;
-  public ?array $translation;
-  public string $hash;
+    protected array $fields = [
+        'type'         => 'string',
+        'data'         => 'string',
+        'phone_number' => 'string',
+        'email'        => 'string',
+        'files'        => [PassportFile::class],
+        'fron_side'    => PassportFile::class,
+        'reverse_side' => PassportFile::class,
+        'selfie'       => PassportFile::class,
+        'translation'  => [PassportFile::class],
+        'hash'         => 'string',
+    ];
 
-  public function __construct(stdClass $up) {
-    $this->setType($up->type)
-      ->setData($up->data ?? self::DEFAULT_PARAM)
-      ->setPhoneNumber($up->phone_number ?? self::DEFAULT_PARAM)
-      ->setEmail($up->email ?? self::DEFAULT_PARAM)
-      ->setFiles(PassportFile::bulkCreate($up->files ?? self::DEFAULT_PARAM))
-      ->setFrontSide(PassportFile::create($up->front_side ?? self::DEFAULT_PARAM))
-      ->setReverseSide(PassportFile::create($up->reverse_side ?? self::DEFAULT_PARAM))
-      ->setSelfie(PassportFile::create($up->selfie ?? self::DEFAULT_PARAM))
-      ->setTranslation(PassportFile::bulkCreate($up->translation ?? self::DEFAULT_PARAM))
-      ->setHash($up->hash);
-  }
-
-  public function setType(string $type): EncryptedPassportElement
-  {
-    $this->type = $type;
-    return $this;
-  }
-
-  public function setData(?string $data): EncryptedPassportElement
-  {
-    $this->data = $data;
-    return $this;
-  }
-
-  public function setPhoneNumber(?string $phoneNumber): EncryptedPassportElement
-  {
-    $this->phone_number = $phoneNumber;
-    return $this;
-  }
-
-  public function setEmail(?string $email): EncryptedPassportElement
-  {
-    $this->email = $email;
-    return $this;
-  }
-
-  public function setFiles(?array $files): EncryptedPassportElement
-  {
-    $this->files = $files;
-    return $this;
-  }
-
-  public function setFrontSide(?PassportFile $frontSide): EncryptedPassportElement
-  {
-    $this->front_side = $frontSide;
-    return $this;
-  }
-
-  public function setReverseSide(?PassportFile $reverseSide): EncryptedPassportElement
-  {
-    $this->reverse_side = $reverseSide;
-    return $this;
-  }
-
-  public function setSelfie(?PassportFile $selfie): EncryptedPassportElement
-  {
-    $this->selfie = $selfie;
-    return $this;
-  }
-
-  public function setTranslation(?array $translation): EncryptedPassportElement
-  {
-    $this->translation = $translation;
-    return $this;
-  }
-
-  public function setHash(string $hash): EncryptedPassportElement
-  {
-    $this->hash = $hash;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    public function get() {
+        return $this->recursiveGet();
+    }
 }

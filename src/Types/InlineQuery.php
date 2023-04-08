@@ -2,69 +2,40 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
  * 
+ * @property string    $id        Unique identifier for this query
+ * @property User      $from      Sender
+ * @property string    $query     Text of the query (up to 256 characters)
+ * @property string    $offset    Offset of the results to be returned, can be controlled by the bot
+ * @property ?string   $chat_type Optional. Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat
+ * @property ?Location $location  Optional. Sender location, only for bots that request user location
+ * 
+ * @method string    id()
+ * @method User      from()
+ * @method string    query()
+ * @method string    offset()
+ * @method ?string   chatType()
+ * @method ?Location location()
+ * 
+ * @method static setId(string $id)
+ * @method static setFrom(User $from)
+ * @method static setQuery(string $query)
+ * @method static setOffset(string $offset)
+ * @method static setChatType(string $chatType)
+ * @method static setLocation(Location $location)
+ * 
  * @see https://core.telegram.org/bots/api#inlinequery
  */
-class InlineQuery extends TypesBase implements TypesInterface
+class InlineQuery extends baseType
 {
-  public string $id;
-  public User $from;
-  public string $query;
-  public string $offset;
-  public ?string $chat_type;
-  public ?Location $location;
-
-  public function __construct(stdClass $up) {
-    $this->setId($up->id)
-      ->setFrom(User::create($up->from ?? self::DEFAULT_PARAM))
-      ->setQuery($up->query)
-      ->setOffset($up->offset)
-      ->setChatType($up->chat_type ?? self::DEFAULT_PARAM)
-      ->setLocation(Location::create($up->location ?? self::DEFAULT_PARAM));
-  }
-  public function setId(string $id): InlineQuery
-  {
-    $this->id = $id;
-    return $this;
-  }
-
-  public function setFrom(User $from): InlineQuery
-  {
-    $this->from = $from;
-    return $this;
-  }
-
-  public function setQuery(string $query): InlineQuery
-  {
-    $this->query = $query;
-    return $this;
-  }
-
-  public function setOffset(string $offset): InlineQuery
-  {
-    $this->offset = $offset;
-    return $this;
-  }
-
-  public function setChatType(?string $chatType): InlineQuery
-  {
-    $this->chat_type = $chatType;
-    return $this;
-  }
-
-  public function setLocation(?Location $location): InlineQuery
-  {
-    $this->location = $location;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'id'        => 'string',
+        'from'      => User::class,
+        'query'     => 'string',
+        'offset'    => 'string',
+        'chat_type' => 'string',
+        'location'  => Location::class,
+    ];
 }

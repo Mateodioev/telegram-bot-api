@@ -2,230 +2,99 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * This object represents a chat.
  * 
+ * @property integer $id Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+ * @property string $type Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+ * @property string $title Optional. Title, for supergroups, channels and group chats
+ * @property string $username Optional. Username, for private chats, supergroups and channels if available
+ * @property string $first_name Optional. First name of the other party in a private chat
+ * @property string $last_name Optional. Last name of the other party in a private chat
+ * @property boolean $is_forum Optional. True, if the supergroup chat is a forum (has [topics](https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups) enabled)
+ * @property ChatPhoto $photo Optional. Chat photo. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property array $active_usernames Optional. If non-empty, the list of all [active chat usernames](https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames); for private chats, supergroups and channels. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property string $emoji_status_custom_emoji_id Optional. Custom emoji identifier of emoji status of the other party in a private chat. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property string $bio Optional. Bio of the other party in a private chat. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $has_private_forwards Optional. True, if privacy settings of the other party in the private chat allows to use `tg://user?id=<user_id>` links only in chats with the user. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $has_restricted_voice_and_video_messages Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $join_to_send_messages Optional. True, if users need to join the supergroup before they can send messages. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $join_by_request Optional. True, if all users directly joining the supergroup need to be approved by supergroup administrators. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property string $description Optional. Description, for groups, supergroups and channel chats. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property string $invite_link Optional. Primary invite link, for groups, supergroups and channel chats. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property Message $pinned_message Optional. The most recent pinned message (by sending date). Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property ChatPermissions $permissions Optional. Default chat member permissions, for groups and supergroups. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property integer $slow_mode_delay Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user; in seconds. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property integer $message_auto_delete_time Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $has_aggressive_anti_spam_enabled Optional. True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $has_hidden_members Optional. True, if non-administrators can only get the list of bots and administrators in the chat. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $has_protected_content Optional. True, if messages from the chat can't be forwarded to other chats. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property string $sticker_set_name Optional. For supergroups, name of group sticker set. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property boolean $can_set_sticker_set Optional. True, if the bot can change the group sticker set. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property integer $linked_chat_id Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * @property ChatLocation $location Optional. For supergroups, the location to which the supergroup is connected. Returned only in [getChat](https://core.telegram.org/bots/api#getchat).
+ * 
+ * @method integer          id()
+ * @method string           type()
+ * @method ?string          title()
+ * @method ?string          username()
+ * @method ?string          firstName()
+ * @method ?string          lastName()
+ * @method ?boolean         isForum()
+ * @method ?ChatPhoto       photo()
+ * @method ?array           activeUsernames()
+ * @method ?string          emojiStatusCustomEmojiId()
+ * @method ?string          bio()
+ * @method ?boolean         hasPrivateForwards()
+ * @method ?boolean         hasRestrictedVoiceAndVideoMessages()
+ * @method ?boolean         joinToSendMessages()
+ * @method ?boolean         joinByRequest()
+ * @method ?string          description()
+ * @method ?string          inviteLink()
+ * @method ?Message         pinnedMessage()
+ * @method ?ChatPermissions permissions()
+ * @method ?integer         slowModeDelay()
+ * @method ?integer         messageAutodeleteTime()
+ * @method ?boolean         hasAggressiveAntiSpamEnabled()
+ * @method ?boolean         hasHiddenMembers()
+ * @method ?boolean         hasProtectedContent()
+ * @method ?string          stickerSetName()
+ * @method ?boolean         canSetStickerSet()
+ * @method ?integer         linkedChatId()
+ * @method ?ChatLocation    location()
+ * 
  * @see https://core.telegram.org/bots/api#chat
  */
-class Chat extends TypesBase implements TypesInterface
+class Chat extends baseType
 {
-  public int $id;
-  public string $type;
-  public ?string $title;
-  public ?string $username;
-  public ?string $first_name;
-  public ?string $last_name;
-  public ?bool $is_forum = self::DEFAULT_BOOL; //
-  public ?ChatPhoto $photo;
-  public ?array $active_usernames = self::DEFAULT_PARAM;//
-  public ?string $emoji_status_custom_emoji_id = self::DEFAULT_PARAM;//
-  public ?string $bio;
-  public bool $has_private_forwards = self::DEFAULT_BOOL;
-  public bool $has_restricted_voice_and_video_messages = self::DEFAULT_BOOL;
-  public bool $join_to_send_messages = self::DEFAULT_BOOL;
-  public bool $join_by_request = self::DEFAULT_BOOL;
-  public ?string $description;
-  public ?string $invite_link;
-  public ?Message $pinned_message;
-  public ?ChatPermissions $permissions;
-  public ?int $slow_mode_delay;
-  public ?int $message_auto_delete_time;
-  public bool $has_protected_content = self::DEFAULT_BOOL;
-  public ?string $sticker_set_name;
-  public bool $can_set_sticker_set;
-  public ?int $linked_chat_id;
-  public ?ChatLocation $location;
-
-  public function __construct(stdClass $up) {
-    $this->setId($up->id)
-      ->setType($up->type)
-      ->setTitle($up->title ?? self::DEFAULT_PARAM)
-      ->setUsername($up->username ?? self::DEFAULT_PARAM)
-      ->setFirstName($up->first_name ?? self::DEFAULT_PARAM)
-      ->setLastName($up->last_name ?? self::DEFAULT_PARAM)
-      ->setIsForum($up->is_forum ?? self::DEFAULT_BOOL)
-      ->setPhoto(ChatPhoto::create($up->photo ?? self::DEFAULT_PARAM))
-      ->setActiveUsernames($up->active_usernames ?? self::DEFAULT_PARAM)
-      ->setEmojiStatusCustomEmojiId($up->emoji_status_custom_emoji_id ?? self::DEFAULT_PARAM)
-      ->setBio($up->bio ?? self::DEFAULT_PARAM)
-      ->setHasPrivateForwards($up->has_private_forwards ?? self::DEFAULT_BOOL)
-      ->setHasRestrictedVoiceAndVideoMessages($up->has_restricted_voice_and_video_messages ?? self::DEFAULT_BOOL)
-      ->setJoinToSendMessages($up->join_to_send_messages ?? self::DEFAULT_BOOL)
-      ->setJoinByRequest($up->join_by_request ?? self::DEFAULT_BOOL)
-      ->setDescription($up->description ?? self::DEFAULT_PARAM)
-      ->setInviteLink($up->invite_link ?? self::DEFAULT_PARAM)
-      ->setPinnedMessage(Message::create($up->pinned_message ?? self::DEFAULT_PARAM))
-      ->setPermissions(ChatPermissions::create($up->permissions ?? self::DEFAULT_PARAM))
-      ->setSlowModeDelay($up->slow_mode_delay ?? self::DEFAULT_PARAM)
-      ->setMessageAutoDeleteTime($up->message_auto_delete_time ?? self::DEFAULT_PARAM)
-      ->setHasProtectedContent($up->has_protected_content ?? self::DEFAULT_BOOL)
-      ->setStickerSetName($up->sticker_set_name ?? self::DEFAULT_PARAM)
-      ->setCanSetStickerSet($up->can_set_sticker_set ?? self::DEFAULT_BOOL)
-      ->setLinkedChatId($up->linked_chat_id ?? self::DEFAULT_PARAM)
-      ->setLocation(ChatLocation::create($up->location ?? self::DEFAULT_PARAM));
-  }
-
-  public function setId(int $id): Chat
-  {
-    $this->id = $id;
-    return $this;
-  }
-
-  public function setType(string $type): Chat
-  {
-    $this->type = $type;
-    return $this;
-  }
-
-  public function setTitle(?string $title): Chat
-  {
-    $this->title = $title;
-    return $this;
-  }
-
-  public function setUsername(?string $username): Chat
-  {
-    $this->username = $username;
-    return $this;
-  }
-
-  public function setFirstName(?string $firstName): Chat
-  {
-    $this->first_name = $firstName;
-    return $this;
-  }
-
-  public function setLastName(?string $lastName): Chat
-  {
-    $this->last_name = $lastName;
-    return $this;
-  }
-
-  public function setIsForum(?bool $isForum): Chat
-  {
-    $this->is_forum = $isForum;
-    return $this;
-  }
-
-  public function setPhoto(?ChatPhoto $photo): Chat
-  {
-    $this->photo = $photo;
-    return $this;
-  }
-
-  public function setActiveUsernames(?array $activeUsernames): Chat
-  {
-    $this->active_usernames = $activeUsernames;
-    return $this;
-  }
-
-  public function setEmojiStatusCustomEmojiId(?string $emojiStatusCustomEmojiId): Chat
-  {
-    $this->emoji_status_custom_emoji_id = $emojiStatusCustomEmojiId;
-    return $this;
-  }
-
-  public function setBio(?string $bio): Chat
-  {
-    $this->bio = $bio;
-    return $this;
-  }
-
-  public function setHasPrivateForwards(bool $hasPrivateForwards): Chat
-  {
-    $this->has_private_forwards = $hasPrivateForwards;
-    return $this;
-  }
-
-  public function setHasRestrictedVoiceAndVideoMessages(bool $hasRestrictedVoiceAndVideoMessages): Chat
-  {
-    $this->has_restricted_voice_and_video_messages = $hasRestrictedVoiceAndVideoMessages;
-    return $this;
-  }
-
-  public function setJoinToSendMessages(bool $joinToSendMessages): Chat
-  {
-    $this->join_to_send_messages = $joinToSendMessages;
-    return $this;
-  }
-
-  public function setJoinByRequest(bool $joinByRequest): Chat
-  {
-    $this->join_by_request = $joinByRequest;
-    return $this;
-  }
-
-  public function setDescription(?string $description): Chat
-  {
-    $this->description = $description;
-    return $this;
-  }
-
-  public function setInviteLink(?string $inviteLink): Chat
-  {
-    $this->invite_link = $inviteLink;
-    return $this;
-  }
-  
-  public function setPinnedMessage(?Message $pinnedMessage): Chat
-  {
-    $this->pinned_message = $pinnedMessage;
-    return $this;
-  }
-
-  public function setPermissions(?ChatPermissions $permissions): Chat
-  {
-    $this->permissions = $permissions;
-    return $this;
-  }
-
-  public function setSlowModeDelay(?int $slowModeDelay): Chat
-  {
-    $this->slow_mode_delay = $slowModeDelay;
-    return $this;
-  }
-
-  public function setMessageAutoDeleteTime(?int $messageAutoDeleteTime): Chat
-  {
-    $this->message_auto_delete_time = $messageAutoDeleteTime;
-    return $this;
-  }
-
-  public function setHasProtectedContent(bool $hasProtectedContent): Chat
-  {
-    $this->has_protected_content = $hasProtectedContent;
-    return $this;
-  }
-
-  public function setStickerSetName(?string $stickerSetName): Chat
-  {
-    $this->sticker_set_name = $stickerSetName;
-    return $this;
-  }
-
-  public function setCanSetStickerSet(bool $canSetTickerSet): Chat
-  {
-    $this->can_set_sticker_set = $canSetTickerSet;
-    return $this;
-  }
-
-  public function setLinkedChatId(?int $linkedChatId): Chat
-  {
-    $this->linked_chat_id = $linkedChatId;
-    return $this;
-  }
-
-  public function setLocation(?ChatLocation $location): Chat
-  {
-    $this->location = $location;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'id'                                      => 'integer',
+        'type'                                    => 'string',
+        'title'                                   => 'string',
+        'username'                                => 'string',
+        'first_name'                              => 'string',
+        'last_name'                               => 'string',
+        'is_forum'                                => 'boolean',
+        'photo'                                   => ChatPhoto::class,
+        'active_usernames'                        => 'array',
+        'emoji_status_custom_emoji_id'            => 'string',
+        'bio'                                     => 'string',
+        'has_private_forwards'                    => 'boolean',
+        'has_restricted_voice_and_video_messages' => 'boolean',
+        'join_to_send_messages'                   => 'boolean',
+        'join_by_request'                         => 'boolean',
+        'description'                             => 'string',
+        'invite_link'                             => 'string',
+        'pinned_message'                          => Message::class,
+        'permissiones'                            => ChatPermissions::class,
+        'slow_mode_delay'                         => 'integer',
+        'message_auto_delete_time'                => 'integer',
+        'has_aggressive_anti_spam_enabled'        => 'boolean',
+        'has_hidden_members'                      => 'boolean',
+        'has_protected_content'                   => 'boolean',
+        'sticker_set_name'                        => 'string',
+        'can_set_sticker_set'                     => 'boolean',
+        'linked_chat_id'                          => 'integer',
+        'location'                                => ChatLocation::class
+    ];
 }

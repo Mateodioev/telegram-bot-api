@@ -1,46 +1,46 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
+use function base64_decode;
 
 /**
- * Describes data required for decrypting and authenticating EncryptedPassportElement.
- * See the Telegram Passport Documentation for a complete description of the data decryption and authentication processes.
+ * Describes data required for decrypting and authenticating [EncryptedPassportElement](https://core.telegram.org/bots/api#encryptedpassportelement).
+ * 
+ * @property string $data   Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and secrets required for [EncryptedPassportElement](https://core.telegram.org/bots/api#encryptedpassportelement) decryption and authentication
+ * @property string $hash   Base64-encoded data hash for data authentication
+ * @property string $secret Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
+ * 
+ * @method string data()
+ * @method string hash()
+ * @method string secret()
+ * @method string decrypData()
+ * @method string decrypHash()
+ * @method string decrypSecret()
+ * 
+ * @method static setData(string $data)
+ * @method static setHash(string $hash)
+ * @method static setSecret(string $secret)
  * 
  * @see https://core.telegram.org/bots/api#encryptedcredentials
  */
-class EncryptedCredentials extends TypesBase implements TypesInterface
+class EncryptedCredentials extends baseType
 {
-  public string $data, $hash, $secret;
+    protected array $fields = [
+        'data'   => 'string',
+        'hash'   => 'string',
+        'secret' => 'string',
+    ];
 
-  public function __construct(stdClass $up) {
-    $this->setData($up->data)
-      ->setHash($up->hash)
-      ->setSecret($up->secret);
-  }
+    public function decrypData(): string {
+        return base64_decode($this->data());
+    }
 
-  public function setData(string $data): EncryptedCredentials
-  {
-    $this->data = $data;
-    return $this;
-  }
+    public function decrypHash(): string {
+        return base64_decode($this->hash());
+    }
 
-  public function setHash(string $hash): EncryptedCredentials
-  {
-    $this->hash = $hash;
-    return $this;
-  }
-
-  public function setSecret(string $secret): EncryptedCredentials
-  {
-    $this->secret = $secret;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    public function decrypSecret(): string {
+        return base64_decode($this->secret());
+    }
 }

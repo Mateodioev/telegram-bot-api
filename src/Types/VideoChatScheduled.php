@@ -1,31 +1,21 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents a service message about a video chat scheduled in the chat.
  * 
+ * @property integer $start_date Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
+ * 
+ * @method integer startDate()
+ * 
+ * @method static setStartDate(integer $startDate)
+ * 
  * @see https://core.telegram.org/bots/api#videochatscheduled
  */
-class VideoChatScheduled extends TypesBase implements TypesInterface
+class VideoChatScheduled extends baseType
 {
-  public int $start_date;
-
-  public function __construct(stdClass $up) {
-    $this->setStartDate($up->start_date);
-  }
-
-  public function setStartDate(int $startDate): VideoChatScheduled
-  {
-    $this->start_date = $startDate;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'start_date' => 'integer',
+    ];
 }

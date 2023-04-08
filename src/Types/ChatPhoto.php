@@ -2,54 +2,32 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * This object represents a chat photo.
  * 
+ * @property string $small_file_id        File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
+ * @property string $small_file_unique_id Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+ * @property string $big_file_id          File identifier of big (640x640) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed
+ * @property string $big_file_unique_id   Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+ * 
+ * @method string smallFileId()
+ * @method string smallFileUniqueId()
+ * @method string bigFileId()
+ * @method string bigFileUniqueId()
+ * 
+ * @method static setSmallFileId(string $smallFileId)
+ * @method static setSmallFileUniqueId(string $smallFileUniqueId)
+ * @method static setBigFileId(string $bigFileId)
+ * @method static setBigFileUniqueId(string $bigFileUniqueId)
+ * 
  * @see https://core.telegram.org/bots/api#chatphoto
  */
-class ChatPhoto extends TypesBase implements TypesInterface
+class ChatPhoto extends baseType
 {
-  public string $small_file_id;
-  public string $small_file_unique_id;
-  public string $big_file_id;
-  public string $big_file_unique_id;
-
-  public function __construct(stdClass $up) {
-    $this->setSmallFileId($up->small_file_id)
-      ->setSmallFileUniqueId($up->small_file_unique_id)
-      ->setBigFileId($up->big_file_id)
-      ->setBigFileUniqueId($up->big_file_unique_id);
-  }
-
-  public function setSmallFileId(string $smallFileId): ChatPhoto
-  {
-    $this->small_file_id = $smallFileId;
-    return $this;
-  }
-
-  public function setSmallFileUniqueId(string $smallFileUniqueId): ChatPhoto
-  {
-    $this->small_file_unique_id = $smallFileUniqueId;
-    return $this;
-  }
-
-  public function setBigFileId(string $bigFileId): ChatPhoto
-  {
-    $this->big_file_id = $bigFileId;
-    return $this;
-  }
-
-  public function setBigFileUniqueId(string $bigFileUniqueId): ChatPhoto
-  {
-    $this->big_file_unique_id = $bigFileUniqueId;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'small_file_id'        => 'string',
+        'small_file_unique_id' => 'string',
+        'big_file_id'          => 'string',
+        'big_file_unique_id'   => 'string',
+    ];
 }

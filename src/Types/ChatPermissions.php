@@ -2,96 +2,72 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * Describes actions that a non-administrator user is allowed to take in a chat.
  * 
+ * @property boolean $can_send_messages         Optional. True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+ * @property boolean $can_send_audios           Optional. True, if the user is allowed to send audios
+ * @property boolean $can_send_documents        Optional. True, if the user is allowed to send documents
+ * @property boolean $can_send_photos           Optional. True, if the user is allowed to send photos
+ * @property boolean $can_send_videos           Optional. True, if the user is allowed to send videos
+ * @property boolean $can_send_video_notes      Optional. True, if the user is allowed to send video notes
+ * @property boolean $can_send_voice_notes      Optional. True, if the user is allowed to send voice notes
+ * @property boolean $can_send_polls            Optional. True, if the user is allowed to send polls
+ * @property boolean $can_send_other_messages   Optional. True, if the user is allowed to send animations, games, stickers and use inline bots
+ * @property boolean $can_add_web_page_previews Optional. True, if the user is allowed to add web page previews to their messages
+ * @property boolean $can_change_info           Optional. True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups
+ * @property boolean $canInviteUsers            Optional. True, if the user is allowed to invite new users to the chat $can_invite_users Optional. True, if the user is allowed to invite new users to the chat
+ * @property boolean $can_pin_messages          Optional. True, if the user is allowed to pin messages. Ignored in public supergroups
+ * @property boolean $can_manage_topics         Optional. True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages
+ * 
+ * @method ?boolean canSendMessages()
+ * @method ?boolean canSendAudios()
+ * @method ?boolean canSendDocuments()
+ * @method ?boolean canSendPhotos()
+ * @method ?boolean canSendVideos()
+ * @method ?boolean canSendVideoNotes()
+ * @method ?boolean canSendVoiceNotes()
+ * @method ?boolean canSendPolls()
+ * @method ?boolean canSendOtherMessages()
+ * @method ?boolean canAddWebPagePreviews()
+ * @method ?boolean canChangeInfo()
+ * @method ?boolean canInviteUsers()
+ * @method ?boolean canPinMessages()
+ * @method ?boolean canManageTopics()
+ * 
+ * @method static setCanSendMessages(boolean $canSendMessages)
+ * @method static setCanSendAudios(boolean $canSendAudios)
+ * @method static setCanSendDocuments(boolean $canSendDocuments)
+ * @method static setCanSendPhotos(boolean $canSendPhotos)
+ * @method static setCanSendVideos(boolean $canSendVideos)
+ * @method static setCanSendVideoNotes(boolean $canSendVideoNotes)
+ * @method static setCanSendVoiceNotes(boolean $canSendVoiceNotes)
+ * @method static setCanSendPolls(boolean $canSendPolls)
+ * @method static setCanSendOtherMessages(boolean $canSendOtherMessages)
+ * @method static setCanAddWebPagePreviews(boolean $canAddWebPagePreviews)
+ * @method static setCanChangeInfo(boolean $canChangeInfo)
+ * @method static setCanInviteUsers(boolean chat $canInviteUsers)
+ * @method static setCanPinMessages(boolean $canPinMessages)
+ * @method static setCanManageTopics(boolean $canManageTopics)
+ * 
  * @see https://core.telegram.org/bots/api#chatpermissions
  */
-class ChatPermissions extends TypesBase implements TypesInterface
+class ChatPermissions extends baseType
 {
-  public const DEFAULT_PERMISSION = false;
-
-  public ?bool $can_send_messages;
-  public ?bool $can_send_media_messages;
-  public ?bool $can_send_polls;
-  public ?bool $can_send_other_messages;
-  public ?bool $can_add_web_page_previews;
-  public ?bool $can_change_info;
-  public ?bool $can_invite_users;
-  public ?bool $can_pin_messages;
-  public ?bool $can_manage_topic;
-
-  public function __construct(?stdClass $up) {
-    $this->setCanSendMessages($up->can_send_messages ?? self::DEFAULT_BOOL)
-      ->setCanSendMediaMessages($up->can_send_media_messages ?? self::DEFAULT_BOOL)
-      ->setCanSendPolls($up->can_send_polls ?? self::DEFAULT_BOOL)
-      ->setCanSendOtherMessages($up->can_send_other_messages ?? self::DEFAULT_BOOL)
-      ->setCanAddWebPagePreviews($up->can_add_web_page_previews ?? self::DEFAULT_BOOL)
-      ->setCanChangeInfo($up->can_change_info ?? self::DEFAULT_BOOL)
-      ->setCanInviteUsers($up->can_invite_users ?? self::DEFAULT_BOOL)
-      ->setCanPinMessages($up->can_pin_messages ?? self::DEFAULT_BOOL)
-      ->setCanManageTopics($up->can_manage_topic ?? self::DEFAULT_BOOL);
-  }
-
-  public function setCanSendMessages(bool $canSendMessages): ChatPermissions
-  {
-    $this->can_send_messages = $canSendMessages;
-    return $this;
-  }
-
-  public function setCanSendMediaMessages(bool $canSendMediaMessages): ChatPermissions
-  {
-    $this->can_send_media_messages = $canSendMediaMessages;
-    return $this;
-  }
-
-  public function setCanSendPolls(bool $canSendPolls): ChatPermissions
-  {
-    $this->can_send_polls = $canSendPolls;
-    return $this;
-  }
-
-  public function setCanSendOtherMessages(bool $canSendOtherMessages): ChatPermissions
-  {
-    $this->can_send_other_messages = $canSendOtherMessages;
-    return $this;
-  }
-
-  public function setCanAddWebPagePreviews(bool $canAddWebPagePreviews): ChatPermissions
-  {
-    $this->can_add_web_page_previews = $canAddWebPagePreviews;
-    return $this;
-  }
-
-  public function setCanChangeInfo(bool $canChangeInfo): ChatPermissions
-  {
-    $this->can_change_info = $canChangeInfo;
-    return $this;
-  }
-
-  public function setCanInviteUsers(bool $canInviteUsers): ChatPermissions
-  {
-    $this->can_invite_users = $canInviteUsers;
-    return $this;
-  }
-
-  public function setCanPinMessages(bool $canPingMessages): ChatPermissions
-  {
-    $this->can_pin_messages = $canPingMessages;
-    return $this;
-  }
-
-  public function setCanManageTopics(bool $canManageTopics): ChatPermissions
-  {
-    $this->can_manage_topic = $canManageTopics;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'can_send_messages'         => 'boolean',
+        'can_send_audios'           => 'boolean',
+        'can_send_documents'        => 'boolean',
+        'can_send_photos'           => 'boolean',
+        'can_send_videos'           => 'boolean',
+        'can_send_video_notes'      => 'boolean',
+        'can_send_voice_notes'      => 'boolean',
+        'can_send_polls'            => 'boolean',
+        'can_send_other_messages'   => 'boolean',
+        'can_add_web_page_previews' => 'boolean',
+        'can_change_info'           => 'boolean',
+        'can_invite_users'          => 'boolean',
+        'can_pin_messages'          => 'boolean',
+        'can_manage_topics'         => 'boolean',
+    ];
 }

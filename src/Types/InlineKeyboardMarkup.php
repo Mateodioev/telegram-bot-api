@@ -1,39 +1,42 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
- * This object represents an inline keyboard that appears right next to the message it belongs to.
+ * This object represents an [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards) that appears right next to the message it belongs to.
+ * 
+ * @property InlineKeyboardButton[][] $inline_keyboard Array of button rows, each represented by an Array of [InlineKeyboardButton](https://core.telegram.org/bots/api#inlinekeyboardbutton) objects
+ * 
+ * @method InlineKeyboardButton[][] inlineKeyboard()
+ * 
+ * @method static setInlineKeyboard(array $inlineKeyboard)
  * 
  * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
  */
-class InlineKeyboardMarkup extends TypesBase implements TypesInterface
+class InlineKeyboardMarkup extends baseType
 {
-  /**
-   * @var array<InlineKeyboardButton[]>
-   */
-  public array $inline_keyboard;
+    protected array $fields = [
+        'inline_keyboard' => 'array',
+    ];
 
-  public function __construct(stdClass $up) {
-    $keyboard = [];
-    // Support for array in arrays
-    foreach ($up->inline_keyboard as $inline_keyboard) {
-      $keyboard[] = InlineKeyboardButton::bulkCreate($inline_keyboard);
+    public function set_inline_keyboard(array $inline_keyboard): static
+    {
+        $keyboard = [];
+        foreach ($inline_keyboard as $inlineKeyboard) {
+            $keyboard[] = InlineKeyboardButton::bulkCreate($inlineKeyboard);
+        }
+        $this->inline_keyboard = $keyboard;
+        return $this;
     }
-    $this->setInlineKeyboard($keyboard);
-  }
 
-  public function setInlineKeyboard(array $inline_keyboard): InlineKeyboardMarkup
-  {
-    $this->inline_keyboard = $inline_keyboard;
-    return $this;
-  }
+    public function get()
+    {
+        $properties = [];
 
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+        foreach ($this->inlineKeyboard() as $keyboards) {
+            $properties['inline_keyboard'][] = array_map(fn ($keyboard) => $keyboard->get(), $keyboards);
+        }
+        
+        return $properties;
+    }
 }

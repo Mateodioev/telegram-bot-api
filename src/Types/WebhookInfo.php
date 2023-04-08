@@ -2,94 +2,52 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * Describes the current status of a webhook.
  * 
+ * @property string    $url                             Webhook URL, may be empty if webhook is not set up
+ * @property boolean   $has_custom_certificate          True, if a custom certificate was provided for webhook certificate checks
+ * @property integer   $pending_update_count            Number of updates awaiting delivery
+ * @property ?string   $ip_address                      Optional. Currently used webhook IP address
+ * @property ?integer  $last_error_date                 Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
+ * @property ?string   $last_error_message              Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
+ * @property ?integer  $last_synchronization_error_date Optional. Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters
+ * @property ?integer  $max_connections                 Optional. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
+ * @property ?string[] $allowed_updates                 Optional. A list of update types the bot is subscribed to. Defaults to all update types except chat_member
+ * 
+ * @method string    url()
+ * @method boolean   hasCustomCertificate()
+ * @method integer   pendingUpdateCount()
+ * @method ?string   ipAddress()
+ * @method ?integer  lastErrorDate()
+ * @method ?string   lastErrorMessage()
+ * @method ?integer  lastSynchronizationErrorDate()
+ * @method ?integer  maxConnections()
+ * @method ?string[] allowedUpdates()
+ * 
+ * @method static setUrl(string $url)
+ * @method static setHasCustomCertificate(boolean $hasCustomCertificate)
+ * @method static setPendingUpdateCount(integer $pendingUpdateCount)
+ * @method static setIpAddress(string $ipAddress)
+ * @method static setLastErrorDate(integer $lastErrorDate)
+ * @method static setLastErrorMessage(string $lastErrorMessage)
+ * @method static setLastSynchronizationErrorDate(integer $lastSynchronizationErrorDate)
+ * @method static setMaxConnections(integer $maxConnections)
+ * @method static setAllowedUpdates(string[] $allowedUpdates)
+ * 
  * @see https://core.telegram.org/bots/api#webhookinfo
  */
-class WebhookInfo extends TypesBase implements TypesInterface
+class WebhookInfo extends baseType
 {
-  public string $url;
-  public bool $has_custom_certificate;
-  public int $pending_update_count;
-  public ?string $ip_address;
-  public ?int $last_error_date;
-  public ?string $last_error_message;
-  public ?int $last_synchronization_error_date;
-  public ?int $max_connections;
-  public ?array $allowed_updates;
-
-  public function __construct(stdClass $up) {
-    $this->setUrl($up->url)
-      ->setHasCustomCertificate($up->has_custom_certificate)
-      ->setPendingUpdateCount($up->pending_update_count)
-      ->setIpAddress($up->ip_address ?? self::DEFAULT_PARAM)
-      ->setLastErrorDate($up->last_error_date ?? self::DEFAULT_PARAM)
-      ->setLasErrorMessage($up->last_error_message ?? self::DEFAULT_PARAM)
-      ->setLastSynchronizationErrorDate($up->last_synchronization_error_date ?? self::DEFAULT_PARAM)
-      ->setMaxConnections($up->max_connections ?? self::DEFAULT_PARAM)
-      ->setAllowedUpdates($up->allowed_updates ?? self::DEFAULT_PARAM);
-  }
-
-  public function setUrl(string $url): WebhookInfo
-  {
-    $this->url = $url;
-    return $this;
-  }
-
-  public function setHasCustomCertificate(bool $hasCustomCertificate): WebhookInfo
-  {
-    $this->has_custom_certificate = $hasCustomCertificate;
-    return $this;
-  }
-
-  public function setPendingUpdateCount(int $pendingUpdateCount): WebhookInfo
-  {
-    $this->pending_update_count = $pendingUpdateCount;
-    return $this;
-  }
-
-  public function setIpAddress(?string $ipAddress): WebhookInfo
-  {
-    $this->ip_address = $ipAddress;
-    return $this;
-  }
-
-  public function setLastErrorDate(?int $lastErrorDate): WebhookInfo
-  {
-    $this->last_error_date = $lastErrorDate;
-    return $this;
-  }
-
-  public function setLasErrorMessage(?string $lastErrorMessage): WebhookInfo
-  {
-    $this->last_error_message = $lastErrorMessage;
-    return $this;
-  }
-
-  public function setLastSynchronizationErrorDate(?int $lastSynchronizationErrorDate): WebhookInfo
-  {
-    $this->last_synchronization_error_date = $lastSynchronizationErrorDate;
-    return $this;
-  }
-
-  public function setMaxConnections(?int $maxConnections): WebhookInfo
-  {
-    $this->max_connections = $maxConnections;
-    return $this;
-  }
-
-  public function setAllowedUpdates(?array $allowedUpdates): WebhookInfo
-  {
-    $this->allowed_updates = $allowedUpdates;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'url'                             => 'string',
+        'has_custom_certificate'          => 'boolean',
+        'pending_update_count'            => 'integer',
+        'ip_address'                      => 'string',
+        'last_error_date'                 => 'integer',
+        'last_error_message'              => 'string',
+        'last_synchronization_error_date' => 'integer',
+        'max_connections'                 => 'integer',
+        'allowed_updates'                 => 'array',
+    ];
 }

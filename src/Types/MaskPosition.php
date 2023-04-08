@@ -2,62 +2,32 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
-use function json_encode;
-
 /**
  * This object describes the position on faces where a mask should be placed by default.
+ * 
+ * @property string $point   The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
+ * @property double $x_shift Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position.
+ * @property double $y_shift Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. For example, 1.0 will place the mask just below the default mask position.
+ * @property double $scale   Mask scaling coefficient. For example, 2.0 means double size.
+ * 
+ * @method string point()
+ * @method double xShift()
+ * @method double yShift()
+ * @method double scale()
+ * 
+ * @method static setPoint(string $point)
+ * @method static setXShift(double $xShift)
+ * @method static setYShift(double $yShift)
+ * @method static setScale(double $scale)
+ * 
  * @see https://core.telegram.org/bots/api#maskposition
  */
-class MaskPosition extends TypesBase implements TypesInterface
+class MaskPosition extends baseType
 {
-  public string $point;
-  public float $scale;
-  public float $x;
-  public float $y;
-
-  public function __construct(stdClass $up) {
-    $this->setPoint($up->point)
-      ->setScale($up->scale)
-      ->setXshift($up->x_shift)
-      ->setYshift($up->y_shift);
-  }
-
-  /**
-   * @param string $point `forehead`, `eyes`, `mouth`, or `chin`.
-   */
-  public function setPoint(string $point): MaskPosition
-  {
-    $this->point = $point;
-    return $this;
-  }
-
-  public function setXshift(float $x): MaskPosition
-  {
-    $this->x = $x;
-    return $this;
-  }
-
-  public function setYshift(float $y): MaskPosition
-  {
-    $this->y = $y;
-    return $this;
-  }
-
-  public function setScale(float $scale): MaskPosition
-  {
-    $this->scale = $scale;
-    return $this;
-  }
-
-  public function get()
-  {
-    try {
-      return json_encode($this->getProperties($this));
-    } catch (\Throwable $_) {
-      return null;
-    }
-  }
+    protected array $fields = [
+        'point'   => 'string',
+        'x_shift' => 'double',
+        'y_shift' => 'double',
+        'scale'   => 'double',
+    ];
 }

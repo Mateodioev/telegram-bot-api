@@ -2,117 +2,64 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * Represents the rights of an administrator in a chat.
  * 
+ * @property boolean $is_anoymous            True, if the user's presence in the chat is hidden
+ * @property boolean $can_manage_chat        True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege
+ * @property boolean $can_delete_messages    True, if the administrator can delete messages of other users
+ * @property boolean $can_manage_video_chats True, if the administrator can manage video chats
+ * @property boolean $can_restrict_members   True, if the administrator can restrict, ban or unban chat members
+ * @property boolean $can_promote_members    True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+ * @property boolean $can_change_info        True, if the user is allowed to change the chat title, photo and other settings
+ * @property boolean $can_invite_users       True, if the user is allowed to invite new users to the chat
+ * @property boolean $can_post_messages      Optional. True, if the administrator can post in the channel; channels only
+ * @property boolean $can_edit_messages      Optional. True, if the administrator can edit messages of other users and can pin messages; channels only
+ * @property boolean $can_pin_messages       Optional. True, if the user is allowed to pin messages; groups and supergroups only
+ * @property boolean $can_manage_topics      Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only
+ * 
+ * @method boolean  isAnoymous()
+ * @method boolean  canManageChat()
+ * @method boolean  canDeleteMessages()
+ * @method boolean  canManageVideoChats()
+ * @method boolean  canRestrictMembers()
+ * @method boolean  canPromoteMembers()
+ * @method boolean  canChangeInfo()
+ * @method boolean  canInviteUsers()
+ * @method ?boolean canPostMessages()
+ * @method ?boolean canEditMessages()
+ * @method ?boolean canPinMessages()
+ * @method ?boolean canManageTopics()
+ * 
+ * @method static setIsAnoymous(boolean $isAnoymous)
+ * @method static setCanManageChat(boolean $canManageChat)
+ * @method static setCanDeleteMessages(boolean $canDeleteMessages)
+ * @method static setCanManageVideoChats(boolean $canManageVideoChats)
+ * @method static setCanRestrictMembers(boolean $canRestrictMembers)
+ * @method static setCanPromoteMembers(boolean $canPromoteMembers)
+ * @method static setCanChangeInfo(boolean $canChangeInfo)
+ * @method static setCanInviteUsers(boolean $canInviteUsers)
+ * @method static setCanPostMessages(boolean $canPostMessages)
+ * @method static setCanEditMessages(boolean $canEditMessages)
+ * @method static setCanPinMessages(boolean $canPinMessages)
+ * @method static setCanManageTopics(boolean $canManageTopics)
+ * 
  * @see https://core.telegram.org/bots/api#chatadministratorrights
  */
-class ChatAdministratorRights extends TypesBase implements TypesInterface
+class ChatAdministratorRights extends baseType
 {
-  public bool $is_anoymous;
-  public bool $can_manage_chat;
-  public bool $can_delete_messages;
-  public bool $can_manage_video_chats;
-  public bool $can_restrict_members;
-  public bool $can_promote_members;
-  public bool $can_change_info;
-  public bool $can_invite_users;
-  public bool $can_post_messages;
-  public bool $can_edit_messages;
-  public bool $can_pin_messages;
-  public bool $can_manage_topics;
-
-  public function __construct(stdClass $up) {
-    $this->setIsAnoymous($up->is_anoymous ?? self::DEFAULT_BOOL)
-      ->setCanManageChat($up->can_manage_chat ?? self::DEFAULT_BOOL)
-      ->setCanDeleteMessages($up->can_delete_messages ?? self::DEFAULT_BOOL)
-      ->setCanManageVideoChats($up->can_manage_video_chats ?? self::DEFAULT_BOOL)
-      ->setCanRestrictMembers($up->can_restrict_members ?? self::DEFAULT_BOOL)
-      ->setCanPromoteMembers($up->can_promote_members ?? self::DEFAULT_BOOL)
-      ->setCanChangeInfo($up->can_change_info ?? self::DEFAULT_BOOL)
-      ->setCanInviteUsers($up->can_invite_users ?? self::DEFAULT_BOOL)
-      ->setCanPostMessages($up->can_post_messages ?? self::DEFAULT_BOOL)
-      ->setCanEditMessages($up->can_edit_messages ?? self::DEFAULT_BOOL)
-      ->setCanPinMessages($up->can_pin_messages ?? self::DEFAULT_BOOL);
-  }
-
-  public function setIsAnoymous(bool $is_anoymous): ChatAdministratorRights
-  {
-    $this->is_anoymous = $is_anoymous;
-    return $this;
-  }
-
-  public function setCanManageChat(bool $can_manage_chat): ChatAdministratorRights
-  {
-    $this->can_manage_chat = $can_manage_chat;
-    return $this;
-  }
-
-  public function setCanDeleteMessages(bool $can_delete_messages): ChatAdministratorRights
-  {
-    $this->can_delete_messages = $can_delete_messages;
-    return $this;
-  }
-
-  public function setCanManageVideoChats(bool $can_manage_video_chats): ChatAdministratorRights
-  {
-    $this->can_manage_video_chats = $can_manage_video_chats;
-    return $this;
-  }
-
-  public function setCanRestrictMembers(bool $can_restrict_members): ChatAdministratorRights
-  {
-    $this->can_restrict_members = $can_restrict_members;
-    return $this;
-  }
-
-  public function setCanPromoteMembers(bool $can_promote_members): ChatAdministratorRights
-  {
-    $this->can_promote_members = $can_promote_members;
-    return $this;
-  }
-
-  public function setCanChangeInfo(bool $can_change_info): ChatAdministratorRights
-  {
-    $this->can_change_info = $can_change_info;
-    return $this;
-  }
-
-  public function setCanInviteUsers(bool $can_invite_users): ChatAdministratorRights
-  {
-    $this->can_invite_users = $can_invite_users;
-    return $this;
-  }
-
-  public function setCanPostMessages(bool $can_post_messages): ChatAdministratorRights
-  {
-    $this->can_post_messages = $can_post_messages;
-    return $this;
-  }
-
-  public function setCanEditMessages(bool $can_edit_messages): ChatAdministratorRights
-  {
-    $this->can_edit_messages = $can_edit_messages;
-    return $this;
-  }
-
-  public function setCanPinMessages(bool $can_pin_messages): ChatAdministratorRights
-  {
-    $this->can_pin_messages = $can_pin_messages;
-    return $this;
-  }
-
-  public function setCanManageTopics(bool $can_manage_topics): ChatAdministratorRights
-  {
-    $this->can_manage_topics = $can_manage_topics;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'is_anoymous'            => 'boolean',
+        'can_manage_chat'        => 'boolean',
+        'can_delete_messages'    => 'boolean',
+        'can_manage_video_chats' => 'boolean',
+        'can_restrict_members'   => 'boolean',
+        'can_promote_members'    => 'boolean',
+        'can_change_info'        => 'boolean',
+        'can_invite_users'       => 'boolean',
+        'can_post_messages'      => 'boolean',
+        'can_edit_messages'      => 'boolean',
+        'can_pin_messages'       => 'boolean',
+        'can_manage_topics'      => 'boolean'
+    ];
 }

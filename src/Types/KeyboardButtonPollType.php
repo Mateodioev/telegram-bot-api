@@ -1,31 +1,21 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.
  * 
+ * @property string $type Optional. If quiz is passed, the user will be allowed to create only polls in the quiz mode. If regular is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.
+ * 
+ * @method string type()
+ * 
+ * @method static setType(string $type)
+ * 
  * @see https://core.telegram.org/bots/api#keyboardbuttonpolltype
  */
-class KeyboardButtonPollType extends TypesBase implements TypesInterface
+class KeyboardButtonPollType extends baseType
 {
-  public ?string $type;
-
-  public function __construct(stdClass $up) {
-    $this->setType($up->type ?? self::DEFAULT_PARAM);
-  }
-
-  public function setType(?string $type): KeyboardButtonPollType
-  {
-    $this->type = $type;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'type' => 'string',
+    ];
 }

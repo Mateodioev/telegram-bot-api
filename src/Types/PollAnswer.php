@@ -1,47 +1,29 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents an answer of a user in a non-anonymous poll.
  * 
+ * @property string    $poll_id    Unique poll identifier
+ * @property User      $user       The user, who changed the answer to the poll
+ * @property integer[] $option_ids 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
+ * 
+ * @method string    pollId()
+ * @method User      user()
+ * @method integer[] optionIds()
+ * 
+ * @method static setPollId(string $pollId)
+ * @method static setUser(User $user)
+ * @method static setOptionIds(integer[] $optionIds)
+ * 
  * @see https://core.telegram.org/bots/api#pollanswer
  */
-class PollAnswer extends TypesBase implements TypesInterface
+class PollAnswer extends baseType
 {
-  public string $poll_id;
-  public User $user;
-  public array $option_ids;
-
-  public function __construct(stdClass $up) {
-    $this->setPollId($up->poll_id)
-      ->setUser(User::create($up->user))
-      ->setOptionIds($up->option_ids);
-  }
-
-  public function setPollId(string $pollId): PollAnswer
-  {
-    $this->poll_id = $pollId;
-    return $this;
-  }
-
-  public function setUser(User $user): PollAnswer
-  {
-    $this->user = $user;
-    return $this;
-  }
-
-  public function setOptionIds(array $optionIds): PollAnswer
-  {
-    $this->option_ids = $optionIds;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'poll_id'    => 'string',
+        'user'       => User::class,
+        'option_ids' => 'array',
+    ];
 }

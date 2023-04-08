@@ -1,40 +1,25 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
- * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard.
- * By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup).
+ * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button
+ * 
+ * @property boolean  $remove_keyboard Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup))
+ * @property ?boolean $selective       Optional. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+ * 
+ * @method boolean  removeKeyboard()
+ * @method ?boolean selective()
+ * 
+ * @method static setRemoveKeyboard(boolean $removeKeyboard)
+ * @method static setSelective(boolean $selective)
  * 
  * @see https://core.telegram.org/bots/api#replykeyboardremove
  */
-class ReplyKeyboardRemove extends TypesBase implements TypesInterface
+class ReplyKeyboardRemove extends baseType
 {
-  public bool $remove_keyboard;
-  public ?bool $selective;
-
-  public function __construct(stdClass $up) {
-    $this->setRemoveKeyboard($up->remove_keyboard)
-      ->setSelective($up->selective ?? self::DEFAULT_PARAM);
-  }
-
-  public function setRemoveKeyboard(bool $remove_keyboard): ReplyKeyboardRemove
-  {
-    $this->remove_keyboard = $remove_keyboard;
-    return $this;
-  }
-
-  public function setSelective(?bool $selective): ReplyKeyboardRemove
-  {
-    $this->selective = $selective;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'remove_keyboard' => 'boolean',
+        'selective'       => 'boolean',
+    ];
 }

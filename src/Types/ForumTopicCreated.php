@@ -1,47 +1,29 @@
-<?php
+<?php 
 
 namespace Mateodioev\Bots\Telegram\Types;
-
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
 
 /**
  * This object represents a service message about a new forum topic created in the chat.
  * 
+ * @property string  $name                 Name of the topic
+ * @property integer $icon_color           Color of the topic icon in RGB format
+ * @property string  $icon_custom_emoji_id Optional. Unique identifier of the custom emoji shown as the topic icon
+ * 
+ * @method string  name()
+ * @method integer iconColor()
+ * @method string  iconCustomEmojiId()
+ * 
+ * @method static setName(string $name)
+ * @method static setIconColor(integer $iconColor)
+ * @method static setIconCustomEmojiId(string $iconCustomEmojiId)
+ * 
  * @see https://core.telegram.org/bots/api#forumtopiccreated
  */
-class ForumTopicCreated extends TypesBase implements TypesInterface
+class ForumTopicCreated extends baseType
 {
-  public string $name;
-  public int $icon_color;
-  public ?string $icon_custom_emoji_id;
-
-  public function __construct(stdClass $up) {
-    $this->setName($up->name)
-      ->setIconColor($up->icon_color)
-      ->setIconCustomEmojiId($up->icon_custom_emoji_id ?? self::DEFAULT_PARAM);
-  }
-
-  public function setName(string $name): ForumTopicCreated
-  {
-    $this->name = $name;
-    return $this;
-  }
-
-  public function setIconColor(int $iconColor): ForumTopicCreated
-  {
-    $this->icon_color = $iconColor;
-    return $this;
-  }
-
-  public function setIconCustomEmojiId(?string $iconCustomEmojiId): ForumTopicCreated
-  {
-    $this->icon_custom_emoji_id = $iconCustomEmojiId;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'name'                 => 'string',
+        'icon_color'           => 'integer',
+        'icon_custom_emoji_id' =>  'string',
+    ];
 }

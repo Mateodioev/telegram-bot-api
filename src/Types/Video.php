@@ -2,95 +2,52 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use Mateodioev\Bots\Telegram\Types\{PhotoSize, TypesBase};
-use stdClass;
-
 /**
  * This object represents a video file.
  * 
+ * @property string     $file_id        Identifier for this file, which can be used to download or reuse the file
+ * @property string     $file_unique_id Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+ * @property integer    $width          Video width as defined by sender
+ * @property integer    $height         Video height as defined by sender
+ * @property integer    $duration       Duration of the video in seconds as defined by sender
+ * @property ?PhotoSize $thumbnail      Optional. Video thumbnail
+ * @property ?string    $file_name      Optional. Original filename as defined by sender
+ * @property ?string    $mime_type      Optional. MIME type of the file as defined by sender
+ * @property ?integer   $file_size      Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+ * 
+ * @method string     fileId()
+ * @method string     fileUniqueId()
+ * @method integer    width()
+ * @method integer    height()
+ * @method integer    duration()
+ * @method ?PhotoSize thumbnail()
+ * @method ?string    fileName()
+ * @method ?string    mimeType()
+ * @method ?integer   fileSize()
+ * 
+ * @method static setFileId(string $fileId)
+ * @method static setFileUniqueId(string $fileUniqueId)
+ * @method static setWidth(integer $width)
+ * @method static setHeight(integer $height)
+ * @method static setDuration(integer $duration)
+ * @method static setThumbnail(PhotoSize $thumbnail)
+ * @method static setFileName(string $fileName)
+ * @method static setMimeType(string $mimeType)
+ * @method static setFileSize(integer $fileSize)
+ * 
  * @see https://core.telegram.org/bots/api#video
  */
-class Video extends TypesBase implements TypesInterface
+class Video extends baseType
 {
-  public string $file_id;
-  public string $file_unique_id;
-  public int $width;
-  public int $height;
-  public int $duration;
-  public ?PhotoSize $thumb;
-  public ?string $file_name;
-  public ?string $mime_type;
-  public ?int $file_size;
-
-  public function __construct(stdClass $up) {
-    $this->setFileId($up->file_id)
-      ->setFileUniqueId($up->file_unique_id)
-      ->setWidth($up->width)
-      ->setHeight($up->height)
-      ->setDuration($up->duration)
-      ->setThumb(PhotoSize::create($up->thumb ?? self::DEFAULT_PARAM))
-      ->setFileName($up->file_name ?? self::DEFAULT_PARAM)
-      ->setMimeType($up->mime_type ?? self::DEFAULT_PARAM)
-      ->setFileSize($up->file_size ?? self::DEFAULT_PARAM);
-  }
-
-  public function setFileId(string $fileId): Video
-  {
-    $this->file_id = $fileId;
-    return $this;
-  }
-
-  public function setFileUniqueId(string $fileUniqueId): Video
-  {
-    $this->file_unique_id = $fileUniqueId;
-    return $this;
-  }
-
-  public function setWidth(int $width): Video
-  {
-    $this->width = $width;
-    return $this;
-  }
-
-  public function setHeight(int $height): Video
-  {
-    $this->height = $height;
-    return $this;
-  }
-
-  public function setDuration(int $duration): Video
-  {
-    $this->duration = $duration;
-    return $this;
-  }
-
-  public function setThumb(?PhotoSize $thumb): Video
-  {
-    $this->thumb = $thumb;
-    return $this;
-  }
-
-  public function setFileName(?string $fileName): Video
-  {
-    $this->file_name = $fileName;
-    return $this;
-  }
-
-  public function setMimeType(?string $mimeType): Video
-  {
-    $this->mime_type = $mimeType;
-    return $this;
-  }
-
-  public function setFileSize(?int $fileSize): Video
-  {
-    $this->file_size = $fileSize;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'file_id'        => 'string',
+        'file_unique_id' => 'string',
+        'width'          => 'integer',
+        'height'         => 'integer',
+        'duration'       => 'integer',
+        'thumbnail'      => PhotoSize::class,
+        'file_name'      => 'string',
+        'mime_type'      => 'string',
+        'file_size'      => 'integer',
+    ];
 }

@@ -2,38 +2,24 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * This object represents an animated emoji that displays a random value.
  * 
+ * @property string  $emoji Emoji on which the dice throw animation is based
+ * @property integer $value Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji
+ * 
+ * @method string  emoji()
+ * @method integer value()
+ * 
+ * @method static setEmoji(string $emoji)
+ * @method static setValue(integer $value)
+ * 
  * @see https://core.telegram.org/bots/api#dice
  */
-class Dice extends TypesBase implements TypesInterface
+class Dice extends baseType
 {
-  public string $emoji;
-  public int $value;
-
-  public function __construct(stdClass $up) {
-    $this->setEmoji($up->emoji)
-      ->setValue($up->value);
-  }
-
-  public function setEmoji(string $emoji): Dice
-  {
-    $this->emoji = $emoji;
-    return $this;
-  }
-
-  public function setValue(int $value): Dice
-  {
-    $this->value = $value;
-    return $this;
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
+    protected array $fields = [
+        'emoji' => 'string',
+        'value' => 'integer',
+    ];
 }

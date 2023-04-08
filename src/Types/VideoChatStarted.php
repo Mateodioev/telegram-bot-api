@@ -10,15 +10,6 @@ use stdClass;
  * 
  * @see https://core.telegram.org/bots/api#videochatstarted
  */
-class VideoChatStarted extends TypesBase implements TypesInterface
+class VideoChatStarted extends baseType
 {
- 
-  public function __construct(stdClass $up) {
-    
-  }
-
-  public function get()
-  {
-    return $this->getProperties($this);
-  }
 }
