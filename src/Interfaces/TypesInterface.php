@@ -21,11 +21,13 @@ interface TypesInterface
 
   /**
    * Create new instance from existent object
+   * @return ?static
    */
   public static function createFromType(TypesInterface $up);
 
   /**
    * create new instance from array
+   * @return ?static
    */
   public static function createFromArray(?array $up);
 

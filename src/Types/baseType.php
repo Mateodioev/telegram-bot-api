@@ -78,7 +78,8 @@ abstract class baseType implements TypesInterface
         $fieldData = $this->getField($key);
 
 
-        if (is_array($fieldData)) {
+        // support for mixed types
+        if (is_array($fieldData) || $fieldData == 'mixed') {
             $this->__set($key, $value);
             return $this;
         }
@@ -211,14 +212,18 @@ abstract class baseType implements TypesInterface
 
     public static function createFromType(TypesInterface $up)
     {
-        return self::createFromArray($up->get());
+        // prevent set null params 
+        TypeConfig::setReturnNullParams(false);
+        $obj = self::createFromArray($up->get());
+        TypeConfig::setReturnNullParams(true);
+        return $obj;
     }
 
     public static function createFromArray(?array $up)
     {
         if (is_null($up)) return self::DEFAULT_PARAM;
 
-        $instance = new static; // only use here
+        $instance = new static;
 
         foreach ($up as $key => $value) {
             // only for scalar, check
@@ -236,7 +241,9 @@ abstract class baseType implements TypesInterface
                     $value = $field::createFromArray((array) $value);
                 }
             }
-            $instance->fluentSetter($key, $value);
+
+            $methodName = 'set_' . $key;
+            $instance->{$methodName}($value); // use __call
         }
 
         return $instance;

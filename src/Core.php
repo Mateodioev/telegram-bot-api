@@ -3,20 +3,16 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
-use Mateodioev\Bots\Telegram\Http\AsyncClient;
-use Mateodioev\Bots\Telegram\Http\HttpException;
-use Mateodioev\Bots\Telegram\Http\SyncClient;
-use Mateodioev\Bots\Telegram\Types\Response;
+use Mateodioev\Bots\Telegram\Http\{AsyncClient, SyncClient, Request as HttpClient, HttpException};
+use Mateodioev\Bots\Telegram\Types\{Response, Error};
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
-use Mateodioev\Bots\Telegram\Types\Error;
 use Mateodioev\Request\{Request, ResponseException};
-use Mateodioev\Bots\Telegram\Http\Request as HttpClient;
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
 
-use function array_merge, json_decode;
+use function array_merge;
 
 /**
  * Make request to telegram bot-api
@@ -93,6 +89,7 @@ abstract class Core implements TelegramInterface
 
   public function getClient(): HttpClient
   {
+    // TODO: add method in HttpClient to know is async or no
     if ($this->client instanceof HttpClient) {
       return $this->client;
     }
@@ -121,7 +118,7 @@ abstract class Core implements TelegramInterface
       ->setTimeout($this->timeout);
 
     try {
-      $this->result = $request->run()->toStdClass();
+      $this->result = $request->run()->toArray();
     } catch (HttpException $th) {
       throw new TelegramApiException('Fail to send method ' . $method->getMethod() . '. ' . $th->getMessage(), previous: $th);
     }
@@ -135,30 +132,30 @@ abstract class Core implements TelegramInterface
   {
     $return = $method->getReturn();
     $returnType = $return[0] ?? Response::class;
-    $methodName = $return[1] ? 'bulkCreate' : 'create';
+    $methodName = $return[1] ? 'bulkCreate' : 'createFromArray';
 
     if ($return[0] === null) return $this->result;
 
-    if ($this->result->ok) {
+    if ($this->result['ok']) {
       try {
         if ($returnType === Response::class) {
-	      return $returnType::$methodName($this->result);
+	        return $returnType::$methodName($this->result);
         }
-        return $returnType::$methodName($this->result->result);
+        return $returnType::$methodName($this->result['result']);
 
       } catch (\Throwable) {
         return $return[0]::$methodName($this->result);
       }
     }
 
-    $error = new Error($this->result);
+    $error = Error::createFromArray($this->result);
 
     if (TypesConfig::$throwOnFail) {
       $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
       throw new TelegramApiException($message, $error->error_code);
     }
 
-    return new Error($this->result);
+    return $error;
   }
 
   /**
@@ -171,11 +168,10 @@ abstract class Core implements TelegramInterface
   {
     $fh = fopen($destination, 'w');
 
-	$req = Request::GET($this->file_link)
-		->addOpts([
-			CURLOPT_FILE => $fh,
-			CURLOPT_TIMEOUT => $timeout
-        ]);
+    // TODO: change this
+	  $req = Request::GET($this->file_link)
+  		->addOpt(CURLOPT_FILE, $fh)
+      ->addOpt(CURLOPT_TIMEOUT, $timeout);
 
     try {
       $res = $req->Run($file_path);
