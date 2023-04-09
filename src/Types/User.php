@@ -8,7 +8,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @property integer  $id                          Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
  * @property boolean  $is_bot                      True, if this user is a bot
  * @property string   $first_name                  User's or bot's first name
- * @property string   $last_name                   Optional. User's or bot's last name
+ * @property ?string   $last_name                  Optional. User's or bot's last name
  * @property ?string  $username                    Optional. User's or bot's username
  * @property ?string  $language_code               Optional. [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) of the user's language
  * @property ?boolean $is_premium                  Optional. True, if this user is a Telegram Premium user
@@ -20,7 +20,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method integer  id()
  * @method boolean  isBot()
  * @method string   firstName()
- * @method string   lastName()
+ * @method ?string  lastName()
  * @method ?string  username()
  * @method ?string  languageCode()
  * @method ?boolean isPremium()
