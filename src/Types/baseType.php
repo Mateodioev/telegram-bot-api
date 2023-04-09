@@ -8,7 +8,7 @@ use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\object\gettersSetters;
 use stdClass;
 
-use function in_array, strtolower, preg_replace, strpos, substr, is_null, get_object_vars, is_subclass_of;
+use function in_array, strtolower, preg_replace, strpos, substr, is_string, array_key_first, is_null, get_object_vars, is_subclass_of;
 /**
  * Summary of baseType
  */
@@ -51,8 +51,14 @@ abstract class baseType implements TypesInterface
         return $this;
     }
 
-    public function __construct() {
+    public function __construct(...$args) {
         $this->cloneFields();
+
+        if (empty($args) || (!is_string(array_key_first($args))) ) return;
+
+        // create from construct params
+        // $obj = new Obj(param1: 1, param2: 'user');
+        $this->properties = self::createFromArray($args)->properties();
     }
 
     public static function create(?stdClass $up)

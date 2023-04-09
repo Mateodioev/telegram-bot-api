@@ -89,4 +89,17 @@ class ObjectsTest extends TestCase
         $this->assertSame($user1->isBot(), $user2->isBot());
         $this->assertSame($user1->firstName(), $user2->firstName());
     }
+
+    /**
+     * @dataProvider userDataSet
+     */
+    public function testCreateTypeFromConstructor(int $id, bool $is_bot, string $first_name)
+    {
+        $user = new User(id: $id, is_bot: $is_bot, first_name: $first_name);
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame($user->id(), $id);
+        $this->assertSame($user->isBot(), $is_bot);
+        $this->assertSame($user->firstName(), $first_name);
+    }
 }
