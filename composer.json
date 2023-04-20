@@ -21,7 +21,7 @@
         "mateodioev/utils": "^1.1",
         "ext-curl": "*",
         "ext-fileinfo": "*",
-        "amphp/http-client": "^5",
+        "amphp/http-client": "v5.0.0-beta.10",
         "amphp/file": "^3.0"
     },
     "require-dev": {
