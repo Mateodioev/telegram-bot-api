@@ -145,6 +145,8 @@ abstract class Core implements TelegramInterface
         }
         return $returnType::$methodName($this->result['result']);
 
+      } catch (TelegramParamException $e) {
+        throw $e;
       } catch (\Throwable) {
         return $return[0]::$methodName($this->result);
       }
