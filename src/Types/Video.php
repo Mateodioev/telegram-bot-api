@@ -46,6 +46,7 @@ class Video extends baseType
         'height'         => 'integer',
         'duration'       => 'integer',
         'thumbnail'      => PhotoSize::class,
+        'thumb'          => PhotoSize::class, // Legacy param
         'file_name'      => 'string',
         'mime_type'      => 'string',
         'file_size'      => 'integer',

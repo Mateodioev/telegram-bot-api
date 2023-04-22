@@ -36,6 +36,7 @@ class VideoNote extends baseType
         'length'         => 'integer',
         'duration'       => 'integer',
         'thumbnail'      => PhotoSize::class,
+        'thumb'          => PhotoSize::class, // Legacy param
         'file_size'      => 'integer',
     ];
 }

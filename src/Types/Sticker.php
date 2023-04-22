@@ -66,6 +66,7 @@ class Sticker extends baseType
         'is_animated'       => 'boolean',
         'is_video'          => 'boolean',
         'thumbnail'         => PhotoSize::class,
+        'thumb'             => PhotoSize::class, // Legacy param
         'emoji'             => 'string',
         'set_name'          => 'string',
         'premium_animation' => File::class,

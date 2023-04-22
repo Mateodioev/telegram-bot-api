@@ -10,7 +10,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @property integer   $width          Video width as defined by sender.
  * @property integer   $height         Video height as defined by sender.
  * @property integer   $duration       Duration of the video in seconds as defined by sender
- * @property PhotoSize $thumb          Optional. Animation thumbnail as defined by sender
+ * @property PhotoSize $thumbnail      Optional. Animation thumbnail as defined by sender
  * @property string    $file_name      Optional. Original animation filename as defined by sender
  * @property string    $mime_type      Optional. MIME type of the file as defined by sender
  * @property integer   $file_size      Optional. File size in bytes.
@@ -20,7 +20,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method integer    width()        Video width
  * @method integer    height()       Video height
  * @method integer    duration()     Duration of the video in seconds
- * @method ?PhotoSize thumb()        Animation thumbnail
+ * @method ?PhotoSize thumbnail()    Animation thumbnail
  * @method ?string    fileName()     Original animation filename
  * @method ?string    mimeType()     MIME type of the file
  * @method ?integer   fileSize()     File size in bytes
@@ -30,7 +30,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method static setWidth(int $width)
  * @method static setHeight(int $height)
  * @method static setDuration(int $duration)
- * @method static setThumb(PhotoSize $thumb)
+ * @method static setThumbnail(PhotoSize $thumbnail)
  * @method static setFileName(string $fileName)
  * @method static setMimeType(string $mimeType)
  * @method static setFileSize(string $fileSize)
@@ -45,7 +45,8 @@ class Animation extends baseType
         'width'          => 'integer',
         'height'         => 'integer',
         'duration'       => 'integer',
-        'thumb'          => PhotoSize::class,
+        'thumbnail'      => PhotoSize::class,
+        'thumb'          => PhotoSize::class, // Legacy param
         'file_name'      => 'string',
         'mime_type'      => 'string',
         'file_size'      => 'integer'

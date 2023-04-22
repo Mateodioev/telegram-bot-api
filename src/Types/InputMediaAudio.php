@@ -43,6 +43,7 @@ class InputMediaAudio extends InputMedia
         'type'             => 'string',
         'media'            => 'string',
         'thumbnail'        => 'mixed',
+        'thumb'            => 'mixed', // Legacy param
         'caption'          => 'string',
         'parse_mode'       => 'string',
         'caption_entities' => [MessageEntity::class],

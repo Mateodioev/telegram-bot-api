@@ -45,7 +45,8 @@ class Audio extends baseType
         'file_name'      => 'string',
         'mime_type'      => 'string',
         'file_size'      => 'integer',
-        'thumbnail'      => PhotoSize::class
+        'thumbnail'      => PhotoSize::class,
+        'thumb'          => PhotoSize::class, // Legacy param
     ];
 }
 

@@ -41,6 +41,7 @@ class StickerSet extends baseType
         'is_video'     => 'boolean',
         'stickers'     => [Sticker::class],
         'thumbnail'    => PhotoSize::class,
+        'thumb'        => PhotoSize::class, // Legacy param
     ];
 
     public function get()
