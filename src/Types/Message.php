@@ -6,6 +6,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * This object represents a message.
  * 
  * @property integer                        $message_id
+ * @property ?integer                       $messageThreadId
  * @property ?User                          $from
  * @property ?Chat                          $sender_chat
  * @property integer                        $date
@@ -69,6 +70,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @property ?InlineKeyboardMarkup          $reply_markup
  * 
  * @method integer                        messageId()
+ * @method ?integer                       messageThreadId()
  * @method ?User                          from()
  * @method ?Chat                          senderChat()
  * @method integer                        date()
@@ -132,6 +134,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method ?InlineKeyboardMarkup          replyMarkup()
  * 
  * @method static setMessageId(integer $messageId)
+ * @method static setMessageThreadId(integer $messageThreadId)
  * @method static setFrom(User $from)
  * @method static setSenderChat(Chat $senderChat)
  * @method static setDate(integer $date)
@@ -200,6 +203,7 @@ class Message extends baseType
 {
     protected array $fields = [
         'message_id'                        => 'integer',
+        'message_thread_id'                 => 'integer',
         'from'                              => User::class,
         'sender_chat'                       => Chat::class,
         'date'                              => 'integer',
