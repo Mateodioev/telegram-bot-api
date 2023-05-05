@@ -87,8 +87,12 @@ abstract class baseType implements TypesInterface
             // only for scalar, check
             $type = $instance->getFieldType($key);
 
-            if (empty($type) && TypeConfig::$throwOnFail) {
-                throw new TelegramParamException('Unknow property ' . $key);
+            if (empty($type)) {
+                if (TypeConfig::$throwOnFail) {
+                    throw new TelegramParamException('Unknow property ' . $key);
+                } else {
+                    continue; // Ignore invalid property
+                }
             }
 
             if (is_subclass_of($type[0], TypesInterface::class)) {
