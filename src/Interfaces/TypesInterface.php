@@ -12,6 +12,11 @@ interface TypesInterface
    */
   public function get();
 
+  /**
+   * Same as static::get() but not return null or false value
+   */
+  public function getReduced(): array;
+
   public function __call($name, $arguments);
 
   /**

@@ -51,6 +51,12 @@ abstract class baseType implements TypesInterface
         return $this;
     }
 
+    public function getReduced(): array
+    {
+      $up = $this->get();
+      return _filter_update($up);
+    }
+
     public function __construct(...$args) {
         $this->cloneFields();
 
@@ -132,3 +138,17 @@ abstract class baseType implements TypesInterface
         }, $up);
     }
 }
+
+function _filter_update(array &$up): array
+{
+  foreach ($up as $key => $value) {
+    \is_array($value) && $up[$key] = _filter_update($value);
+
+    if ($value === baseType::DEFAULT_BOOL || $value === baseType::DEFAULT_PARAM) {
+      unset($up[$key]);
+    }
+  }
+
+  return $up;
+}
+
