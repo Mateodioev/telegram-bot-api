@@ -239,6 +239,8 @@ class Message extends baseType
         'poll'                              => Poll::class,
         'venue'                             => Venue::class,
         'location'                          => Location::class,
+        'new_chat_participant'              => User::class,
+        'new_chat_member'                   => User::class,
         'new_chat_members'                  => [User::class],
         'left_chat_member'                  => User::class,
         'new_chat_title'                    => 'string',
