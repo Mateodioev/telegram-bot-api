@@ -26,9 +26,9 @@ class Buttons
     /**
      * @param string $type inline_keyboard, keyboard
      * @param array $others_params
-     * 
+     * @return Buttons
      */
-    public static function create(string $type = 'inline_keyboard', array $others_params = [])
+    public static function create(string $type = 'inline_keyboard', array $others_params = []): Buttons
     {
       return new self($type, $others_params);
     }
@@ -36,7 +36,7 @@ class Buttons
     /**
      * remove reply keyboard
      */
-    public static function replyKeyboardRemove(bool $selective = false)
+    public static function replyKeyboardRemove(bool $selective = false): Buttons
     {
       return new self('', [
         'remove_keyboard' => true,
