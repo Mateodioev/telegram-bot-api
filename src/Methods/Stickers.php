@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\sendInputFile;
-use Mateodioev\Bots\Telegram\Types\{File, MaskPosition, Message, Response, Sticker, StickerSet};
+use Mateodioev\Bots\Telegram\Types\{File, MaskPosition, Message, Sticker, StickerSet};
 
 /**
  * Stickers methods
@@ -19,7 +19,7 @@ trait Stickers
      */
     public function sendSticker(string|int $chatId, sendInputFile $sticker, array $params = []): TypesInterface
     {
-        return $this->request(Method::create(['chat_id' => $chatId, 'sticker' => $sticker, ...$params], 'senSticker')
+        return $this->request(Method::create(['chat_id' => $chatId, 'sticker' => $sticker->get(), ...$params], 'senSticker')
             ->setReturnType(Message::class));
     }
 
@@ -48,9 +48,9 @@ trait Stickers
     }
 
     /**
-    * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
-    * @see https://core.telegram.org/bots/api#uploadstickerfile
-    */
+     * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
+     * @see https://core.telegram.org/bots/api#uploadstickerfile
+     */
     public function uploadStickerFile(int $userId, sendInputFile $pngSticker): TypesInterface
     {
         return $this->request(Method::create(['user_id' => $userId, 'png_sticker' => $pngSticker->get()], 'uploadStickerFile')
@@ -71,14 +71,18 @@ trait Stickers
      * Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
      * @see https://core.telegram.org/bots/api#addstickertoset
      */
-    public function addStickerToSet(int $userId, string $name, string $emojis, ?sendInputFile $pngSticker = null, ?sendInputFile $tgSticker=null, ?sendInputFile $webmSticker=null, ?MaskPosition $maskPosition=null): TypesInterface
+    public function addStickerToSet(int $userId, string $name, string $emojis, ?sendInputFile $pngSticker = null, ?sendInputFile $tgSticker = null, ?sendInputFile $webmSticker = null, ?MaskPosition $maskPosition = null): TypesInterface
     {
         $payload = ['user_id' => $userId, 'name' => $name, 'emojis' => $emojis];
 
-        if ($pngSticker) $payload['pngSticker']     = $pngSticker->get();
-        if ($tgSticker) $payload['tgs_sticker']     = $tgSticker->get();
-        if ($webmSticker) $payload['webm_sticker']  = $webmSticker->get();
-        if ($maskPosition) $payload['maskPosition'] = $maskPosition->get();
+        if ($pngSticker)
+            $payload['pngSticker'] = $pngSticker->get();
+        if ($tgSticker)
+            $payload['tgs_sticker'] = $tgSticker->get();
+        if ($webmSticker)
+            $payload['webm_sticker'] = $webmSticker->get();
+        if ($maskPosition)
+            $payload['maskPosition'] = $maskPosition->get();
 
         return $this->request(Method::create($payload, 'addStickerToSet'));
     }
@@ -99,7 +103,7 @@ trait Stickers
     public function deleteStickerFromSet(string $sticker): TypesInterface
     {
         return $this->request(Method::create(['sticker' => $sticker])
-        ->setMethod('deleteStickerFromSet'));
+            ->setMethod('deleteStickerFromSet'));
     }
 
     /**
