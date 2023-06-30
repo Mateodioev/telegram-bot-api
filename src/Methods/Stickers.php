@@ -19,7 +19,7 @@ trait Stickers
      */
     public function sendSticker(string|int $chatId, sendInputFile $sticker, array $params = []): TypesInterface
     {
-        return $this->request(Method::create(['chat_id' => $chatId, 'sticker' => $sticker->get(), ...$params], 'senSticker')
+        return $this->request(Method::create(['chat_id' => $chatId, 'sticker' => $sticker->get(), ...$params], 'sendSticker')
             ->setReturnType(Message::class));
     }
 
