@@ -140,11 +140,10 @@ abstract class Core implements TelegramInterface
 
     if ($this->result['ok']) {
       try {
-        if ($returnType === Response::class) {
-	        return $returnType::$methodName($this->result);
-        }
-        return $returnType::$methodName($this->result['result']);
+        if ($returnType === Response::class)
+          return $returnType::$methodName($this->result);
 
+        return $returnType::$methodName($this->result['result']);
       } catch (TelegramParamException $e) {
         throw $e;
       } catch (\Throwable) {
@@ -173,8 +172,8 @@ abstract class Core implements TelegramInterface
     $fh = fopen($destination, 'w');
 
     // TODO: change this
-	  $req = Request::GET($this->file_link)
-  		->addOpt(CURLOPT_FILE, $fh)
+    $req = Request::GET($this->file_link)
+      ->addOpt(CURLOPT_FILE, $fh)
       ->addOpt(CURLOPT_TIMEOUT, $timeout);
 
     try {

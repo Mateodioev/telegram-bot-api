@@ -8,7 +8,8 @@ use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\object\gettersSetters;
 use stdClass;
 
-use function in_array, strtolower, preg_replace, strpos, substr, is_string, array_key_first, is_null, get_object_vars, is_subclass_of;
+use function in_array, strtolower, preg_replace, strpos, substr, array_walk, is_string, array_key_first, is_null, get_object_vars, is_subclass_of;
+
 /**
  * Summary of baseType
  */
@@ -38,29 +39,31 @@ abstract class baseType implements TypesInterface
 
     /**
      * Clone fields key into array
-     * Warning: this method reset all propertie values
+     * Warning: this method reset all properties values
      */
     public function cloneFields(): static
     {
-        foreach ($this->fields as $key => $_) {
-            $this->properties[$key] = (in_array('boolean', $this->getFieldType($key)))
+        $fields = $this->fields();
+        array_walk($fields, function ($_, $i) {
+            $this->properties[$i] = in_array('boolean', $this->getFieldType($i))
                 ? self::DEFAULT_BOOL
                 : self::DEFAULT_PARAM;
-        }
+        });
 
         return $this;
     }
 
     public function getReduced(): array
     {
-      $up = $this->get();
-      return _filter_update($up);
+        $up = $this->get();
+        return _filter_update($up);
     }
 
-    public function __construct(...$args) {
+    public function __construct(...$args)
+    {
         $this->cloneFields();
 
-        if (empty($args) || (!is_string(array_key_first($args))) ) return;
+        if (empty($args) || (!is_string(array_key_first($args)))) return;
 
         // create from construct params
         // $obj = new Obj(param1: 1, param2: 'user');
@@ -95,7 +98,7 @@ abstract class baseType implements TypesInterface
 
             if (empty($type)) {
                 if (TypeConfig::$throwOnFail) {
-                    throw new TelegramParamException('Unknow property ' . $key);
+                    throw new TelegramParamException('Unknow property ' . $key . ' in type ' . $instance::class);
                 } else {
                     continue; // Ignore invalid property
                 }
@@ -130,25 +133,29 @@ abstract class baseType implements TypesInterface
                 return self::create($update);
             } elseif (is_array($update) || is_null($update)) {
                 return self::createFromArray($update);
-            } elseif($update instanceof TypesInterface) {
+            } elseif ($update instanceof TypesInterface) {
                 return self::createFromType($update);
             } else {
                 throw new TelegramParamException('Invalid update');
             }
         }, $up);
     }
+
+    public function __debugInfo()
+    {
+        return $this->properties;
+    }
 }
 
 function _filter_update(array &$up): array
 {
-  foreach ($up as $key => $value) {
-    \is_array($value) && $up[$key] = _filter_update($value);
+    foreach ($up as $key => $value) {
+        \is_array($value) && $up[$key] = _filter_update($value);
 
-    if ($value === baseType::DEFAULT_BOOL || $value === baseType::DEFAULT_PARAM) {
-      unset($up[$key]);
+        if ($value === baseType::DEFAULT_BOOL || $value === baseType::DEFAULT_PARAM) {
+            unset($up[$key]);
+        }
     }
-  }
 
-  return $up;
+    return $up;
 }
-

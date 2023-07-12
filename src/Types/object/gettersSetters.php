@@ -27,11 +27,13 @@ trait gettersSetters
      */
     protected array $fields = [];
 
-    public function __get($key) {
+    public function __get($key)
+    {
         return $this->properties[$key] ?? self::DEFAULT_PARAM;
     }
 
-    public function __set($key, $value) {
+    public function __set($key, $value)
+    {
         $this->properties[$key] = $value;
     }
 
@@ -46,7 +48,8 @@ trait gettersSetters
     /**
      * Get all properties
      */
-    public function properties(): array {
+    public function properties(): array
+    {
         return $this->properties;
     }
 
@@ -58,7 +61,8 @@ trait gettersSetters
     /**
      * Get all fields
      */
-    public function fields(): array {
+    public function fields(): array
+    {
         return $this->fields;
     }
 
@@ -69,9 +73,9 @@ trait gettersSetters
     public function getFieldType(string $fieldName): array
     {
         $type = $this->getField($fieldName) ?? '';
-        
+
         if (is_array($type)) $type = $type[0];
-        
+
         $types = explode('|', $type);
         return Arrays::DeleteEmptyKeys($types);
     }
@@ -82,14 +86,14 @@ trait gettersSetters
     private function fluentSetter($key, $value): static
     {
         if (!in_array($key, array_keys($this->properties))) {
-            throw new TelegramParamException("Param {$key} not found");
+            throw new TelegramParamException("Param {$key} not found in type " . $this::class);
         }
 
-        $valueType = gettype($value);
-        $fieldData = $this->getField($key);
-
+        $valueType = gettype($value); // input type
+        $fieldData = $this->getField($key); // data type
 
         // support for mixed types
+        // TODO: if field support many values this don't check the type
         if (is_array($fieldData) || $fieldData == 'mixed') {
             $this->__set($key, $value);
             return $this;
@@ -133,10 +137,10 @@ trait gettersSetters
      */
     private function getter($key): mixed
     {
-        $param = substr($key, 4);
+        $param = substr($key, 4); // delete "get_"
         $property = $this->getProperty($key)
             ?? $this->getProperty($param);
-        
+
         if ($property === null && TypeConfig::$returnNullParams === false) {
             throw new TelegramParamException("Param {$key} not found");
         }
@@ -153,12 +157,11 @@ trait gettersSetters
 
         foreach ($this->properties as $key => $value) {
 
-            if ($value instanceof TypesInterface) {
+            if ($value instanceof TypesInterface)
                 $value = $value->get() ?? self::DEFAULT_PARAM;
-            }
-            if (TypeConfig::$returnNullParams === false && $value === self::DEFAULT_PARAM) {
+
+            if (TypeConfig::$returnNullParams === false && $value === self::DEFAULT_PARAM)
                 continue;
-            }
 
             $params[$key] = $value;
         }
@@ -176,8 +179,16 @@ trait gettersSetters
      */
     protected function recursiveGet(): array
     {
-        $props = $this->getProperties();
-        foreach ($props as $key => $value) {
+        $params = [];
+
+        foreach ($this->properties as $key => $value) {
+
+            if ($value instanceof TypesInterface)
+                $value = $value->get() ?? self::DEFAULT_PARAM;
+
+            if (TypeConfig::$returnNullParams === false && $value === self::DEFAULT_PARAM)
+                continue;
+
             if (is_array($value)) {
                 $value = array_map(function ($val) {
                     if ($val instanceof TypesInterface)
@@ -186,8 +197,9 @@ trait gettersSetters
                     return $val;
                 }, $value);
             }
-            $props[$key] = $value;
+            $params[$key] = $value;
         }
-        return $props;
+
+        return $params;
     }
 }
