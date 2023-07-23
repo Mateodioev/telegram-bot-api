@@ -13,7 +13,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * 
  * @see https://core.telegram.org/bots/api#botcommandscopedefault
  */
-class BotCommandScopeDefault extends baseType
+class BotCommandScopeDefault extends BotCommandScope
 {
     protected array $fields = [
         'type' => 'string',

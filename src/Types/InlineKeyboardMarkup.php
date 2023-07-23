@@ -25,7 +25,7 @@ class InlineKeyboardMarkup extends baseType
         foreach ($inline_keyboard as $inlineKeyboard) {
             $keyboard[] = InlineKeyboardButton::bulkCreate($inlineKeyboard);
         }
-        $this->inline_keyboard = $keyboard;
+        $this->properties['inline_keyboard'] = $keyboard;
         return $this;
     }
 
@@ -33,7 +33,8 @@ class InlineKeyboardMarkup extends baseType
     {
         $properties = [];
 
-        foreach ($this->inlineKeyboard() as $keyboards) {
+        // Avoid calling magic methods
+        foreach ($this->properties['inline_keyboard'] as $keyboards) {
             $properties['inline_keyboard'][] = array_map(fn ($keyboard) => $keyboard->get(), $keyboards);
         }
         

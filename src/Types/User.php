@@ -1,6 +1,8 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Types;
+
+use Mateodioev\Bots\Telegram\Config\ParseMode;
 
 /**
  * This object represents a Telegram user or bot.
@@ -58,4 +60,29 @@ class User extends baseType
         'can_read_all_group_messages' => 'boolean',
         'supports_inline_queries'     => 'boolean',
     ];
+
+    /**
+     * Get inline mention for this user. See {@see self::getName()} for name syntax
+     */
+    public function mention(ParseMode $mode = ParseMode::HTML): string
+    {
+        if ($mode == ParseMode::HTML) {
+            // <a href='tg://user?id=USER_ID'>First name + Last Name</a>
+            return '<a href=\'tg://user?id=' . $this->properties['id'] . '\'>' . ParseMode::removeHtml($this->getName()) . '</a>';
+        }
+
+        // [First name + Last Name](tg://user?id=USER_ID)
+        return '[' . $this->getName() . '](tg://user?id=' . $this->properties['id'] . ')';
+    }
+
+    /**
+     * Get user full name
+     */
+    public function getName(): string
+    {
+        // return $this->first_name . ' ' . $this->last_name;
+        // Avoid call magic methods
+
+        return \trim($this->properties['first_name'] . ' ' . $this->properties()['last_name']);
+    }
 }

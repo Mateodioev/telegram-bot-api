@@ -124,6 +124,9 @@ abstract class baseType implements TypesInterface
         return $instance;
     }
 
+    /**
+     * @return static[]|null
+     */
     public static function bulkCreate(?array $up): ?array
     {
         if (is_null($up)) return self::DEFAULT_PARAM;

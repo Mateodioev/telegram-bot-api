@@ -13,7 +13,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * 
  * @see https://core.telegram.org/bots/api#botcommandscopeallprivatechats
  */
-class BotCommandScopeAllPrivateChats extends baseType
+class BotCommandScopeAllPrivateChats extends BotCommandScope
 {
     protected array $fields = [
         'type' => 'string',

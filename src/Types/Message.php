@@ -17,6 +17,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @property ?string                        $forward_signature
  * @property ?string                        $forward_sender_name
  * @property ?integer                       $forward_date
+ * @property ?boolean                       $is_topic_message
  * @property ?boolean                       $is_automatic_forward
  * @property ?Message                       $reply_to_message
  * @property ?User                          $via_bot
@@ -36,6 +37,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @property ?Voice                         $voice
  * @property ?string                        $caption
  * @property ?MessageEntity[]               $caption_entities
+ * @property ?bool                          $has_media_spoiler
  * @property ?Contact                       $contact
  * @property ?Dice                          $dice
  * @property ?Game                          $game
@@ -56,12 +58,17 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @property ?Message                       $pinned_message
  * @property ?Message                       $invoice
  * @property ?SuccessfulPayment             $successful_payment
+ * @property ?UserShared                    $user_shared
+ * @property ?ChatShared                    $chat_shared
  * @property ?string                        $connected_website
+ * @property WriteAccessAllowed             $write_access_allowed
  * @property ?PassportData                  $passport_data
  * @property ?ProximityAlertTriggered       $proximity_alert_triggered
  * @property ?ForumTopicCreated             $forum_topic_created
  * @property ?ForumTopicClosed              $forum_topic_closed
  * @property ?ForumTopicReopened            $forum_topic_reopened
+ * @property ?GeneralForumTopicHidden       $general_forum_topic_hidden
+ * @property ?GeneralForumTopicUnhidden     $general_forum_topic_unhidden
  * @property ?VideoChatScheduled            $video_chat_scheduled
  * @property ?VideoChatStarted              $video_chat_started
  * @property ?VideoChatEnded                $video_chat_ended
@@ -81,6 +88,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method ?string                        forwardSignature()
  * @method ?string                        forwardSenderName()
  * @method ?integer                       forwardDate()
+ * @method ?boolean                       isTopicMessage()
  * @method ?boolean                       isAutomaticForward()
  * @method ?Message                       replyToMessage()
  * @method ?User                          viaBot()
@@ -100,6 +108,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method ?Voice                         voice()
  * @method ?string                        caption()
  * @method ?MessageEntity[]               captionEntities()
+ * @method ?boolean                       hasMediaSpoiler()
  * @method ?Contact                       contact()
  * @method ?Dice                          dice()
  * @method ?Game                          game()
@@ -120,12 +129,17 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method ?Message                       pinnedMessage()
  * @method ?Message                       invoice()
  * @method ?SuccessfulPayment             successfulPayment()
+ * @method ?UserShared                    userShared()
+ * @method ?ChatShared                    chatShared()
  * @method ?string                        connectedWebsite()
+ * @method ?WriteAccessAllowed            writeAccessAllowed()
  * @method ?PassportData                  passportData()
  * @method ?ProximityAlertTriggered       proximityAlertTriggered()
  * @method ?ForumTopicCreated             forumTopicCreated()
  * @method ?ForumTopicClosed              forumTopicClosed()
  * @method ?ForumTopicReopened            forumTopicReopened()
+ * @method ?GeneralForumTopicHidden       generalForumTopicHidden()
+ * @method ?GeneralForumTopicUnhidden     generalForumTopicUnhidden()
  * @method ?VideoChatScheduled            videoChatScheduled()
  * @method ?VideoChatStarted              videoChatStarted()
  * @method ?VideoChatEnded                videoChatEnded()
@@ -145,6 +159,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method static setForwardSignature(string $forwardSignature)
  * @method static setForwardSenderName(string $forwardSenderName)
  * @method static setForwardDate(integer $forwardDate)
+ * @method static isTopicMessage(boolean $isTopicMessage)
  * @method static setIsAutomaticForward(boolean $isAutomaticForward)
  * @method static setReplyToMessage(Message $replyToMessage)
  * @method static setViaBot(User $viaBot)
@@ -164,6 +179,7 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method static setVoice(Voice $voice)
  * @method static setCaption(string $caption)
  * @method static setCaptionEntities(array $captionEntities)
+ * @method static hasMediaSpoiler(boolean $hasMediaSpoiler)
  * @method static setContact(Contact $contact)
  * @method static setDice(Dice $dice)
  * @method static setGame(Game $game)
@@ -184,12 +200,17 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method static setPinnedMessage(Message $pinnedMessage)
  * @method static setInvoice(Message $invoice)
  * @method static setSuccessfulPayment(SuccessfulPayment $successfulPayment)
+ * @method static setUserShared(UserShared $userShared)
+ * @method static setChatShared(ChatShared $chatShared)
  * @method static setConnectedWebsite(string $connectedWebsite)
+ * @method static setWriteAccessAllowed(WriteAccessAllowed $writeAccessAllowed)
  * @method static setPassportData(PassportData $passportData)
  * @method static setProximityAlertTriggered(ProximityAlertTriggered $proximityAlertTriggered)
  * @method static setForumTopicCreated(ForumTopicCreated $forumTopicCreated)
  * @method static setForumTopicClosed(ForumTopicClosed $forumTopicClosed)
  * @method static setForumTopicReopened(ForumTopicReopened $forumTopicReopened)
+ * @method static setGeneralForumTopicHidden(GeneralForumTopicHidden $generalForumTopicHidden)
+ * @method static setGeneralForumTopicUnhidden(GeneralForumTopicUnhidden $generalForumTopicUnhidden)
  * @method static setVideoChatScheduled(VideoChatScheduled $videoChatScheduled)
  * @method static setVideoChatStarted(VideoChatStarted $videoChatStarted)
  * @method static setVideoChatEnded(VideoChatEnded $videoChatEnded)
@@ -214,6 +235,7 @@ class Message extends baseType
         'forward_signature'                 => 'string',
         'forward_sender_name'               => 'string',
         'forward_date'                      => 'integer',
+        'is_topic_message'                  => 'boolean',
         'is_automatic_forward'              => 'boolean',
         'reply_to_message'                  => Message::class,
         'via_bot'                           => User::class,

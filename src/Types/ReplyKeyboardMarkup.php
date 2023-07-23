@@ -45,7 +45,7 @@ class ReplyKeyboardMarkup extends baseType
         foreach ($keyboard as $keyboardRow) {
             $_keyboard[] = KeyboardButton::bulkCreate($keyboardRow);
         }
-        $this->keyboard = $_keyboard;
+        $this->properties['keyboard'] = $_keyboard;
         return $this;
     }
 
@@ -53,10 +53,16 @@ class ReplyKeyboardMarkup extends baseType
     {
         $properties = $this->getProperties();
 
-        foreach ($this->keyboard() as $keyboards) {
+        // Avoid calling magic methods
+        foreach ($this->properties['keyboard'] as $keyboards) {
             $properties['keyboard'][] = array_map(fn ($keyboard) => $keyboard->get(), $keyboards);
         }
-        
+        /**
+         * foreach ($this->keyboard() as $keyboards) {
+         *   # code...
+         * }
+         */
+
         return $properties;
     }
 }
