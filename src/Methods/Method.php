@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
@@ -16,7 +16,8 @@ class Method implements MethodInterface
   public ?string $returnType = null;
   public bool $multipleResults = false;
 
-  public function __construct(array $params = [], ?string $method = null) {
+  public function __construct(array $params = [], ?string $method = null)
+  {
     $this->params = $params;
     if ($method) {
       $this->setMethod($method);
@@ -31,7 +32,7 @@ class Method implements MethodInterface
 
   public function addParam(string $key, mixed $value): Method
   {
-    $this->params = [...$this->params, ...[$key => $value]];
+    $this->params[$key] = $value;
     return $this;
   }
 
@@ -49,17 +50,16 @@ class Method implements MethodInterface
 
   public function setMethod(string $method): Method
   {
-    if (empty($method)) {
+    if (empty($method))
       throw new TelegramParamException('Method can\'t be empty');
-      
-    }
+
     $this->method = $method;
     return $this;
   }
 
   public function setReturnType(string $type, bool $multipleResults = false): Method
   {
-    $this->returnType = $type;
+    $this->returnType      = $type;
     $this->multipleResults = $multipleResults;
     return $this;
   }

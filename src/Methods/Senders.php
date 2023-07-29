@@ -3,8 +3,7 @@
 namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use Mateodioev\Bots\Telegram\Types\{sendInputFile, sendPoll};
-use Mateodioev\Bots\Telegram\Types\{Message};
+use Mateodioev\Bots\Telegram\Types\{Message, sendInputFile, sendPoll};
 
 /**
  * Methods for send
@@ -31,7 +30,7 @@ trait Senders
   {
     return $this->sendMessage($chatId, $text, [
       'reply_to_message_id' => $replyToMessageId,
-      'parse_mode' => $parseMode,
+      'parse_mode' => 'html',
       ...$params
     ]);
   }
@@ -60,8 +59,8 @@ trait Senders
   public function sendVideo(string|int $chatId, sendInputFile $video, array $params = []): TypesInterface
   {
     return $this->request(Method::create(['chat_id' => $chatId, 'document' => $video->get(), ...$params])
-        ->setMethod('sendVideo')
-        ->setReturnType(Message::class));
+      ->setMethod('sendVideo')
+      ->setReturnType(Message::class));
   }
 
   public function sendAnimation(string|int $chatId, sendInputFile $animation, array $params = []): TypesInterface
@@ -119,7 +118,7 @@ trait Senders
     if ($options->getCorrectId() !== null) {
       $payload['correct_option_id'] = $options->getCorrectId();
     }
-    
+
     return $this->request(Method::create($payload)
       ->setMethod('sendPoll')
       ->setReturnType(Message::class));

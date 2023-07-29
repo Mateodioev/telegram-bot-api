@@ -64,15 +64,17 @@ class User extends baseType
     /**
      * Get inline mention for this user. See {@see self::getName()} for name syntax
      */
-    public function mention(ParseMode $mode = ParseMode::HTML): string
+    public function mention(ParseMode $mode = ParseMode::HTML, ?string $customName = null): string
     {
+        $name = $mode->scapeTags($customName ?? $this->getName());
+
         if ($mode == ParseMode::HTML) {
-            // <a href='tg://user?id=USER_ID'>First name + Last Name</a>
-            return '<a href=\'tg://user?id=' . $this->properties['id'] . '\'>' . ParseMode::removeHtml($this->getName()) . '</a>';
+            // <a href="tg://user?id=USER_ID">First name + Last Name</a>
+            return '<a href="tg://user?id=' . $this->properties['id'] . '">' . $name . '</a>';
         }
 
         // [First name + Last Name](tg://user?id=USER_ID)
-        return '[' . $this->getName() . '](tg://user?id=' . $this->properties['id'] . ')';
+        return '[' . $name . '](tg://user?id=' . $this->properties['id'] . ')';
     }
 
     /**
@@ -82,7 +84,6 @@ class User extends baseType
     {
         // return $this->first_name . ' ' . $this->last_name;
         // Avoid call magic methods
-
-        return \trim($this->properties['first_name'] . ' ' . $this->properties()['last_name']);
+        return \trim($this->properties['first_name'] . ' ' . $this->properties['last_name']);
     }
 }
