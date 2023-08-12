@@ -39,7 +39,7 @@ class KeyboardButton extends baseType
         'request_chat'     => KeyboardButtonRequestChat::class,
         'request_contact'  => 'boolean',
         'request_location' => 'boolean',
-        'request_poll'     => KeyboardButtonPollType   ::class,
+        'request_poll'     => KeyboardButtonPollType::class,
         'web_app'          => WebAppInfo::class,
     ];
 }

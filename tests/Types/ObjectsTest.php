@@ -14,7 +14,7 @@ class ObjectsTest extends TestCase
     /**
      * @dataProvider userDataSet
      */
-    public function testCreateSingleTypes(int $id, bool $is_bot, string $first_name) 
+    public function testCreateSingleTypes(int $id, bool $is_bot, string $first_name)
     {
         $user = User::createFromArray(compact('id', 'is_bot', 'first_name'));
 
@@ -49,7 +49,7 @@ class ObjectsTest extends TestCase
     public function testSetInvalidProperty(int $id, bool $is_bot, string $first_name)
     {
         $data = [...compact('id', 'is_bot', 'first_name'), 'invalid_property' => 'invalid value'];
-        
+
         Types::setThrowExceptionOnFail(true);
         $this->expectException(TelegramParamException::class);
         User::createFromArray($data);
@@ -70,7 +70,7 @@ class ObjectsTest extends TestCase
     public function testCreateTypeFromAnotherType(int $id, bool $is_bot, string $first_name)
     {
         $data = compact('id', 'is_bot', 'first_name');
-        
+
         $user1 = User::createFromArray($data);
         $user2 = User::createFromType(User::createFromArray($data));
 

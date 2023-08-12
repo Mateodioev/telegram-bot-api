@@ -1,6 +1,8 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Types;
+
+use Mateodioev\Bots\Telegram\Config\Types;
 
 /**
  * This object represents one button of an inline keyboard. You must use exactly one of the optional fields.

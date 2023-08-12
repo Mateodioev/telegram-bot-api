@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests\Telegram;
 
@@ -47,7 +47,15 @@ class ApiTest extends TestCase
   {
     $me = self::$api->setAsync(true)
       ->getMe();
-    
+
     $this->assertInstanceOf(User::class, $me);
+  }
+
+  public function testGetErrorOnInvalidToken()
+  {
+    $api = new Api('INVALID_BOT_TOKEN');
+
+    $me = $api->getMe();
+    $this->assertInstanceOf(Error::class, $me);
   }
 }

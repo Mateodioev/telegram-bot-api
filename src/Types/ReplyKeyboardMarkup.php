@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -52,16 +52,12 @@ class ReplyKeyboardMarkup extends baseType
     public function get()
     {
         $properties = $this->getProperties();
+        unset($properties['keyboard']);
 
         // Avoid calling magic methods
         foreach ($this->properties['keyboard'] as $keyboards) {
             $properties['keyboard'][] = array_map(fn ($keyboard) => $keyboard->get(), $keyboards);
         }
-        /**
-         * foreach ($this->keyboard() as $keyboards) {
-         *   # code...
-         * }
-         */
 
         return $properties;
     }

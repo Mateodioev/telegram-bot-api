@@ -175,6 +175,17 @@ trait gettersSetters
     }
 
     /**
+     * Return all properties as json
+     * @see self::get()
+     * 
+     * @param int $flags {@see json_encode} flags
+     */
+    public function toString(int $flags = 0): string
+    {
+        return json_encode($this->get(), $flags);
+    }
+
+    /**
      * Iterate for all elements and use method get if is instance of TypesInterface
      */
     protected function recursiveGet(): array
