@@ -52,7 +52,7 @@ use Mateodioev\Bots\Telegram\Types\baseType;
 class MyCustomType extends baseType
 {
     protected array $fields = [
-        'field1' => 'valueType',
+        'field1' => 'string',
         'id'     => 'integer', // only accept integer values
         'user'   => User::class, // only accept arrays or instances of the User class
     ];
@@ -67,5 +67,9 @@ $customType = MyCustomType::createFromArray(['field1' => 'Type', 'id' => 1111, '
 // From stdClass
 $customType = MyCustomType::create((object) ['field1' => 'Type', 'id' => 1111, 'user' => $user]);
 // Create from constructor
-$customType = new MyCustomType(field1: 'Type', id: 1111, user: $user); // maybe this cause linter errors
+$customType = new MyCustomType([
+    'field1' => 'example value',
+    'id' => 123121,
+    'user' => new User // or an array the follows the properties of the User class. example: ['id' => 1111111, 'first_name' => 'user first name']
+]);
 ```

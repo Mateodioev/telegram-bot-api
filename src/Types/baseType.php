@@ -59,11 +59,11 @@ abstract class baseType implements TypesInterface
         return _filter_update($up);
     }
 
-    public function __construct(...$args)
+    public function __construct(?array $args = null)
     {
         $this->cloneFields();
 
-        if (empty($args) || (!is_string(array_key_first($args)))) return;
+        if ($args === null) return;
 
         // create from construct params
         // $obj = new Obj(param1: 1, param2: 'user');

@@ -96,7 +96,11 @@ class ObjectsTest extends TestCase
      */
     public function testCreateTypeFromConstructor(int $id, bool $is_bot, string $first_name)
     {
-        $user = new User(id: $id, is_bot: $is_bot, first_name: $first_name);
+        $user = new User([
+            'id'         => $id,
+            'is_bot'     => $is_bot,
+            'first_name' => $first_name
+        ]);
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertSame($user->id(), $id);
