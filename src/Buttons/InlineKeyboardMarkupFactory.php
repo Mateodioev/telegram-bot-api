@@ -10,6 +10,8 @@ use Mateodioev\Bots\Telegram\Types\{
 class InlineKeyboardMarkupFactory extends baseFactory
 {
     private InlineKeyboardMarkup $button;
+
+    /** InlineKeyboardButton[][] */
     private array $rows = [];
     private int $line   = 0;
 

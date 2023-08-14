@@ -205,6 +205,7 @@ abstract class Core implements TelegramInterface
 
   /** 
    * Add new options params to the actual method
+   * @deprecated v4.0.0-beta
    */
   public function addOpt(array $opts): static
   {
