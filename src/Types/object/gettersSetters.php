@@ -160,7 +160,7 @@ trait gettersSetters
             if ($value instanceof TypesInterface)
                 $value = $value->get() ?? self::DEFAULT_PARAM;
 
-            if (TypeConfig::$returnNullParams === false && $value === self::DEFAULT_PARAM)
+            if (TypeConfig::$returnNullParams === false && ($value === self::DEFAULT_PARAM || $value === self::DEFAULT_BOOL))
                 continue;
 
             $params[$key] = $value;
@@ -197,7 +197,7 @@ trait gettersSetters
             if ($value instanceof TypesInterface)
                 $value = $value->get() ?? self::DEFAULT_PARAM;
 
-            if (TypeConfig::$returnNullParams === false && $value === self::DEFAULT_PARAM)
+            if (TypeConfig::$returnNullParams === false && ($value === self::DEFAULT_PARAM || $value === self::DEFAULT_BOOL))
                 continue;
 
             if (is_array($value)) {
