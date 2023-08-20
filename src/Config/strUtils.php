@@ -2,9 +2,14 @@
 
 namespace Mateodioev\Bots\Telegram\Config;
 
+use function strtolower, preg_replace, str_replace;
+
 class strUtils
 {
-    private const EMOJIFY_OFFSET = 127397;
+    public static function toSnakeCase(string $value): string
+    {
+        return strtolower(preg_replace('/(?<=[a-z])([A-Z])/', '_$1', $value));
+    }
 
     public static function scapeTags(string $str, ParseMode $mode): string
     {
@@ -21,8 +26,8 @@ class strUtils
     public static function scapeHtmlTags(string $str): string
     {
         return str_replace(
-            ['<', '>', '≤', '≥', '&'],
-            ['&lt;', '&gt;', '&le;', '&ge;', '&amp;'],
+            ['&', '<', '>', '≤', '≥'],
+            ['&amp;', '&lt;', '&gt;', '&le;', '&ge;'],
             $str
         );
     }
@@ -34,9 +39,9 @@ class strUtils
      */
     public static function scapeMarkdownTags(string $str): string
     {
-        return str_replace([
-            '\\', '-', '#', '*', '+', '`', '.', '[', ']', '(', ')', '!', '&', '<', '>', '_', '{', '}', ],
-            ['\\\\', '\-', '\#', '\*', '\+', '\`', '\.', '\[', '\]', '\(', '\)', '\!', '\&', '\<', '\>', '\_', '\{', '\}',],
+        return str_replace(
+            ['\\', '-', '#', '*', '+', '`', '.', '[', ']', '(', ')', '!', '&', '<', '>', '_', '{', '}'],
+            ['\\\\', '\-', '\#', '\*', '\+', '\`', '\.', '\[', '\]', '\(', '\)', '\!', '\&', '\<', '\>', '\_', '\{', '\}'],
             $str
         );
     }

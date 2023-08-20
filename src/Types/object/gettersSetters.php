@@ -34,7 +34,8 @@ trait gettersSetters
 
     public function __set($key, $value)
     {
-        $this->properties[$key] = $value;
+         $this->fluentSetter($key, $value);
+        // $this->properties[$key] = $value;
     }
 
     /**
@@ -95,7 +96,7 @@ trait gettersSetters
         // support for mixed types
         // TODO: if field support many values this don't check the type
         if (is_array($fieldData) || $fieldData == 'mixed') {
-            $this->__set($key, $value);
+            $this->properties[$key] = $value;
             return $this;
         }
 
@@ -103,13 +104,13 @@ trait gettersSetters
 
         // Check scalar values
         if ($valueType != 'object' && in_array($valueType, $fieldType)) {
-            $this->__set($key, $value);
+            $this->properties[$key] = $value;
             return $this;
         }
 
         // check objects
         if ($value instanceof $fieldType[0]) {
-            $this->__set($key, $value);
+            $this->properties[$key] = $value;
             return $this;
         }
 
@@ -169,6 +170,9 @@ trait gettersSetters
         return $params;
     }
 
+    /**
+     * @return array
+     */
     public function get()
     {
         return $this->getProperties();

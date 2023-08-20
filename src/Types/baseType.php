@@ -2,13 +2,13 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\Types as TypeConfig;
+use Mateodioev\Bots\Telegram\Config\{strUtils, Types as TypeConfig};
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\object\gettersSetters;
 use stdClass;
 
-use function in_array, strtolower, preg_replace, strpos, substr, array_walk, is_string, array_key_first, is_null, get_object_vars, is_subclass_of;
+use function in_array, str_starts_with, substr, array_walk, is_null, get_object_vars, is_subclass_of;
 
 /**
  * Summary of baseType
@@ -22,15 +22,14 @@ abstract class baseType implements TypesInterface
         return is_array($this->getField($fieldName));
     }
 
-    public function __call($name, $values): mixed
+    public function __call($name, $arguments): mixed
     {
-        $fieldName = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name));
+        $fieldName = strUtils::toSnakeCase($name);
 
         // set new field
-        if (strpos($fieldName, 'set') === 0) {
+        if (str_starts_with($fieldName, 'set')) {
             $fieldName = substr($fieldName, 4);
-
-            return $this->fluentSetter($fieldName, $values[0]);
+            return $this->fluentSetter($fieldName, $arguments[0]);
         }
 
         // get field name
@@ -41,7 +40,7 @@ abstract class baseType implements TypesInterface
      * Clone fields key into array
      * Warning: this method reset all properties values
      */
-    public function cloneFields(): static
+    private function cloneFields(): static
     {
         $fields = $this->fields();
         array_walk($fields, function ($_, $i) {

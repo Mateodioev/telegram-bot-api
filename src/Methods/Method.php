@@ -5,9 +5,9 @@ namespace Mateodioev\Bots\Telegram\Methods;
 use Mateodioev\Bots\Telegram\Config\ParseMode;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TypesInterface};
-use Mateodioev\Bots\Telegram\Types\Response;
+use Mateodioev\Bots\Telegram\Types\{InputFile, Response};
 
-use function array_merge;
+use function array_merge, array_map, array_filter;
 
 class Method implements MethodInterface
 {
@@ -86,12 +86,14 @@ class Method implements MethodInterface
 
 	private function normalizeParams(): array
 	{
-		return array_map(function ($value) {
-			if ($value instanceof TypesInterface)
+		$params = array_map(function ($value) {
+			if ($value instanceof TypesInterface || $value instanceof InputFile)
 				return $value->get();
 			if ($value instanceof ParseMode)
 				return $value->value;
 			return $value;
 		}, $this->params);
+
+		return array_filter($params);
 	}
 }

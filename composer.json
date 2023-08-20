@@ -1,13 +1,13 @@
 {
     "name": "mateodioev/tgbot",
-    "description": "Libreria para interactuar con los metodos de la api de bots de telegram",
+    "description": "Librería para interactuar con los metodos de la api de bots de telegram",
     "type": "library",
     "license": "MIT",
     "keywords": [
-      "telegram",
-      "bot",
-      "api",
-      "telegram-bot-api"
+        "telegram",
+        "bot",
+        "api",
+        "telegram-bot-api"
     ],
     "autoload": {
         "psr-4": {
@@ -29,9 +29,9 @@
         "phpunit/phpunit": "^9.5"
     },
     "autoload-dev": {
-      "psr-4": {
-        "Tests\\": "tests/"
-      }
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "test": "phpunit --testdox tests/ --colors=always",
