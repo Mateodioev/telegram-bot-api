@@ -2,42 +2,22 @@
 
 namespace Mateodioev\Bots\Telegram\Interfaces;
 
-use stdClass;
-
 interface TypesInterface
 {
-  /**
-   * Get all properties
-   * @return array
-   */
-  public function get();
+	/**
+	 * Get all properties
+	 */
+	public function get(): array;
 
-  /**
-   * Same as static::get() but not return null or false value
-   */
-  public function getReduced(): array;
+	/**
+	 * Get only properties that not null or false
+	 */
+	public function getReduced(): array;
 
-  public function __call($name, $arguments);
+	/**
+	 * Create new instance
+	 */
+	public static function create(?array $update): ?static;
 
-  /**
-   * create new instance
-   */
-  public static function create(?stdClass $up);
-
-  /**
-   * Create new instance from existent object
-   * @return ?static
-   */
-  public static function createFromType(TypesInterface $up);
-
-  /**
-   * create new instance from array
-   * @return ?static
-   */
-  public static function createFromArray(?array $up);
-
-  /**
-   * Create multiple instances from array
-   */
-  public static function bulkCreate(?array $up): ?array;
+	public function bulkCreate(?array $up): ?array;
 }

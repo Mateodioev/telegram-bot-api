@@ -18,14 +18,36 @@ final class FieldType
     private array $cachedSubFields = [];
     private ?\Closure $matcher = null;
 
+    public static function single(string $type): FieldType
+    {
+        return new FieldType($type);
+    }
+
+    public static function multiple(string $type): FieldType
+    {
+        return new FieldType($type, allowArrays: true);
+    }
+
+    public static function optional(string $type): FieldType
+    {
+        return new FieldType($type, allowNull: true);
+    }
+
+    public static function mixed(): FieldType
+    {
+        return new FieldType('mixed');
+    }
+
     public function __construct(
         private readonly string $type,
         private readonly bool   $allowArrays = false,
         private readonly bool   $allowNull = false,
         private readonly array  $subTypes = []
     ) {
-        if ($type === 'mixed')
+        if ($type === 'mixed') {
             $this->isMixed = true;
+            return;
+        }
 
         if (!empty($this->subTypes))
             $this->getSubFields();
@@ -59,9 +81,37 @@ final class FieldType
         return $this->getMatcher()($value);
     }
 
+    public function explainType(): string
+    {
+        $types = $this->types();
+        $last = array_pop($types);
+
+        if (count($types) > 0)
+            return implode(', ', $types) . ' or ' . $last;
+
+        return $last;
+    }
+
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * Get types and subtypes
+     * @return string[]
+     */
+    public function types(): array
+    {
+        return [$this->type, ...$this->subTypes];
+    }
+
+    /**
+     * Return true if the field support booleans values
+     */
+    public function allowBooleans(): bool
+    {
+        return in_array('boolean', $this->types());
     }
 
     /**
@@ -78,6 +128,14 @@ final class FieldType
     public function allowNull(): bool
     {
         return $this->allowNull;
+    }
+
+    /**
+     * Return true if the field is scalar
+     */
+    public function isScalar(): bool
+    {
+        return $this->isScalar;
     }
 
     /**
