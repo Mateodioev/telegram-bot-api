@@ -134,7 +134,7 @@ abstract class Core implements TelegramInterface
   {
     $return = $method->getReturn();
     $returnType = $return[0] ?? Response::class;
-    $methodName = $return[1] ? 'bulkCreate' : 'createFromArray';
+    $methodName = $return[1] ? 'bulkCreate' : 'create';
 
     if ($return[0] === null) return $this->result;
 
@@ -151,7 +151,7 @@ abstract class Core implements TelegramInterface
       }
     }
 
-    $error = Error::createFromArray($this->result);
+    $error = Error::create($this->result);
 
     if (TypesConfig::$throwOnFail) {
       $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
