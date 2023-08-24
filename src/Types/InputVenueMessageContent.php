@@ -7,6 +7,33 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
 /**
  * Represents the content of a venue message to be sent as the result of an inline query.
  *
+ * @property double $latitude Latitude of the venue in degrees
+ * @property double $longitude Longitude of the venue in degrees
+ * @property string $title Name of the venue
+ * @property string $address Address of the venue
+ * @property ?string $foursquare_id Optional. Foursquare identifier of the venue, if known
+ * @property ?string $foursquare_type Optional. Foursquare type of the venue, if known. (For example, "arts_entertainment/default", "arts_entertainment/aquarium" or "food/icecream".)
+ * @property ?string $google_place_id Optional. Google Places identifier of the venue
+ * @property ?string $google_place_type Optional. Google Places type of the venue. (See supported types.)
+ *
+ * @method double latitude()
+ * @method double longitude()
+ * @method string title()
+ * @method string address()
+ * @method ?string foursquareId()
+ * @method ?string foursquareType()
+ * @method ?string googlePlaceId()
+ * @method ?string googlePlaceType()
+ *
+ * @method static setLatitude(double $latitude)
+ * @method static setLongitude(double $longitude)
+ * @method static setTitle(string $title)
+ * @method static setAddress(string $address)
+ * @method static setFoursquareId(?string $foursquareId)
+ * @method static setFoursquareType(?string $foursquareType)
+ * @method static setGooglePlaceId(?string $googlePlaceId)
+ * @method static setGooglePlaceType(?string $googlePlaceType)
+ *
  * @see https://core.telegram.org/bots/api#inputvenuemessagecontent
  */
 class InputVenueMessageContent extends InputMessageContent

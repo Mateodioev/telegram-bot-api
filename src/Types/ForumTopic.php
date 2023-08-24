@@ -7,6 +7,21 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
 /**
  * This object represents a forum topic.
  *
+ * @property int $message_thread_id Unique identifier of the forum topic
+ * @property string $name Name of the topic
+ * @property int $icon_color Color of the topic icon in RGB format
+ * @property ?string $icon_custom_emoji_id Optional. Unique identifier of the custom emoji shown as the topic icon
+ *
+ * @method int messageThreadId()
+ * @method string name()
+ * @method int iconColor()
+ * @method ?string iconCustomEmojiId()
+ *
+ * @method static setMessageThreadId(int $messageThreadId)
+ * @method static setName(string $name)
+ * @method static setIconColor(int $iconColor)
+ * @method static setIconCustomEmojiId(?string $iconCustomEmojiId)
+ *
  * @see https://core.telegram.org/bots/api#forumtopic
  */
 class ForumTopic extends abstractType

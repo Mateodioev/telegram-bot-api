@@ -41,4 +41,32 @@ class Field
         }
         return $parsedTypes;
     }
+
+    public function typeStr()
+    {
+        $types = [];
+        foreach ($this->types as $type) {
+            $typeStr = $type->getType();
+            if ($type->isScalar() === false) {
+                $typeStr = str_replace('Mateodioev\Bots\Telegram\Types\\', '', $typeStr);
+            } else {
+                $convert = ['integer' => 'int', 'boolean' => 'bool'];
+                $typeStr = $convert[$typeStr] ?? $typeStr;
+            }
+            if ($type->allowArrays()) {
+                $typeStr = $typeStr . '[]';
+            }
+            $types[] = $typeStr;
+        }
+        $type = join('|', $types);
+        if ($this->required === false) {
+            if (count($this->types) > 1) {
+                return $type . '|null';
+            }
+
+            return '?' . $type;
+        }
+
+        return $type;
+    }
 }

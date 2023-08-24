@@ -125,10 +125,14 @@ class TypeStr
 
     private function generatePhpDoc(): string
     {
-        $max = $this->getMaxFieldLength();
+        $this->getMaxFieldLength();
+
+        $docString = $this->phpDocString();
+        $docString = empty($docString) ? '' : PHP_EOL . $docString;
 
         return '/**'
             . PHP_EOL . $this->phpDocDescription()
+            . $docString
             . PHP_EOL . $this->seeTagDescription()
             . PHP_EOL . ' */';
     }
@@ -141,6 +145,25 @@ class TypeStr
     private function seeTagDescription()
     {
         return ' *' . PHP_EOL . ' * @see ' . $this->type->link;
+    }
+
+    private function phpDocString(): string
+    {
+        $properties = $this->phpDocProperties();
+        if (empty($properties))
+            return '';
+
+        return ' *' . PHP_EOL . $properties . PHP_EOL . ' *' . PHP_EOL . $this->phpDocMethods();
+    }
+
+    private function phpDocProperties(): string
+    {
+        return join(PHP_EOL, $this->type->docProperties());
+    }
+
+    private function phpDocMethods(): string
+    {
+        return join(PHP_EOL, $this->type->docMethods());
     }
 
     private function getMaxFieldLength(): int
