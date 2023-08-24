@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -53,6 +55,7 @@ class Audio extends abstractType
             'mime_type'      => FieldType::optional('string'),
             'file_size'      => FieldType::optional('integer'),
             'thumbnail'      => FieldType::optional(PhotoSize::class),
+            'thumb'          => FieldType::optional(PhotoSize::class),
         ];
     }
 }

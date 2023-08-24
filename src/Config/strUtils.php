@@ -2,13 +2,24 @@
 
 namespace Mateodioev\Bots\Telegram\Config;
 
-use function strtolower, preg_replace, str_replace;
+use function strtolower, preg_replace, str_replace, ucwords, lcfirst;
 
 class strUtils
 {
     public static function toSnakeCase(string $value): string
     {
         return strtolower(preg_replace('/(?<=[a-z])([A-Z])/', '_$1', $value));
+    }
+
+    public static function toPascalCase(string $value): string
+    {
+        return str_replace('_', '', ucwords($value, '_'));
+    }
+
+    public static function toCamelCase(string $value): string
+    {
+        // Convert first letter to lowercase
+        return lcfirst(self::toPascalCase($value));
     }
 
     public static function scapeTags(string $str, ParseMode $mode): string

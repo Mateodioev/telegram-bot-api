@@ -12,7 +12,9 @@ use function in_array, is_array;
  */
 final class FieldType
 {
-    private bool $isScalar;
+    public ?string $customType = null;
+
+    private bool $isScalar = false;
     private bool $isMixed = false;
 
     private array $cachedSubFields = [];
@@ -44,7 +46,7 @@ final class FieldType
         private readonly bool   $allowNull = false,
         private readonly array  $subTypes = []
     ) {
-        if ($type === 'mixed') {
+        if ($this->type === 'mixed') {
             $this->isMixed = true;
             return;
         }
@@ -52,7 +54,7 @@ final class FieldType
         if (!empty($this->subTypes))
             $this->getSubFields();
 
-        $this->isScalar = in_array($type, ['integer', 'double', 'string', 'boolean']);
+        $this->isScalar = in_array($this->type, ['integer', 'double', 'string', 'boolean']);
 
         if ($this->isScalar === false && class_exists($this->type) === false)
             throw new TelegramParamException('Invalid type ' . $this->type);
@@ -139,6 +141,12 @@ final class FieldType
     public function isScalar(): bool
     {
         return $this->isScalar;
+    }
+
+    public function withCustomClass(string $class): static
+    {
+        $this->customType = $class;
+        return $this;
     }
 
     /**

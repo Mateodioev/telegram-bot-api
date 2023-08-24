@@ -14,6 +14,8 @@ interface TypesInterface
 	 */
 	public function getReduced(): array;
 
+	public function toString(int $flags = 0): string;
+
 	/**
 	 * Create new instance
 	 */

@@ -24,7 +24,7 @@ class ReplyKeyboardMarkupFactory extends baseFactory
     public function addCeil(array|KeyboardButton $ceil): static
     {
         if (is_array($ceil))
-            $ceil = KeyboardButton::createFromArray($ceil);
+            $ceil = KeyboardButton::create($ceil);
 
         $this->rows[$this->line][] = $ceil;
         return $this;

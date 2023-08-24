@@ -26,7 +26,7 @@ class InlineKeyboardMarkupFactory extends baseFactory
     public function addCeil(array|InlineKeyboardButton $ceil): static
     {
         if (is_array($ceil))
-            $ceil = InlineKeyboardButton::createFromArray($ceil);
+            $ceil = InlineKeyboardButton::create($ceil);
 
         $this->rows[$this->line][] = $ceil;
         return $this;

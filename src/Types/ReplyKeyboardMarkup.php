@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -14,14 +16,14 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property ?string $input_field_placeholder Optional. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters
  * @property ?bool $selective Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message. Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
  *
- * @method KeyboardButton[] keyboard()
+ * @method KeyboardButton[][] keyboard()
  * @method ?bool isPersistent()
  * @method ?bool resizeKeyboard()
  * @method ?bool oneTimeKeyboard()
  * @method ?string inputFieldPlaceholder()
  * @method ?bool selective()
  *
- * @method static setKeyboard(KeyboardButton[] $keyboard)
+ * @method static setKeyboard(KeyboardButton[][] $keyboard)
  * @method static setIsPersistent(?bool $isPersistent)
  * @method static setResizeKeyboard(?bool $resizeKeyboard)
  * @method static setOneTimeKeyboard(?bool $oneTimeKeyboard)
@@ -35,12 +37,35 @@ class ReplyKeyboardMarkup extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'keyboard'                => FieldType::multiple(KeyboardButton::class),
+            'keyboard'                => (new FieldType('mixed', true))->withCustomClass(InlineKeyboardButton::class),
             'is_persistent'           => FieldType::optional('boolean'),
             'resize_keyboard'         => FieldType::optional('boolean'),
             'one_time_keyboard'       => FieldType::optional('boolean'),
             'input_field_placeholder' => FieldType::optional('string'),
             'selective'               => FieldType::optional('boolean'),
         ];
+    }
+
+    public function setKeyboard(array $keyboard): static
+    {
+        $_keyboard = [];
+        foreach ($keyboard as $keyboardRow) {
+            $_keyboard[] = KeyboardButton::bulkCreate($keyboardRow);
+        }
+        $this->properties['keyboard'] = $_keyboard;
+        return $this;
+    }
+
+    public function get(): array
+    {
+        $properties = $this->getProperties();
+        unset($properties['keyboard']);
+
+        // Avoid calling magic methods
+        foreach ($this->properties['keyboard'] as $keyboards) {
+            $properties['keyboard'][] = array_map(fn ($keyboard) => $keyboard->get(), $keyboards);
+        }
+
+        return $properties;
     }
 }

@@ -146,10 +146,23 @@ abstract class abstractType implements TypesInterface
 
             $field = $this->fields[$key];
 
+            if ($field->allowArrays() && is_array($value) && is_array($value[0])) {
+                $className = $field->customType ?? $field->getType();
+
+                $value = array_map(function ($val) use ($className) {
+                    if ($val instanceof TypesInterface)
+                        return $val;
+                    return $className::bulkCreate($val);
+                }, $value);
+
+                $this->properties[$key] = $value;
+                continue;
+            }
             if ($field->isScalar() === false) {
-                $className = $field->getType();
+                $className = $field->customType ?? $field->getType();
 
                 if ($field->allowArrays()) {
+                    echo $className . PHP_EOL . PHP_EOL;
                     $value = $className::bulkCreate($value);
                 } elseif ($value instanceof TypesInterface) {
                     // continue;

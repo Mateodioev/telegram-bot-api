@@ -11,6 +11,8 @@ final class Schema
     private array $json;
     private array $ignoreTypes = [
         'InputFile',
+        'ReplyKeyboardMarkup',
+        'InlineKeyboardMarkup'
     ];
 
     public function __construct()

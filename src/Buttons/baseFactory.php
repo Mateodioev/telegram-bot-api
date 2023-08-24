@@ -28,7 +28,7 @@ abstract class baseFactory implements ButtonInterface
         Types::setReturnNullParams(false);
 
         // if ($obj instanceof TypesInterface)
-        $json = $obj->toString();
+        $json = $obj->toString(0);
 
         Types::setReturnNullParams($conf);
 
