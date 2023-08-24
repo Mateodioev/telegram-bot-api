@@ -16,6 +16,10 @@ abstract class abstractType implements TypesInterface
     /** @var array<string, FieldType> $fields */
     protected array $fields = [];
 
+    private array $legacyProperties = [
+        'thumb'
+    ];
+
     public static function create(?array $update): ?static
     {
         if ($update === null)
@@ -136,7 +140,7 @@ abstract class abstractType implements TypesInterface
     {
         foreach ($values as $key => $value) {
             // Check if property exists
-            if ($this->existsProperty($key) === false) {
+            if ($this->existsProperty($key) === false && $this->isLegacyProperty($key) === false) {
                 if (Types::$throwOnFail === false) {
                     continue;
                 } else { // Throw exception if property not exists
@@ -144,7 +148,7 @@ abstract class abstractType implements TypesInterface
                 }
             }
 
-            $field = $this->fields[$key];
+            $field = $this->fields[$key] ?? FieldType::mixed();
 
             if ($field->allowArrays() && is_array($value) && is_array($value[0])) {
                 $className = $field->customType ?? $field->getType();
@@ -162,7 +166,6 @@ abstract class abstractType implements TypesInterface
                 $className = $field->customType ?? $field->getType();
 
                 if ($field->allowArrays()) {
-                    echo $className . PHP_EOL . PHP_EOL;
                     $value = $className::bulkCreate($value);
                 } elseif ($value instanceof TypesInterface) {
                     // continue;
@@ -177,6 +180,11 @@ abstract class abstractType implements TypesInterface
         }
 
         return $this;
+    }
+
+    private function isLegacyProperty(string $propertie): bool
+    {
+        return in_array($propertie, $this->legacyProperties);
     }
 
     /**
