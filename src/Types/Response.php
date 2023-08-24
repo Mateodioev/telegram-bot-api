@@ -2,6 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldType;
+
 /**
  * 
  * @property boolean $ok 
@@ -24,10 +26,10 @@ class Response extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'ok'          => 'boolean',
-            'error_code'  => 'integer',
-            'description' => 'string',
-            'result'      => 'mixed',
+            'ok'          => FieldType::single('boolean'),
+            'error_code'  => FieldType::single('integer'),
+            'description' => FieldType::single('string'),
+            'result'      => FieldType::mixed(),
         ];
     }
 }
