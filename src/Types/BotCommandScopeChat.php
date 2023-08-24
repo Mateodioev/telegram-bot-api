@@ -1,25 +1,21 @@
-<?php 
+<?php declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldType;
+
 /**
- * Represents the [scope](https://core.telegram.org/bots/api#botcommandscope) of bot commands, covering a specific chat.
- * 
- * @property string         $type    Scope type, must be chat
- * @property integer|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
- * 
- * @method string         type()
- * @method integer|string chatId()
- * 
- * @method static setType(string $type)
- * @method static setChatId(integer|string $chatId)
- * 
+ * Represents the scope of bot commands, covering a specific chat.
+ *
  * @see https://core.telegram.org/bots/api#botcommandscopechat
  */
 class BotCommandScopeChat extends BotCommandScope
 {
-    protected array $fields = [
-        'type'    => 'string',
-        'chat_id' => 'integer|string',
-    ];
+    protected function boot(): void
+    {
+        $this->fields = [
+            'type'    => FieldType::single('string'),
+            'chat_id' => new FieldType('string', allowArrays: false, allowNull: false, subTypes: ['integer']),
+        ];
+    }
 }

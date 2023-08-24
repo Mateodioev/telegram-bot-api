@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -19,16 +19,15 @@ namespace Mateodioev\Bots\Telegram\Types;
  * @method static setDescription(string $description)
  * @method static setResult(mixed $result)
  */
-class Response extends baseType
+class Response extends abstractType
 {
-    protected array $fields = [
-        'ok'          => 'boolean',
-        'error_code'  => 'integer',
-        'description' => 'string',
-        'result'      => 'mixed',
-    ];
-
-    public function get() {
-        return $this->recursiveGet();
+    protected function boot(): void
+    {
+        $this->fields = [
+            'ok'          => 'boolean',
+            'error_code'  => 'integer',
+            'description' => 'string',
+            'result'      => 'mixed',
+        ];
     }
 }

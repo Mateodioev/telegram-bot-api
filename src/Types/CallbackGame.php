@@ -1,16 +1,18 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use stdClass;
-
 /**
  * A placeholder, currently holds no information. Use BotFather to set up your game.
- * 
+ *
  * @see https://core.telegram.org/bots/api#callbackgame
  */
-class CallbackGame extends baseType
+class CallbackGame extends abstractType
 {
-    // 
+    protected function boot(): void
+    {
+        $this->fields = [
+
+        ];
+    }
 }

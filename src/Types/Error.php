@@ -2,15 +2,20 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldType;
+
 /**
  * This class is returned when an error occurs.
  */
-class Error extends baseType
+class Error extends abstractType
 {
-  protected array $fields = [
-    'ok'          => 'boolean',
-    'error_code'  => 'integer',
-    'description' => 'string',
-    'parameters'  => 'mixed'
-  ];
+	protected function boot(): void
+	{
+		$this->fields = [
+			'ok'          => FieldType::single('boolean'),
+			'error_code'  => FieldType::single('integer'),
+			'description' => FieldType::single('string'),
+			'parameters'  => FieldType::mixed()
+		];
+	}
 }

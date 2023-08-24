@@ -1,21 +1,20 @@
-<?php 
+<?php declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldType;
+
 /**
  * This object represents a service message about new members invited to a video chat.
- * 
- * @property User[] $user New members that were invited to the video chat
- * 
- * @method User[] user()
- * 
- * @method static setUser(User[] $user)
- * 
+ *
  * @see https://core.telegram.org/bots/api#videochatparticipantsinvited
  */
-class VideoChatParticipantsInvited extends baseType
+class VideoChatParticipantsInvited extends abstractType
 {
-    protected array $fields = [
-        'user' => [User::class],
-    ];
+    protected function boot(): void
+    {
+        $this->fields = [
+            'users' => FieldType::multiple(User::class),
+        ];
+    }
 }

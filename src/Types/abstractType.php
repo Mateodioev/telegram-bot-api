@@ -21,12 +21,10 @@ abstract class abstractType implements TypesInterface
         if ($update === null)
             return self::DEFAULT_PARAM;
 
-        $instance = new static;
-
-        return $instance->magicSetter($update);
+        return new static($update);
     }
 
-    public function bulkCreate(?array $up): ?array
+    public static function bulkCreate(?array $up): ?array
     {
         if ($up === null)
             return self::DEFAULT_PARAM;
@@ -154,7 +152,7 @@ abstract class abstractType implements TypesInterface
                 if ($field->allowArrays()) {
                     $value = $className::bulkCreate($value);
                 } elseif ($value instanceof TypesInterface) {
-                    $value = $className::createFromType($value);
+                    // continue;
                 } else {
                     $value = $className::create($value);
                 }

@@ -1,29 +1,23 @@
-<?php 
+<?php declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldType;
+
 /**
  * This object represents an answer of a user in a non-anonymous poll.
- * 
- * @property string    $poll_id    Unique poll identifier
- * @property User      $user       The user, who changed the answer to the poll
- * @property integer[] $option_ids 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
- * 
- * @method string    pollId()
- * @method User      user()
- * @method integer[] optionIds()
- * 
- * @method static setPollId(string $pollId)
- * @method static setUser(User $user)
- * @method static setOptionIds(integer[] $optionIds)
- * 
+ *
  * @see https://core.telegram.org/bots/api#pollanswer
  */
-class PollAnswer extends baseType
+class PollAnswer extends abstractType
 {
-    protected array $fields = [
-        'poll_id'    => 'string',
-        'user'       => User::class,
-        'option_ids' => 'array',
-    ];
+    protected function boot(): void
+    {
+        $this->fields = [
+            'poll_id'    => FieldType::single('string'),
+            'voter_chat' => FieldType::optional(Chat::class),
+            'user'       => FieldType::optional(User::class),
+            'option_ids' => FieldType::multiple('integer'),
+        ];
+    }
 }

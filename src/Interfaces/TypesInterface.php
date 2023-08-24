@@ -19,5 +19,5 @@ interface TypesInterface
 	 */
 	public static function create(?array $update): ?static;
 
-	public function bulkCreate(?array $up): ?array;
+	public static function bulkCreate(?array $up): ?array;
 }

@@ -16,7 +16,7 @@ class ObjectsTest extends TestCase
      */
     public function testCreateSingleTypes(int $id, bool $is_bot, string $first_name)
     {
-        $user = User::createFromArray(compact('id', 'is_bot', 'first_name'));
+        $user = User::create(compact('id', 'is_bot', 'first_name'));
 
         $this->assertInstanceOf(User::class, $user);
 
@@ -52,7 +52,7 @@ class ObjectsTest extends TestCase
 
         Types::setThrowExceptionOnFail(true);
         $this->expectException(TelegramParamException::class);
-        User::createFromArray($data);
+        User::create($data);
     }
 
     /**
@@ -60,7 +60,7 @@ class ObjectsTest extends TestCase
      */
     public function testGetInvalidProperty(int $id, bool $is_bot, string $first_name)
     {
-        $user = User::createFromArray(compact('id', 'is_bot', 'first_name'));
+        $user = User::create(compact('id', 'is_bot', 'first_name'));
         $this->assertSame($user->invalidProperty(), null);
     }
 
@@ -71,8 +71,8 @@ class ObjectsTest extends TestCase
     {
         $data = compact('id', 'is_bot', 'first_name');
 
-        $user1 = User::createFromArray($data);
-        $user2 = User::createFromType(User::createFromArray($data));
+        $user1 = new User($data);
+        $user2 = User::create(User::create($data)->get());
 
         $this->assertSame($user1::class, $user2::class);
 

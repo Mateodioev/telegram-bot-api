@@ -60,10 +60,13 @@ final class FieldType
 
     public function match(mixed $value): bool
     {
+        $matchs = 0;
         foreach ($this->cachedSubFields as $subField) {
-            if ($subField->match($subField) === false)
-                return false;
+            if ($subField->match($value))
+                $matchs++;
         }
+        if ($matchs > 1)
+            return true;
 
         if ($this->isMixed) // mixed type match with all values
             return true;
