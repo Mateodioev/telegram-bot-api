@@ -47,15 +47,19 @@ $api->setAsync(true);
 ## Create new telegram types
 
 ```php
-use Mateodioev\Bots\Telegram\Types\baseType;
+use Mateodioev\Bots\Telegram\Types\abstractType;
 
-class MyCustomType extends baseType
+class MyCustomType extends abstractType
 {
-    protected array $fields = [
-        'field1' => 'string',
-        'id'     => 'integer', // only accept integer values
-        'user'   => User::class, // only accept arrays or instances of the User class
-    ];
+    protected function boot(): void
+    {
+        $this->fields = [
+            'field1'  => FieldType::single('string'),       // Only accept strings
+            'id'      => FieldType::optional('integer'),    // only accept integer or null values
+            'users'   => FieldType::multiuple(User::class), // only accept arrays or instances of the User class
+            'message' => FieldType::mixed(),                // Accept all values
+        ];
+    }
 }
 ```
 
@@ -63,13 +67,12 @@ class MyCustomType extends baseType
 
 ```php
 // from array
-$customType = MyCustomType::createFromArray(['field1' => 'Type', 'id' => 1111, 'user' => $user]);
-// From stdClass
-$customType = MyCustomType::create((object) ['field1' => 'Type', 'id' => 1111, 'user' => $user]);
+$customType = MyCustomType::create(['field1' => 'Type', 'id' => 1111, 'user' => $user]);
 // Create from constructor
 $customType = new MyCustomType([
     'field1' => 'example value',
-    'id' => 123121,
-    'user' => new User // or an array the follows the properties of the User class. example: ['id' => 1111111, 'first_name' => 'user first name']
+    'id' => 123121, // or null
+    'users' => [new User], // or an array the follows the properties of the User class. example: [['id' => 1111111, 'first_name' => 'user first name']]
+    'message' => [], //  Accept any type of data
 ]);
 ```
