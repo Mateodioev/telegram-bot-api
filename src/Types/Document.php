@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -38,6 +40,7 @@ class Document extends abstractType
             'file_id'        => FieldType::single('string'),
             'file_unique_id' => FieldType::single('string'),
             'thumbnail'      => FieldType::optional(PhotoSize::class),
+            'thumb'          => FieldType::optional(PhotoSize::class), // Legacy param
             'file_name'      => FieldType::optional('string'),
             'mime_type'      => FieldType::optional('string'),
             'file_size'      => FieldType::optional('integer'),

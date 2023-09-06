@@ -9,7 +9,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @property string $status The member's status in the chat, always "kicked"
  * @property User $user Information about the user
- * @property int $until_date Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever
+ * @property int $until_date Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever
  *
  * @method string status()
  * @method User user()

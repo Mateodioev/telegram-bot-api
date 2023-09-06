@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -9,43 +9,45 @@ use function strlen, count, json_encode;
 /**
  * Create new poll
  */
-class sendPoll
+final class sendPoll
 {
-  public array $answers = [];
-  public ?int $correctOption = null;
+	public array $answers = [];
+	public ?int $correctOption = null;
 
-  public static function create()
-  {
-    return new self();
-  }
+	public static function create()
+	{
+		return new self();
+	}
 
-  /**
-   * @param boolean $isCorrectOption Pass true if the option is correct, only valid in poll in quiz mode
-   */
-  public function addAnswer(string $param, bool $isCorrectOption = false): sendPoll
-  {
-    if (empty($param) || strlen($param) > 100) {
-      throw new TelegramParamException('Invalid poll answer');
-    }
+	/**
+	 * @param boolean $isCorrectOption Pass true if the option is correct, only valid in poll in quiz mode
+	 */
+	public function addAnswer(string $param, bool $isCorrectOption = false): sendPoll
+	{
+		if (empty($param) || strlen($param) > 100) {
+			throw new TelegramParamException('Invalid poll answer');
+		}
 
-    $this->answers[] = $param;
-    if ($isCorrectOption) {
-      $this->correctOption = count($this->answers) - 1;
-    }
-    return $this;
-  }
+		$this->answers[] = $param;
 
-  public function getCorrectId(): ?int
-  {
-    return $this->correctOption;
-  }
+		if ($isCorrectOption)
+			$this->correctOption = count($this->answers) - 1;
 
-  public function get()
-  {
-    if (count($this->answers) > 2) {
-      throw new TelegramParamException('Add more than two answers');
-    }
+		return $this;
+	}
 
-    return json_encode($this->answers);
-  }
+	public function getCorrectId(): ?int
+	{
+		return $this->correctOption;
+	}
+
+	public function get()
+	{
+		$totalAnswers = count($this->answers);
+
+		if ($totalAnswers < 2 || $totalAnswers > 10)
+			throw new TelegramParamException('Invalid poll answers');
+
+		return json_encode($this->answers);
+	}
 }

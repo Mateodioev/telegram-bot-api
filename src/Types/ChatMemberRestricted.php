@@ -24,7 +24,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property bool $can_invite_users True, if the user is allowed to invite new users to the chat
  * @property bool $can_pin_messages True, if the user is allowed to pin messages
  * @property bool $can_manage_topics True, if the user is allowed to create forum topics
- * @property int $until_date Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever
+ * @property int $until_date Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever
  *
  * @method string status()
  * @method User user()

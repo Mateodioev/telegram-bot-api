@@ -17,7 +17,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property ?ChatPhoto $photo Optional. Chat photo. Returned only in getChat.
  * @property ?string[] $active_usernames Optional. If non-empty, the list of all active chat usernames; for private chats, supergroups and channels. Returned only in getChat.
  * @property ?string $emoji_status_custom_emoji_id Optional. Custom emoji identifier of emoji status of the other party in a private chat. Returned only in getChat.
- * @property ?int $emoji_status_expiration_date Optional. Expiration date of the emoji status of the other party in a private chat, if any. Returned only in getChat.
+ * @property ?int $emoji_status_expiration_date Optional. Expiration date of the emoji status of the other party in a private chat in Unix time, if any. Returned only in getChat.
  * @property ?string $bio Optional. Bio of the other party in a private chat. Returned only in getChat.
  * @property ?bool $has_private_forwards Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.
  * @property ?bool $has_restricted_voice_and_video_messages Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat. Returned only in getChat.

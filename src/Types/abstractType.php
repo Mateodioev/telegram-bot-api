@@ -150,7 +150,7 @@ abstract class abstractType implements TypesInterface
 
             $field = $this->fields[$key] ?? FieldType::mixed();
 
-            if ($field->allowArrays() && is_array($value) && is_array($value[0])) {
+            if ($field->allowArrays() && is_array($value) && is_array($value[0]) && in_array($key, ['inline_keyboard', 'keyboard'])) {
                 $className = $field->customType ?? $field->getType();
 
                 $value = array_map(function ($val) use ($className) {
