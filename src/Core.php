@@ -66,6 +66,7 @@ abstract class Core implements TelegramInterface
 
   /**
    * Enable test environments
+   * @api
    */
   public function setTestEnvironment(bool $isTestEnvironment = false): static
   {
@@ -105,6 +106,8 @@ abstract class Core implements TelegramInterface
    * Call telegram api method
    * @throws RequestException
    * @throws TelegramApiException
+   * 
+   * @return Response|array|TypesInterface|stdClass
    */
   public function request(MethodInterface $method): TypesInterface|stdClass|array
   {
@@ -154,8 +157,8 @@ abstract class Core implements TelegramInterface
     $error = Error::create($this->result);
 
     if (TypesConfig::$throwOnFail) {
-      $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
-      throw new TelegramApiException($message, $error->error_code);
+        $message = '(' . ($error->error_code ?? '400') . ') ' . ($error->description ?? 'Unknown error');
+        throw new TelegramApiException($message, $error->error_code);
     }
 
     return $error;
