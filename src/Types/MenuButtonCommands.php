@@ -23,4 +23,10 @@ class MenuButtonCommands extends MenuButton
             'type' => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('commands');
+    }
 }

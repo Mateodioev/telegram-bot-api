@@ -21,5 +21,10 @@ interface TypesInterface
 	 */
 	public static function create(?array $update): ?static;
 
+    /**
+     * Create new instance, but initialize some fields with default values
+     */
+    public static function default(): static;
+
 	public static function bulkCreate(?array $up): ?array;
 }

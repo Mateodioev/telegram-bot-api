@@ -10,7 +10,7 @@ class FieldTypeTest extends TestCase
 {
     public function testSingleScalarType()
     {
-        $type = new FieldType('string');
+        $type = new FieldType('string'); // Only macth strings
 
         $this->assertFalse($type->match(1));
         $this->assertFalse($type->match(1.1));
@@ -24,7 +24,7 @@ class FieldTypeTest extends TestCase
 
     public function testScalarArrayType()
     {
-        $type = new FieldType('string', true);
+        $type = new FieldType('string', true); // Only an array of strings
 
         $this->assertFalse($type->match(1));
         $this->assertFalse($type->match(1.1));
@@ -41,7 +41,7 @@ class FieldTypeTest extends TestCase
 
     public function testOptionalValues()
     {
-        $type = new FieldType('string', false, true);
+        $type = new FieldType('string', false, true); // Only match null or string values
 
         $this->assertFalse($type->match(1));
         $this->assertFalse($type->match(1.1));
@@ -55,7 +55,7 @@ class FieldTypeTest extends TestCase
         $this->assertTrue($type->match(null));
 
 
-        $type = new FieldType('string', true, true);
+        $type = new FieldType('string', true, true); // Only match array of strings or null values
 
         $this->assertFalse($type->match(1));
         $this->assertFalse($type->match(1.1));
@@ -71,7 +71,7 @@ class FieldTypeTest extends TestCase
 
     public function testObjectsTypes()
     {
-        $type = new FieldType(User::class);
+        $type = new FieldType(User::class); // Only match user instances
 
         $this->assertFalse($type->match(1));
         $this->assertFalse($type->match(1.1));
@@ -88,7 +88,7 @@ class FieldTypeTest extends TestCase
 
     public function testArrayObjectsTypes()
     {
-        $type = new FieldType(User::class, true);
+        $type = new FieldType(User::class, true); // Only match array of user instances
 
         $this->assertFalse($type->match(1));
         $this->assertFalse($type->match(1.1));

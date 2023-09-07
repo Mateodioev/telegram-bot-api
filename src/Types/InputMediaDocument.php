@@ -47,4 +47,10 @@ class InputMediaDocument extends InputMedia
             'disable_content_type_detection' => FieldType::optional('boolean'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('document');
+    }
 }

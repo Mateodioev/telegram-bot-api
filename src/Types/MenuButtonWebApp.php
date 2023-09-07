@@ -31,4 +31,10 @@ class MenuButtonWebApp extends MenuButton
             'web_app' => FieldType::single(WebAppInfo::class),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('web_app');
+    }
 }

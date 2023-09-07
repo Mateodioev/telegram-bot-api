@@ -28,6 +28,11 @@ abstract class abstractType implements TypesInterface
         return new static($update);
     }
 
+    public static function default(): static
+    {
+        return new static();
+    }
+
     public static function bulkCreate(?array $up): ?array
     {
         if ($up === null)

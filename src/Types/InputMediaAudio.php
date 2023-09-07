@@ -55,4 +55,10 @@ class InputMediaAudio extends InputMedia
             'title'            => FieldType::optional('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('audio');
+    }
 }

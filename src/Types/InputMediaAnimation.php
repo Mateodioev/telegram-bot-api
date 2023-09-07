@@ -59,4 +59,10 @@ class InputMediaAnimation extends InputMedia
             'has_spoiler'      => FieldType::optional('boolean'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('animation');
+    }
 }

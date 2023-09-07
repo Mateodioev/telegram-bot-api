@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -34,5 +36,17 @@ class File extends abstractType
             'file_size'      => FieldType::optional('integer'),
             'file_path'      => FieldType::optional('string'),
         ];
+    }
+
+    /**
+     * Get HTTPS URL to download the file.
+     *
+     * @param string $token Bot Token
+     */
+    public function getDownloadLink(string $token): string
+    {
+        $fmt = 'https://api.telegram.org/file/bot%s/%s';
+
+        return \sprintf($fmt, $token, $this->filePath());
     }
 }
