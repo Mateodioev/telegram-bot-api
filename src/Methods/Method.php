@@ -58,6 +58,9 @@ class Method implements MethodInterface
 		return $this;
 	}
 
+    /**
+     * @param class-string $type
+     */
 	public function setReturnType(string $type, bool $multipleResults = false): Method
 	{
 		$this->returnType      = $type;

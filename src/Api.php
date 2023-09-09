@@ -2,15 +2,19 @@
 
 namespace Mateodioev\Bots\Telegram;
 
-use Mateodioev\Bots\Telegram\Methods\{Method, Callbacks, Senders, SetGet, Stickers, UpdateMessages, Updates};
-use Mateodioev\Bots\Telegram\Methods\availableMethods;
+use Mateodioev\Bots\Telegram\Methods\{
+    availableMethods,
+    gettingUpdates,
+    inlineMode,
+    Method,
+    Stickers,
+    updatingMessages};
 
 use function method_exists, call_user_func_array;
 
 class Api extends Core
 {
-	// use Callbacks, Senders, Updates, Stickers, SetGet, UpdateMessages;
-	use availableMethods;
+	use availableMethods, gettingUpdates, updatingMessages, Stickers, inlineMode;
 
 	/**
 	 * Require `BOT_TOKEN` env var

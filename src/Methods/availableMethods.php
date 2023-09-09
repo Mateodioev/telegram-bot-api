@@ -24,10 +24,9 @@ use Mateodioev\Bots\Telegram\Types\{BotCommand,
     Message,
     MessageId,
     sendPoll,
+    Sticker,
     User,
-    UserProfilePhotos,
-    Sticker};
-
+    UserProfilePhotos};
 use function array_map;
 use function count;
 use function json_encode;
@@ -1236,10 +1235,3 @@ trait availableMethods
         );
     }
 }
-
-/*
-return $this->request(
-    Method::create([])
-        ->setMethod('')
-);
-*/

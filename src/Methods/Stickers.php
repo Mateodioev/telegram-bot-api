@@ -4,8 +4,7 @@ namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use Mateodioev\Bots\Telegram\Types\sendInputFile;
-use Mateodioev\Bots\Telegram\Types\{File, MaskPosition, Message, Sticker, StickerSet};
+use Mateodioev\Bots\Telegram\Types\{File, InputFile, InputSticker, MaskPosition, Message, Sticker, StickerSet};
 
 /**
  * Stickers methods
@@ -15,9 +14,11 @@ trait Stickers
 {
     /**
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
+     *
      * @see https://core.telegram.org/bots/api#sendsticker
+     * @return Message
      */
-    public function sendSticker(string|int $chatId, sendInputFile $sticker, array $params = []): TypesInterface
+    public function sendSticker(string|int $chatId, InputFile $sticker, array $params = []): TypesInterface
     {
         return $this->request(Method::create(['chat_id' => $chatId, 'sticker' => $sticker->get(), ...$params], 'sendSticker')
             ->setReturnType(Message::class));
@@ -25,7 +26,9 @@ trait Stickers
 
     /**
      * Use this method to get a sticker set. On success, a StickerSet object is returned.
+     *
      * @see https://core.telegram.org/bots/api#getstickerset
+     * @return StickerSet
      */
     public function getStickerSet(string $name): TypesInterface
     {
@@ -35,8 +38,10 @@ trait Stickers
 
     /**
      * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
+     *
      * @see https://core.telegram.org/bots/api#getcustomemojistickers
      * @throws TelegramParamException If the total of customIds is greater than 200
+     * @return TypesInterface|Sticker[]
      */
     public function getCustomEmojiStickers(array $customIds): TypesInterface|array
     {
@@ -48,43 +53,48 @@ trait Stickers
     }
 
     /**
-     * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
+     * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times)
+     *
      * @see https://core.telegram.org/bots/api#uploadstickerfile
+     * @return File
      */
-    public function uploadStickerFile(int $userId, sendInputFile $pngSticker): TypesInterface
+    public function uploadStickerFile(int $userId, InputFile $pngSticker, string $stickerFormat = 'static'): TypesInterface
     {
-        return $this->request(Method::create(['user_id' => $userId, 'png_sticker' => $pngSticker->get()], 'uploadStickerFile')
+        return $this->request(Method::create(['user_id' => $userId, 'png_sticker' => $pngSticker->get(), 'sticker_format' => $stickerFormat])
+            ->setMethod('uploadStickerFile')
             ->setReturnType(File::class));
     }
 
     /**
      * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker.
-     * @return TypesInterface Return Response type
+     *
+     * @param InputSticker[] $stickers
      * @see https://core.telegram.org/bots/api#createnewstickerset
      */
-    public function createNewStickerSet(int $userId, string $name, string $title, array $params = []): TypesInterface
+    public function createNewStickerSet(int $userID, string $name, string $title, array $stickers, string $stickerFormat, array $params = []): TypesInterface
     {
-        return $this->request(Method::create(['user_id' => $userId, 'name' => $name, 'title' => $title, ...$params], 'createNewStickerSet'));
+        $stickers = \array_map(fn (InputSticker $sticker) => $sticker->getReduced(), $stickers);
+        $stickers = \json_encode($stickers);
+
+        return $this->request(
+            Method::create(['user_id' => $userID, 'name' => $name, 'title' => $title, 'stickers' => $stickers, 'sticker_format' => $stickerFormat, ...$params])
+                ->setMethod('createNewStickerSet')
+        );
     }
 
     /**
-     * Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
+     * Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set.
+     *
      * @see https://core.telegram.org/bots/api#addstickertoset
      */
-    public function addStickerToSet(int $userId, string $name, string $emojis, ?sendInputFile $pngSticker = null, ?sendInputFile $tgSticker = null, ?sendInputFile $webmSticker = null, ?MaskPosition $maskPosition = null): TypesInterface
+    public function addStickerToSet(int $userID, string $name, InputSticker $sticker): TypesInterface
     {
-        $payload = ['user_id' => $userId, 'name' => $name, 'emojis' => $emojis];
+        $sticker = json_encode($sticker->getReduced());
 
-        if ($pngSticker)
-            $payload['pngSticker'] = $pngSticker->get();
-        if ($tgSticker)
-            $payload['tgs_sticker'] = $tgSticker->get();
-        if ($webmSticker)
-            $payload['webm_sticker'] = $webmSticker->get();
-        if ($maskPosition)
-            $payload['maskPosition'] = $maskPosition->get();
-
-        return $this->request(Method::create($payload, 'addStickerToSet'));
+        return $this->request(
+            Method::create(['user_id' => $userID, 'name' => $name, 'sticker' => $sticker])
+                ->setMethod('addStickerToSet')
+        );
     }
 
     /**
@@ -107,12 +117,97 @@ trait Stickers
     }
 
     /**
-     * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only.
-     * @see https://core.telegram.org/bots/api#setstickersetthumb
+     * Use this method to change the list of emoji assigned to a regular or custom emoji sticker.
+     * The sticker must belong to a sticker set created by the bot.
+     *
+     * @param string[] $emojiList
+     * @see https://core.telegram.org/bots/api#setstickeremojilist
      */
-    public function setStickerSetThumb(string $name, int $userId, sendInputFile $thumb): TypesInterface
+    public function setStickerEmojiList(string $sticker, array $emojiList): TypesInterface
     {
-        return $this->request(Method::create(['name' => $name, 'user_Id' => $userId, 'thumb' => $thumb->get()])
-            ->setMethod('setStickerSetThumb'));
+        if (count($emojiList) > 20)
+            throw new TelegramParamException('The maximum number of emoji in the input field is 20');
+
+        return $this->request(Method::create(['sticker' => $sticker, 'emoji_list' => json_encode($emojiList)])
+            ->setMethod('setStickerEmojiList'));
+    }
+
+    /**
+     * Use this method to change search keywords assigned to a regular or custom emoji sticker.
+     * The sticker must belong to a sticker set created by the bot.
+     *
+     * @param string[] $keywords
+     * @see https://core.telegram.org/bots/api#setstickerthumb
+     */
+    public function setStickerKeywords(string $sticker, array $keywords): TypesInterface
+    {
+        if (count($keywords) > 20)
+            throw new TelegramParamException('The maximum number of keywords in the input field is 20');
+
+        return $this->request(Method::create(['sticker' => $sticker, 'keywords' => json_encode($keywords)])
+            ->setMethod('setStickerKeywords'));
+    }
+
+    /**
+     * Use this method to change the mask position of a mask sticker.
+     * The sticker must belong to a sticker set that was created by the bot.
+     *
+     * @see https://core.telegram.org/bots/api#setstickermaskposition
+     */
+    public function setStickerMaskPosition(string $sticker, ?MaskPosition $maskPosition = null): TypesInterface
+    {
+        return $this->request(
+            Method::create(['sticker' => $sticker, 'mask_position' => $maskPosition?->get()])
+                ->setMethod('setStickerMaskPosition')
+        );
+    }
+
+    /**
+     * Use this method to set the title of a created sticker set.
+     *
+     * @see https://core.telegram.org/bots/api#setstickersettitle
+     */
+    public function setStickerSetTitle(string $name, string $title): TypesInterface
+    {
+        return $this->request(
+            Method::create(['name' => $name, 'title' => $title], 'setStickerSetTitle')
+        );
+    }
+
+    /**
+     * Use this method to set the thumbnail of a regular or mask sticker set.
+     * The format of the thumbnail file must match the format of the stickers in the set.
+     *
+     * @see https://core.telegram.org/bots/api#setstickersetthumbnail
+     */
+    public function setStickerSetThumbnail(string $name, int $userId, ?InputFile $thumbnail = null): TypesInterface
+    {
+        return $this->request(Method::create(['name' => $name, 'user_Id' => $userId, 'thumb' => $thumbnail->get()])
+            ->setMethod('setStickerSetThumbnail'));
+    }
+
+    /**
+     * Use this method to set the thumbnail of a custom emoji sticker set.
+     *
+     * @see https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+     */
+    public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiID = null): TypesInterface
+    {
+        return $this->request(
+            Method::create(['name' => $name, 'custom_emoji_id' => $customEmojiID])
+                ->setMethod('setCustomEmojiStickerSetThumbnail')
+        );
+    }
+
+    /**
+     * Use this method to delete a sticker set that was created by the bot.
+     *
+     * @see https://core.telegram.org/bots/api#deletestickerset
+     */
+    public function deleteStickerSet(string $name): TypesInterface
+    {
+        return $this->request(
+            Method::create(['name' => $name], 'deleteStickerSet')
+        );
     }
 }
