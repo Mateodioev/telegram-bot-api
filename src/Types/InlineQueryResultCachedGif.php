@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -54,5 +56,11 @@ class InlineQueryResultCachedGif extends InlineQueryResult
             'reply_markup'          => FieldType::optional(InlineKeyboardMarkup::class),
             'input_message_content' => FieldType::optional(InputMessageContent::class),
         ];
+    }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('gif');
     }
 }

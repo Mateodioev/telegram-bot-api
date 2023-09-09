@@ -52,4 +52,10 @@ class InlineQueryResultCachedAudio extends InlineQueryResult
             'input_message_content' => FieldType::optional(InputMessageContent::class),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('audio');
+    }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -35,5 +37,11 @@ class InlineQueryResultGame extends InlineQueryResult
             'game_short_name' => FieldType::single('string'),
             'reply_markup'    => FieldType::optional(InlineKeyboardMarkup::class),
         ];
+    }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('game');
     }
 }

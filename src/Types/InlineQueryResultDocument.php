@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -75,5 +77,12 @@ class InlineQueryResultDocument extends InlineQueryResult
             'thumbnail_width'       => FieldType::optional('integer'),
             'thumbnail_height'      => FieldType::optional('integer'),
         ];
+    }
+
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('document');
     }
 }
