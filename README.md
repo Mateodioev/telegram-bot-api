@@ -76,3 +76,5 @@ $customType = new MyCustomType([
     'message' => [], //  Accept any type of data
 ]);
 ```
+
+**See more examples here: [examples/](examples)**
