@@ -2,9 +2,11 @@
 
 namespace Mateodioev\Bots\Telegram\Methods;
 
+use Mateodioev\Bots\Telegram\Config\ParseMode;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use Mateodioev\Bots\Telegram\Types\{BotCommand,
+use Mateodioev\Bots\Telegram\Types\{
+    BotCommand,
     BotCommandScope,
     BotDescription,
     BotShortDescription,
@@ -26,7 +28,8 @@ use Mateodioev\Bots\Telegram\Types\{BotCommand,
     sendPoll,
     Sticker,
     User,
-    UserProfilePhotos};
+    UserProfilePhotos
+};
 use function count;
 
 /**
@@ -97,12 +100,13 @@ trait availableMethods
      * @see https://core.telegram.org/bots/api#sendmessage
      * @return Message
      */
-    public function replyTo(string|int $chatID, string $text, int $replyToMessageID, array $params = []): TypesInterface
+    public function replyTo(string|int $chatID, string $text, int $replyToMessageID, ParseMode $parseMode = ParseMode::HTML, array $params = []): TypesInterface
     {
         return $this->sendMessage(
             $chatID,
             $text,
             [
+                'parse_mode' => $parseMode,
                 'reply_to_message_id' => $replyToMessageID,
                 ...$params
             ]
@@ -116,12 +120,13 @@ trait availableMethods
      * @see https://core.telegram.org/bots/api#sendmessage
      * @return Message
      */
-    public function replyToMessage(Message $message, string $text, array $params = []): TypesInterface
+    public function replyToMessage(Message $message, string $text, ParseMode $parseMode = ParseMode::HTML, array $params = []): TypesInterface
     {
         return $this->replyTo(
             $message->chat->id,
             $text,
             $message->message_id,
+            $parseMode,
             $params
         );
     }

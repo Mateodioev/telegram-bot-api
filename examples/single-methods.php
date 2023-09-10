@@ -21,6 +21,7 @@ $api->replyTo(
     'CHAT_ID',
     'This is a reply message',
     'MESSAGE_ID',
+    ParseMode::HTML,
     [
         // For other params see https://core.telegram.org/bots/api#sendmessage
     ]

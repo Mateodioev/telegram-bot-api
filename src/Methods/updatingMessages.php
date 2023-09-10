@@ -150,6 +150,6 @@ trait updatingMessages
     private function inlineAsMessage($result): TypesInterface
     {
         $_result = $result->result;
-        return isset($result['via_bot']) ? $result : new Message($_result);
+        return isset($_result['via_bot']) ? $result : new Message($_result);
     }
 }
