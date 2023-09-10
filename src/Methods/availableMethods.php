@@ -27,9 +27,7 @@ use Mateodioev\Bots\Telegram\Types\{BotCommand,
     Sticker,
     User,
     UserProfilePhotos};
-use function array_map;
 use function count;
-use function json_encode;
 
 /**
  * @api
@@ -315,11 +313,8 @@ trait availableMethods
         if ($len < 2 || $len > 10)
             throw new TelegramParamException('Media group must have at least 2 and at most 10 items');
 
-        $media = array_map(fn (InputMedia $m) => $m->getReduced(), $media); // to array
-        $media = json_encode($media);
-
         return $this->request(
-            Method::create(['chat_id' => $chatID, 'media' => $media, ...$params])
+            Method::create(['chat_id' => $chatID, 'media' => InputMedia::bulkToJson($media), ...$params])
                 ->setMethod('sendMediaGroup')
                 ->setReturnType(Message::class, true)
         );
@@ -494,10 +489,8 @@ trait availableMethods
      */
     public function restrictChatMember(string|int $chatID, int $userID, ChatPermissions $permissions, array $params = []): TypesInterface
     {
-        $permissions = json_encode($permissions->get());
-
         return $this->request(
-            Method::create(['chat_id' => $chatID, 'user_id' => $userID, 'permissions' => $permissions, ...$params])
+            Method::create(['chat_id' => $chatID, 'user_id' => $userID, 'permissions' => $permissions->toString(), ...$params])
                 ->setMethod('restrictChatMember')
         );
     }
@@ -561,10 +554,8 @@ trait availableMethods
      */
     public function setChatPermissions(string|int $chatID, ChatPermissions $permissions, ?bool $useIndependentChatPermissions = null): TypesInterface
     {
-        $permissions = json_encode($permissions->get());
-
         return $this->request(
-            Method::create(['chat_id' => $chatID, 'permissions' => $permissions, 'use_independent_chat_permissions' => $useIndependentChatPermissions])
+            Method::create(['chat_id' => $chatID, 'permissions' => $permissions->toString(), 'use_independent_chat_permissions' => $useIndependentChatPermissions])
                 ->setMethod('setChatPermissions')
         );
     }
@@ -1057,12 +1048,8 @@ trait availableMethods
         if ($scope::class === BotCommandScope::class)
             throw new TelegramParamException('Scope must be an instance of BotCommandScope');
 
-
-        $commands = array_map(fn (BotCommand $c) => $c->getReduced(), $commands); // to array
-        $commands = json_encode($commands);
-
         return $this->request(
-            Method::create(['commands' => $commands, 'scope' => $scope?->getReduced(), 'language_code' => $languageCode])
+            Method::create(['commands' => BotCommand::bulkToJson($commands), 'scope' => $scope?->getReduced(), 'language_code' => $languageCode])
                 ->setMethod('setMyCommands')
         );
     }

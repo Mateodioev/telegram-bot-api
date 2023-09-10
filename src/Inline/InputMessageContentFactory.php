@@ -90,8 +90,7 @@ final class InputMessageContentFactory
      */
     public static function invoice(string $title, string $description, string $payload, string $providerToken, string $currency, array $prices, array $params = []): InputInvoiceMessageContent
     {
-        $prices = \array_map(fn (LabeledPrice $price) => $price->getReduced(), $prices);
-        $prices = \json_encode($prices);
+        $prices = LabeledPrice::bulkToJson($prices);
 
         return new InputInvoiceMessageContent([
             'title'          => $title,

@@ -49,6 +49,17 @@ abstract class abstractType implements TypesInterface
         }, $up);
     }
 
+    /**
+     * Convert arrays of types to json-object
+     * @param TypesInterface[] $types
+     */
+    public static function bulkToJson(array $types): string
+    {
+        return \json_encode(
+            \array_map(fn (TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
+        );
+    }
+
     public function __construct(?array $args = null)
     {
         $this->boot();

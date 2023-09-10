@@ -5,7 +5,8 @@ namespace Mateodioev\Bots\Telegram\Inline;
 use Mateodioev\Bots\Telegram\Buttons\InlineKeyboardMarkupFactory;
 use Mateodioev\Bots\Telegram\Config\foreachable;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
-use Mateodioev\Bots\Telegram\Types\{InlineQueryResult,
+use Mateodioev\Bots\Telegram\Types\{
+    InlineQueryResult,
     InlineQueryResultArticle,
     InlineQueryResultAudio,
     InlineQueryResultCachedAudio,
@@ -74,9 +75,7 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function toJson(): string
     {
-        $results = \array_map(fn (InlineQueryResult $result) => $result->getReduced(), $this->all());
-
-        return \json_encode($results);
+        return InlineQueryResult::bulkToJson($this->all());
     }
 
     /**
