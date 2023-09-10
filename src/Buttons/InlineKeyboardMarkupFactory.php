@@ -9,7 +9,7 @@ use Mateodioev\Bots\Telegram\Types\{
 
 class InlineKeyboardMarkupFactory extends baseFactory
 {
-    private InlineKeyboardMarkup $button;
+    public InlineKeyboardMarkup $button;
 
     /** InlineKeyboardButton[][] */
     private array $rows = [];
@@ -42,6 +42,7 @@ class InlineKeyboardMarkupFactory extends baseFactory
     }
 
     /**
+     * Build the button
      * @return InlineKeyboardMarkup
      */
     public function get()

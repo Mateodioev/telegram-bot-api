@@ -28,7 +28,7 @@ class ForceReplyFactory extends baseFactory
 
     public function enableSelective(): self
     {
-        return $this->selective(true);
+        return $this->selective();
     }
 
     public function disableSelective(): self

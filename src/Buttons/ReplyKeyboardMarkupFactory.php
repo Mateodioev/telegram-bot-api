@@ -40,12 +40,13 @@ class ReplyKeyboardMarkupFactory extends baseFactory
     }
 
     /**
+     * Build the keyboard
      * @return ReplyKeyboardMarkup
      */
     public function get()
     {
         $this->rows = \array_filter($this->rows);
 
-        return $this->button->set_keyboard($this->rows);
+        return $this->button->setKeyboard($this->rows);
     }
 }

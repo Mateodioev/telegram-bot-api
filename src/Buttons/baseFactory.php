@@ -25,10 +25,10 @@ abstract class baseFactory implements ButtonInterface
     private function getObject(TypesInterface $obj): string
     {
         $conf = Types::$returnNullParams;
-        Types::setReturnNullParams(false);
+        Types::setReturnNullParams();
 
         // if ($obj instanceof TypesInterface)
-        $json = $obj->toString(0);
+        $json = $obj->toString();
 
         Types::setReturnNullParams($conf);
 
