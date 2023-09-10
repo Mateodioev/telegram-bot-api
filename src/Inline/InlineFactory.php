@@ -56,4 +56,9 @@ final class InlineFactory
     {
         return self::inlineQueryResultsButton($text, $webApp, $startParameter);
     }
+
+    public static function randId(string $seed = ''): string
+    {
+        return \md5(\microtime(true) . $seed . \rand(0, 10000000));
+    }
 }

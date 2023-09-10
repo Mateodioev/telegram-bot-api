@@ -5,7 +5,6 @@ namespace Mateodioev\Bots\Telegram\Inline;
 use Mateodioev\Bots\Telegram\Config\ParseMode;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Types\{
-    InputMessageContent,
     InputContactMessageContent,
     InputInvoiceMessageContent,
     InputLocationMessageContent,
@@ -35,7 +34,7 @@ final class InputMessageContentFactory
 
         return new InputTextMessageContent([
             'message_text' => $text,
-            'parse_mode'   => $parseMode,
+            'parse_mode'   => $parseMode->value,
             ...$params
         ]);
     }
@@ -89,7 +88,7 @@ final class InputMessageContentFactory
      *
      * @see https://core.telegram.org/bots/api#inputinvoicemessagecontent
      */
-    public static function invoice(string $title, string $description, string $payload, string $providerToken, string $currency, array $prices, array $params = []): InputMessageContent
+    public static function invoice(string $title, string $description, string $payload, string $providerToken, string $currency, array $prices, array $params = []): InputInvoiceMessageContent
     {
         $prices = \array_map(fn (LabeledPrice $price) => $price->getReduced(), $prices);
         $prices = \json_encode($prices);

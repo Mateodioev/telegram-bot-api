@@ -24,6 +24,8 @@ trait inlineMode
 
     /**
      * Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf of the user to the chat from which the query originated.
+     *
+     * @see https://core.telegram.org/bots/api#answerwebappquery
      */
     public function answerWebAppQuery(string $webAppQueryID, InlineQueryResultsFactory $results, array $params = []): TypesInterface
     {
