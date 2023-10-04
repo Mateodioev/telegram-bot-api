@@ -78,3 +78,15 @@ $customType = new MyCustomType([
 ```
 
 **See more examples here: [examples/](examples)**
+
+## Run tests
+
+Install dev dependencies
+```bash
+composer install
+```
+
+Run tests
+```bash
+composer test
+```
