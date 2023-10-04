@@ -2,7 +2,6 @@
 
 namespace Mateodioev\Bots\Telegram\Buttons;
 
-use Mateodioev\Bots\Telegram\Config\Types;
 use Mateodioev\Bots\Telegram\Interfaces\{
     ButtonInterface,
     TypesInterface
@@ -24,14 +23,8 @@ abstract class baseFactory implements ButtonInterface
 
     private function getObject(TypesInterface $obj): string
     {
-        $conf = Types::$returnNullParams;
-        Types::setReturnNullParams();
-
-        // if ($obj instanceof TypesInterface)
-        $json = $obj->toString();
-
-        Types::setReturnNullParams($conf);
-
-        return $json;
+        return json_encode(
+            $obj->getReduced()
+        );
     }
 }

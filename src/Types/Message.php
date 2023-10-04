@@ -64,7 +64,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property ?UserShared $user_shared Optional. Service message: a user was shared with the bot
  * @property ?ChatShared $chat_shared Optional. Service message: a chat was shared with the bot
  * @property ?string $connected_website Optional. The domain name of the website on which the user has logged in. More about Telegram Login: https://core.telegram.org/widgets/login
- * @property ?WriteAccessAllowed $write_access_allowed Optional. Service message: the user allowed the bot added to the attachment menu to write messages
+ * @property ?WriteAccessAllowed $write_access_allowed Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess
  * @property ?PassportData $passport_data Optional. Telegram Passport data
  * @property ?ProximityAlertTriggered $proximity_alert_triggered Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
  * @property ?ForumTopicCreated $forum_topic_created Optional. Service message: forum topic created
@@ -305,6 +305,8 @@ class Message extends abstractType
             'video_chat_participants_invited'   => FieldType::optional(VideoChatParticipantsInvited::class),
             'web_app_data'                      => FieldType::optional(WebAppData::class),
             'reply_markup'                      => FieldType::optional(InlineKeyboardMarkup::class),
+            // Legacy params 
+            'new_chat_participant'              => FieldType::optional(User::class),
         ];
     }
 }

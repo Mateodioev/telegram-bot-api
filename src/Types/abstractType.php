@@ -11,9 +11,10 @@ abstract class abstractType implements TypesInterface
     const DEFAULT_PARAM = null;
     const DEFAULT_BOOL  = false;
 
+    /** @var array<string, mixed> $properties Parsed properties */
     protected array $properties = [];
 
-    /** @var array<string, FieldType> $fields */
+    /** @var array<string, FieldType> $fields Fields rules */
     protected array $fields = [];
 
     private array $legacyProperties = [
@@ -90,6 +91,9 @@ abstract class abstractType implements TypesInterface
         return $this->properties[$key] ?? self::DEFAULT_PARAM;
     }
 
+    /**
+     * Magic setter and getter
+     */
     public function __call($name, $arguments)
     {
         $fieldName = strUtils::toSnakeCase($name);
@@ -102,6 +106,9 @@ abstract class abstractType implements TypesInterface
         return $this->getter($fieldName);
     }
 
+    /**
+     * var_dump properties
+     */
     public function __debugInfo()
     {
         return $this->properties;
@@ -284,7 +291,10 @@ abstract class abstractType implements TypesInterface
 
     private function propertieToScalar(string $key): mixed
     {
-        $type  = $this->fields[$key];
+        if (!isset($this->fields[$key]) && Types::$returnNullParams === false) {
+            throw new TelegramParamException('Propertie ' . $key . ' not found');
+        }
+        $type  = $this->fields[$key] ?? FieldType::optional('mixed');
         $value = $this->properties[$key] ?? ($type->allowBooleans()
             ? self::DEFAULT_BOOL
             : self::DEFAULT_PARAM

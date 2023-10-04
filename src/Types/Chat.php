@@ -133,6 +133,8 @@ class Chat extends abstractType
             'can_set_sticker_set'                     => FieldType::optional('boolean'),
             'linked_chat_id'                          => FieldType::optional('integer'),
             'location'                                => FieldType::optional(ChatLocation::class),
+            // legacy params
+            'all_members_are_administrators'          => FieldType::optional('boolean'),
         ];
     }
 }

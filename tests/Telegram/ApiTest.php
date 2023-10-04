@@ -7,6 +7,7 @@ use Mateodioev\Bots\Telegram\Config\Types as ApiConfig;
 use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
 use Mateodioev\Bots\Telegram\Methods\Method;
 use Mateodioev\Bots\Telegram\Types\{Error, User};
+use Mateodioev\Bots\Telegram\Types\Update;
 use PHPUnit\Framework\TestCase;
 
 class ApiTest extends TestCase
@@ -22,6 +23,16 @@ class ApiTest extends TestCase
   {
     return Method::create(method: 'MyInvalidMethod')
       ->setReturnType(Error::class);
+  }
+
+  public function testGetUpdates()
+  {
+    $updates = self::$api->getUpdates();
+    $this->assertIsArray($updates);
+    
+    foreach ($updates as $update) {
+      $this->assertInstanceOf(Update::class, $update);
+    }
   }
 
   public function testGetMe()
