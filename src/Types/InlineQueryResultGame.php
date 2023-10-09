@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -13,17 +11,17 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property string $type Type of the result, must be game
  * @property string $id Unique identifier for this result, 1-64 bytes
  * @property string $game_short_name Short name of the game
- * @property ?InlineKeyboardMarkup $reply_markup Optional. Inline keyboard attached to the message
+ * @property InlineKeyboardMarkup|null $reply_markup Optional. Inline keyboard attached to the message
  *
  * @method string type()
  * @method string id()
  * @method string gameShortName()
- * @method ?InlineKeyboardMarkup replyMarkup()
+ * @method InlineKeyboardMarkup|null replyMarkup()
  *
  * @method static setType(string $type)
  * @method static setId(string $id)
  * @method static setGameShortName(string $gameShortName)
- * @method static setReplyMarkup(?InlineKeyboardMarkup $replyMarkup)
+ * @method static setReplyMarkup(InlineKeyboardMarkup|null $replyMarkup)
  *
  * @see https://core.telegram.org/bots/api#inlinequeryresultgame
  */

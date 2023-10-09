@@ -9,18 +9,18 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @property string $phone_number Contact's phone number
  * @property string $first_name Contact's first name
- * @property ?string $last_name Optional. Contact's last name
- * @property ?string $vcard Optional. Additional data about the contact in the form of a vCard, 0-2048 bytes
+ * @property string|null $last_name Optional. Contact's last name
+ * @property string|null $vcard Optional. Additional data about the contact in the form of a vCard, 0-2048 bytes
  *
  * @method string phoneNumber()
  * @method string firstName()
- * @method ?string lastName()
- * @method ?string vcard()
+ * @method string|null lastName()
+ * @method string|null vcard()
  *
  * @method static setPhoneNumber(string $phoneNumber)
  * @method static setFirstName(string $firstName)
- * @method static setLastName(?string $lastName)
- * @method static setVcard(?string $vcard)
+ * @method static setLastName(string|null $lastName)
+ * @method static setVcard(string|null $vcard)
  *
  * @see https://core.telegram.org/bots/api#inputcontactmessagecontent
  */

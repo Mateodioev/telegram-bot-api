@@ -60,11 +60,13 @@ class Field
         }
         $type = join('|', $types);
         if ($this->required === false) {
-            if (count($this->types) > 1) {
+            return $type . '|null';
+            
+            /* if (count($this->types) > 1) {
                 return $type . '|null';
             }
 
-            return '?' . $type;
+            return '?' . $type; */
         }
 
         return $type;

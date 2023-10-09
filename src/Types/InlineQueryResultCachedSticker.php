@@ -11,20 +11,20 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property string $type Type of the result, must be sticker
  * @property string $id Unique identifier for this result, 1-64 bytes
  * @property string $sticker_file_id A valid file identifier of the sticker
- * @property ?InlineKeyboardMarkup $reply_markup Optional. Inline keyboard attached to the message
- * @property ?InputMessageContent $input_message_content Optional. Content of the message to be sent instead of the sticker
+ * @property InlineKeyboardMarkup|null $reply_markup Optional. Inline keyboard attached to the message
+ * @property InputMessageContent|null $input_message_content Optional. Content of the message to be sent instead of the sticker
  *
  * @method string type()
  * @method string id()
  * @method string stickerFileId()
- * @method ?InlineKeyboardMarkup replyMarkup()
- * @method ?InputMessageContent inputMessageContent()
+ * @method InlineKeyboardMarkup|null replyMarkup()
+ * @method InputMessageContent|null inputMessageContent()
  *
  * @method static setType(string $type)
  * @method static setId(string $id)
  * @method static setStickerFileId(string $stickerFileId)
- * @method static setReplyMarkup(?InlineKeyboardMarkup $replyMarkup)
- * @method static setInputMessageContent(?InputMessageContent $inputMessageContent)
+ * @method static setReplyMarkup(InlineKeyboardMarkup|null $replyMarkup)
+ * @method static setInputMessageContent(InputMessageContent|null $inputMessageContent)
  *
  * @see https://core.telegram.org/bots/api#inlinequeryresultcachedsticker
  */

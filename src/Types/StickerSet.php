@@ -13,7 +13,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property bool $is_animated True, if the sticker set contains animated stickers
  * @property bool $is_video True, if the sticker set contains video stickers
  * @property Sticker[] $stickers List of all set stickers
- * @property ?PhotoSize $thumbnail Optional. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
+ * @property PhotoSize|null $thumbnail Optional. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
  *
  * @method string name()
  * @method string title()
@@ -21,7 +21,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method bool isAnimated()
  * @method bool isVideo()
  * @method Sticker[] stickers()
- * @method ?PhotoSize thumbnail()
+ * @method PhotoSize|null thumbnail()
  *
  * @method static setName(string $name)
  * @method static setTitle(string $title)
@@ -29,7 +29,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setIsAnimated(bool $isAnimated)
  * @method static setIsVideo(bool $isVideo)
  * @method static setStickers(Sticker[] $stickers)
- * @method static setThumbnail(?PhotoSize $thumbnail)
+ * @method static setThumbnail(PhotoSize|null $thumbnail)
  *
  * @see https://core.telegram.org/bots/api#stickerset
  */

@@ -10,17 +10,17 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property string $status The member's status in the chat, always "creator"
  * @property User $user Information about the user
  * @property bool $is_anonymous True, if the user's presence in the chat is hidden
- * @property ?string $custom_title Optional. Custom title for this user
+ * @property string|null $custom_title Optional. Custom title for this user
  *
  * @method string status()
  * @method User user()
  * @method bool isAnonymous()
- * @method ?string customTitle()
+ * @method string|null customTitle()
  *
  * @method static setStatus(string $status)
  * @method static setUser(User $user)
  * @method static setIsAnonymous(bool $isAnonymous)
- * @method static setCustomTitle(?string $customTitle)
+ * @method static setCustomTitle(string|null $customTitle)
  *
  * @see https://core.telegram.org/bots/api#chatmemberowner
  */

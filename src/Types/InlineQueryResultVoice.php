@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -14,34 +12,34 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property string $id Unique identifier for this result, 1-64 bytes
  * @property string $voice_url A valid URL for the voice recording
  * @property string $title Recording title
- * @property ?string $caption Optional. Caption, 0-1024 characters after entities parsing
- * @property ?string $parse_mode Optional. Mode for parsing entities in the voice message caption. See formatting options for more details.
- * @property ?MessageEntity[] $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
- * @property ?int $voice_duration Optional. Recording duration in seconds
- * @property ?InlineKeyboardMarkup $reply_markup Optional. Inline keyboard attached to the message
- * @property ?InputMessageContent $input_message_content Optional. Content of the message to be sent instead of the voice recording
+ * @property string|null $caption Optional. Caption, 0-1024 characters after entities parsing
+ * @property string|null $parse_mode Optional. Mode for parsing entities in the voice message caption. See formatting options for more details.
+ * @property MessageEntity[]|null $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+ * @property int|null $voice_duration Optional. Recording duration in seconds
+ * @property InlineKeyboardMarkup|null $reply_markup Optional. Inline keyboard attached to the message
+ * @property InputMessageContent|null $input_message_content Optional. Content of the message to be sent instead of the voice recording
  *
  * @method string type()
  * @method string id()
  * @method string voiceUrl()
  * @method string title()
- * @method ?string caption()
- * @method ?string parseMode()
- * @method ?MessageEntity[] captionEntities()
- * @method ?int voiceDuration()
- * @method ?InlineKeyboardMarkup replyMarkup()
- * @method ?InputMessageContent inputMessageContent()
+ * @method string|null caption()
+ * @method string|null parseMode()
+ * @method MessageEntity[]|null captionEntities()
+ * @method int|null voiceDuration()
+ * @method InlineKeyboardMarkup|null replyMarkup()
+ * @method InputMessageContent|null inputMessageContent()
  *
  * @method static setType(string $type)
  * @method static setId(string $id)
  * @method static setVoiceUrl(string $voiceUrl)
  * @method static setTitle(string $title)
- * @method static setCaption(?string $caption)
- * @method static setParseMode(?string $parseMode)
- * @method static setCaptionEntities(?MessageEntity[] $captionEntities)
- * @method static setVoiceDuration(?int $voiceDuration)
- * @method static setReplyMarkup(?InlineKeyboardMarkup $replyMarkup)
- * @method static setInputMessageContent(?InputMessageContent $inputMessageContent)
+ * @method static setCaption(string|null $caption)
+ * @method static setParseMode(string|null $parseMode)
+ * @method static setCaptionEntities(MessageEntity[]|null $captionEntities)
+ * @method static setVoiceDuration(int|null $voiceDuration)
+ * @method static setReplyMarkup(InlineKeyboardMarkup|null $replyMarkup)
+ * @method static setInputMessageContent(InputMessageContent|null $inputMessageContent)
  *
  * @see https://core.telegram.org/bots/api#inlinequeryresultvoice
  */

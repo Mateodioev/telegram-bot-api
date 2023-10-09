@@ -9,18 +9,18 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @property string $file_id Identifier for this file, which can be used to download or reuse the file
  * @property string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
- * @property ?int $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
- * @property ?string $file_path Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
+ * @property int|null $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+ * @property string|null $file_path Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
  *
  * @method string fileId()
  * @method string fileUniqueId()
- * @method ?int fileSize()
- * @method ?string filePath()
+ * @method int|null fileSize()
+ * @method string|null filePath()
  *
  * @method static setFileId(string $fileId)
  * @method static setFileUniqueId(string $fileUniqueId)
- * @method static setFileSize(?int $fileSize)
- * @method static setFilePath(?string $filePath)
+ * @method static setFileSize(int|null $fileSize)
+ * @method static setFilePath(string|null $filePath)
  *
  * @see https://core.telegram.org/bots/api#file
  */

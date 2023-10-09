@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -15,15 +13,15 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property string $mime_type MIME type of the content of the video URL, "text/html" or "video/mp4"
  * @property string $thumbnail_url URL of the thumbnail (JPEG only) for the video
  * @property string $title Title for the result
- * @property ?string $caption Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
- * @property ?string $parse_mode Optional. Mode for parsing entities in the video caption. See formatting options for more details.
- * @property ?MessageEntity[] $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
- * @property ?int $video_width Optional. Video width
- * @property ?int $video_height Optional. Video height
- * @property ?int $video_duration Optional. Video duration in seconds
- * @property ?string $description Optional. Short description of the result
- * @property ?InlineKeyboardMarkup $reply_markup Optional. Inline keyboard attached to the message
- * @property ?InputMessageContent $input_message_content Optional. Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
+ * @property string|null $caption Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
+ * @property string|null $parse_mode Optional. Mode for parsing entities in the video caption. See formatting options for more details.
+ * @property MessageEntity[]|null $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+ * @property int|null $video_width Optional. Video width
+ * @property int|null $video_height Optional. Video height
+ * @property int|null $video_duration Optional. Video duration in seconds
+ * @property string|null $description Optional. Short description of the result
+ * @property InlineKeyboardMarkup|null $reply_markup Optional. Inline keyboard attached to the message
+ * @property InputMessageContent|null $input_message_content Optional. Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
  *
  * @method string type()
  * @method string id()
@@ -31,15 +29,15 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method string mimeType()
  * @method string thumbnailUrl()
  * @method string title()
- * @method ?string caption()
- * @method ?string parseMode()
- * @method ?MessageEntity[] captionEntities()
- * @method ?int videoWidth()
- * @method ?int videoHeight()
- * @method ?int videoDuration()
- * @method ?string description()
- * @method ?InlineKeyboardMarkup replyMarkup()
- * @method ?InputMessageContent inputMessageContent()
+ * @method string|null caption()
+ * @method string|null parseMode()
+ * @method MessageEntity[]|null captionEntities()
+ * @method int|null videoWidth()
+ * @method int|null videoHeight()
+ * @method int|null videoDuration()
+ * @method string|null description()
+ * @method InlineKeyboardMarkup|null replyMarkup()
+ * @method InputMessageContent|null inputMessageContent()
  *
  * @method static setType(string $type)
  * @method static setId(string $id)
@@ -47,15 +45,15 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setMimeType(string $mimeType)
  * @method static setThumbnailUrl(string $thumbnailUrl)
  * @method static setTitle(string $title)
- * @method static setCaption(?string $caption)
- * @method static setParseMode(?string $parseMode)
- * @method static setCaptionEntities(?MessageEntity[] $captionEntities)
- * @method static setVideoWidth(?int $videoWidth)
- * @method static setVideoHeight(?int $videoHeight)
- * @method static setVideoDuration(?int $videoDuration)
- * @method static setDescription(?string $description)
- * @method static setReplyMarkup(?InlineKeyboardMarkup $replyMarkup)
- * @method static setInputMessageContent(?InputMessageContent $inputMessageContent)
+ * @method static setCaption(string|null $caption)
+ * @method static setParseMode(string|null $parseMode)
+ * @method static setCaptionEntities(MessageEntity[]|null $captionEntities)
+ * @method static setVideoWidth(int|null $videoWidth)
+ * @method static setVideoHeight(int|null $videoHeight)
+ * @method static setVideoDuration(int|null $videoDuration)
+ * @method static setDescription(string|null $description)
+ * @method static setReplyMarkup(InlineKeyboardMarkup|null $replyMarkup)
+ * @method static setInputMessageContent(InputMessageContent|null $inputMessageContent)
  *
  * @see https://core.telegram.org/bots/api#inlinequeryresultvideo
  */

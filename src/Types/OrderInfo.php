@@ -7,20 +7,20 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
 /**
  * This object represents information about an order.
  *
- * @property ?string $name Optional. User name
- * @property ?string $phone_number Optional. User's phone number
- * @property ?string $email Optional. User email
- * @property ?ShippingAddress $shipping_address Optional. User shipping address
+ * @property string|null $name Optional. User name
+ * @property string|null $phone_number Optional. User's phone number
+ * @property string|null $email Optional. User email
+ * @property ShippingAddress|null $shipping_address Optional. User shipping address
  *
- * @method ?string name()
- * @method ?string phoneNumber()
- * @method ?string email()
- * @method ?ShippingAddress shippingAddress()
+ * @method string|null name()
+ * @method string|null phoneNumber()
+ * @method string|null email()
+ * @method ShippingAddress|null shippingAddress()
  *
- * @method static setName(?string $name)
- * @method static setPhoneNumber(?string $phoneNumber)
- * @method static setEmail(?string $email)
- * @method static setShippingAddress(?ShippingAddress $shippingAddress)
+ * @method static setName(string|null $name)
+ * @method static setPhoneNumber(string|null $phoneNumber)
+ * @method static setEmail(string|null $email)
+ * @method static setShippingAddress(ShippingAddress|null $shippingAddress)
  *
  * @see https://core.telegram.org/bots/api#orderinfo
  */

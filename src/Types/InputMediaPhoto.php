@@ -9,24 +9,24 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @property string $type Type of the result, must be photo
  * @property string $media File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files: https://core.telegram.org/bots/api#sending-files
- * @property ?string $caption Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
- * @property ?string $parse_mode Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
- * @property ?MessageEntity[] $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
- * @property ?bool $has_spoiler Optional. Pass True if the photo needs to be covered with a spoiler animation
+ * @property string|null $caption Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
+ * @property string|null $parse_mode Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
+ * @property MessageEntity[]|null $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+ * @property bool|null $has_spoiler Optional. Pass True if the photo needs to be covered with a spoiler animation
  *
  * @method string type()
  * @method string media()
- * @method ?string caption()
- * @method ?string parseMode()
- * @method ?MessageEntity[] captionEntities()
- * @method ?bool hasSpoiler()
+ * @method string|null caption()
+ * @method string|null parseMode()
+ * @method MessageEntity[]|null captionEntities()
+ * @method bool|null hasSpoiler()
  *
  * @method static setType(string $type)
  * @method static setMedia(string $media)
- * @method static setCaption(?string $caption)
- * @method static setParseMode(?string $parseMode)
- * @method static setCaptionEntities(?MessageEntity[] $captionEntities)
- * @method static setHasSpoiler(?bool $hasSpoiler)
+ * @method static setCaption(string|null $caption)
+ * @method static setParseMode(string|null $parseMode)
+ * @method static setCaptionEntities(MessageEntity[]|null $captionEntities)
+ * @method static setHasSpoiler(bool|null $hasSpoiler)
  *
  * @see https://core.telegram.org/bots/api#inputmediaphoto
  */

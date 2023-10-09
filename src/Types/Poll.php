@@ -15,11 +15,11 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property bool $is_anonymous True, if the poll is anonymous
  * @property string $type Poll type, currently can be "regular" or "quiz"
  * @property bool $allows_multiple_answers True, if the poll allows multiple answers
- * @property ?int $correct_option_id Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
- * @property ?string $explanation Optional. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
- * @property ?MessageEntity[] $explanation_entities Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the explanation
- * @property ?int $open_period Optional. Amount of time in seconds the poll will be active after creation
- * @property ?int $close_date Optional. Point in time (Unix timestamp) when the poll will be automatically closed
+ * @property int|null $correct_option_id Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
+ * @property string|null $explanation Optional. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
+ * @property MessageEntity[]|null $explanation_entities Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the explanation
+ * @property int|null $open_period Optional. Amount of time in seconds the poll will be active after creation
+ * @property int|null $close_date Optional. Point in time (Unix timestamp) when the poll will be automatically closed
  *
  * @method string id()
  * @method string question()
@@ -29,11 +29,11 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method bool isAnonymous()
  * @method string type()
  * @method bool allowsMultipleAnswers()
- * @method ?int correctOptionId()
- * @method ?string explanation()
- * @method ?MessageEntity[] explanationEntities()
- * @method ?int openPeriod()
- * @method ?int closeDate()
+ * @method int|null correctOptionId()
+ * @method string|null explanation()
+ * @method MessageEntity[]|null explanationEntities()
+ * @method int|null openPeriod()
+ * @method int|null closeDate()
  *
  * @method static setId(string $id)
  * @method static setQuestion(string $question)
@@ -43,11 +43,11 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setIsAnonymous(bool $isAnonymous)
  * @method static setType(string $type)
  * @method static setAllowsMultipleAnswers(bool $allowsMultipleAnswers)
- * @method static setCorrectOptionId(?int $correctOptionId)
- * @method static setExplanation(?string $explanation)
- * @method static setExplanationEntities(?MessageEntity[] $explanationEntities)
- * @method static setOpenPeriod(?int $openPeriod)
- * @method static setCloseDate(?int $closeDate)
+ * @method static setCorrectOptionId(int|null $correctOptionId)
+ * @method static setExplanation(string|null $explanation)
+ * @method static setExplanationEntities(MessageEntity[]|null $explanationEntities)
+ * @method static setOpenPeriod(int|null $openPeriod)
+ * @method static setCloseDate(int|null $closeDate)
  *
  * @see https://core.telegram.org/bots/api#poll
  */
