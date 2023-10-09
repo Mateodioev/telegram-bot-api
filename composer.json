@@ -21,7 +21,7 @@
         "mateodioev/utils": "^1.1",
         "ext-curl": "*",
         "ext-fileinfo": "*",
-        "amphp/http-client": "v5.0.0-beta.10",
+        "amphp/http-client": "^v5",
         "amphp/file": "^3.0"
     },
     "require-dev": {
@@ -39,6 +39,5 @@
         "test-report": "phpunit --testdox tests/ --colors=always --testdox-html docs/report.html",
         "coverage": "phpunit --coverage-html docs/coverage --coverage-text --colors=always",
         "gen-type": "php tools/gen-type.php"
-    },
-    "minimum-stability": "beta"
+    }
 }

@@ -19,7 +19,7 @@ trait gettingUpdates
      * @see https://core.telegram.org/bots/api#getupdates
      * @return Update[]|Error Array of Update objects
      */
-    public function getUpdates(int $offset = 0, int $limit = 100, $timeout = 0, array $allowedUpdates = []): TypesInterface|array
+    public function getUpdates(int $offset = 0, int $limit = 100, $timeout = 0, array $allowedUpdates = []): array|Error
     {
         $payload = [
             'offset'          => $offset,

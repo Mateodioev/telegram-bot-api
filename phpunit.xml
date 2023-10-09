@@ -9,5 +9,6 @@
 
 <php>
   <env name="BOT_TOKEN" value="YOUR_BOT_TOKEN"/>
+  <env name="TELEGRAM_CHAT_ID" value="996202950"/>
 </php>
 </phpunit>

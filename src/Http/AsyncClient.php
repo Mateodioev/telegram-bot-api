@@ -2,8 +2,9 @@
 
 namespace Mateodioev\Bots\Telegram\Http;
 
+use Amp\Http\Client\Form;
 use Amp\Http\Client\Body\{FormBody, StringBody};
-use Amp\Http\Client\{HttpClient, HttpClientBuilder, Request as AsyncRequest, RequestBody};
+use Amp\Http\Client\{HttpClient, HttpClientBuilder, HttpContent, Request as AsyncRequest, RequestBody};
 
 class AsyncClient implements Request
 {
@@ -18,14 +19,14 @@ class AsyncClient implements Request
     /**
      * @throws HttpException
      */
-    private function createBody(mixed $payload): RequestBody
+    private function createBody(mixed $payload): HttpContent|string
     {
         if (is_string($payload) || $payload instanceof \Stringable) {
-            return new StringBody((string) $payload);
+            return (string) $payload;
         } elseif ($payload instanceof \stdClass) {
-            return new StringBody(json_encode($payload));
+            return json_encode($payload);
         } elseif (is_array($payload)) {
-            $body = new FormBody();
+            $body = new Form;
 
             foreach ($payload as $key => $value) {
                 if ($value instanceof \CURLFile) {

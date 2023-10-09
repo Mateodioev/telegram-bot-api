@@ -28,7 +28,8 @@ use Mateodioev\Bots\Telegram\Types\{
     sendPoll,
     Sticker,
     User,
-    UserProfilePhotos
+    UserProfilePhotos,
+    Error
 };
 use function count;
 
@@ -311,7 +312,7 @@ trait availableMethods
      * @see https://core.telegram.org/bots/api#sendmediagroup
      * @return Message[]
      */
-    public function sendMediaGroup(string|int $chatID, array $media, array $params = []): array
+    public function sendMediaGroup(string|int $chatID, array $media, array $params = []): array|Error
     {
         $len = count($media);
 
@@ -777,7 +778,7 @@ trait availableMethods
      * @see https://core.telegram.org/bots/api#getchatadministrators
      * @return ChatMember[]
      */
-    public function getChatAdministrators(string|int $chatID): array
+    public function getChatAdministrators(string|int $chatID): array|Error
     {
         return $this->request(
             Method::create(['chat_id' => $chatID], 'getChatAdministrators')
@@ -847,7 +848,7 @@ trait availableMethods
      * @see https://core.telegram.org/bots/api#getforumtopiciconstickers
      * @return Sticker[]
      */
-    public function getForumTopicIconStickers(): array
+    public function getForumTopicIconStickers(): array|Error
     {
         return $this->request(
             Method::create([], 'getForumTopicIconStickers')
