@@ -3,3 +3,5 @@ examples/ export-ignore
 tools/ export-ignore
 
 .php-cs-fixer.dist.php export-ignore
+.editorconfig export-ignore
+phpunit.xml export-ignore

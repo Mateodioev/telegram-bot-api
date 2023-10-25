@@ -2,6 +2,8 @@
 /vendor
 /.idea/
 /fn-tests/
+/.devcontainer/
+
 
 # files
 .env
