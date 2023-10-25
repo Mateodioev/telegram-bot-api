@@ -308,7 +308,9 @@ class Message extends abstractType
             'web_app_data'                      => FieldType::optional(WebAppData::class),
             'reply_markup'                      => FieldType::optional(InlineKeyboardMarkup::class),
             // Legacy params
+            'left_chat_participant'             => FieldType::optional(User::class),
             'new_chat_participant'              => FieldType::optional(User::class),
+            'new_chat_member'                   => FieldType::optional(User::class),
         ];
     }
 }
