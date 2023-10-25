@@ -26,7 +26,8 @@
     },
     "require-dev": {
         "mateodioev/php-easy-cli": "*",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3.35"
     },
     "autoload-dev": {
         "psr-4": {
@@ -36,8 +37,7 @@
     },
     "scripts": {
         "test": "phpunit --testdox tests/ --colors=always",
-        "test-report": "phpunit --testdox tests/ --colors=always --testdox-html docs/report.html",
-        "coverage": "phpunit --coverage-html docs/coverage --coverage-text --colors=always",
-        "gen-type": "php tools/gen-type.php"
+        "gen-type": "php tools/gen-type.php",
+        "fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose"
     }
 }
