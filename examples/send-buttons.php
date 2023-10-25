@@ -4,8 +4,7 @@
 
 use Mateodioev\Bots\Telegram\Api;
 use Mateodioev\Bots\Telegram\Buttons\ButtonFactory;
-use Mateodioev\Bots\Telegram\Types\InlineKeyboardButton;
-use Mateodioev\Bots\Telegram\Types\KeyboardButton;
+use Mateodioev\Bots\Telegram\Types\{InlineKeyboardButton, KeyboardButton};
 
 $api = new Api('YOUR BOT TOKEN');
 

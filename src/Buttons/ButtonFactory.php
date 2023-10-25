@@ -17,12 +17,12 @@ final class ButtonFactory
      */
     public static function inlineKeyboardMarkup(): InlineKeyboardMarkupFactory
     {
-        return new InlineKeyboardMarkupFactory;
+        return new InlineKeyboardMarkupFactory();
     }
 
     /**
      * This object represents a [custom keyboard](https://core.telegram.org/bots/features#keyboards) with reply options
-     * 
+     *
      * @see https://core.telegram.org/bots/api#replykeyboardmarkup
      * @api
      */
@@ -33,7 +33,7 @@ final class ButtonFactory
         ?string $inputFieldPlaceholder = null,
         bool    $selective             = true
     ): ReplyKeyboardMarkupFactory {
-        $replyKeyboardMarkup = new ReplyKeyboardMarkup;
+        $replyKeyboardMarkup = new ReplyKeyboardMarkup();
         $replyKeyboardMarkup->is_persistent           = $isPersistent;
         $replyKeyboardMarkup->resize_keyboard         = $resizeKeyboard;
         $replyKeyboardMarkup->one_time_keyboard       = $oneTimeKeyboard;
@@ -63,6 +63,6 @@ final class ButtonFactory
      */
     public static function forceReply(): ForceReplyFactory
     {
-        return new ForceReplyFactory;
+        return new ForceReplyFactory();
     }
 }

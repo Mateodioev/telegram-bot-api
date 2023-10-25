@@ -14,13 +14,13 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  */
 class Error extends abstractType
 {
-	protected function boot(): void
-	{
-		$this->fields = [
-			'ok'          => FieldType::single('boolean'),
-			'error_code'  => FieldType::single('integer'),
-			'description' => FieldType::single('string'),
-			'parameters'  => FieldType::mixed()
-		];
-	}
+    protected function boot(): void
+    {
+        $this->fields = [
+            'ok'          => FieldType::single('boolean'),
+            'error_code'  => FieldType::single('integer'),
+            'description' => FieldType::single('string'),
+            'parameters'  => FieldType::mixed()
+        ];
+    }
 }

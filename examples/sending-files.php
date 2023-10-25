@@ -3,8 +3,7 @@
 # This file is an example of how to send files to Telegram using this library.
 
 use Mateodioev\Bots\Telegram\Api;
-use Mateodioev\Bots\Telegram\Types\InputFile;
-use Mateodioev\Bots\Telegram\Types\InputMediaDocument;
+use Mateodioev\Bots\Telegram\Types\{InputFile, InputMediaDocument};
 
 $api = new Api('YOUR BOT TOKEN');
 
@@ -54,15 +53,11 @@ $api->sendDocument(
     ]
 );
 
-
-$api->sendMediaGroup(
-    'CHAT_ID',
-    [// You can send up to 10 files
-        new InputMediaDocument(['media' => 'FILE_ID', 'caption' => 'This is a caption']),
-        new InputMediaDocument(['media' => 'https://example.com/file.pdf', 'caption' => 'This is a caption']),
-        // new InputMediaDocument(['media' => '/path/to/file.pdf', 'caption' => 'This is a caption']), Not supported yet
-    ],
-    [
-        'protect_content' => true // Protect the content of the files
-    ]
-);
+$medias = [ // You can send up to 10 files
+    new InputMediaDocument(['media' => 'FILE_ID', 'caption' => 'This is a caption']),
+    new InputMediaDocument(['media' => 'https://example.com/file.pdf', 'caption' => 'This is a caption']),
+    // new InputMediaDocument(['media' => '/path/to/file.pdf', 'caption' => 'This is a caption']), Not supported yet
+];
+$api->sendMediaGroup('CHAT_ID', $medias, [
+    'protect_content' => true // Protect the content of the files
+]);

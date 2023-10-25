@@ -10,7 +10,7 @@ class ForceReplyFactory extends baseFactory
 
     public function __construct()
     {
-        $this->button = new ForceReply;
+        $this->button = new ForceReply();
         $this->button->force_reply = true;
     }
 

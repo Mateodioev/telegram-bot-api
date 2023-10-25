@@ -29,8 +29,9 @@ final class InputMessageContentFactory
      */
     public static function text(string $text, ParseMode $parseMode = ParseMode::HTML, array $params = []): InputTextMessageContent
     {
-        if (\strlen($text) > self::TEXT_LIMIT)
+        if (\strlen($text) > self::TEXT_LIMIT) {
             throw new TelegramParamException('Text length exceeds maximum limit');
+        }
 
         return new InputTextMessageContent([
             'message_text' => $text,

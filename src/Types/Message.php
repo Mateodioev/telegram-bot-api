@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -305,7 +307,7 @@ class Message extends abstractType
             'video_chat_participants_invited'   => FieldType::optional(VideoChatParticipantsInvited::class),
             'web_app_data'                      => FieldType::optional(WebAppData::class),
             'reply_markup'                      => FieldType::optional(InlineKeyboardMarkup::class),
-            // Legacy params 
+            // Legacy params
             'new_chat_participant'              => FieldType::optional(User::class),
         ];
     }

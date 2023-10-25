@@ -83,7 +83,7 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match(new \stdClass()));
         $this->assertFalse($type->match(User::class));
 
-        $this->assertTrue($type->match(new User));
+        $this->assertTrue($type->match(new User()));
     }
 
     public function testArrayObjectsTypes()
@@ -99,10 +99,10 @@ class FieldTypeTest extends TestCase
 
         $this->assertFalse($type->match(new \stdClass()));
         $this->assertFalse($type->match(User::class));
-        $this->assertFalse($type->match(new User));
-        $this->assertFalse($type->match([new User, new \stdClass]));
+        $this->assertFalse($type->match(new User()));
+        $this->assertFalse($type->match([new User(), new \stdClass()]));
 
-        $this->assertTrue($type->match([new User]));
-        $this->assertTrue($type->match([new User, new User]));
+        $this->assertTrue($type->match([new User()]));
+        $this->assertTrue($type->match([new User(), new User()]));
     }
 }

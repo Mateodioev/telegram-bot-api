@@ -7,7 +7,7 @@ namespace Tools\Gen;
  */
 class TypeStr
 {
-    const TAB_SIZE = 4; // spaces
+    public const TAB_SIZE = 4; // spaces
 
     private int $maxFieldLength = -1;
     private array $cacheLengths = [];
@@ -20,7 +20,9 @@ class TypeStr
     public function classHeader(): string
     {
         $header = <<<PHP
-            <?php declare(strict_types=1);
+            <?php
+            
+            declare(strict_types=1);
 
             namespace Mateodioev\Bots\Telegram\Types;{$this->requireFieldType()}
 
@@ -82,33 +84,39 @@ class TypeStr
         $subtypes = [];
         foreach ($fieldType->types as $type) {
             $subtypes[] = "'" . $type->getType() . "'";
-            if ($type->allowArrays())
+            if ($type->allowArrays()) {
                 $multiple = true;
+            }
         }
 
-        if ($first->allowArrays())
+        if ($first->allowArrays()) {
             $multiple = true;
+        }
 
         $multiple = $multiple ? 'true' : 'false';
 
-        if ($first->isScalar() === false)
+        if ($first->isScalar() === false) {
             $firstType = str_replace('Mateodioev\Bots\Telegram\Types\\', '', $first->getType()) . '::class';
-        else
+        } else {
             $firstType = '\'' . $first->getType() . '\'';
+        }
 
         if (in_array('\'Mateodioev\Bots\Telegram\Types\InputFile\'', [$firstType, ...$subtypes])) {
             return 'FieldType::mixed()';
         }
 
         if (empty($subtypes)) {
-            if ($multiple === 'false' && $optional === 'false')
+            if ($multiple === 'false' && $optional === 'false') {
                 return 'FieldType::single(' . $firstType . ')';
+            }
 
-            if ($multiple === 'true' && $optional === 'false')
+            if ($multiple === 'true' && $optional === 'false') {
                 return 'FieldType::multiple(' . $firstType . ')';
+            }
 
-            if ($multiple === 'false' && $optional === 'true')
+            if ($multiple === 'false' && $optional === 'true') {
                 return 'FieldType::optional(' . $firstType . ')';
+            }
         }
 
         return "new FieldType(" . $firstType . ", allowArrays: " . $multiple . ", allowNull: " . $optional . ", subTypes: [" . join(', ', $subtypes) . "])";
@@ -150,8 +158,9 @@ class TypeStr
     private function phpDocString(): string
     {
         $properties = $this->phpDocProperties();
-        if (empty($properties))
+        if (empty($properties)) {
             return '';
+        }
 
         return ' *' . PHP_EOL . $properties . PHP_EOL . ' *' . PHP_EOL . $this->phpDocMethods();
     }

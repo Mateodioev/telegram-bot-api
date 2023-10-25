@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Mateodioev\Bots\Telegram\Exception;
 
@@ -7,5 +7,5 @@ use UnexpectedValueException;
 
 final class TelegramParamException extends UnexpectedValueException implements ExceptionInterface
 {
-  # code...
+    # code...
 }

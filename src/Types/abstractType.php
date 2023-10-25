@@ -8,8 +8,8 @@ use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 
 abstract class abstractType implements TypesInterface
 {
-    const DEFAULT_PARAM = null;
-    const DEFAULT_BOOL  = false;
+    public const DEFAULT_PARAM = null;
+    public const DEFAULT_BOOL  = false;
 
     /** @var array<string, mixed> $properties Parsed properties */
     protected array $properties = [];
@@ -23,8 +23,9 @@ abstract class abstractType implements TypesInterface
 
     public static function create(?array $update): ?static
     {
-        if ($update === null)
+        if ($update === null) {
             return self::DEFAULT_PARAM;
+        }
 
         return new static($update);
     }
@@ -36,8 +37,9 @@ abstract class abstractType implements TypesInterface
 
     public static function bulkCreate(?array $up): ?array
     {
-        if ($up === null)
+        if ($up === null) {
             return self::DEFAULT_PARAM;
+        }
 
         return array_map(function ($update) {
             if (is_array($update) || is_null($update)) {
@@ -66,8 +68,9 @@ abstract class abstractType implements TypesInterface
         $this->boot();
         $this->cloneFields();
 
-        if ($args !== null)
+        if ($args !== null) {
             $this->magicSetter($args);
+        }
     }
 
     /**
@@ -177,8 +180,9 @@ abstract class abstractType implements TypesInterface
                 $className = $field->customType ?? $field->getType();
 
                 $value = array_map(function ($val) use ($className) {
-                    if ($val instanceof TypesInterface)
+                    if ($val instanceof TypesInterface) {
                         return $val;
+                    }
                     return $className::bulkCreate($val);
                 }, $value);
 
@@ -232,8 +236,9 @@ abstract class abstractType implements TypesInterface
      */
     private function getter(string $key): mixed
     {
-        if ($this->existsProperty($key) === false && Types::$returnNullParams === false)
+        if ($this->existsProperty($key) === false && Types::$returnNullParams === false) {
             throw new TelegramParamException('Param ' . $key . ' not found');
+        }
 
         $property = $this->properties[$key]
             ?? $this->properties[substr($key, 4)]
@@ -247,8 +252,9 @@ abstract class abstractType implements TypesInterface
      */
     private function fluentSetter(string $key, mixed $value): static
     {
-        if ($this->existsProperty($key) === false)
+        if ($this->existsProperty($key) === false) {
             throw new TelegramParamException('Param ' . $key . ' not found in ' . $this::class);
+        }
 
         $field = $this->fields[$key];
 
@@ -268,8 +274,9 @@ abstract class abstractType implements TypesInterface
 
     private function checkIfPropertyMatchValues(string $key, mixed $value, FieldType $field): void
     {
-        if ($field->match($value) === false)
+        if ($field->match($value) === false) {
             throw new TelegramParamException('Param ' . $key . ' must be ' . $field->explainType());
+        }
     }
 
     protected function getProperties(): array
@@ -280,8 +287,9 @@ abstract class abstractType implements TypesInterface
 
             $value = $this->propertieToScalar($key);
 
-            if (Types::$returnNullParams === false && ($value === self::DEFAULT_PARAM || $value === self::DEFAULT_BOOL))
+            if (Types::$returnNullParams === false && ($value === self::DEFAULT_PARAM || $value === self::DEFAULT_BOOL)) {
                 continue;
+            }
 
             $params[$key] = $value;
         }
@@ -295,21 +303,24 @@ abstract class abstractType implements TypesInterface
             throw new TelegramParamException('Propertie ' . $key . ' not found');
         }
         $type  = $this->fields[$key] ?? FieldType::optional('mixed');
-        $value = $this->properties[$key] ?? ($type->allowBooleans()
+        $value = $this->properties[$key] ?? (
+            $type->allowBooleans()
             ? self::DEFAULT_BOOL
             : self::DEFAULT_PARAM
         );
 
         if (is_array($value)) {
             $value = array_map(function ($val) {
-                if ($val instanceof TypesInterface)
+                if ($val instanceof TypesInterface) {
                     return $val->get();
+                }
                 return $val;
             }, $value);
         }
 
-        if ($value instanceof TypesInterface)
+        if ($value instanceof TypesInterface) {
             $value = $value->get();
+        }
 
         return $value;
     }

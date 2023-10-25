@@ -38,8 +38,9 @@ final class InlineFactory
      */
     public static function inlineQueryResultsButton(string $text, ?WebhookInfo $webApp = null, ?string $startParameter = null): InlineQueryResultsButton
     {
-        if ($webApp && $startParameter)
+        if ($webApp && $startParameter) {
             throw new TelegramParamException('You can only set one of the parameters "webApp" or "startParameter"');
+        }
 
         return new InlineQueryResultsButton([
             'text' => $text,

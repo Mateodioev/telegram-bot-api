@@ -5,17 +5,17 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
- * 
- * @property boolean $ok 
- * @property integer $error_code 
- * @property string  $description 
- * @property mixed   $result 
- * 
+ *
+ * @property boolean $ok
+ * @property integer $error_code
+ * @property string  $description
+ * @property mixed   $result
+ *
  * @method boolean ok()
  * @method integer errorCode()
  * @method string  description()
  * @method mixed   result()
- * 
+ *
  * @method static setOk(boolean $ok)
  * @method static setErrorCode(integer $errorCode)
  * @method static setDescription(string $description)

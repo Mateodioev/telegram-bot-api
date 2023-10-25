@@ -125,8 +125,9 @@ trait Stickers
      */
     public function setStickerEmojiList(string $sticker, array $emojiList): TypesInterface
     {
-        if (count($emojiList) > 20)
+        if (count($emojiList) > 20) {
             throw new TelegramParamException('The maximum number of emoji in the input field is 20');
+        }
 
         return $this->request(Method::create(['sticker' => $sticker, 'emoji_list' => json_encode($emojiList)])
             ->setMethod('setStickerEmojiList'));
@@ -141,8 +142,9 @@ trait Stickers
      */
     public function setStickerKeywords(string $sticker, array $keywords): TypesInterface
     {
-        if (count($keywords) > 20)
+        if (count($keywords) > 20) {
             throw new TelegramParamException('The maximum number of keywords in the input field is 20');
+        }
 
         return $this->request(Method::create(['sticker' => $sticker, 'keywords' => json_encode($keywords)])
             ->setMethod('setStickerKeywords'));

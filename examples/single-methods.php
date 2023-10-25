@@ -3,10 +3,8 @@
 # This file is an example of how to use the library
 
 use Mateodioev\Bots\Telegram\Api;
-use Mateodioev\Bots\Telegram\Config\ParseMode;
-use Mateodioev\Bots\Telegram\Config\Types;
-use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
-use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
+use Mateodioev\Bots\Telegram\Config\{ParseMode, Types};
+use Mateodioev\Bots\Telegram\Exception\{TelegramApiException, TelegramParamException};
 
 $api = new Api('YOUR BOT TOKEN');
 

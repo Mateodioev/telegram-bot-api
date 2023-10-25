@@ -6,7 +6,9 @@ use function json_decode;
 
 class Response
 {
-    public function __construct(protected string $body) {}
+    public function __construct(protected string $body)
+    {
+    }
 
     /**
      * Get request body

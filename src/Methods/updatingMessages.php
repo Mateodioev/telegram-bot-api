@@ -54,8 +54,9 @@ trait updatingMessages
      */
     public function editMessageMedia(InputMedia $media, array $params = []): TypesInterface
     {
-        if ($media::class === InputMedia::class)
+        if ($media::class === InputMedia::class) {
             throw new TelegramParamException('Media must be a child of InputMedia');
+        }
 
         $result = $this->request(
             Method::create(['media' => $media->getReduced(), ...$params])

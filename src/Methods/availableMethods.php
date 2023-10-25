@@ -31,6 +31,7 @@ use Mateodioev\Bots\Telegram\Types\{
     UserProfilePhotos,
     Error
 };
+
 use function count;
 
 /**
@@ -43,7 +44,7 @@ trait availableMethods
 
     /**
      * A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a User object.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#getme
      * @return User
      */
@@ -134,7 +135,7 @@ trait availableMethods
 
     /**
      * Use this method to forward messages of any kind. Service messages can't be forwarded.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#forwardmessage
      * @return Message
      */
@@ -159,7 +160,7 @@ trait availableMethods
     /**
      * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot.
      * The method is analogous to the method {@see self::forwardMessage}, but the copied message doesn't have a link to the original message.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#copymessage
      * @return Message
      */
@@ -184,7 +185,7 @@ trait availableMethods
     }
 
     /**
-     * Use this method to send photos. 
+     * Use this method to send photos.
      *
      * @see https://core.telegram.org/bots/api#sendphoto
      * @return Message
@@ -202,7 +203,7 @@ trait availableMethods
 
     /**
      * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format
-     * 
+     *
      * @see https://core.telegram.org/bots/api#sendaudio
      * @return Message
      */
@@ -254,7 +255,7 @@ trait availableMethods
 
     /**
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound).
-     * 
+     *
      * @see https://core.telegram.org/bots/api#sendanimation
      * @return Message
      */
@@ -289,7 +290,7 @@ trait availableMethods
 
     /**
      * As of [v.4.0](https://telegram.org/blog/video-messages-and-telescope), Telegram clients support rounded square MPEG4 videos of up to 1 minute long.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#sendvideonote
      * @return Message
      */
@@ -306,8 +307,8 @@ trait availableMethods
 
     /**
      * Use this method to send a group of photos, videos, documents or audios as an album.
-     * Documents and audio files can be only grouped in an album with messages of the same type. 
-     * 
+     * Documents and audio files can be only grouped in an album with messages of the same type.
+     *
      * @param InputMedia[] $media
      * @see https://core.telegram.org/bots/api#sendmediagroup
      * @return Message[]
@@ -316,8 +317,9 @@ trait availableMethods
     {
         $len = count($media);
 
-        if ($len < 2 || $len > 10)
+        if ($len < 2 || $len > 10) {
             throw new TelegramParamException('Media group must have at least 2 and at most 10 items');
+        }
 
         return $this->request(
             Method::create(['chat_id' => $chatID, 'media' => InputMedia::bulkToJson($media), ...$params])
@@ -333,8 +335,9 @@ trait availableMethods
     {
         $limit = ($type === 'Photo' ? $this->photoSizeLimit : $this->fileSizeLimit);
 
-        if ($file->size() > $limit)
+        if ($file->size() > $limit) {
             throw new TelegramParamException($type . ' file is too big');
+        }
     }
 
     /**
@@ -353,8 +356,8 @@ trait availableMethods
     }
 
     /**
-     * Use this method to send information about a venue. 
-     * 
+     * Use this method to send information about a venue.
+     *
      * @see https://core.telegram.org/bots/api#sendvenue
      * @return Message
      */
@@ -369,7 +372,7 @@ trait availableMethods
 
     /**
      * Use this method to send phone contacts.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#sendcontact
      * @return Message
      */
@@ -383,8 +386,8 @@ trait availableMethods
     }
 
     /**
-     * Use this method to send a native poll. 
-     * 
+     * Use this method to send a native poll.
+     *
      * @see https://core.telegram.org/bots/api#sendpoll
      * @return Message
      */
@@ -433,7 +436,7 @@ trait availableMethods
 
     /**
      * Use this method to get a list of profile pictures for a user.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#getuserprofilephotos
      * @return UserProfilePhotos
      */
@@ -464,7 +467,7 @@ trait availableMethods
     /**
      * Use this method to ban a user in a group, a supergroup or a channel.
      * In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#banchatmember
      */
     public function banChatMember(string|int $chatID, int $userID, array $params = []): TypesInterface
@@ -477,7 +480,7 @@ trait availableMethods
 
     /**
      * Use this method to unban a previously banned user in a supergroup or channel.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#unbanchatmember
      */
     public function unbanChatMember(string|int $chatID, int $userID, ?bool $onlyIfBanned = null): TypesInterface
@@ -490,7 +493,7 @@ trait availableMethods
 
     /**
      * Use this method to restrict a user in a supergroup.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#restrictchatmember
      */
     public function restrictChatMember(string|int $chatID, int $userID, ChatPermissions $permissions, array $params = []): TypesInterface
@@ -516,7 +519,7 @@ trait availableMethods
 
     /**
      * Use this method to set a custom title for an administrator in a supergroup promoted by the bot.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
      */
     public function setChatAdministratorCustomTitle(string|int $chatID, int $userID, string $customTitle): TypesInterface
@@ -529,7 +532,7 @@ trait availableMethods
 
     /**
      * Use this method to ban a channel chat in a supergroup or a channel.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#banchatsenderchat
      */
     public function banChatSenderChat(string|int $chatID, int $senderChatID): TypesInterface
@@ -542,7 +545,7 @@ trait availableMethods
 
     /**
      * Use this method to unban a previously banned channel chat in a supergroup or channel.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#unbanchatsenderchat
      */
     public function unbanChatSenderChat(string|int $chatID, int $senderChatID): TypesInterface
@@ -555,7 +558,7 @@ trait availableMethods
 
     /**
      * Use this method to set default chat permissions for all members.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#setchatpermissions
      */
     public function setChatPermissions(string|int $chatID, ChatPermissions $permissions, ?bool $useIndependentChatPermissions = null): TypesInterface
@@ -568,7 +571,7 @@ trait availableMethods
 
     /**
      * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#exportchatinvitelink
      * @return string Chat invite link
      */
@@ -615,7 +618,7 @@ trait availableMethods
     /**
      * Use this method to revoke an invite link created by the bot.
      * If the primary link is revoked, a new link is automatically generated.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#revokechatinvitelink
      * @return ChatInviteLink
      */
@@ -630,7 +633,7 @@ trait availableMethods
 
     /**
      * Use this method to approve a chat join request.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#approvechatjoinrequest
      */
     public function approveChatJoinRequest(string|int $chatID, int $userID): TypesInterface
@@ -670,7 +673,7 @@ trait availableMethods
 
     /**
      * Use this method to delete a chat photo.
-     * Photos can't be changed for private chats. 
+     * Photos can't be changed for private chats.
      *
      * @see https://core.telegram.org/bots/api#deletechatphoto
      */
@@ -698,7 +701,7 @@ trait availableMethods
 
     /**
      * Use this method to change the description of a group, a supergroup or a channel.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#setchatdescription
      */
     public function setChatDescription(string|int $chatID, ?string $description = null): TypesInterface
@@ -711,7 +714,7 @@ trait availableMethods
 
     /**
      * Use this method to add a message to the list of pinned messages in a chat.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#pinchatmessage
      */
     public function pinChatMessage(string|int $chatID, int $messageId, bool $disableNotification = false): TypesInterface
@@ -750,7 +753,7 @@ trait availableMethods
 
     /**
      * Use this method for your bot to leave a group, supergroup or channel.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#leavechat
      */
     public function leaveChat(string|int $chatID): TypesInterface
@@ -774,7 +777,7 @@ trait availableMethods
 
     /**
      * Use this method to get a list of administrators in a chat, which aren't bots.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#getchatadministrators
      * @return ChatMember[]
      */
@@ -874,7 +877,7 @@ trait availableMethods
 
     /**
      * Use this method to edit name and icon of a topic in a forum supergroup chat.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#editforumtopic
      */
     public function editForumTopic(string|int $chatID, int $messageThreadID, array $params = []): TypesInterface
@@ -886,7 +889,7 @@ trait availableMethods
     }
 
     /**
-     * Use this method to close an open topic in a forum supergroup chat. 
+     * Use this method to close an open topic in a forum supergroup chat.
      *
      * @see https://core.telegram.org/bots/api#closeforumtopic
      */
@@ -900,7 +903,7 @@ trait availableMethods
 
     /**
      * Use this method to reopen a closed topic in a forum supergroup chat.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#reopenforumtopic
      */
     public function reopenForumTopic(string|int $chatID, int $messageThreadID): TypesInterface
@@ -913,7 +916,7 @@ trait availableMethods
 
     /**
      * Use this method to delete a forum topic along with all its messages in a forum supergroup chat.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#deleteforumtopic
      */
     public function deleteForumTopic(string|int $chatID, int $messageThreadID): TypesInterface
@@ -926,7 +929,7 @@ trait availableMethods
 
     /**
      * Use this method to clear the list of pinned messages in a forum topic.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
      */
     public function unpinAllForumTopicMessages(string|int $chatID, int $messageThreadID): TypesInterface
@@ -939,7 +942,7 @@ trait availableMethods
 
     /**
      * Use this method to edit the name of the 'General' topic in a forum supergroup chat.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#editgeneralforumtopic
      */
     public function editGeneralForumTopic(string|int $chatID, string $name): TypesInterface
@@ -952,7 +955,7 @@ trait availableMethods
 
     /**
      * Use this method to close an open 'General' topic in a forum supergroup chat.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#closegeneralforumtopic
      */
     public function closeGeneralForumTopic(string|int $chatID): TypesInterface
@@ -1051,8 +1054,9 @@ trait availableMethods
      */
     public function setMyCommands(array $commands, ?BotCommandScope $scope = null, ?string $languageCode = null): TypesInterface
     {
-        if ($scope::class === BotCommandScope::class)
+        if ($scope::class === BotCommandScope::class) {
             throw new TelegramParamException('Scope must be an instance of BotCommandScope');
+        }
 
         return $this->request(
             Method::create(['commands' => BotCommand::bulkToJson($commands), 'scope' => $scope?->getReduced(), 'language_code' => $languageCode])
@@ -1202,7 +1206,7 @@ trait availableMethods
 
     /**
      * Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels.
-     * 
+     *
      * @see https://core.telegram.org/bots/api#setmydefaultadministratorrights
      */
     public function setMyDefaultAdministratorRights(?ChatAdministratorRights $rights = null, ?bool $forChannels = null): TypesInterface

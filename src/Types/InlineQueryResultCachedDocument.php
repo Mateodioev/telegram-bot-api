@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -63,7 +65,7 @@ class InlineQueryResultCachedDocument extends InlineQueryResult
 
     public static function default(): static
     {
-        return (new static)
+        return (new static())
             ->setType('document');
     }
 }

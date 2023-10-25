@@ -12,7 +12,6 @@ use Mateodioev\Utils\Network;
  */
 trait gettingUpdates
 {
-
     /**
      * Use this method to receive incoming updates using long polling. Returns an Array of Update objects.
      *

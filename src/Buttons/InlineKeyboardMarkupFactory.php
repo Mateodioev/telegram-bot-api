@@ -7,6 +7,8 @@ use Mateodioev\Bots\Telegram\Types\{
     InlineKeyboardMarkup
 };
 
+use function is_array, array_filter;
+
 class InlineKeyboardMarkupFactory extends baseFactory
 {
     public InlineKeyboardMarkup $button;
@@ -25,8 +27,9 @@ class InlineKeyboardMarkupFactory extends baseFactory
      */
     public function addCeil(array|InlineKeyboardButton $ceil): static
     {
-        if (is_array($ceil))
+        if (is_array($ceil)) {
             $ceil = InlineKeyboardButton::create($ceil);
+        }
 
         $this->rows[$this->line][] = $ceil;
         return $this;
@@ -47,7 +50,7 @@ class InlineKeyboardMarkupFactory extends baseFactory
      */
     public function get()
     {
-        $this->rows = \array_filter($this->rows);
+        $this->rows = array_filter($this->rows);
 
         return $this->button->setInlineKeyboard($this->rows);
     }

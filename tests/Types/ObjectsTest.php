@@ -6,7 +6,6 @@ use Mateodioev\Bots\Telegram\Config\Types;
 use Mateodioev\Bots\Telegram\Types\User;
 use PHPUnit\Framework\TestCase;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
-use TypeError;
 
 class ObjectsTest extends TestCase
 {

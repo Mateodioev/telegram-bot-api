@@ -16,7 +16,8 @@ class AsyncClient implements Request
 
     private AsyncRequest $request;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->client = HttpClientBuilder::buildDefault();
     }
 
@@ -30,7 +31,7 @@ class AsyncClient implements Request
         } elseif ($payload instanceof \stdClass) {
             return json_encode($payload);
         } elseif (is_array($payload)) {
-            $body = new Form;
+            $body = new Form();
 
             foreach ($payload as $key => $value) {
                 if ($value instanceof \CURLFile) {

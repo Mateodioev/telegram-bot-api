@@ -5,7 +5,8 @@ namespace Mateodioev\Bots\Telegram\Http;
 /**
  * Common HTTP methods
  */
-enum Methods: string {
+enum Methods: string
+{
     case GET = 'GET';
     case POST = 'POST';
 

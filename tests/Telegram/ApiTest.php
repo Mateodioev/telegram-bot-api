@@ -8,110 +8,109 @@ use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Methods\Method;
 use Mateodioev\Bots\Telegram\Types\{Document, Error, InputFile, InputMediaDocument, Message, User};
-use Mateodioev\Bots\Telegram\Types\sendInputFile;
 use Mateodioev\Bots\Telegram\Types\Update;
 use PHPUnit\Framework\TestCase;
 
 class ApiTest extends TestCase
 {
-  private static Api $api;
+    private static Api $api;
 
-  public static function setUpBeforeClass(): void
-  {
-    self::$api = Api::fromEnv();
-  }
-
-  private function getInvalidMethod(): Method
-  {
-    return Method::create(method: 'MyInvalidMethod')
-      ->setReturnType(Error::class);
-  }
-
-  public function testGetUpdates()
-  {
-    $updates = self::$api->getUpdates();
-    $this->assertIsArray($updates);
-    
-    foreach ($updates as $update) {
-      $this->assertInstanceOf(Update::class, $update);
+    public static function setUpBeforeClass(): void
+    {
+        self::$api = Api::fromEnv();
     }
-  }
 
-  public function testGetMe()
-  {
-    $this->assertInstanceOf(User::class, self::$api->getMe());
-  }
+    private function getInvalidMethod(): Method
+    {
+        return Method::create(method: 'MyInvalidMethod')
+          ->setReturnType(Error::class);
+    }
 
-  public function testAssertTelegramApiException()
-  {
-    $this->expectException(TelegramApiException::class);
-    self::$api->request($this->getInvalidMethod());
-  }
+    public function testGetUpdates()
+    {
+        $updates = self::$api->getUpdates();
+        $this->assertIsArray($updates);
 
-  public function testIgnoreExceptionAndAssertError()
-  {
-    ApiConfig::setThrowExceptionOnFail(false);
+        foreach ($updates as $update) {
+            $this->assertInstanceOf(Update::class, $update);
+        }
+    }
 
-    $res = self::$api->request($this->getInvalidMethod());
-    $this->assertInstanceOf(Error::class, $res);
-  }
+    public function testGetMe()
+    {
+        $this->assertInstanceOf(User::class, self::$api->getMe());
+    }
 
-  public function testAsyncClient()
-  {
-    $me = self::$api->setAsync(true)
-      ->getMe();
+    public function testAssertTelegramApiException()
+    {
+        $this->expectException(TelegramApiException::class);
+        self::$api->request($this->getInvalidMethod());
+    }
 
-    $this->assertInstanceOf(User::class, $me);
-  }
+    public function testIgnoreExceptionAndAssertError()
+    {
+        ApiConfig::setThrowExceptionOnFail(false);
 
-  public function testGetErrorOnInvalidToken()
-  {
-    $api = new Api('INVALID_BOT_TOKEN');
+        $res = self::$api->request($this->getInvalidMethod());
+        $this->assertInstanceOf(Error::class, $res);
+    }
 
-    $me = $api->getMe();
-    $this->assertInstanceOf(Error::class, $me);
-  }
+    public function testAsyncClient()
+    {
+        $me = self::$api->setAsync(true)
+          ->getMe();
 
-  public function testSendFile()
-  {
-    $message = self::$api->sendDocument(
-      chatID: $_ENV['TELEGRAM_CHAT_ID'],
-      document: InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt')
-    );
+        $this->assertInstanceOf(User::class, $me);
+    }
 
-    $this->assertInstanceOf(Message::class, $message);
-    $this->assertInstanceOf(Document::class, $message->document);
-  }
+    public function testGetErrorOnInvalidToken()
+    {
+        $api = new Api('INVALID_BOT_TOKEN');
 
-  public function testSendMultipleFiles()
-  {
-    $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png');
+        $me = $api->getMe();
+        $this->assertInstanceOf(Error::class, $me);
+    }
 
-    $messages = self::$api->sendMediaGroup(
-      chatID: $_ENV['TELEGRAM_CHAT_ID'],
-      media: [
-        $media,
-        $media
+    public function testSendFile()
+    {
+        $message = self::$api->sendDocument(
+            chatID: $_ENV['TELEGRAM_CHAT_ID'],
+            document: InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt')
+        );
+
+        $this->assertInstanceOf(Message::class, $message);
+        $this->assertInstanceOf(Document::class, $message->document);
+    }
+
+    public function testSendMultipleFiles()
+    {
+        $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png');
+
+        $messages = self::$api->sendMediaGroup(
+            chatID: $_ENV['TELEGRAM_CHAT_ID'],
+            media: [
+            $media,
+            $media
       ]
-    );
+        );
 
-    $this->assertIsArray($messages);
-    $this->assertCount(2, $messages);
-    foreach ($messages as $message) {
-      $this->assertInstanceOf(Message::class, $message);
+        $this->assertIsArray($messages);
+        $this->assertCount(2, $messages);
+        foreach ($messages as $message) {
+            $this->assertInstanceOf(Message::class, $message);
+        }
     }
-  }
 
-  public function testSendInvalidMediaCount()
-  {
-    $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'); // Not supported local files
+    public function testSendInvalidMediaCount()
+    {
+        $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'); // Not supported local files
 
-    $this->expectException(TelegramParamException::class);
-    $this->expectExceptionMessage('Media group must have at least 2 and at most 10 items');
+        $this->expectException(TelegramParamException::class);
+        $this->expectExceptionMessage('Media group must have at least 2 and at most 10 items');
 
-    self::$api->sendMediaGroup(
-      chatID: $_ENV['TELEGRAM_CHAT_ID'],
-      media: [$media]
-    );
-  }
+        self::$api->sendMediaGroup(
+            chatID: $_ENV['TELEGRAM_CHAT_ID'],
+            media: [$media]
+        );
+    }
 }
