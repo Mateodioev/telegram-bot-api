@@ -103,6 +103,16 @@ abstract class Core implements TelegramInterface
   }
 
   /**
+   * Set custom http client
+   */
+  public function setClient(HttpClient $client): static
+  {
+    $this->client = $client;
+    $this->async  = $client->isAsync();
+    return $this;
+  }
+
+  /**
    * Call telegram api method
    * @throws RequestException
    * @throws TelegramApiException

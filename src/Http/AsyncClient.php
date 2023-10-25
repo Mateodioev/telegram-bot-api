@@ -2,9 +2,13 @@
 
 namespace Mateodioev\Bots\Telegram\Http;
 
-use Amp\Http\Client\Form;
-use Amp\Http\Client\Body\{FormBody, StringBody};
-use Amp\Http\Client\{HttpClient, HttpClientBuilder, HttpContent, Request as AsyncRequest, RequestBody};
+use Amp\Http\Client\{
+    HttpClient,
+    HttpClientBuilder,
+    HttpContent,
+    Request as AsyncRequest,
+    Form
+};
 
 class AsyncClient implements Request
 {
