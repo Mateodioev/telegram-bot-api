@@ -11,7 +11,6 @@ use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
-
 use Throwable;
 
 use function array_merge;
@@ -37,7 +36,6 @@ abstract class Core implements TelegramInterface
     /**
      * @param string $token Telegram bot token
      * @param string $endpoint Telegram(support local bot api server) bot endpoint
-     * @throws TelegramApiException
      * @throws TelegramParamException
      */
     public function __construct(string $token, string $endpoint = self::URL_BASE)
@@ -48,8 +46,8 @@ abstract class Core implements TelegramInterface
             throw new TelegramParamException("Invalid api link: $endpoint");
         }
 
-        $this->token = $token;
-        $this->api_link = $endpoint . 'bot' . $token . '/';
+        $this->token     = $token;
+        $this->api_link  = $endpoint . 'bot' . $token . '/';
         $this->file_link = $endpoint . 'file/bot' . $token . '/';
 
         $this->endpoint = $this->api_link;

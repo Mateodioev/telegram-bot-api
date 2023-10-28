@@ -17,7 +17,7 @@ use function strtoupper;
 use function implode;
 
 /**
- * @deprecated version 1.0.0
+ * @deprecated version 4.3.1
  */
 class TelegramLogger
 {

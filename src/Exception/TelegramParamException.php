@@ -3,9 +3,7 @@
 namespace Mateodioev\Bots\Telegram\Exception;
 
 use Mateodioev\Utils\Exceptions\ExceptionInterface;
-use UnexpectedValueException;
 
-final class TelegramParamException extends UnexpectedValueException implements ExceptionInterface
+final class TelegramParamException extends TelegramException implements ExceptionInterface
 {
-    # code...
 }

@@ -18,8 +18,6 @@ use function filesize;
  */
 class InputFile
 {
-    public array $files;
-
     public function __construct(
         public CURLFile|string $file
     ) {
