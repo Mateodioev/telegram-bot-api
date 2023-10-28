@@ -2,11 +2,13 @@
 
 namespace Tools\Gen;
 
-use function file_get_contents, json_decode, array_map;
+use function file_get_contents;
+use function json_decode;
+use function array_map;
 
 final class Schema
 {
-    const JSON_SCHEMA = 'https://raw.githubusercontent.com/PaulSonOfLars/telegram-bot-api-spec/main/api.json';
+    public const JSON_SCHEMA = 'https://raw.githubusercontent.com/PaulSonOfLars/telegram-bot-api-spec/main/api.json';
 
     private array $json;
     private array $ignoreTypes = [

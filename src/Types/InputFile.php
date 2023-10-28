@@ -6,11 +6,14 @@ use CURLFile;
 use Mateodioev\Bots\Telegram\Exception\InvalidFileException;
 use Mateodioev\Utils\{Network, Files};
 
-use function basename, realpath, mime_content_type;
+use function basename;
+use function realpath;
+use function mime_content_type;
+use function filesize;
 
 /**
  * Use this object to send files to Telegram.
- * 
+ *
  * @see https://core.telegram.org/bots/api#sending-files
  */
 class InputFile
@@ -80,7 +83,7 @@ class InputFile
     public function size(): ?int
     {
         if ($this->file instanceof CURLFile) {
-            return \filesize($this->file->getFilename());
+            return filesize($this->file->getFilename());
         }
         return null;
     }

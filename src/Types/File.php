@@ -6,6 +6,8 @@ namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
+use function sprintf;
+
 /**
  * This object represents a file ready to be downloaded. The file can be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile.
  *
@@ -47,6 +49,6 @@ class File extends abstractType
     {
         $fmt = 'https://api.telegram.org/file/bot%s/%s';
 
-        return \sprintf($fmt, $token, $this->filePath());
+        return sprintf($fmt, $token, $this->filePath());
     }
 }

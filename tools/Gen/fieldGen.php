@@ -2,7 +2,8 @@
 
 namespace Tools\Gen;
 
-use function in_array, strtolower;
+use function in_array;
+use function strtolower;
 
 trait fieldGen
 {

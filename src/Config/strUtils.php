@@ -2,7 +2,11 @@
 
 namespace Mateodioev\Bots\Telegram\Config;
 
-use function strtolower, preg_replace, str_replace, ucwords, lcfirst;
+use function strtolower;
+use function preg_replace;
+use function str_replace;
+use function ucwords;
+use function lcfirst;
 
 class strUtils
 {
@@ -31,7 +35,7 @@ class strUtils
 
     /**
      * Scape "<", ">", "&", "≤", "≥" symbols
-     * 
+     *
      * @see https://core.telegram.org/bots/api#formatting-options
      */
     public static function scapeHtmlTags(string $str): string
@@ -45,7 +49,7 @@ class strUtils
 
     /**
      * Replace all markdown tags with \TAG
-     * 
+     *
      * @see https://core.telegram.org/bots/api#formatting-options
      */
     public static function scapeMarkdownTags(string $str): string

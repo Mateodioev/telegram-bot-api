@@ -38,6 +38,6 @@
     "scripts": {
         "test": "phpunit --testdox tests/ --colors=always",
         "gen-type": "php tools/gen-type.php",
-        "fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose"
+        "fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php -vv"
     }
 }

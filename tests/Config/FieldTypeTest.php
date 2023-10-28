@@ -5,6 +5,7 @@ namespace Tests\Config;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 use Mateodioev\Bots\Telegram\Types\User;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class FieldTypeTest extends TestCase
 {
@@ -17,7 +18,7 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match([1]));
         $this->assertFalse($type->match(true));
         $this->assertFalse($type->match(null));
-        $this->assertFalse($type->match(new \stdClass()));
+        $this->assertFalse($type->match(new stdClass()));
 
         $this->assertTrue($type->match('1'));
     }
@@ -31,7 +32,7 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match([1]));
         $this->assertFalse($type->match(true));
         $this->assertFalse($type->match(null));
-        $this->assertFalse($type->match(new \stdClass()));
+        $this->assertFalse($type->match(new stdClass()));
 
         $this->assertFalse($type->match('1'));
         $this->assertFalse($type->match(['1', 1, 1.9]));
@@ -47,7 +48,7 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match(1.1));
         $this->assertFalse($type->match([1]));
         $this->assertFalse($type->match(true));
-        $this->assertFalse($type->match(new \stdClass()));
+        $this->assertFalse($type->match(new stdClass()));
         $this->assertFalse($type->match([]));
         $this->assertFalse($type->match(['1']));
 
@@ -61,7 +62,7 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match(1.1));
         $this->assertFalse($type->match([1]));
         $this->assertFalse($type->match(true));
-        $this->assertFalse($type->match(new \stdClass()));
+        $this->assertFalse($type->match(new stdClass()));
 
         $this->assertFalse($type->match('1'));
         $this->assertTrue($type->match(null));
@@ -80,7 +81,7 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match(null));
         $this->assertFalse($type->match('1'));
 
-        $this->assertFalse($type->match(new \stdClass()));
+        $this->assertFalse($type->match(new stdClass()));
         $this->assertFalse($type->match(User::class));
 
         $this->assertTrue($type->match(new User()));
@@ -97,10 +98,10 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match(null));
         $this->assertFalse($type->match('1'));
 
-        $this->assertFalse($type->match(new \stdClass()));
+        $this->assertFalse($type->match(new stdClass()));
         $this->assertFalse($type->match(User::class));
         $this->assertFalse($type->match(new User()));
-        $this->assertFalse($type->match([new User(), new \stdClass()]));
+        $this->assertFalse($type->match([new User(), new stdClass()]));
 
         $this->assertTrue($type->match([new User()]));
         $this->assertTrue($type->match([new User(), new User()]));

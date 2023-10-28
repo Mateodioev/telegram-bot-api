@@ -2,7 +2,8 @@
 
 namespace Tools\Gen;
 
-use function join, array_map;
+use function join;
+use function array_map;
 
 trait phpDocDescription
 {

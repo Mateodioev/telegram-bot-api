@@ -6,6 +6,8 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Mateodioev\Bots\Telegram\Types\{File, InputFile, InputSticker, MaskPosition, Message, Sticker, StickerSet};
 
+use function array_map;
+
 /**
  * Stickers methods
  * @see https://core.telegram.org/bots/api#stickers
@@ -73,7 +75,7 @@ trait Stickers
      */
     public function createNewStickerSet(int $userID, string $name, string $title, array $stickers, string $stickerFormat, array $params = []): TypesInterface
     {
-        $stickers = \array_map(fn (InputSticker $sticker) => $sticker->getReduced(), $stickers);
+        $stickers = array_map(fn (InputSticker $sticker) => $sticker->getReduced(), $stickers);
         $stickers = \json_encode($stickers);
 
         return $this->request(

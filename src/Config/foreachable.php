@@ -2,10 +2,12 @@
 
 namespace Mateodioev\Bots\Telegram\Config;
 
+use Iterator;
+
 /**
  * @internal This class is not meant to be used by library users.
  */
-abstract class foreachable implements \Iterator
+abstract class foreachable implements Iterator
 {
     private int $position = 0;
 

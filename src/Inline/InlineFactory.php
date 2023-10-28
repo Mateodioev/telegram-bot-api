@@ -5,6 +5,10 @@ namespace Mateodioev\Bots\Telegram\Inline;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Types\{InlineQueryResultsButton, WebhookInfo};
 
+use function md5;
+use function microtime;
+use function rand;
+
 final class InlineFactory
 {
     /**
@@ -60,6 +64,6 @@ final class InlineFactory
 
     public static function randId(string $seed = ''): string
     {
-        return \md5(\microtime(true) . $seed . \rand(0, 10000000));
+        return md5(microtime(true) . $seed . rand(0, 10000000));
     }
 }

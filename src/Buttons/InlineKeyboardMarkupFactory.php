@@ -7,7 +7,8 @@ use Mateodioev\Bots\Telegram\Types\{
     InlineKeyboardMarkup
 };
 
-use function is_array, array_filter;
+use function is_array;
+use function array_filter;
 
 class InlineKeyboardMarkupFactory extends baseFactory
 {

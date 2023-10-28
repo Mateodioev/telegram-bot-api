@@ -4,8 +4,7 @@ namespace Tests\Telegram;
 
 use Mateodioev\Bots\Telegram\Api;
 use Mateodioev\Bots\Telegram\Config\Types as ApiConfig;
-use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
-use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
+use Mateodioev\Bots\Telegram\Exception\{TelegramApiException, TelegramParamException};
 use Mateodioev\Bots\Telegram\Methods\Method;
 use Mateodioev\Bots\Telegram\Types\{Document, Error, InputFile, InputMediaDocument, Message, User};
 use Mateodioev\Bots\Telegram\Types\Update;

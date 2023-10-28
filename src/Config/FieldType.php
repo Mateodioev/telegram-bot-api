@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Config;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
-use function in_array, is_array;
+use Closure;
+
+use function in_array;
+use function is_array;
+use function gettype;
+use function is_a;
 
 /**
  * @internal Used to define the type of field in a class
@@ -18,7 +23,7 @@ final class FieldType
     private bool $isMixed = false;
 
     private array $cachedSubFields = [];
-    private ?\Closure $matcher = null;
+    private ?Closure $matcher = null;
 
     public static function single(string $type): FieldType
     {
@@ -50,30 +55,36 @@ final class FieldType
             $this->isMixed = true;
         }
 
-        if (!empty($this->subTypes))
+        if (!empty($this->subTypes)) {
             $this->getSubFields();
+        }
 
         $this->isScalar = in_array($this->type, ['integer', 'double', 'string', 'boolean', 'mixed']);
 
-        if ($this->isScalar === false && class_exists($this->type) === false)
+        if ($this->isScalar === false && class_exists($this->type) === false) {
             throw new TelegramParamException('Invalid type ' . $this->type);
+        }
     }
 
     public function match(mixed $value): bool
     {
         $matchs = 0;
         foreach ($this->cachedSubFields as $subField) {
-            if ($subField->match($value))
+            if ($subField->match($value)) {
                 $matchs++;
+            }
         }
-        if ($matchs > 1)
+        if ($matchs > 1) {
             return true;
+        }
 
-        if ($this->isMixed) // mixed type match with all values
+        if ($this->isMixed) { // mixed type match with all values
             return true;
+        }
 
-        if ($this->allowNull && $value === null)
+        if ($this->allowNull && $value === null) {
             return true;
+        }
 
         if ($this->allowArrays) {
             if (is_array($value)) {
@@ -90,8 +101,9 @@ final class FieldType
         $types = $this->types();
         $last = array_pop($types);
 
-        if (count($types) > 0)
+        if (count($types) > 0) {
             return implode(', ', $types) . ' or ' . $last;
+        }
 
         return $last;
     }
@@ -165,7 +177,7 @@ final class FieldType
      */
     private function matchScalar(mixed $value): bool
     {
-        return \gettype($value) === $this->type;
+        return gettype($value) === $this->type;
     }
 
     /**
@@ -173,7 +185,7 @@ final class FieldType
      */
     private function matchObjects(mixed $value): bool
     {
-        return \is_a($value, $this->type);
+        return is_a($value, $this->type);
     }
 
     /**
@@ -182,21 +194,23 @@ final class FieldType
      */
     private function matchArray(array $arr): bool
     {
-        if (empty($arr))
+        if (empty($arr)) {
             return true;
+        }
 
         $matcher = $this->getMatcher();
 
         $len = \count($arr);
         for ($i = 0; $i < $len; $i++) {
-            if (!$matcher($arr[$i]))
+            if (!$matcher($arr[$i])) {
                 return false;
+            }
         }
 
         return true;
     }
 
-    private function getMatcher(): \Closure
+    private function getMatcher(): Closure
     {
         if ($this->matcher === null) {
             $this->matcher = $this->isScalar

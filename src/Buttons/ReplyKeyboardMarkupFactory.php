@@ -7,6 +7,8 @@ use Mateodioev\Bots\Telegram\Types\{
     ReplyKeyboardMarkup
 };
 
+use function array_filter;
+
 class ReplyKeyboardMarkupFactory extends baseFactory
 {
     private ReplyKeyboardMarkup $button;
@@ -46,7 +48,7 @@ class ReplyKeyboardMarkupFactory extends baseFactory
      */
     public function get()
     {
-        $this->rows = \array_filter($this->rows);
+        $this->rows = array_filter($this->rows);
 
         return $this->button->setKeyboard($this->rows);
     }

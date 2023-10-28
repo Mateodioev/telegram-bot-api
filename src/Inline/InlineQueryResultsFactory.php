@@ -30,6 +30,8 @@ use Mateodioev\Bots\Telegram\Types\{
     InputMessageContent};
 use Mateodioev\Utils\Network;
 
+use function count;
+
 /**
  * @api
  */
@@ -45,7 +47,7 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function add(InlineQueryResult $result): static
     {
-        if (\count($this->results) > self::MAX_RESULTS) {
+        if (count($this->results) > self::MAX_RESULTS) {
             throw new TelegramParamException('Exceeded maximum number of results');
         }
         if ($result::class === InlineQueryResult::class) {
@@ -59,7 +61,7 @@ class InlineQueryResultsFactory extends foreachable
 
     public function total(): int
     {
-        return \count($this->results);
+        return count($this->results);
     }
 
     /**

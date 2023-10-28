@@ -12,6 +12,8 @@ use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
 
+use Throwable;
+
 use function array_merge;
 
 /**
@@ -164,7 +166,7 @@ abstract class Core implements TelegramInterface
                 return $returnType::$methodName($this->result['result']);
             } catch (TelegramParamException $e) {
                 throw $e;
-            } catch (\Throwable) {
+            } catch (Throwable) {
                 return $return[0]::$methodName($this->result);
             }
         }

@@ -13,6 +13,8 @@ use Mateodioev\Bots\Telegram\Types\{
     LabeledPrice
 };
 
+use function strlen;
+
 /**
  * This object represents the content of a message to be sent as a result of an inline query.
  *
@@ -29,7 +31,7 @@ final class InputMessageContentFactory
      */
     public static function text(string $text, ParseMode $parseMode = ParseMode::HTML, array $params = []): InputTextMessageContent
     {
-        if (\strlen($text) > self::TEXT_LIMIT) {
+        if (strlen($text) > self::TEXT_LIMIT) {
             throw new TelegramParamException('Text length exceeds maximum limit');
         }
 

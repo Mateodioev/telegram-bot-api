@@ -2,7 +2,9 @@
 
 namespace Mateodioev\Bots\Telegram\Interfaces;
 
-interface ButtonInterface extends \Stringable
+use Stringable;
+
+interface ButtonInterface extends Stringable
 {
     /**
      * Get button as a base object

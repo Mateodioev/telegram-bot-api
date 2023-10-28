@@ -2,6 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram\Http;
 
+use stdClass;
+
 use function json_decode;
 
 class Response
@@ -29,7 +31,7 @@ class Response
     /**
      * Decode json body
      */
-    public function toStdClass(): \stdClass
+    public function toStdClass(): stdClass
     {
         return json_decode($this->body);
     }

@@ -6,6 +6,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, Types, strUtils};
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 
+use function json_encode;
+
 abstract class abstractType implements TypesInterface
 {
     public const DEFAULT_PARAM = null;
@@ -58,7 +60,7 @@ abstract class abstractType implements TypesInterface
      */
     public static function bulkToJson(array $types): string
     {
-        return \json_encode(
+        return json_encode(
             \array_map(fn (TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
         );
     }
@@ -156,7 +158,7 @@ abstract class abstractType implements TypesInterface
      */
     public function toString(int $flags = 0): string
     {
-        return \json_encode($this->get(), $flags);
+        return json_encode($this->get(), $flags);
     }
 
     /**

@@ -2,8 +2,7 @@
 
 namespace Tests\Config;
 
-use Mateodioev\Bots\Telegram\Config\ParseMode;
-use Mateodioev\Bots\Telegram\Config\strUtils;
+use Mateodioev\Bots\Telegram\Config\{ParseMode, strUtils};
 use PHPUnit\Framework\TestCase;
 
 class strUtilsTest extends TestCase

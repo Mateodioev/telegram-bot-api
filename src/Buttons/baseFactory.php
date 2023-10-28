@@ -7,7 +7,8 @@ use Mateodioev\Bots\Telegram\Interfaces\{
     TypesInterface
 };
 
-use function is_array, json_encode;
+use function is_array;
+use function json_encode;
 
 abstract class baseFactory implements ButtonInterface
 {
@@ -15,8 +16,9 @@ abstract class baseFactory implements ButtonInterface
     {
         $obj = $this->get();
 
-        if (is_array($obj))
+        if (is_array($obj)) {
             return json_encode($obj);
+        }
 
         return $this->getObject($obj);
     }
