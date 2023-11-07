@@ -8,12 +8,15 @@ use PHPUnit\Framework\TestCase;
 
 class SwooleClientTest extends TestCase
 {
-    public function testCreateClient()
+    protected function setUp(): void
     {
         if (extension_loaded('openswoole') === false) {
             $this->markTestSkipped('Not found swoole extension');
         }
+    }
 
+    public function testCreateClient()
+    {
         $client = new SwooleClient();
         $this->assertInstanceOf(SwooleClient::class, $client);
 

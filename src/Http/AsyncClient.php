@@ -57,10 +57,13 @@ class AsyncClient implements Request
     /**
      * Create non-blocking request
      */
-    public function new(string $url, mixed $payload, Methods $method = Methods::POST): static
+    public function new(string $url, mixed $payload = null, Methods $method = Methods::POST): static
     {
         $this->request = new AsyncRequest($url, $method->value());
-        $this->request->setBody($this->createBody($payload));
+
+        if ($payload !== null && !empty($payload)) {
+            $this->request->setBody($this->createBody($payload));
+        }
 
         return $this;
     }

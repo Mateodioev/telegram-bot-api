@@ -29,7 +29,7 @@ class SwooleClient implements Request
         }
     }
 
-    public function new(string $url, mixed $payload, Methods $method = Methods::POST): static
+    public function new(string $url, mixed $payload = null, Methods $method = Methods::POST): static
     {
         // remove "/" from the end
         [$host, $path] = $this->parseUrl(rtrim($url, '/'));
@@ -42,7 +42,11 @@ class SwooleClient implements Request
             'Content-Type' => 'application/json',
         ]);
         $this->client->setMethod($method->value());
-        $this->client->setData($payload);
+
+        if (!empty($payload)) {
+            $this->client->setData($payload);
+        }
+
         $this->setTimeout();
 
         return $this;

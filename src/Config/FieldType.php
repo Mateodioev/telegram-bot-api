@@ -74,7 +74,7 @@ final class FieldType
                 $matchs++;
             }
         }
-        if ($matchs > 1) {
+        if ($matchs > 0) {
             return true;
         }
 

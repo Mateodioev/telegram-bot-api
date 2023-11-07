@@ -16,7 +16,18 @@ class ApiTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
+        if (!isset($_ENV['BOT_TOKEN']) || empty($_ENV['BOT_TOKEN'])) {
+            self::markTestSkipped('BOT_TOKEN not found in env');
+        }
+
         self::$api = Api::fromEnv();
+    }
+
+    protected function setUp(): void
+    {
+        if (!isset($_ENV['BOT_TOKEN']) || empty($_ENV['BOT_TOKEN'])) {
+            $this->markTestSkipped('BOT_TOKEN not found in env');
+        }
     }
 
     private function getInvalidMethod(): Method
@@ -88,9 +99,9 @@ class ApiTest extends TestCase
         $messages = self::$api->sendMediaGroup(
             chatID: $_ENV['TELEGRAM_CHAT_ID'],
             media: [
-            $media,
-            $media
-      ]
+                $media,
+                $media
+            ]
         );
 
         $this->assertIsArray($messages);

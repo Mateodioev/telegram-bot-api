@@ -10,7 +10,7 @@ interface Request
     /**
      * Create new request
      */
-    public function new(string $url, mixed $payload, Methods $method = Methods::POST): static;
+    public function new(string $url, mixed $payload = null, Methods $method = Methods::POST): static;
 
     /**
      * Set request timeout
