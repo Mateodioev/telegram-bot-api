@@ -29,4 +29,10 @@ class BotCommandScopeChatAdministrators extends BotCommandScope
             'chat_id' => new FieldType('string', allowArrays: false, allowNull: false, subTypes: ['integer']),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('chat_administrators');
+    }
 }

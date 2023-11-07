@@ -37,4 +37,10 @@ class PassportElementErrorReverseSide extends PassportElementError
             'message'   => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setSource('reverse_side');
+    }
 }

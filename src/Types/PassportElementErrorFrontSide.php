@@ -37,4 +37,10 @@ class PassportElementErrorFrontSide extends PassportElementError
             'message'   => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setSource('front_side');
+    }
 }

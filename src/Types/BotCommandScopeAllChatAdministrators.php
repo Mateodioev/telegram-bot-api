@@ -25,4 +25,10 @@ class BotCommandScopeAllChatAdministrators extends BotCommandScope
             'type' => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('all_chat_administrators');
+    }
 }

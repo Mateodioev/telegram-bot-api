@@ -37,4 +37,10 @@ class PassportElementErrorTranslationFiles extends PassportElementError
             'message'     => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('translation_files');
+    }
 }
