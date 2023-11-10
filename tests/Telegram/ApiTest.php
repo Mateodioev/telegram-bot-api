@@ -20,7 +20,12 @@ class ApiTest extends TestCase
             self::markTestSkipped('BOT_TOKEN not found in env');
         }
 
-        self::$api = Api::fromEnv();
+        self::getApi();
+    }
+
+    public static function getApi(): Api
+    {
+        return Api::fromEnv();
     }
 
     protected function setUp(): void
@@ -33,12 +38,12 @@ class ApiTest extends TestCase
     private function getInvalidMethod(): Method
     {
         return Method::create(method: 'MyInvalidMethod')
-          ->setReturnType(Error::class);
+            ->setReturnType(Error::class);
     }
 
     public function testGetUpdates()
     {
-        $updates = self::$api->getUpdates();
+        $updates = self::getApi()->getUpdates();
         $this->assertIsArray($updates);
 
         foreach ($updates as $update) {
@@ -48,27 +53,27 @@ class ApiTest extends TestCase
 
     public function testGetMe()
     {
-        $this->assertInstanceOf(User::class, self::$api->getMe());
+        $this->assertInstanceOf(User::class, self::getApi()->getMe());
     }
 
     public function testAssertTelegramApiException()
     {
         $this->expectException(TelegramApiException::class);
-        self::$api->request($this->getInvalidMethod());
+        self::getApi()->request($this->getInvalidMethod());
     }
 
     public function testIgnoreExceptionAndAssertError()
     {
         ApiConfig::setThrowExceptionOnFail(false);
 
-        $res = self::$api->request($this->getInvalidMethod());
+        $res = self::getApi()->request($this->getInvalidMethod());
         $this->assertInstanceOf(Error::class, $res);
     }
 
     public function testAsyncClient()
     {
-        $me = self::$api->setAsync(true)
-          ->getMe();
+        $me = self::getApi()->setAsync(true)
+            ->getMe();
 
         $this->assertInstanceOf(User::class, $me);
     }
@@ -83,10 +88,23 @@ class ApiTest extends TestCase
 
     public function testSendFile()
     {
-        $message = self::$api->sendDocument(
+        $message = self::getApi()->sendDocument(
             chatID: $_ENV['TELEGRAM_CHAT_ID'],
             document: InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt')
         );
+
+        $this->assertInstanceOf(Message::class, $message);
+        $this->assertInstanceOf(Document::class, $message->document);
+    }
+
+    public function testAsyncSendFile()
+    {
+        $message = self::getApi()
+            ->setAsync(true)
+            ->sendDocument(
+                chatID: $_ENV['TELEGRAM_CHAT_ID'],
+                document: InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt')
+            );
 
         $this->assertInstanceOf(Message::class, $message);
         $this->assertInstanceOf(Document::class, $message->document);
@@ -96,7 +114,26 @@ class ApiTest extends TestCase
     {
         $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png');
 
-        $messages = self::$api->sendMediaGroup(
+        $messages = self::getApi()->sendMediaGroup(
+            chatID: $_ENV['TELEGRAM_CHAT_ID'],
+            media: [
+                $media,
+                $media
+            ]
+        );
+
+        $this->assertIsArray($messages);
+        $this->assertCount(2, $messages);
+        foreach ($messages as $message) {
+            $this->assertInstanceOf(Message::class, $message);
+        }
+    }
+
+    public function testAsyncSendMultipleFiles()
+    {
+        $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png');
+
+        $messages = self::getApi()->setAsync(true)->sendMediaGroup(
             chatID: $_ENV['TELEGRAM_CHAT_ID'],
             media: [
                 $media,
@@ -118,7 +155,7 @@ class ApiTest extends TestCase
         $this->expectException(TelegramParamException::class);
         $this->expectExceptionMessage('Media group must have at least 2 and at most 10 items');
 
-        self::$api->sendMediaGroup(
+        self::getApi()->sendMediaGroup(
             chatID: $_ENV['TELEGRAM_CHAT_ID'],
             media: [$media]
         );
