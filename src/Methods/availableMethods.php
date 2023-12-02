@@ -493,7 +493,7 @@ trait availableMethods
      * @see https://core.telegram.org/bots/api#getfile
      * @return File
      */
-    public function getFile(int $fileID): TypesInterface
+    public function getFile(string $fileID): TypesInterface
     {
         return $this->request(
             Method::create(['file_id' => $fileID])

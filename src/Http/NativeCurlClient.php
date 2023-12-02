@@ -57,7 +57,7 @@ class NativeCurlClient implements Request
         $file = fopen($destination, 'w');
         $this->request->addOpt(CURLOPT_FILE, $file);
         try {
-            $this->request->run($path);
+            $this->request->setMethod(Methods::GET->value())->run($path);
             fclose($file);
             return true;
         } catch (HttpException) {

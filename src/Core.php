@@ -4,7 +4,7 @@ namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
 use Mateodioev\Bots\Telegram\Http\{AsyncClient, SyncClient, Request as HttpClient, HttpException};
-use Mateodioev\Bots\Telegram\Types\{Response, Error};
+use Mateodioev\Bots\Telegram\Types\{File, Response, Error};
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
 use Mateodioev\Request\{Request, ResponseException};
@@ -182,27 +182,18 @@ abstract class Core implements TelegramInterface
     /**
      * Download file sent to the bot
      *
-     * @param string $file_path Use `$this->request(Method::create(['file_id' => 'bot-file_id'], 'getFile')->setReturnType(File::class))` to get file path
+     * @param string $filePath Use `$this->request(Method::create(['file_id' => 'bot-file_id'], 'getFile')->setReturnType(File::class))` to get file path
      * @param string $destination Document name to save the file
      */
-    public function download(string $file_path, string $destination, int $timeout = 30): bool
+    public function download(string $filePath, string $destination): bool
     {
-        $fh = fopen($destination, 'w');
+        return $this->getClient()->new($this->file_link)
+            ->download($filePath, $destination);
+    }
 
-        // TODO: change this
-        $req = Request::GET($this->file_link)
-          ->addOpt(CURLOPT_FILE, $fh)
-          ->addOpt(CURLOPT_TIMEOUT, $timeout);
-
-        try {
-            $res = $req->Run($file_path);
-
-            return ($res->toJson(true) !== $res);
-        } catch (RequestException | ResponseException) {
-            return false;
-        } finally {
-            fclose($fh);
-        }
+    public function downloadFile(File $file, string $destination): bool
+    {
+        return $this->download($file->file_path, $destination);
     }
 
     /**

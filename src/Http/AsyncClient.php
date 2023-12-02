@@ -84,10 +84,10 @@ class AsyncClient implements Request
         return $this;
     }
 
-    private function executeRequest(): \Amp\Http\Client\Response
+    private function executeRequest(AsyncRequest $request): \Amp\Http\Client\Response
     {
         try {
-            return $this->client->request($this->request);
+            return $this->client->request($request);
         } catch (Throwable $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -96,7 +96,11 @@ class AsyncClient implements Request
     public function run(): Response
     {
         try {
-            return new Response($this->executeRequest()->getBody()->buffer());
+            return new Response(
+                $this->executeRequest($this->request)
+                    ->getBody()
+                    ->buffer()
+            );
         } catch (BufferException|StreamException $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -109,13 +113,16 @@ class AsyncClient implements Request
 
     public function download(string $path, string $destination): bool
     {
-        $this->request->setUri(
+        $request = clone $this->request;
+        $request->setUri(
             $this->request
                 ->getUri()
-                ->withPath($path)
+                . $path
         );
 
-        $response = $this->executeRequest();
+        $request->setMethod('GET');
+        $response = $this->executeRequest($request);
+
         try {
             $file = openFile($destination, 'w');
         } catch (FilesystemException $e) {
