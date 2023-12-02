@@ -30,7 +30,7 @@ class Api extends Core
         $token    = $_ENV['BOT_TOKEN'];
         $api_link = $_ENV['BOT_API_LINK'] ?? self::URL_BASE;
 
-        return new static($token, $api_link);
+        return new self($token, $api_link);
     }
 
     public function __call($method, $params)

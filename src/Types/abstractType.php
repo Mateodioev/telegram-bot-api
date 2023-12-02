@@ -6,9 +6,23 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, Types, strUtils};
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 
-use function json_encode;
+use Stringable;
 
-abstract class abstractType implements TypesInterface
+use function json_encode;
+use function array_filter;
+use function explode;
+use function is_null;
+use function is_bool;
+use function is_string;
+use function join;
+use function in_array;
+use function is_array;
+use function array_map;
+use function array_walk;
+use function substr;
+use function array_key_exists;
+
+abstract class abstractType implements TypesInterface, Stringable
 {
     public const DEFAULT_PARAM = null;
     public const DEFAULT_BOOL  = false;
@@ -61,7 +75,7 @@ abstract class abstractType implements TypesInterface
     public static function bulkToJson(array $types): string
     {
         return json_encode(
-            \array_map(fn (TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
+            array_map(fn (TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
         );
     }
 
@@ -143,6 +157,28 @@ abstract class abstractType implements TypesInterface
         return $this->getProperties();
     }
 
+    /**
+     * Get property value.
+     *
+     * Example:
+     * ```php
+     * $update->dotGet('message.from.id');
+     * ```
+     */
+    public function dotGet(string $key, string $separator = '.'): mixed
+    {
+        $keys  = array_filter(explode($separator, $key), 'trim');
+        $value = $this->properties;
+
+        array_map(function ($key) use (&$value) {
+            $value = $value instanceof abstractType
+                ? $value->$key // ensure that the property is a getter
+                : $value[$key] ?? self::DEFAULT_PARAM;
+        }, $keys);
+
+        return $value;
+    }
+
     public function getReduced(): array
     {
         $up = $this->get();
@@ -156,9 +192,34 @@ abstract class abstractType implements TypesInterface
      *
      * @param integer $flags {@see json_encode} Flags
      */
-    public function toString(int $flags = 0): string
+    public function toJson(int $flags = 0): string
     {
         return json_encode($this->get(), $flags);
+    }
+
+    public function toString(): string
+    {
+        return $this->__toString();
+    }
+
+    public function __toString(): string
+    {
+        $params = [];
+        foreach ($this->properties as $prop => $value) {
+            if ($value === self::DEFAULT_PARAM || $value === self::DEFAULT_BOOL) {
+                continue;
+            } elseif (is_bool($value)) {
+                $value = $value ? 'true' : 'false';
+            } elseif (is_string($value)) {
+                $value = '"' . $value . '"';
+            } elseif (is_array($value)) {
+                $value = json_encode($value);
+            } else {
+                $value = (string) $value;
+            }
+            $params[] = strUtils::toCamelCase($prop) . ': ' . $value;
+        }
+        return static::class . '(' . join(", ", $params) . ')';
     }
 
     /**
@@ -334,7 +395,7 @@ abstract class abstractType implements TypesInterface
 function _filter_update(array &$up): array
 {
     foreach ($up as $key => $value) {
-        \is_array($value) && $up[$key] = _filter_update($value);
+        is_array($value) && $up[$key] = _filter_update($value);
 
         if ($value === abstractType::DEFAULT_BOOL || $value === abstractType::DEFAULT_PARAM) {
             unset($up[$key]);
