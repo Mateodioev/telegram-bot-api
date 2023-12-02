@@ -83,4 +83,17 @@ class SwooleClient implements Request
         // Swoole always is async
         return true;
     }
+
+    public function download(string $path, string $destination): bool
+    {
+        $this->client->setHeaders([
+            'Content-Type' => '',
+            'Accept-Encoding' => 'gzip',
+        ]);
+
+        $status = $this->client->download($path, $destination);
+        $this->client->close();
+
+        return $status;
+    }
 }

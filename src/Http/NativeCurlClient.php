@@ -51,4 +51,17 @@ class NativeCurlClient implements Request
     {
         return false;
     }
+
+    public function download(string $path, string $destination): bool
+    {
+        $file = fopen($destination, 'w');
+        $this->request->addOpt(CURLOPT_FILE, $file);
+        try {
+            $this->request->run($path);
+            fclose($file);
+            return true;
+        } catch (HttpException) {
+            return false;
+        }
+    }
 }

@@ -2,11 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram\Http;
 
-use Stringable;
-use stdClass;
-use CURLFile;
-use Throwable;
-
+use Amp\File\{File, FilesystemException};
 use Amp\Http\Client\{
     HttpClient,
     HttpClientBuilder,
@@ -14,6 +10,14 @@ use Amp\Http\Client\{
     Request as AsyncRequest,
     Form
 };
+use Amp\ByteStream\{BufferException, Payload, StreamException};
+
+use Stringable;
+use stdClass;
+use CURLFile;
+use Throwable;
+
+use function Amp\File\openFile;
 
 class AsyncClient implements Request
 {
@@ -27,7 +31,7 @@ class AsyncClient implements Request
     }
 
     /**
-     * @throws HttpException
+     * @throws HttpException|\Amp\Http\Client\HttpException
      */
     private function createBody(mixed $payload): HttpContent|string
     {
@@ -61,8 +65,12 @@ class AsyncClient implements Request
     {
         $this->request = new AsyncRequest($url, $method->value());
 
-        if ($payload !== null && !empty($payload)) {
-            $this->request->setBody($this->createBody($payload));
+        if (!empty($payload)) {
+            try {
+                $this->request->setBody($this->createBody($payload));
+            } catch (\Amp\Http\Client\HttpException $e) {
+                throw new HttpException($e->getMessage(), $e->getCode(), $e);
+            }
         }
 
         return $this;
@@ -76,18 +84,61 @@ class AsyncClient implements Request
         return $this;
     }
 
+    private function executeRequest(): \Amp\Http\Client\Response
+    {
+        try {
+            return $this->client->request($this->request);
+        } catch (Throwable $e) {
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
     public function run(): Response
     {
         try {
-            $response = $this->client->request($this->request);
-            return new Response($response->getBody()->buffer());
-        } catch (Throwable $e) {
+            return new Response($this->executeRequest()->getBody()->buffer());
+        } catch (BufferException|StreamException $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
     public function isAsync(): bool
     {
+        return true;
+    }
+
+    public function download(string $path, string $destination): bool
+    {
+        $this->request->setUri(
+            $this->request
+                ->getUri()
+                ->withPath($path)
+        );
+
+        $response = $this->executeRequest();
+        try {
+            $file = openFile($destination, 'w');
+        } catch (FilesystemException $e) {
+            throw new HttpException('File ' . $destination . ' not writable', previous: $e);
+        }
+
+        return $this->saveResponse(
+            body: $response->getBody(),
+            destination: $file
+        );
+    }
+
+    private function saveResponse(Payload $body, File $destination): bool
+    {
+        try {
+            while (null !== $chunk = $body->read()) {
+                $destination->write($chunk);
+            }
+        } catch (StreamException) {
+            return false;
+        }
+
+        $destination->close();
         return true;
     }
 }

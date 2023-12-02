@@ -2,6 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram\Http;
 
+use Mateodioev\Bots\Telegram\Types\File;
+
 /**
  * HTTP request interface
  */
@@ -22,6 +24,13 @@ interface Request
      * @throws HttpException
      */
     public function run(): Response;
+
+    /**
+     * Download file from telegram server
+     * @param string $path Remote File path
+     * @param string $destination Local file path to save
+     */
+    public function download(string $path, string $destination): bool;
 
     /**
      * Return true if is async client
