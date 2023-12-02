@@ -25,4 +25,11 @@ class BotCommandScopeAllPrivateChats extends BotCommandScope
             'type' => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return new static([
+            'type' => 'all_private_chats',
+        ]);
+    }
 }

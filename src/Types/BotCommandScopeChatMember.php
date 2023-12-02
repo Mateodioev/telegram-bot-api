@@ -33,4 +33,10 @@ class BotCommandScopeChatMember extends BotCommandScope
             'user_id' => FieldType::single('integer'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('chat_member');
+    }
 }
