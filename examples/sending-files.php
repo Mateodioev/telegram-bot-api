@@ -54,10 +54,20 @@ $api->sendDocument(
 );
 
 $medias = [ // You can send up to 10 files
-    new InputMediaDocument(['media' => 'FILE_ID', 'caption' => 'This is a caption']),
-    new InputMediaDocument(['media' => 'https://example.com/file.pdf', 'caption' => 'This is a caption']),
-    // new InputMediaDocument(['media' => '/path/to/file.pdf', 'caption' => 'This is a caption']), Not supported yet
+    InputMediaDocument::default()
+        ->setMedia('FILE_ID')
+        ->setCaption('Sending a file using ID'),
+
+    InputMediaDocument::default()
+        ->setMedia('https://example.com/file.pdf')
+        ->setCaption('This is a external file'),
+
+    InputMediaDocument::default()
+        // if you want to sent local file use Inputfile and set the second parameter to the file name
+        ->setMedia(InputFile::fromLocal('/path/to/file', 'file name'))
+        ->setCaption('This is a local file'),
 ];
+
 $api->sendMediaGroup('CHAT_ID', $medias, [
-    'protect_content' => true // Protect the content of the files
+    'protect_content' => true // Disable forward, download and share
 ]);

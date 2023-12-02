@@ -30,7 +30,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method string|null title()
  *
  * @method static setType(string $type)
- * @method static setMedia(string $media)
+ * @method static setMedia(string|InputFile $media)
  * @method static setThumbnail(InputFile|string|null $thumbnail)
  * @method static setCaption(string|null $caption)
  * @method static setParseMode(string|null $parseMode)
@@ -47,7 +47,7 @@ class InputMediaAudio extends InputMedia
     {
         $this->fields = [
             'type'             => FieldType::single('string'),
-            'media'            => FieldType::single('string'),
+            'media'            => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),,
             'thumbnail'        => FieldType::mixed(),
             'caption'          => FieldType::optional('string'),
             'parse_mode'       => FieldType::optional('string'),

@@ -6,7 +6,7 @@ use Mateodioev\Bots\Telegram\Api;
 use Mateodioev\Bots\Telegram\Config\Types as ApiConfig;
 use Mateodioev\Bots\Telegram\Exception\{TelegramApiException, TelegramParamException};
 use Mateodioev\Bots\Telegram\Methods\Method;
-use Mateodioev\Bots\Telegram\Types\{Document, Error, InputFile, InputMediaDocument, Message, User};
+use Mateodioev\Bots\Telegram\Types\{Document, Error, InputFile, InputMediaDocument, InputMediaPhoto, Message, User};
 use Mateodioev\Bots\Telegram\Types\Update;
 use PHPUnit\Framework\TestCase;
 
@@ -19,6 +19,7 @@ class ApiTest extends TestCase
         if (!isset($_ENV['BOT_TOKEN']) || empty($_ENV['BOT_TOKEN'])) {
             self::markTestSkipped('BOT_TOKEN not found in env');
         }
+
 
         self::getApi();
     }
@@ -112,14 +113,14 @@ class ApiTest extends TestCase
 
     public function testSendMultipleFiles()
     {
-        $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png');
+        $media = [
+            InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'),
+            InputMediaDocument::default()->setMedia(InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt'))
+        ];
 
         $messages = self::getApi()->sendMediaGroup(
             chatID: $_ENV['TELEGRAM_CHAT_ID'],
-            media: [
-                $media,
-                $media
-            ]
+            media: $media
         );
 
         $this->assertIsArray($messages);
@@ -131,14 +132,14 @@ class ApiTest extends TestCase
 
     public function testAsyncSendMultipleFiles()
     {
-        $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png');
+        $media = [
+            InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'),
+            InputMediaDocument::default()->setMedia(InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt'))
+        ];
 
         $messages = self::getApi()->setAsync(true)->sendMediaGroup(
             chatID: $_ENV['TELEGRAM_CHAT_ID'],
-            media: [
-                $media,
-                $media
-            ]
+            media: $media
         );
 
         $this->assertIsArray($messages);
@@ -146,6 +147,24 @@ class ApiTest extends TestCase
         foreach ($messages as $message) {
             $this->assertInstanceOf(Message::class, $message);
         }
+    }
+
+    public function testSendMultipleWrongFileTypes()
+    {
+        // You cant combine documents or audio files with other type of files
+        $media = [
+            InputMediaPhoto::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'),
+            InputMediaDocument::default()->setMedia(InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt'))
+        ];
+
+        $this->expectException(TelegramApiException::class);
+        $this->expectExceptionMessage('(400) Bad Request: document can\'t be mixed with other media types');
+
+        ApiConfig::setThrowExceptionOnFail(true);
+        self::getApi()->setAsync(true)->sendMediaGroup(
+            chatID: $_ENV['TELEGRAM_CHAT_ID'],
+            media: $media
+        );
     }
 
     public function testSendInvalidMediaCount()

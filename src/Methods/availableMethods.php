@@ -32,7 +32,10 @@ use Mateodioev\Bots\Telegram\Types\{
     Error
 };
 
+use CURLFile;
+
 use function count;
+use function json_encode;
 
 /**
  * @api
@@ -321,11 +324,46 @@ trait availableMethods
             throw new TelegramParamException('Media group must have at least 2 and at most 10 items');
         }
 
+        [$media, $files] = $this->createMediaGroupFiles($media);
+
         return $this->request(
-            Method::create(['chat_id' => $chatID, 'media' => InputMedia::bulkToJson($media), ...$params])
+            Method::create(['chat_id' => $chatID, 'media' => $media, ...$params, ...$files])
                 ->setMethod('sendMediaGroup')
                 ->setReturnType(Message::class, true)
         );
+    }
+
+    /**
+     * @param InputMedia[] $medias
+     */
+    private function createMediaGroupFiles(array $medias): array
+    {
+        $items = [];
+        $files = [];
+
+        foreach ($medias as $media) {
+            $mediaFile = $media->media;
+
+            if ($mediaFile instanceof InputFile) {
+                $file = $mediaFile->get();
+
+                // The media is a local file
+                if ($file instanceof CURLFile) {
+                    $fileName         = $file->getPostFilename();
+                    $media->media     = 'attach://' . $fileName;
+                    $files[$fileName] = $file;
+                } else {
+                    $media->media = $file;
+                }
+            }
+
+            $items[] = $media->getReduced();
+        }
+
+        return [
+            json_encode($items),
+            $files
+        ];
     }
 
     /**
