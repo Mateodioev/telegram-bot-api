@@ -27,7 +27,8 @@ use Mateodioev\Bots\Telegram\Types\{
     InlineQueryResultVenue,
     InlineQueryResultVideo,
     InlineQueryResultVoice,
-    InputMessageContent};
+    InputMessageContent
+};
 use Mateodioev\Utils\Network;
 
 use function count;
@@ -227,9 +228,7 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function audio(?string $id, string $audioUrl, string $title, array $params = []): static
     {
-        if (Network::IsValidUrl($audioUrl) === false) {
-            throw new TelegramParamException('Invalid audio url');
-        }
+        $this->validateMediaUrl($audioUrl, 'audio');
 
         return $this->add(
             InlineQueryResultAudio::default()
@@ -278,9 +277,7 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function document(?string $id, string $title, string $documentUrl, string $mimeType, array $params = []): static
     {
-        if (Network::IsValidUrl($documentUrl) === false) {
-            throw new TelegramParamException('Invalid document url');
-        }
+        $this->validateMediaUrl($documentUrl, 'document');
 
         return $this->add(
             InlineQueryResultDocument::default()
@@ -299,12 +296,8 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function gif(?string $id, string $gifUrl, string $thumbnailUrl, array $params = []): static
     {
-        if (Network::IsValidUrl($gifUrl) === false) {
-            throw new TelegramParamException('Invalid gif url');
-        }
-        if (Network::IsValidUrl($thumbnailUrl) === false) {
-            throw new TelegramParamException('Invalid thumbnail url');
-        }
+        $this->validateMediaUrl($gifUrl, 'gif');
+        $this->validateMediaUrl($thumbnailUrl, 'thumbnail');
 
         return $this->add(
             InlineQueryResultGif::default()
@@ -339,12 +332,8 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function mpeg4Gif(?string $id, string $mpeg4Url, string $thumbnailUrl, array $params = []): static
     {
-        if (Network::IsValidUrl($mpeg4Url) === false) {
-            throw new TelegramParamException('Invalid mpeg4 url');
-        }
-        if (Network::IsValidUrl($thumbnailUrl) === false) {
-            throw new TelegramParamException('Invalid thumbnail url');
-        }
+        $this->validateMediaUrl($mpeg4Url, 'mpeg4');
+        $this->validateMediaUrl($thumbnailUrl, 'thumbnail');
 
         return $this->add(
             InlineQueryResultMpeg4Gif::default()
@@ -362,12 +351,8 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function photo(?string $id, string $photoUrl, string $thumbnailUrl, array $params = []): static
     {
-        if (Network::IsValidUrl($photoUrl) === false) {
-            throw new TelegramParamException('Invalid photo url');
-        }
-        if (Network::IsValidUrl($thumbnailUrl) === false) {
-            throw new TelegramParamException('Invalid thumbnail url');
-        }
+        $this->validateMediaUrl($photoUrl, 'photo');
+        $this->validateMediaUrl($thumbnailUrl, 'thumbnail');
 
         return $this->add(
             InlineQueryResultPhoto::default()
@@ -403,12 +388,8 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function video(?string $id, string $videoUrl, string $mimeType, string $thumbUrl, string $title, array $params = []): static
     {
-        if (Network::IsValidUrl($videoUrl) === false) {
-            throw new TelegramParamException('Invalid video url');
-        }
-        if (Network::IsValidUrl($thumbUrl) === false) {
-            throw new TelegramParamException('Invalid thumbnail url');
-        }
+        $this->validateMediaUrl($videoUrl, 'video');
+        $this->validateMediaUrl($thumbUrl, 'thumbnail');
 
         return $this->add(
             InlineQueryResultVideo::default()
@@ -428,9 +409,7 @@ class InlineQueryResultsFactory extends foreachable
      */
     public function voice(?string $id, string $voiceUrl, string $title, array $params = []): static
     {
-        if (Network::IsValidUrl($voiceUrl) === false) {
-            throw new TelegramParamException('Invalid voice url');
-        }
+        $this->validateMediaUrl($voiceUrl, 'voice');
 
         return $this->add(
             InlineQueryResultVoice::default()
@@ -439,6 +418,13 @@ class InlineQueryResultsFactory extends foreachable
                 ->setTitle($title)
                 ->magicSetter($params)
         );
+    }
+
+    private function validateMediaUrl(string $mediaUrl, string $type): void
+    {
+        if (Network::IsValidUrl($mediaUrl) === false) {
+            throw new TelegramParamException("Invalid $type url");
+        }
     }
 
     protected function getArray(): array
