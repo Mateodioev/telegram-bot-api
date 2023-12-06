@@ -11,7 +11,7 @@ use Amp\Http\Client\{
     Form
 };
 use Amp\ByteStream\{BufferException, Payload, StreamException};
-
+use Amp\Cancellation;
 use Stringable;
 use stdClass;
 use CURLFile;
@@ -24,6 +24,7 @@ class AsyncClient implements Request
     protected HttpClient $client;
 
     private AsyncRequest $request;
+    private ?Cancellation $cancellation = null;
 
     public function __construct()
     {
@@ -84,10 +85,16 @@ class AsyncClient implements Request
         return $this;
     }
 
+    public function setCancellation(Cancellation $cancellation): static
+    {
+        $this->cancellation =  $cancellation;
+        return $this;
+    }
+
     private function executeRequest(AsyncRequest $request): \Amp\Http\Client\Response
     {
         try {
-            return $this->client->request($request);
+            return $this->client->request($request, $this->cancellation);
         } catch (Throwable $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -101,7 +108,7 @@ class AsyncClient implements Request
                     ->getBody()
                     ->buffer()
             );
-        } catch (BufferException|StreamException $e) {
+        } catch (BufferException | StreamException $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
