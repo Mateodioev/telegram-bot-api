@@ -42,13 +42,19 @@ class TypeStr
         return $header;
     }
 
+    /**
+     * Get the parent class name to extends.
+     */
     private function parentClass(): string
     {
-        return $this->type->subtypeOf !== null
+        return $this->type->hasSubTypes()
             ? $this->type->subtypeOf[0]
             : 'abstractType';
     }
 
+    /**
+     * Import FieldType class if the type has fields.
+     */
     private function requireFieldType(): string
     {
         return !empty($this->type->fields)
@@ -131,6 +137,9 @@ class TypeStr
         );
     }
 
+    /**
+     * Generate the phpdoc for the class (type).
+     */
     private function generatePhpDoc(): string
     {
         $this->getMaxFieldLength();
@@ -178,18 +187,24 @@ class TypeStr
     private function getMaxFieldLength(): int
     {
         foreach ($this->type->fields as $field) {
-            $this->cacheLengths[$field->name] = strlen($field->name);
-            $this->maxFieldLength             = max($this->maxFieldLength, $this->cacheLengths[$field->name]);
+            $this->cacheLengths[$field->name] = $fieldLen = strlen($field->name);
+            $this->maxFieldLength = max($this->maxFieldLength, $fieldLen);
         }
 
         return $this->maxFieldLength;
     }
 
+    /**
+     * Get length of the field. You can also use strlen() directly.
+     */
     private function fieldLength(string $field): int
     {
         return $this->cacheLengths[$field] ?? 0;
     }
 
+    /**
+     * Convert tabs into spaces.
+     */
     public static function tab(int $cant = 1): string
     {
         return str_repeat(' ', self::TAB_SIZE * $cant);

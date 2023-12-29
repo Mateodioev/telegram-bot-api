@@ -12,6 +12,9 @@ trait phpDocDescription
         return join("\n", $this->description);
     }
 
+    /**
+     * Format field description for phpDoc.
+     */
     public function docDescription(): array
     {
         return array_map(fn ($line) => " * $line", $this->description);

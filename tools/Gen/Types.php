@@ -12,7 +12,10 @@ class Types
     use fieldGen;
 
     /**
-     * @param Field[] $fields
+     * @param array $description Multiline description
+     * @param Field[] $fields Properties
+     * @param ?string[] $subtypes Child classes
+     * @param ?string[] $subtypeOf Parent class
      */
     public function __construct(
         public string $name,
@@ -33,16 +36,26 @@ class Types
         );
     }
 
+    /**
+     * Return true if the type has subtypes (child).
+     */
     public function hasSubTypes(): bool
     {
         return $this->subtypes !== null;
     }
 
+    /**
+     * Return true if the given type is a subtype of this type.
+     */
     public function isSubTypeOf(string $type): bool
     {
         return $this->subtypeOf !== null && in_array($type, $this->subtypeOf);
     }
 
+    /**
+     * Get collection of phpDoc for properties.
+     * Format: `* @property Type $name Description`
+     */
     public function docProperties(): array
     {
         $docProperties = [];
@@ -55,6 +68,10 @@ class Types
         return $docProperties;
     }
 
+    /**
+     * Get collection of phpDoc for methods. Return getters and setters methods
+     * Format: `* @method ReturnType methodName()` or `* @method static ReturnType methodName(ParamName $param)`
+     */
     public function docMethods(): array
     {
         $docMethods = [];

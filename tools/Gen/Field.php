@@ -6,12 +6,18 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
 
 use function str_starts_with;
 
+/**
+ * Property of a type.
+ */
 class Field
 {
     use fieldGen;
 
     /**
-     * @param FieldType[] $types
+     * @param string $name Name of the property
+     * @param FieldType[] $types Types of this property
+     * @param bool $required True if the property is required
+     * @param string $description Description of the property
      */
     public function __construct(
         public string $name,
@@ -42,6 +48,9 @@ class Field
         return $parsedTypes;
     }
 
+    /**
+     * Generate type string for phpDoc.
+     */
     public function typeStr()
     {
         $types = [];
@@ -54,19 +63,14 @@ class Field
                 $typeStr = $convert[$typeStr] ?? $typeStr;
             }
             if ($type->allowArrays()) {
-                $typeStr = $typeStr . '[]';
+                $typeStr = $typeStr . '[]'; // e.g. Type[]
             }
             $types[] = $typeStr;
         }
+
         $type = join('|', $types);
         if ($this->required === false) {
             return $type . '|null';
-
-            /* if (count($this->types) > 1) {
-                return $type . '|null';
-            }
-
-            return '?' . $type; */
         }
 
         return $type;

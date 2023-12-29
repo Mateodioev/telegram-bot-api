@@ -48,11 +48,11 @@ final class Schema
 
         $builder = static fn (array $type): Types => new Types(
             $type['name'],
-            $type['href'],
-            $type['description'],
-            $type['fields'] ?? [],
-            $type['subtypes'] ?? null,
-            $type['subtype_of'] ?? null,
+            $type['href'], // Link to bot api docs
+            $type['description'], // Description
+            $type['fields'] ?? [], // Type properties
+            $type['subtypes'] ?? null, // Child classes
+            $type['subtype_of'] ?? null, // Parent class
         );
 
         return array_map($builder, $this->json['types']);
