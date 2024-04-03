@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -22,6 +22,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setUserIsPremium(bool|null $userIsPremium)
  *
  * @see https://core.telegram.org/bots/api#keyboardbuttonrequestuser
+ * @deprecated v4.3.6 Use {@see KeyboardButtonRequestUser} instead
  */
 class KeyboardButtonRequestUser extends abstractType
 {

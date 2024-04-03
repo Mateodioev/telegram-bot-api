@@ -12,7 +12,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property string $status The member's status in the chat, always "restricted"
  * @property User $user Information about the user
  * @property bool $is_member True, if the user is a member of the chat at the moment of the request
- * @property bool $can_send_messages True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+ * @property bool $can_send_messages True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues
  * @property bool $can_send_audios True, if the user is allowed to send audios
  * @property bool $can_send_documents True, if the user is allowed to send documents
  * @property bool $can_send_photos True, if the user is allowed to send photos

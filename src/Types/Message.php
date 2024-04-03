@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -13,24 +13,27 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property int|null $message_thread_id Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
  * @property User|null $from Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
  * @property Chat|null $sender_chat Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
- * @property int $date Date the message was sent in Unix time
- * @property Chat $chat Conversation the message belongs to
- * @property User|null $forward_from Optional. For forwarded messages, sender of the original message
- * @property Chat|null $forward_from_chat Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat
- * @property int|null $forward_from_message_id Optional. For messages forwarded from channels, identifier of the original message in the channel
- * @property string|null $forward_signature Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present
- * @property string|null $forward_sender_name Optional. Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
- * @property int|null $forward_date Optional. For forwarded messages, date the original message was sent in Unix time
+ * @property int|null $sender_boost_count Optional. If the sender of the message boosted the chat, the number of boosts added by the user
+ * @property User|null $sender_business_bot Optional. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.
+ * @property int $date Date the message was sent in Unix time. It is always a positive number, representing a valid date.
+ * @property string|null $business_connection_id Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
+ * @property Chat $chat Chat the message belongs to
+ * @property MessageOrigin|null $forward_origin Optional. Information about the original message for forwarded messages
  * @property bool|null $is_topic_message Optional. True, if the message is sent to a forum topic
  * @property bool|null $is_automatic_forward Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group
- * @property Message|null $reply_to_message Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+ * @property Message|null $reply_to_message Optional. For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+ * @property ExternalReplyInfo|null $external_reply Optional. Information about the message that is being replied to, which may come from another chat or forum topic
+ * @property TextQuote|null $quote Optional. For replies that quote part of the original message, the quoted part of the message
+ * @property Story|null $reply_to_story Optional. For replies to a story, the original story
  * @property User|null $via_bot Optional. Bot through which the message was sent
  * @property int|null $edit_date Optional. Date the message was last edited in Unix time
  * @property bool|null $has_protected_content Optional. True, if the message can't be forwarded
+ * @property bool|null $is_from_offline Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
  * @property string|null $media_group_id Optional. The unique identifier of a media message group this message belongs to
  * @property string|null $author_signature Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
  * @property string|null $text Optional. For text messages, the actual UTF-8 text of the message
  * @property MessageEntity[]|null $entities Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+ * @property LinkPreviewOptions|null $link_preview_options Optional. Options used for link preview generation for the message, if it is a text message and link preview options were changed
  * @property Animation|null $animation Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
  * @property Audio|null $audio Optional. Message is an audio file, information about the file
  * @property Document|null $document Optional. Message is a general file, information about the file
@@ -60,21 +63,26 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property MessageAutoDeleteTimerChanged|null $message_auto_delete_timer_changed Optional. Service message: auto-delete timer settings changed in the chat
  * @property int|null $migrate_to_chat_id Optional. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
  * @property int|null $migrate_from_chat_id Optional. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
- * @property Message|null $pinned_message Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+ * @property MaybeInaccessibleMessage|null $pinned_message Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @property Invoice|null $invoice Optional. Message is an invoice for a payment, information about the invoice. More about payments: https://core.telegram.org/bots/api#payments
  * @property SuccessfulPayment|null $successful_payment Optional. Message is a service message about a successful payment, information about the payment. More about payments: https://core.telegram.org/bots/api#payments
- * @property UserShared|null $user_shared Optional. Service message: a user was shared with the bot
+ * @property UsersShared|null $users_shared Optional. Service message: users were shared with the bot
  * @property ChatShared|null $chat_shared Optional. Service message: a chat was shared with the bot
  * @property string|null $connected_website Optional. The domain name of the website on which the user has logged in. More about Telegram Login: https://core.telegram.org/widgets/login
  * @property WriteAccessAllowed|null $write_access_allowed Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess
  * @property PassportData|null $passport_data Optional. Telegram Passport data
  * @property ProximityAlertTriggered|null $proximity_alert_triggered Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
+ * @property ChatBoostAdded|null $boost_added Optional. Service message: user boosted the chat
  * @property ForumTopicCreated|null $forum_topic_created Optional. Service message: forum topic created
  * @property ForumTopicEdited|null $forum_topic_edited Optional. Service message: forum topic edited
  * @property ForumTopicClosed|null $forum_topic_closed Optional. Service message: forum topic closed
  * @property ForumTopicReopened|null $forum_topic_reopened Optional. Service message: forum topic reopened
  * @property GeneralForumTopicHidden|null $general_forum_topic_hidden Optional. Service message: the 'General' forum topic hidden
  * @property GeneralForumTopicUnhidden|null $general_forum_topic_unhidden Optional. Service message: the 'General' forum topic unhidden
+ * @property GiveawayCreated|null $giveaway_created Optional. Service message: a scheduled giveaway was created
+ * @property Giveaway|null $giveaway Optional. The message is a scheduled giveaway message
+ * @property GiveawayWinners|null $giveaway_winners Optional. A giveaway with public winners was completed
+ * @property GiveawayCompleted|null $giveaway_completed Optional. Service message: a giveaway without public winners was completed
  * @property VideoChatScheduled|null $video_chat_scheduled Optional. Service message: video chat scheduled
  * @property VideoChatStarted|null $video_chat_started Optional. Service message: video chat started
  * @property VideoChatEnded|null $video_chat_ended Optional. Service message: video chat ended
@@ -86,24 +94,27 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method int|null messageThreadId()
  * @method User|null from()
  * @method Chat|null senderChat()
+ * @method int|null senderBoostCount()
+ * @method User|null senderBusinessBot()
  * @method int date()
+ * @method string|null businessConnectionId()
  * @method Chat chat()
- * @method User|null forwardFrom()
- * @method Chat|null forwardFromChat()
- * @method int|null forwardFromMessageId()
- * @method string|null forwardSignature()
- * @method string|null forwardSenderName()
- * @method int|null forwardDate()
+ * @method MessageOrigin|null forwardOrigin()
  * @method bool|null isTopicMessage()
  * @method bool|null isAutomaticForward()
  * @method Message|null replyToMessage()
+ * @method ExternalReplyInfo|null externalReply()
+ * @method TextQuote|null quote()
+ * @method Story|null replyToStory()
  * @method User|null viaBot()
  * @method int|null editDate()
  * @method bool|null hasProtectedContent()
+ * @method bool|null isFromOffline()
  * @method string|null mediaGroupId()
  * @method string|null authorSignature()
  * @method string|null text()
  * @method MessageEntity[]|null entities()
+ * @method LinkPreviewOptions|null linkPreviewOptions()
  * @method Animation|null animation()
  * @method Audio|null audio()
  * @method Document|null document()
@@ -133,21 +144,26 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method MessageAutoDeleteTimerChanged|null messageAutoDeleteTimerChanged()
  * @method int|null migrateToChatId()
  * @method int|null migrateFromChatId()
- * @method Message|null pinnedMessage()
+ * @method MaybeInaccessibleMessage|null pinnedMessage()
  * @method Invoice|null invoice()
  * @method SuccessfulPayment|null successfulPayment()
- * @method UserShared|null userShared()
+ * @method UsersShared|null usersShared()
  * @method ChatShared|null chatShared()
  * @method string|null connectedWebsite()
  * @method WriteAccessAllowed|null writeAccessAllowed()
  * @method PassportData|null passportData()
  * @method ProximityAlertTriggered|null proximityAlertTriggered()
+ * @method ChatBoostAdded|null boostAdded()
  * @method ForumTopicCreated|null forumTopicCreated()
  * @method ForumTopicEdited|null forumTopicEdited()
  * @method ForumTopicClosed|null forumTopicClosed()
  * @method ForumTopicReopened|null forumTopicReopened()
  * @method GeneralForumTopicHidden|null generalForumTopicHidden()
  * @method GeneralForumTopicUnhidden|null generalForumTopicUnhidden()
+ * @method GiveawayCreated|null giveawayCreated()
+ * @method Giveaway|null giveaway()
+ * @method GiveawayWinners|null giveawayWinners()
+ * @method GiveawayCompleted|null giveawayCompleted()
  * @method VideoChatScheduled|null videoChatScheduled()
  * @method VideoChatStarted|null videoChatStarted()
  * @method VideoChatEnded|null videoChatEnded()
@@ -159,24 +175,27 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setMessageThreadId(int|null $messageThreadId)
  * @method static setFrom(User|null $from)
  * @method static setSenderChat(Chat|null $senderChat)
+ * @method static setSenderBoostCount(int|null $senderBoostCount)
+ * @method static setSenderBusinessBot(User|null $senderBusinessBot)
  * @method static setDate(int $date)
+ * @method static setBusinessConnectionId(string|null $businessConnectionId)
  * @method static setChat(Chat $chat)
- * @method static setForwardFrom(User|null $forwardFrom)
- * @method static setForwardFromChat(Chat|null $forwardFromChat)
- * @method static setForwardFromMessageId(int|null $forwardFromMessageId)
- * @method static setForwardSignature(string|null $forwardSignature)
- * @method static setForwardSenderName(string|null $forwardSenderName)
- * @method static setForwardDate(int|null $forwardDate)
+ * @method static setForwardOrigin(MessageOrigin|null $forwardOrigin)
  * @method static setIsTopicMessage(bool|null $isTopicMessage)
  * @method static setIsAutomaticForward(bool|null $isAutomaticForward)
  * @method static setReplyToMessage(Message|null $replyToMessage)
+ * @method static setExternalReply(ExternalReplyInfo|null $externalReply)
+ * @method static setQuote(TextQuote|null $quote)
+ * @method static setReplyToStory(Story|null $replyToStory)
  * @method static setViaBot(User|null $viaBot)
  * @method static setEditDate(int|null $editDate)
  * @method static setHasProtectedContent(bool|null $hasProtectedContent)
+ * @method static setIsFromOffline(bool|null $isFromOffline)
  * @method static setMediaGroupId(string|null $mediaGroupId)
  * @method static setAuthorSignature(string|null $authorSignature)
  * @method static setText(string|null $text)
  * @method static setEntities(MessageEntity[]|null $entities)
+ * @method static setLinkPreviewOptions(LinkPreviewOptions|null $linkPreviewOptions)
  * @method static setAnimation(Animation|null $animation)
  * @method static setAudio(Audio|null $audio)
  * @method static setDocument(Document|null $document)
@@ -206,21 +225,26 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setMessageAutoDeleteTimerChanged(MessageAutoDeleteTimerChanged|null $messageAutoDeleteTimerChanged)
  * @method static setMigrateToChatId(int|null $migrateToChatId)
  * @method static setMigrateFromChatId(int|null $migrateFromChatId)
- * @method static setPinnedMessage(Message|null $pinnedMessage)
+ * @method static setPinnedMessage(MaybeInaccessibleMessage|null $pinnedMessage)
  * @method static setInvoice(Invoice|null $invoice)
  * @method static setSuccessfulPayment(SuccessfulPayment|null $successfulPayment)
- * @method static setUserShared(UserShared|null $userShared)
+ * @method static setUsersShared(UsersShared|null $usersShared)
  * @method static setChatShared(ChatShared|null $chatShared)
  * @method static setConnectedWebsite(string|null $connectedWebsite)
  * @method static setWriteAccessAllowed(WriteAccessAllowed|null $writeAccessAllowed)
  * @method static setPassportData(PassportData|null $passportData)
  * @method static setProximityAlertTriggered(ProximityAlertTriggered|null $proximityAlertTriggered)
+ * @method static setBoostAdded(ChatBoostAdded|null $boostAdded)
  * @method static setForumTopicCreated(ForumTopicCreated|null $forumTopicCreated)
  * @method static setForumTopicEdited(ForumTopicEdited|null $forumTopicEdited)
  * @method static setForumTopicClosed(ForumTopicClosed|null $forumTopicClosed)
  * @method static setForumTopicReopened(ForumTopicReopened|null $forumTopicReopened)
  * @method static setGeneralForumTopicHidden(GeneralForumTopicHidden|null $generalForumTopicHidden)
  * @method static setGeneralForumTopicUnhidden(GeneralForumTopicUnhidden|null $generalForumTopicUnhidden)
+ * @method static setGiveawayCreated(GiveawayCreated|null $giveawayCreated)
+ * @method static setGiveaway(Giveaway|null $giveaway)
+ * @method static setGiveawayWinners(GiveawayWinners|null $giveawayWinners)
+ * @method static setGiveawayCompleted(GiveawayCompleted|null $giveawayCompleted)
  * @method static setVideoChatScheduled(VideoChatScheduled|null $videoChatScheduled)
  * @method static setVideoChatStarted(VideoChatStarted|null $videoChatStarted)
  * @method static setVideoChatEnded(VideoChatEnded|null $videoChatEnded)
@@ -230,7 +254,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @see https://core.telegram.org/bots/api#message
  */
-class Message extends abstractType
+class Message extends MaybeInaccessibleMessage
 {
     protected function boot(): void
     {
@@ -239,24 +263,27 @@ class Message extends abstractType
             'message_thread_id'                 => FieldType::optional('integer'),
             'from'                              => FieldType::optional(User::class),
             'sender_chat'                       => FieldType::optional(Chat::class),
+            'sender_boost_count'                => FieldType::optional('integer'),
+            'sender_business_bot'               => FieldType::optional(User::class),
             'date'                              => FieldType::single('integer'),
+            'business_connection_id'            => FieldType::optional('string'),
             'chat'                              => FieldType::single(Chat::class),
-            'forward_from'                      => FieldType::optional(User::class),
-            'forward_from_chat'                 => FieldType::optional(Chat::class),
-            'forward_from_message_id'           => FieldType::optional('integer'),
-            'forward_signature'                 => FieldType::optional('string'),
-            'forward_sender_name'               => FieldType::optional('string'),
-            'forward_date'                      => FieldType::optional('integer'),
+            'forward_origin'                    => FieldType::optional(MessageOrigin::class),
             'is_topic_message'                  => FieldType::optional('boolean'),
             'is_automatic_forward'              => FieldType::optional('boolean'),
             'reply_to_message'                  => FieldType::optional(Message::class),
+            'external_reply'                    => FieldType::optional(ExternalReplyInfo::class),
+            'quote'                             => FieldType::optional(TextQuote::class),
+            'reply_to_story'                    => FieldType::optional(Story::class),
             'via_bot'                           => FieldType::optional(User::class),
             'edit_date'                         => FieldType::optional('integer'),
             'has_protected_content'             => FieldType::optional('boolean'),
+            'is_from_offline'                   => FieldType::optional('boolean'),
             'media_group_id'                    => FieldType::optional('string'),
             'author_signature'                  => FieldType::optional('string'),
             'text'                              => FieldType::optional('string'),
             'entities'                          => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
+            'link_preview_options'              => FieldType::optional(LinkPreviewOptions::class),
             'animation'                         => FieldType::optional(Animation::class),
             'audio'                             => FieldType::optional(Audio::class),
             'document'                          => FieldType::optional(Document::class),
@@ -286,21 +313,26 @@ class Message extends abstractType
             'message_auto_delete_timer_changed' => FieldType::optional(MessageAutoDeleteTimerChanged::class),
             'migrate_to_chat_id'                => FieldType::optional('integer'),
             'migrate_from_chat_id'              => FieldType::optional('integer'),
-            'pinned_message'                    => FieldType::optional(Message::class),
+            'pinned_message'                    => FieldType::optional(MaybeInaccessibleMessage::class),
             'invoice'                           => FieldType::optional(Invoice::class),
             'successful_payment'                => FieldType::optional(SuccessfulPayment::class),
-            'user_shared'                       => FieldType::optional(UserShared::class),
+            'users_shared'                      => FieldType::optional(UsersShared::class),
             'chat_shared'                       => FieldType::optional(ChatShared::class),
             'connected_website'                 => FieldType::optional('string'),
             'write_access_allowed'              => FieldType::optional(WriteAccessAllowed::class),
             'passport_data'                     => FieldType::optional(PassportData::class),
             'proximity_alert_triggered'         => FieldType::optional(ProximityAlertTriggered::class),
+            'boost_added'                       => FieldType::optional(ChatBoostAdded::class),
             'forum_topic_created'               => FieldType::optional(ForumTopicCreated::class),
             'forum_topic_edited'                => FieldType::optional(ForumTopicEdited::class),
             'forum_topic_closed'                => FieldType::optional(ForumTopicClosed::class),
             'forum_topic_reopened'              => FieldType::optional(ForumTopicReopened::class),
             'general_forum_topic_hidden'        => FieldType::optional(GeneralForumTopicHidden::class),
             'general_forum_topic_unhidden'      => FieldType::optional(GeneralForumTopicUnhidden::class),
+            'giveaway_created'                  => FieldType::optional(GiveawayCreated::class),
+            'giveaway'                          => FieldType::optional(Giveaway::class),
+            'giveaway_winners'                  => FieldType::optional(GiveawayWinners::class),
+            'giveaway_completed'                => FieldType::optional(GiveawayCompleted::class),
             'video_chat_scheduled'              => FieldType::optional(VideoChatScheduled::class),
             'video_chat_started'                => FieldType::optional(VideoChatStarted::class),
             'video_chat_ended'                  => FieldType::optional(VideoChatEnded::class),

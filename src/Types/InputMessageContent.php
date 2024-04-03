@@ -22,4 +22,15 @@ class InputMessageContent extends abstractType
 
         ];
     }
+
+    public static function childs(): array
+    {
+        return [
+            InputTextMessageContent::class,
+            InputLocationMessageContent::class,
+            InputVenueMessageContent::class,
+            InputContactMessageContent::class,
+            InputInvoiceMessageContent::class,
+        ];
+    }
 }

@@ -23,4 +23,16 @@ class ChatMember extends abstractType
 
         ];
     }
+
+    public static function childs(): array
+    {
+        return [
+            ChatMemberOwner::class,
+            ChatMemberAdministrator::class,
+            ChatMemberMember::class,
+            ChatMemberRestricted::class,
+            ChatMemberLeft::class,
+            ChatMemberBanned::class,
+        ];
+    }
 }

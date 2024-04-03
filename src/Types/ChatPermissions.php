@@ -9,7 +9,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
 /**
  * Describes actions that a non-administrator user is allowed to take in a chat.
  *
- * @property bool|null $can_send_messages Optional. True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+ * @property bool|null $can_send_messages Optional. True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues
  * @property bool|null $can_send_audios Optional. True, if the user is allowed to send audios
  * @property bool|null $can_send_documents Optional. True, if the user is allowed to send documents
  * @property bool|null $can_send_photos Optional. True, if the user is allowed to send photos

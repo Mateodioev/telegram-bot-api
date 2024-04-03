@@ -38,4 +38,30 @@ class InlineQueryResult extends abstractType
 
         ];
     }
+
+    public static function childs(): array
+    {
+        return [
+            InlineQueryResultCachedAudio::class,
+            InlineQueryResultCachedDocument::class,
+            InlineQueryResultCachedGif::class,
+            InlineQueryResultCachedMpeg4Gif::class,
+            InlineQueryResultCachedPhoto::class,
+            InlineQueryResultCachedSticker::class,
+            InlineQueryResultCachedVideo::class,
+            InlineQueryResultCachedVoice::class,
+            InlineQueryResultArticle::class,
+            InlineQueryResultAudio::class,
+            InlineQueryResultContact::class,
+            InlineQueryResultGame::class,
+            InlineQueryResultDocument::class,
+            InlineQueryResultGif::class,
+            InlineQueryResultLocation::class,
+            InlineQueryResultMpeg4Gif::class,
+            InlineQueryResultPhoto::class,
+            InlineQueryResultVenue::class,
+            InlineQueryResultVideo::class,
+            InlineQueryResultVoice::class,
+        ];
+    }
 }

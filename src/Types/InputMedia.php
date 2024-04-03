@@ -12,13 +12,25 @@ namespace Mateodioev\Bots\Telegram\Types;
  * - InputMediaPhoto
  * - InputMediaVideo
  *
- * @property mixed $media
  * @see https://core.telegram.org/bots/api#inputmedia
  */
 class InputMedia extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
+    }
+
+    public static function childs(): array
+    {
+        return [
+            InputMediaAnimation::class,
+            InputMediaDocument::class,
+            InputMediaAudio::class,
+            InputMediaPhoto::class,
+            InputMediaVideo::class,
+        ];
     }
 }

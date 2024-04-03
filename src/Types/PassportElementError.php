@@ -26,4 +26,19 @@ class PassportElementError extends abstractType
 
         ];
     }
+
+    public static function childs(): array
+    {
+        return [
+            PassportElementErrorDataField::class,
+            PassportElementErrorFrontSide::class,
+            PassportElementErrorReverseSide::class,
+            PassportElementErrorSelfie::class,
+            PassportElementErrorFile::class,
+            PassportElementErrorFiles::class,
+            PassportElementErrorTranslationFile::class,
+            PassportElementErrorTranslationFiles::class,
+            PassportElementErrorUnspecified::class,
+        ];
+    }
 }

@@ -11,7 +11,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @property string $id Unique identifier for this query
  * @property User $from Sender
- * @property Message|null $message Optional. Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old
+ * @property MaybeInaccessibleMessage|null $message Optional. Message sent by the bot with the callback button that originated the query
  * @property string|null $inline_message_id Optional. Identifier of the message sent via the bot in inline mode, that originated the query.
  * @property string $chat_instance Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
  * @property string|null $data Optional. Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.
@@ -19,7 +19,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @method string id()
  * @method User from()
- * @method Message|null message()
+ * @method MaybeInaccessibleMessage|null message()
  * @method string|null inlineMessageId()
  * @method string chatInstance()
  * @method string|null data()
@@ -27,7 +27,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @method static setId(string $id)
  * @method static setFrom(User $from)
- * @method static setMessage(Message|null $message)
+ * @method static setMessage(MaybeInaccessibleMessage|null $message)
  * @method static setInlineMessageId(string|null $inlineMessageId)
  * @method static setChatInstance(string $chatInstance)
  * @method static setData(string|null $data)
@@ -42,7 +42,7 @@ class CallbackQuery extends abstractType
         $this->fields = [
             'id'                => FieldType::single('string'),
             'from'              => FieldType::single(User::class),
-            'message'           => FieldType::optional(Message::class),
+            'message'           => FieldType::optional(MaybeInaccessibleMessage::class),
             'inline_message_id' => FieldType::optional('string'),
             'chat_instance'     => FieldType::single('string'),
             'data'              => FieldType::optional('string'),

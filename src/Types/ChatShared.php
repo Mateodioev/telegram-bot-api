@@ -7,16 +7,25 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
- * This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button.
+ * This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.
  *
  * @property int $request_id Identifier of the request
  * @property int $chat_id Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means.
+ * @property string|null $title Optional. Title of the chat, if the title was requested by the bot.
+ * @property string|null $username Optional. Username of the chat, if the username was requested by the bot and available.
+ * @property PhotoSize[]|null $photo Optional. Available sizes of the chat photo, if the photo was requested by the bot
  *
  * @method int requestId()
  * @method int chatId()
+ * @method string|null title()
+ * @method string|null username()
+ * @method PhotoSize[]|null photo()
  *
  * @method static setRequestId(int $requestId)
  * @method static setChatId(int $chatId)
+ * @method static setTitle(string|null $title)
+ * @method static setUsername(string|null $username)
+ * @method static setPhoto(PhotoSize[]|null $photo)
  *
  * @see https://core.telegram.org/bots/api#chatshared
  */
@@ -27,6 +36,9 @@ class ChatShared extends abstractType
         $this->fields = [
             'request_id' => FieldType::single('integer'),
             'chat_id'    => FieldType::single('integer'),
+            'title'      => FieldType::optional('string'),
+            'username'   => FieldType::optional('string'),
+            'photo'      => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
         ];
     }
 }

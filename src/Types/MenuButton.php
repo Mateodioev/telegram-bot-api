@@ -21,4 +21,13 @@ class MenuButton extends abstractType
 
         ];
     }
+
+    public static function childs(): array
+    {
+        return [
+            MenuButtonCommands::class,
+            MenuButtonWebApp::class,
+            MenuButtonDefault::class,
+        ];
+    }
 }

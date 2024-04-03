@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -24,4 +24,18 @@ class BotCommandScope extends abstractType
 
         ];
     }
+
+    public static function childs(): array
+    {
+        return [
+            BotCommandScopeDefault::class,
+            BotCommandScopeAllPrivateChats::class,
+            BotCommandScopeAllGroupChats::class,
+            BotCommandScopeAllChatAdministrators::class,
+            BotCommandScopeChat::class,
+            BotCommandScopeChatAdministrators::class,
+            BotCommandScopeChatMember::class,
+        ];
+    }
+    // TODO: add method getChild(string $class): string
 }

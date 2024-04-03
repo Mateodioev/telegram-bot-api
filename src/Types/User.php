@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -20,6 +20,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, ParseMode};
  * @property bool|null $can_join_groups Optional. True, if the bot can be invited to groups. Returned only in getMe.
  * @property bool|null $can_read_all_group_messages Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
  * @property bool|null $supports_inline_queries Optional. True, if the bot supports inline queries. Returned only in getMe.
+ * @property bool|null $can_connect_to_business Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
  *
  * @method int id()
  * @method bool isBot()
@@ -32,6 +33,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, ParseMode};
  * @method bool|null canJoinGroups()
  * @method bool|null canReadAllGroupMessages()
  * @method bool|null supportsInlineQueries()
+ * @method bool|null canConnectToBusiness()
  *
  * @method static setId(int $id)
  * @method static setIsBot(bool $isBot)
@@ -44,6 +46,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, ParseMode};
  * @method static setCanJoinGroups(bool|null $canJoinGroups)
  * @method static setCanReadAllGroupMessages(bool|null $canReadAllGroupMessages)
  * @method static setSupportsInlineQueries(bool|null $supportsInlineQueries)
+ * @method static setCanConnectToBusiness(bool|null $canConnectToBusiness)
  *
  * @see https://core.telegram.org/bots/api#user
  */
@@ -63,6 +66,7 @@ class User extends abstractType
             'can_join_groups'             => FieldType::optional('boolean'),
             'can_read_all_group_messages' => FieldType::optional('boolean'),
             'supports_inline_queries'     => FieldType::optional('boolean'),
+            'can_connect_to_business'     => FieldType::optional('boolean'),
         ];
     }
 

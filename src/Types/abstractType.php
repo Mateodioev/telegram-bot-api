@@ -272,9 +272,9 @@ abstract class abstractType implements TypesInterface, Stringable
         return $this;
     }
 
-    private function isLegacyProperty(string $propertie): bool
+    private function isLegacyProperty(string $property): bool
     {
-        return in_array($propertie, $this->legacyProperties);
+        return in_array($property, $this->legacyProperties);
     }
 
     /**
@@ -348,7 +348,7 @@ abstract class abstractType implements TypesInterface, Stringable
 
         foreach ($this->properties as $key => $value) {
 
-            $value = $this->propertieToScalar($key);
+            $value = $this->propertyToScalar($key);
 
             if (Types::$returnNullParams === false && ($value === self::DEFAULT_PARAM || $value === self::DEFAULT_BOOL)) {
                 continue;
@@ -360,10 +360,10 @@ abstract class abstractType implements TypesInterface, Stringable
         return $params;
     }
 
-    private function propertieToScalar(string $key): mixed
+    private function propertyToScalar(string $key): mixed
     {
         if (!isset($this->fields[$key]) && Types::$returnNullParams === false) {
-            throw new TelegramParamException('Propertie ' . $key . ' not found');
+            throw new TelegramParamException('Property ' . $key . ' not found');
         }
         $type  = $this->fields[$key] ?? FieldType::optional('mixed');
         $value = $this->properties[$key] ?? (
@@ -386,6 +386,11 @@ abstract class abstractType implements TypesInterface, Stringable
         }
 
         return $value;
+    }
+
+    public static function childs(): array
+    {
+        return [];
     }
 }
 
