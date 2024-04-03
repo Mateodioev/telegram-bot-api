@@ -2,9 +2,7 @@
 
 namespace Tools\Gen;
 
-use function file_get_contents;
-use function json_decode;
-use function array_map;
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
 final class Schema
 {
@@ -14,7 +12,7 @@ final class Schema
     private array $ignoreTypes = [
         'InputFile',
         'ReplyKeyboardMarkup',
-        'InlineKeyboardMarkup'
+        'InlineKeyboardMarkup',
     ];
 
     public function __construct()
@@ -49,13 +47,43 @@ final class Schema
         $builder = static fn (array $type): Types => new Types(
             $type['name'],
             $type['href'], // Link to bot api docs
-            $type['description'], // Description
+            $type['description'] ?? [], // Description
             $type['fields'] ?? [], // Type properties
             $type['subtypes'] ?? null, // Child classes
             $type['subtype_of'] ?? null, // Parent class
         );
 
         return array_map($builder, $this->json['types']);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function missingTypes(): array
+    {
+        foreach ($this->ignoreTypes as $ignored) {
+            unset($this->json['types'][$ignored]);
+        }
+
+        $missing = [];
+        foreach ($this->json['types'] as $type) {
+            try {
+                new Types(
+                    $type['name'],
+                    $type['href'], // Link to bot api docs
+                    $type['description'] ?? [], // Description
+                    $type['fields'] ?? [], // Type properties
+                    $type['subtypes'] ?? null, // Child classes
+                    $type['subtype_of'] ?? null, // Parent class
+                );
+            } catch (TelegramParamException $e) {
+                if (str_starts_with($e->getMessage(), 'Invalid type')) {
+                    $missing[] = str_replace('Invalid type ', '', $e->getMessage());
+                }
+            }
+        }
+
+        return $missing;
     }
 
     /**

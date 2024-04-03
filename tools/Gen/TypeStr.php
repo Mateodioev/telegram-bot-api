@@ -2,6 +2,14 @@
 
 namespace Tools\Gen;
 
+use function array_pop;
+use function in_array;
+use function max;
+use function sprintf;
+use function str_repeat;
+use function str_replace;
+use function strlen;
+
 /**
  * Convert a type into a string.
  */
@@ -9,7 +17,14 @@ class TypeStr
 {
     public const TAB_SIZE = 4; // spaces
 
+    /**
+     * Max length of the fields
+     */
     private int $maxFieldLength = -1;
+
+    /**
+     * Cache the length of the fields
+     */
     private array $cacheLengths = [];
 
     public function __construct(
@@ -34,7 +49,7 @@ class TypeStr
                     \$this->fields = [
             %s
                     ];
-                }
+                }%s
             }
 
             PHP;
@@ -47,7 +62,7 @@ class TypeStr
      */
     private function parentClass(): string
     {
-        return $this->type->hasSubTypes()
+        return $this->type->subtypeOf !== null
             ? $this->type->subtypeOf[0]
             : 'abstractType';
     }
@@ -70,7 +85,7 @@ class TypeStr
             $fields[] = $this->tab(3) . $this->generateField($field);
         }
 
-        return join(PHP_EOL, $fields);
+        return \join(PHP_EOL, $fields);
     }
 
     private function generateField(Field $field): string
@@ -133,8 +148,33 @@ class TypeStr
         return sprintf(
             $this->classHeader(),
             $this->generatePhpDoc(),
-            $this->generateFields()
+            $this->generateFields(),
+            $this->generateChildMethod(),
         );
+    }
+
+    private function generateChildMethod(): string
+    {
+        if (!$this->type->hasSubTypes()) {
+            return '';
+        }
+
+        $format = <<<PHP
+            
+        
+                public static function childs(): array
+                {
+                    return [
+            %s
+                    ];
+                }
+            PHP;
+
+        $childArray = [];
+        foreach ($this->type->subtypes as $subType) {
+            $childArray[] = $this->tab(3) . $subType . '::class,';
+        }
+        return sprintf($format, \join(PHP_EOL, $childArray));
     }
 
     /**
@@ -154,12 +194,12 @@ class TypeStr
             . PHP_EOL . ' */';
     }
 
-    private function phpDocDescription()
+    private function phpDocDescription(): string
     {
-        return join(PHP_EOL, $this->type->docDescription());
+        return \join(PHP_EOL, $this->type->docDescription());
     }
 
-    private function seeTagDescription()
+    private function seeTagDescription(): string
     {
         return ' *' . PHP_EOL . ' * @see ' . $this->type->link;
     }
@@ -176,12 +216,12 @@ class TypeStr
 
     private function phpDocProperties(): string
     {
-        return join(PHP_EOL, $this->type->docProperties());
+        return \join(PHP_EOL, $this->type->docProperties());
     }
 
     private function phpDocMethods(): string
     {
-        return join(PHP_EOL, $this->type->docMethods());
+        return \join(PHP_EOL, $this->type->docMethods());
     }
 
     private function getMaxFieldLength(): int
