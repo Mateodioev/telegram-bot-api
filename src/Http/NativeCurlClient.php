@@ -2,7 +2,8 @@
 
 namespace Mateodioev\Bots\Telegram\Http;
 
-use Mateodioev\Request\Request as BlockingRequest;
+use Mateodioev\Request\Clients\Curl as BlockingRequest;
+use Mateodioev\Request\Methods as RequestMethod;
 use Mateodioev\Utils\Exceptions\RequestException;
 
 /**
@@ -17,9 +18,10 @@ class NativeCurlClient implements Request
      */
     public function new(string $url, mixed $payload = null, Methods $method = Methods::POST): static
     {
+        $method = $method->toRequestMethod();
         match ($method) {
-            Methods::POST => $this->request = BlockingRequest::POST($url, $payload),
-            default => $this->request = BlockingRequest::GET($url)
+            RequestMethod::POST => $this->request = BlockingRequest::POST($url, $payload),
+            default => $this->request             = BlockingRequest::GET($url)
         };
 
         return $this;
@@ -41,7 +43,7 @@ class NativeCurlClient implements Request
     public function run(): Response
     {
         try {
-            return new Response($this->request->run()->getBody());
+            return new Response($this->request->run()->body());
         } catch (RequestException $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -57,7 +59,7 @@ class NativeCurlClient implements Request
         $file = fopen($destination, 'w');
         $this->request->addOpt(CURLOPT_FILE, $file);
         try {
-            $this->request->setMethod(Methods::GET->value())->run($path);
+            $this->request->setMethod(RequestMethod::GET)->run($path);
             fclose($file);
             return true;
         } catch (HttpException) {

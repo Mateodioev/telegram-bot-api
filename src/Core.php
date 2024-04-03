@@ -7,7 +7,6 @@ use Mateodioev\Bots\Telegram\Http\{AsyncClient, SyncClient, Request as HttpClien
 use Mateodioev\Bots\Telegram\Types\{File, Response, Error};
 use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
-use Mateodioev\Request\{Request, ResponseException};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
