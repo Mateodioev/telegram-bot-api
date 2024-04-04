@@ -1,8 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Mateodioev\Bots\Telegram\Types;
+
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
 /**
  * This object describes the bot's menu button in a private chat. It should be one of
@@ -29,5 +31,19 @@ class MenuButton extends abstractType
             MenuButtonWebApp::class,
             MenuButtonDefault::class,
         ];
+    }
+
+    public static function selectChild(array $update): string
+    {
+        if (isset($update['type']) === false) {
+            throw new TelegramParamException('Missing type field in MenuButton');
+        }
+
+        return match ($update['type']) {
+            'commands' => MenuButtonCommands::class,
+            'web_app' => MenuButtonWebApp::class,
+            'default' => MenuButtonDefault::class,
+            default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in MenuButton')
+        };
     }
 }

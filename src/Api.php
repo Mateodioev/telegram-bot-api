@@ -28,7 +28,7 @@ class Api extends Core
     public static function fromEnv(): Api
     {
         $token    = $_ENV['BOT_TOKEN'];
-        $api_link = $_ENV['BOT_API_LINK'] ?? self::URL_BASE;
+        $api_link = $_ENV['BOT_API_LINK'] ?? Core::URL_BASE;
 
         return new self($token, $api_link);
     }

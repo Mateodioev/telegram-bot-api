@@ -2,25 +2,12 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\{FieldType, Types, strUtils};
+use function array_filter;use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\strUtils;
+use Mateodioev\Bots\Telegram\Config\Types;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-
 use Stringable;
-
-use function json_encode;
-use function array_filter;
-use function explode;
-use function is_null;
-use function is_bool;
-use function is_string;
-use function join;
-use function in_array;
-use function is_array;
-use function array_map;
-use function array_walk;
-use function substr;
-use function array_key_exists;
 
 abstract class abstractType implements TypesInterface, Stringable
 {
@@ -34,7 +21,7 @@ abstract class abstractType implements TypesInterface, Stringable
     protected array $fields = [];
 
     private array $legacyProperties = [
-        'thumb'
+        'thumb',
     ];
 
     public static function create(?array $update): ?static
@@ -43,7 +30,18 @@ abstract class abstractType implements TypesInterface, Stringable
             return self::DEFAULT_PARAM;
         }
 
-        return new static($update);
+        if (static::hasChilds() === false) {
+            return new static($update);
+        }
+
+        $className = static::selectChild($update);
+
+        // avoid recursion
+        if ($className === static::class) {
+            return new static($update);
+        }
+
+        return new $className($update);
     }
 
     public static function default(): static
@@ -75,7 +73,7 @@ abstract class abstractType implements TypesInterface, Stringable
     public static function bulkToJson(array $types): string
     {
         return json_encode(
-            array_map(fn (TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
+            array_map(fn(TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
         );
     }
 
@@ -172,8 +170,8 @@ abstract class abstractType implements TypesInterface, Stringable
 
         array_map(function ($key) use (&$value) {
             $value = $value instanceof abstractType
-                ? $value->$key // ensure that the property is a getter
-                : $value[$key] ?? self::DEFAULT_PARAM;
+            ? $value->$key // ensure that the property is a getter
+            : $value[$key] ?? self::DEFAULT_PARAM;
         }, $keys);
 
         return $value;
@@ -287,8 +285,8 @@ abstract class abstractType implements TypesInterface, Stringable
 
         array_walk($fields, function ($type, $i) {
             $this->properties[$i] = $type->allowBooleans()
-                ? self::DEFAULT_BOOL
-                : self::DEFAULT_PARAM;
+            ? self::DEFAULT_BOOL
+            : self::DEFAULT_PARAM;
         });
 
         return $this;
@@ -303,9 +301,7 @@ abstract class abstractType implements TypesInterface, Stringable
             throw new TelegramParamException('Param ' . $key . ' not found');
         }
 
-        $property = $this->properties[$key]
-            ?? $this->properties[substr($key, 4)]
-            ?? self::DEFAULT_PARAM;
+        $property = $this->properties[$key] ?? $this->properties[substr($key, 4)] ?? self::DEFAULT_PARAM;
 
         return $property;
     }
@@ -391,6 +387,16 @@ abstract class abstractType implements TypesInterface, Stringable
     public static function childs(): array
     {
         return [];
+    }
+
+    protected static function hasChilds(): bool
+    {
+        return \count(static::childs()) > 0;
+    }
+
+    public static function selectChild(array $update): string
+    {
+        return static::class;
     }
 }
 

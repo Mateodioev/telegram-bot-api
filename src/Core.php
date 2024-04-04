@@ -3,16 +3,22 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
-use Mateodioev\Bots\Telegram\Http\{AsyncClient, SyncClient, Request as HttpClient, HttpException};
-use Mateodioev\Bots\Telegram\Types\{File, Response, Error};
-use Mateodioev\Bots\Telegram\Exception\{TelegramParamException, TelegramApiException};
-use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
+use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
+use Mateodioev\Bots\Telegram\Http\AsyncClient;
+use Mateodioev\Bots\Telegram\Http\HttpException;
+use Mateodioev\Bots\Telegram\Http\Request as HttpClient;
+use Mateodioev\Bots\Telegram\Http\SyncClient;
+use Mateodioev\Bots\Telegram\Interfaces\MethodInterface;
+use Mateodioev\Bots\Telegram\Interfaces\TelegramInterface;
+use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
+use Mateodioev\Bots\Telegram\Types\Error;
+use Mateodioev\Bots\Telegram\Types\File;
+use Mateodioev\Bots\Telegram\Types\Response;
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;
 use Throwable;
-
-use function array_merge;
 
 /**
  * Make request to telegram bot-api
@@ -20,8 +26,8 @@ use function array_merge;
 abstract class Core implements TelegramInterface
 {
     public const URL_BASE = 'https://api.telegram.org/';
-    public int $timeout = 5;
-    public bool $async = false;
+    public int $timeout   = 5;
+    public bool $async    = false;
 
     protected string $api_link;
     protected string $file_link; // File to download
@@ -88,7 +94,6 @@ abstract class Core implements TelegramInterface
         return $this;
     }
 
-
     public function getClient(): HttpClient
     {
         if (
@@ -99,8 +104,8 @@ abstract class Core implements TelegramInterface
         }
 
         return $this->client = ($this->async)
-          ? new AsyncClient()
-          : new SyncClient();
+        ? new AsyncClient()
+        : new SyncClient();
     }
 
     /**
@@ -120,7 +125,7 @@ abstract class Core implements TelegramInterface
      *
      * @return Response|array|TypesInterface|stdClass
      */
-    public function request(MethodInterface $method): TypesInterface|stdClass|array
+    public function request(MethodInterface $method): TypesInterface | stdClass | array
     {
         if (empty($method->getMethod())) {
             throw new TelegramParamException('Method can\'t be empty');
@@ -131,7 +136,7 @@ abstract class Core implements TelegramInterface
         $datas = array_merge($method->getParams(), $this->opt);
 
         $request = $this->getClient()->new($this->endpoint, $datas)
-          ->setTimeout($this->timeout);
+            ->setTimeout($this->timeout);
 
         try {
             $this->result = $request->run()->toArray();
@@ -146,10 +151,12 @@ abstract class Core implements TelegramInterface
 
     private function parseRequestResult(MethodInterface $method): mixed
     {
-        $return = $method->getReturn();
+        /** @var array[string, boolean] */
+        $return     = $method->getReturn();
         $returnType = $return[0] ?? Response::class;
         $methodName = $return[1] ? 'bulkCreate' : 'create';
 
+        // If the return type if not set, return the result as raw array
         if ($return[0] === null) {
             return $this->result;
         }

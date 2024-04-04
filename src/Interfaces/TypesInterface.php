@@ -34,4 +34,9 @@ interface TypesInterface
      * @return TypesInterface[]
      */
     public static function childs(): array;
+
+    /**
+     * If the object has sub-classes, returns the name of the sub-class that should be instantiated. Otherwise return the class name.
+     */
+    public static function selectChild(array $update): string;
 }

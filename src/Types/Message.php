@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare (strict_types = 1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -343,6 +343,12 @@ class Message extends MaybeInaccessibleMessage
             'left_chat_participant'             => FieldType::optional(User::class),
             'new_chat_participant'              => FieldType::optional(User::class),
             'new_chat_member'                   => FieldType::optional(User::class),
+            'forward_from'                      => FieldType::optional(User::class),
+            'forward_from_chat'                 => FieldType::optional(Chat::class),
+            'forward_from_message_id'           => FieldType::optional('integer'),
+            'forward_signature'                 => FieldType::optional('string'),
+            'forward_sender_name'               => FieldType::optional('string'),
+            'forward_date'                      => FieldType::optional('integer'),
         ];
     }
 }
