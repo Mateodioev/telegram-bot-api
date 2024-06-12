@@ -5,6 +5,8 @@
 use Mateodioev\Bots\Telegram\Api;
 use Mateodioev\Bots\Telegram\Types\{InputFile, InputMediaDocument};
 
+// require __DIR__ . '/../vendor/autoload.php';
+
 $api = new Api('YOUR BOT TOKEN');
 
 // For send files use the class InputFile
@@ -63,7 +65,7 @@ $medias = [ // You can send up to 10 files
         ->setCaption('This is a external file'),
 
     InputMediaDocument::default()
-        // if you want to sent local file use Inputfile and set the second parameter to the file name
+        // if you want to sent local files, use InputFile and set the second parameter to the file name
         ->setMedia(InputFile::fromLocal('/path/to/file', 'file name'))
         ->setCaption('This is a local file'),
 ];

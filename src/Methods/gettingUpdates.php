@@ -28,7 +28,7 @@ trait gettingUpdates
         ];
 
         $oldTimeout = $this->timeout;
-        $this->timeout = $timeout;
+        $this->timeout = $timeout + 1; // Add 1 second to the timeout of the client, to avoid timeout errors
 
         $result = $this->request(Method::create($payload, 'getUpdates')
             ->setReturnType(Update::class, true));
