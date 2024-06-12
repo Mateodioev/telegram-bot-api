@@ -15,6 +15,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property ChatMember $old_chat_member Previous information about the chat member
  * @property ChatMember $new_chat_member New information about the chat member
  * @property ChatInviteLink|null $invite_link Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.
+ * @property bool|null $via_join_request Optional. True, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator
  * @property bool|null $via_chat_folder_invite_link Optional. True, if the user joined the chat via a chat folder invite link
  *
  * @method Chat chat()
@@ -23,6 +24,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method ChatMember oldChatMember()
  * @method ChatMember newChatMember()
  * @method ChatInviteLink|null inviteLink()
+ * @method bool|null viaJoinRequest()
  * @method bool|null viaChatFolderInviteLink()
  *
  * @method static setChat(Chat $chat)
@@ -31,6 +33,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setOldChatMember(ChatMember $oldChatMember)
  * @method static setNewChatMember(ChatMember $newChatMember)
  * @method static setInviteLink(ChatInviteLink|null $inviteLink)
+ * @method static setViaJoinRequest(bool|null $viaJoinRequest)
  * @method static setViaChatFolderInviteLink(bool|null $viaChatFolderInviteLink)
  *
  * @see https://core.telegram.org/bots/api#chatmemberupdated
@@ -46,6 +49,7 @@ class ChatMemberUpdated extends abstractType
             'old_chat_member'             => FieldType::single(ChatMember::class),
             'new_chat_member'             => FieldType::single(ChatMember::class),
             'invite_link'                 => FieldType::optional(ChatInviteLink::class),
+            'via_join_request'            => FieldType::optional('boolean'),
             'via_chat_folder_invite_link' => FieldType::optional('boolean'),
         ];
     }

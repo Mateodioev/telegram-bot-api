@@ -7,7 +7,7 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
-
+ * Describes the opening hours of a business.
  *
  * @property string $time_zone_name Unique name of the time zone for which the opening hours are defined
  * @property BusinessOpeningHoursInterval[] $opening_hours List of time intervals describing business opening hours

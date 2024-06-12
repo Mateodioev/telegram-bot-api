@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -22,9 +22,7 @@ class BotCommandScope extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [
-
-        ];
+        $this->fields = [];
     }
 
     public static function childs(): array
@@ -43,7 +41,7 @@ class BotCommandScope extends abstractType
     public static function selectChild(array $update): string
     {
         if (isset($update['type']) === false) {
-            throw new TelegramParamException('Missing type field in BotCommandScope');
+            throw TelegramParamException::missingField(static::class, 'type');
         }
 
         return match ($update['type']) {

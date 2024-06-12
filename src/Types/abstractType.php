@@ -2,12 +2,13 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use function array_filter;use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\strUtils;
-use Mateodioev\Bots\Telegram\Config\Types;
+use Mateodioev\Bots\Telegram\Config\{FieldType, Types, strUtils};
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use Stringable;
+
+use function array_filter;
+use function count;
 
 abstract class abstractType implements TypesInterface, Stringable
 {
@@ -73,7 +74,7 @@ abstract class abstractType implements TypesInterface, Stringable
     public static function bulkToJson(array $types): string
     {
         return json_encode(
-            array_map(fn(TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
+            array_map(fn (TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
         );
     }
 
@@ -391,7 +392,7 @@ abstract class abstractType implements TypesInterface, Stringable
 
     protected static function hasChilds(): bool
     {
-        return \count(static::childs()) > 0;
+        return count(static::childs()) > 0;
     }
 
     public static function selectChild(array $update): string

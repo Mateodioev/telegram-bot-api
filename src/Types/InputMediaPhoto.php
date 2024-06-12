@@ -10,10 +10,11 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * Represents a photo to be sent.
  *
  * @property string $type Type of the result, must be photo
- * @property string $media File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files: https://core.telegram.org/bots/api#sending-files
+ * @property string|InputFile $media File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files: https://core.telegram.org/bots/api#sending-files
  * @property string|null $caption Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
  * @property string|null $parse_mode Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
  * @property MessageEntity[]|null $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+ * @property bool|null $show_caption_above_media Optional. Pass True, if the caption must be shown above the message media
  * @property bool|null $has_spoiler Optional. Pass True if the photo needs to be covered with a spoiler animation
  *
  * @method string type()
@@ -21,6 +22,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method string|null caption()
  * @method string|null parseMode()
  * @method MessageEntity[]|null captionEntities()
+ * @method bool|null showCaptionAboveMedia()
  * @method bool|null hasSpoiler()
  *
  * @method static setType(string $type)
@@ -28,6 +30,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setCaption(string|null $caption)
  * @method static setParseMode(string|null $parseMode)
  * @method static setCaptionEntities(MessageEntity[]|null $captionEntities)
+ * @method static setShowCaptionAboveMedia(bool|null $showCaptionAboveMedia)
  * @method static setHasSpoiler(bool|null $hasSpoiler)
  *
  * @see https://core.telegram.org/bots/api#inputmediaphoto
@@ -37,12 +40,13 @@ class InputMediaPhoto extends InputMedia
     protected function boot(): void
     {
         $this->fields = [
-            'type'             => FieldType::single('string'),
-            'media'            => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
-            'caption'          => FieldType::optional('string'),
-            'parse_mode'       => FieldType::optional('string'),
-            'caption_entities' => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
-            'has_spoiler'      => FieldType::optional('boolean'),
+            'type'                     => FieldType::single('string'),
+            'media'                    => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
+            'caption'                  => FieldType::optional('string'),
+            'parse_mode'               => FieldType::optional('string'),
+            'caption_entities'         => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
+            'show_caption_above_media' => FieldType::optional('boolean'),
+            'has_spoiler'              => FieldType::optional('boolean'),
         ];
     }
 

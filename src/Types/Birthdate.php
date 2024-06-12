@@ -1,12 +1,13 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
+ * Describes the birthdate of a user.
  *
  * @property int $day Day of the user's birth; 1-31
  * @property int $month Month of the user's birth; 1-12

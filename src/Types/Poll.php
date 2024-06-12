@@ -11,6 +11,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @property string $id Unique poll identifier
  * @property string $question Poll question, 1-300 characters
+ * @property MessageEntity[]|null $question_entities Optional. Special entities that appear in the question. Currently, only custom emoji entities are allowed in poll questions
  * @property PollOption[] $options List of poll options
  * @property int $total_voter_count Total number of users that voted in the poll
  * @property bool $is_closed True, if the poll is closed
@@ -25,6 +26,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @method string id()
  * @method string question()
+ * @method MessageEntity[]|null questionEntities()
  * @method PollOption[] options()
  * @method int totalVoterCount()
  * @method bool isClosed()
@@ -39,6 +41,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  *
  * @method static setId(string $id)
  * @method static setQuestion(string $question)
+ * @method static setQuestionEntities(MessageEntity[]|null $questionEntities)
  * @method static setOptions(PollOption[] $options)
  * @method static setTotalVoterCount(int $totalVoterCount)
  * @method static setIsClosed(bool $isClosed)
@@ -60,6 +63,7 @@ class Poll extends abstractType
         $this->fields = [
             'id'                      => FieldType::single('string'),
             'question'                => FieldType::single('string'),
+            'question_entities'       => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'options'                 => FieldType::multiple(PollOption::class),
             'total_voter_count'       => FieldType::single('integer'),
             'is_closed'               => FieldType::single('boolean'),

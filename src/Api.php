@@ -8,7 +8,8 @@ use Mateodioev\Bots\Telegram\Methods\{
     inlineMode,
     Method,
     Stickers,
-    updatingMessages
+    updatingMessages,
+    payments
 };
 
 use function method_exists;
@@ -21,6 +22,7 @@ class Api extends Core
     use updatingMessages;
     use Stickers;
     use inlineMode;
+    use payments;
 
     /**
      * Require `BOT_TOKEN` env var

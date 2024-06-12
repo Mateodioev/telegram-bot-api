@@ -7,7 +7,7 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
-
+ * Contains information about the start page settings of a Telegram Business account.
  *
  * @property string|null $title Optional. Title text of the business intro
  * @property string|null $message Optional. Message text of the business intro

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -34,6 +34,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property string|null $text Optional. For text messages, the actual UTF-8 text of the message
  * @property MessageEntity[]|null $entities Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
  * @property LinkPreviewOptions|null $link_preview_options Optional. Options used for link preview generation for the message, if it is a text message and link preview options were changed
+ * @property string|null $effect_id Optional. Unique identifier of the message effect added to the message
  * @property Animation|null $animation Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
  * @property Audio|null $audio Optional. Message is an audio file, information about the file
  * @property Document|null $document Optional. Message is a general file, information about the file
@@ -45,6 +46,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property Voice|null $voice Optional. Message is a voice message, information about the file
  * @property string|null $caption Optional. Caption for the animation, audio, document, photo, video or voice
  * @property MessageEntity[]|null $caption_entities Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+ * @property bool|null $show_caption_above_media Optional. True, if the caption must be shown above the message media
  * @property bool|null $has_media_spoiler Optional. True, if the message media is covered by a spoiler animation
  * @property Contact|null $contact Optional. Message is a shared contact, information about the contact
  * @property Dice|null $dice Optional. Message is a dice with random value
@@ -73,6 +75,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property PassportData|null $passport_data Optional. Telegram Passport data
  * @property ProximityAlertTriggered|null $proximity_alert_triggered Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
  * @property ChatBoostAdded|null $boost_added Optional. Service message: user boosted the chat
+ * @property ChatBackground|null $chat_background_set Optional. Service message: chat background set
  * @property ForumTopicCreated|null $forum_topic_created Optional. Service message: forum topic created
  * @property ForumTopicEdited|null $forum_topic_edited Optional. Service message: forum topic edited
  * @property ForumTopicClosed|null $forum_topic_closed Optional. Service message: forum topic closed
@@ -115,6 +118,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method string|null text()
  * @method MessageEntity[]|null entities()
  * @method LinkPreviewOptions|null linkPreviewOptions()
+ * @method string|null effectId()
  * @method Animation|null animation()
  * @method Audio|null audio()
  * @method Document|null document()
@@ -126,6 +130,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method Voice|null voice()
  * @method string|null caption()
  * @method MessageEntity[]|null captionEntities()
+ * @method bool|null showCaptionAboveMedia()
  * @method bool|null hasMediaSpoiler()
  * @method Contact|null contact()
  * @method Dice|null dice()
@@ -154,6 +159,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method PassportData|null passportData()
  * @method ProximityAlertTriggered|null proximityAlertTriggered()
  * @method ChatBoostAdded|null boostAdded()
+ * @method ChatBackground|null chatBackgroundSet()
  * @method ForumTopicCreated|null forumTopicCreated()
  * @method ForumTopicEdited|null forumTopicEdited()
  * @method ForumTopicClosed|null forumTopicClosed()
@@ -196,6 +202,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setText(string|null $text)
  * @method static setEntities(MessageEntity[]|null $entities)
  * @method static setLinkPreviewOptions(LinkPreviewOptions|null $linkPreviewOptions)
+ * @method static setEffectId(string|null $effectId)
  * @method static setAnimation(Animation|null $animation)
  * @method static setAudio(Audio|null $audio)
  * @method static setDocument(Document|null $document)
@@ -207,6 +214,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setVoice(Voice|null $voice)
  * @method static setCaption(string|null $caption)
  * @method static setCaptionEntities(MessageEntity[]|null $captionEntities)
+ * @method static setShowCaptionAboveMedia(bool|null $showCaptionAboveMedia)
  * @method static setHasMediaSpoiler(bool|null $hasMediaSpoiler)
  * @method static setContact(Contact|null $contact)
  * @method static setDice(Dice|null $dice)
@@ -235,6 +243,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method static setPassportData(PassportData|null $passportData)
  * @method static setProximityAlertTriggered(ProximityAlertTriggered|null $proximityAlertTriggered)
  * @method static setBoostAdded(ChatBoostAdded|null $boostAdded)
+ * @method static setChatBackgroundSet(ChatBackground|null $chatBackgroundSet)
  * @method static setForumTopicCreated(ForumTopicCreated|null $forumTopicCreated)
  * @method static setForumTopicEdited(ForumTopicEdited|null $forumTopicEdited)
  * @method static setForumTopicClosed(ForumTopicClosed|null $forumTopicClosed)
@@ -284,6 +293,7 @@ class Message extends MaybeInaccessibleMessage
             'text'                              => FieldType::optional('string'),
             'entities'                          => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'link_preview_options'              => FieldType::optional(LinkPreviewOptions::class),
+            'effect_id'                         => FieldType::optional('string'),
             'animation'                         => FieldType::optional(Animation::class),
             'audio'                             => FieldType::optional(Audio::class),
             'document'                          => FieldType::optional(Document::class),
@@ -295,6 +305,7 @@ class Message extends MaybeInaccessibleMessage
             'voice'                             => FieldType::optional(Voice::class),
             'caption'                           => FieldType::optional('string'),
             'caption_entities'                  => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
+            'show_caption_above_media'          => FieldType::optional('boolean'),
             'has_media_spoiler'                 => FieldType::optional('boolean'),
             'contact'                           => FieldType::optional(Contact::class),
             'dice'                              => FieldType::optional(Dice::class),
@@ -323,6 +334,7 @@ class Message extends MaybeInaccessibleMessage
             'passport_data'                     => FieldType::optional(PassportData::class),
             'proximity_alert_triggered'         => FieldType::optional(ProximityAlertTriggered::class),
             'boost_added'                       => FieldType::optional(ChatBoostAdded::class),
+            'chat_background_set'               => FieldType::optional(ChatBackground::class),
             'forum_topic_created'               => FieldType::optional(ForumTopicCreated::class),
             'forum_topic_edited'                => FieldType::optional(ForumTopicEdited::class),
             'forum_topic_closed'                => FieldType::optional(ForumTopicClosed::class),

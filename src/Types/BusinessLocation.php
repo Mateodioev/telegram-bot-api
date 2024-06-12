@@ -7,7 +7,7 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
-
+ * Contains information about the location of a Telegram Business account.
  *
  * @property string $address Address of the business
  * @property Location|null $location Optional. Location of the business

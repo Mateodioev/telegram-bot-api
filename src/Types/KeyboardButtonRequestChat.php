@@ -7,7 +7,7 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
- * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the сhat if appropriate More about requesting chats: https://core.telegram.org/bots/features#chat-and-user-selection
+ * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. More about requesting chats: https://core.telegram.org/bots/features#chat-and-user-selection.
  *
  * @property int $request_id Signed 32-bit identifier of the request, which will be received back in the ChatShared object. Must be unique within the message
  * @property bool $chat_is_channel Pass True to request a channel chat, pass False to request a group or a supergroup chat.

@@ -13,9 +13,9 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property bool|null $user_is_bot Optional. Pass True to request bots, pass False to request regular users. If not specified, no additional restrictions are applied.
  * @property bool|null $user_is_premium Optional. Pass True to request premium users, pass False to request non-premium users. If not specified, no additional restrictions are applied.
  * @property int|null $max_quantity Optional. The maximum number of users to be selected; 1-10. Defaults to 1.
- * @property bool|null $request_name Optional. Pass True to request the users' first and last name
- * @property bool|null $request_username Optional. Pass True to request the users' username
- * @property bool|null $request_photo Optional. Pass True to request the users' photo
+ * @property bool|null $request_name Optional. Pass True to request the users' first and last names
+ * @property bool|null $request_username Optional. Pass True to request the users' usernames
+ * @property bool|null $request_photo Optional. Pass True to request the users' photos
  *
  * @method int requestId()
  * @method bool|null userIsBot()

@@ -18,7 +18,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property bool $can_change_info True, if the user is allowed to change the chat title, photo and other settings
  * @property bool $can_invite_users True, if the user is allowed to invite new users to the chat
  * @property bool $can_post_stories True, if the administrator can post stories to the chat
- * @property bool $can_edit_stories True, if the administrator can edit stories posted by other users
+ * @property bool $can_edit_stories True, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive
  * @property bool $can_delete_stories True, if the administrator can delete stories posted by other users
  * @property bool|null $can_post_messages Optional. True, if the administrator can post messages in the channel, or access channel statistics; for channels only
  * @property bool|null $can_edit_messages Optional. True, if the administrator can edit messages of other users and can pin messages; for channels only

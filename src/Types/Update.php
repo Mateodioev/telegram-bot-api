@@ -16,7 +16,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property Message|null $channel_post Optional. New incoming channel post of any kind - text, photo, sticker, etc.
  * @property Message|null $edited_channel_post Optional. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
  * @property BusinessConnection|null $business_connection Optional. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot
- * @property Message|null $business_message Optional. New non-service message from a connected business account
+ * @property Message|null $business_message Optional. New message from a connected business account
  * @property Message|null $edited_business_message Optional. New version of a message from a connected business account
  * @property BusinessMessagesDeleted|null $deleted_business_messages Optional. Messages were deleted from a connected business account
  * @property MessageReactionUpdated|null $message_reaction Optional. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots.

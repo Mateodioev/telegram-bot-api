@@ -3,18 +3,10 @@
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
-use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
-use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
-use Mateodioev\Bots\Telegram\Http\AsyncClient;
-use Mateodioev\Bots\Telegram\Http\HttpException;
-use Mateodioev\Bots\Telegram\Http\Request as HttpClient;
-use Mateodioev\Bots\Telegram\Http\SyncClient;
-use Mateodioev\Bots\Telegram\Interfaces\MethodInterface;
-use Mateodioev\Bots\Telegram\Interfaces\TelegramInterface;
-use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use Mateodioev\Bots\Telegram\Types\Error;
-use Mateodioev\Bots\Telegram\Types\File;
-use Mateodioev\Bots\Telegram\Types\Response;
+use Mateodioev\Bots\Telegram\Http\{AsyncClient, HttpException, Request as HttpClient, SyncClient};
+use Mateodioev\Bots\Telegram\Types\{Error, File, Response};
+use Mateodioev\Bots\Telegram\Exception\{TelegramApiException, TelegramParamException};
+use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;

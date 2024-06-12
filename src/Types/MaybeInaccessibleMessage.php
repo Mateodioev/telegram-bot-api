@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -17,9 +17,7 @@ class MaybeInaccessibleMessage extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [
-
-        ];
+        $this->fields = [];
     }
 
     public static function childs(): array
@@ -33,7 +31,7 @@ class MaybeInaccessibleMessage extends abstractType
     public static function selectChild(array $update): string
     {
         if (isset($update['date']) === false) {
-            throw new TelegramParamException('Missing date field in MaybeInaccessibleMessage');
+            throw TelegramParamException::missingField(static::class, 'date');
         }
 
         if ($update['date'] === 0) {
