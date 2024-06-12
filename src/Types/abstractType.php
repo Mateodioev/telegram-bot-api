@@ -5,12 +5,13 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\{FieldType, Types, strUtils};
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
+use JsonSerializable;
 use Stringable;
 
 use function array_filter;
 use function count;
 
-abstract class abstractType implements TypesInterface, Stringable
+abstract class abstractType implements TypesInterface, Stringable, JsonSerializable
 {
     public const DEFAULT_PARAM = null;
     public const DEFAULT_BOOL  = false;
@@ -132,6 +133,11 @@ abstract class abstractType implements TypesInterface, Stringable
         return $this->properties;
     }
 
+    public function jsonSerialize(): array
+    {
+        return $this->getReduced();
+    }
+
     /**
      * Get all properties
      */
@@ -171,8 +177,8 @@ abstract class abstractType implements TypesInterface, Stringable
 
         array_map(function ($key) use (&$value) {
             $value = $value instanceof abstractType
-            ? $value->$key // ensure that the property is a getter
-            : $value[$key] ?? self::DEFAULT_PARAM;
+                ? $value->$key // ensure that the property is a getter
+                : $value[$key] ?? self::DEFAULT_PARAM;
         }, $keys);
 
         return $value;
@@ -286,8 +292,8 @@ abstract class abstractType implements TypesInterface, Stringable
 
         array_walk($fields, function ($type, $i) {
             $this->properties[$i] = $type->allowBooleans()
-            ? self::DEFAULT_BOOL
-            : self::DEFAULT_PARAM;
+                ? self::DEFAULT_BOOL
+                : self::DEFAULT_PARAM;
         });
 
         return $this;

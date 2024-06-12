@@ -1,6 +1,6 @@
 {
     "name": "mateodioev/tgbot",
-    "description": "Librería para interactuar con los metodos de la api de bots de telegram",
+    "description": "Librería para interactuar con los métodos de la api de bots de telegram",
     "type": "library",
     "license": "MIT",
     "keywords": [
