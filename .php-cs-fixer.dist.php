@@ -1,10 +1,13 @@
 <?php
 
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
+
 $finder = PhpCsFixer\Finder::create()
     ->ignoreDotFiles(true)
     ->in(__DIR__);
 
 $config = new PhpCsFixer\Config();
+$config->setParallelConfig(ParallelConfigFactory::detect());
 
 return $config->setFinder($finder)
     ->setRules([
@@ -22,5 +25,4 @@ return $config->setFinder($finder)
             'import_classes'   => true,
             'import_functions' => true,
         ],
-    ])
-;
+    ]);

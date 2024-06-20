@@ -22,7 +22,9 @@
         "ext-curl": "*",
         "ext-fileinfo": "*",
         "amphp/http-client": "^v5.0",
-        "amphp/file": "^3.0"
+        "amphp/file": "^3.0",
+        "amphp/byte-stream": "^2.1",
+        "amphp/amp": "^3.0"
     },
     "require-dev": {
         "mateodioev/php-easy-cli": "*",
