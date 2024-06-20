@@ -42,6 +42,10 @@ class InputVenueMessageContent extends InputMessageContent
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'latitude'          => FieldType::single('double'),
             'longitude'         => FieldType::single('double'),

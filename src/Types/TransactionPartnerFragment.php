@@ -24,6 +24,10 @@ class TransactionPartnerFragment extends TransactionPartner
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'             => FieldType::single('string'),
             'withdrawal_state' => FieldType::optional(RevenueWithdrawalState::class),
@@ -32,6 +36,6 @@ class TransactionPartnerFragment extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static)->setType('fragment');
+        return (new static())->setType('fragment');
     }
 }

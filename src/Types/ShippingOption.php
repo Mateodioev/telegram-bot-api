@@ -27,6 +27,10 @@ class ShippingOption extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'id'     => FieldType::single('string'),
             'title'  => FieldType::single('string'),

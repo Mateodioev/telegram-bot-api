@@ -21,13 +21,12 @@ class RevenueWithdrawalStatePending extends RevenueWithdrawalState
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type' => FieldType::single('string'),
         ];
-    }
-
-    public static function default(): static
-    {
-        return (new static)->setType('pending');
     }
 }

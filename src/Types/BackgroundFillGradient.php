@@ -30,6 +30,10 @@ class BackgroundFillGradient extends BackgroundFill
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'           => FieldType::single('string'),
             'top_color'      => FieldType::single('integer'),

@@ -18,9 +18,11 @@ class InputMessageContent extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [
-
-        ];
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
+        $this->fields = [];
     }
 
     public static function childs(): array

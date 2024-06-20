@@ -24,6 +24,10 @@ class ForumTopicEdited extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'name'                 => FieldType::optional('string'),
             'icon_custom_emoji_id' => FieldType::optional('string'),

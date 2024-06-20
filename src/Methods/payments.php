@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use Mateodioev\Bots\Telegram\Types\LabeledPrice;
-use Mateodioev\Bots\Telegram\Types\Message;
+use Mateodioev\Bots\Telegram\Types\{LabeledPrice, Message};
 
 trait payments
 {
@@ -14,7 +13,7 @@ trait payments
      * Use this method to send invoices.
      *
      * @param LabeledPrice[] $prices
-     * 
+     *
      * @see https://core.telegram.org/bots/api#sendinvoice
      * @return Message
      */

@@ -30,6 +30,10 @@ class ChatBoost extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'boost_id'        => FieldType::single('string'),
             'add_date'        => FieldType::single('integer'),

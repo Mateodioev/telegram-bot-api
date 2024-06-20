@@ -27,6 +27,10 @@ class ForumTopicCreated extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'name'                 => FieldType::single('string'),
             'icon_color'           => FieldType::single('integer'),

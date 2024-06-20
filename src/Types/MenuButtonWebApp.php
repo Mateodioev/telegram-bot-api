@@ -27,6 +27,10 @@ class MenuButtonWebApp extends MenuButton
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'    => FieldType::single('string'),
             'text'    => FieldType::single('string'),

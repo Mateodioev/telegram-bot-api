@@ -24,6 +24,10 @@ class LabeledPrice extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'label'  => FieldType::single('string'),
             'amount' => FieldType::single('integer'),

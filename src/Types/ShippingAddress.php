@@ -36,6 +36,10 @@ class ShippingAddress extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'country_code' => FieldType::single('string'),
             'state'        => FieldType::single('string'),

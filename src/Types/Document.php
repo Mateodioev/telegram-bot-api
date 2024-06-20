@@ -36,6 +36,10 @@ class Document extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'file_id'        => FieldType::single('string'),
             'file_unique_id' => FieldType::single('string'),

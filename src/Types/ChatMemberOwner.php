@@ -30,6 +30,10 @@ class ChatMemberOwner extends ChatMember
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'status'       => FieldType::single('string'),
             'user'         => FieldType::single(User::class),

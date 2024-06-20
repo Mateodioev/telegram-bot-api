@@ -88,6 +88,10 @@ class Update extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'update_id'                 => FieldType::single('integer'),
             'message'                   => FieldType::optional(Message::class),

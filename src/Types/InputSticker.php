@@ -33,6 +33,10 @@ class InputSticker extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'sticker'       => FieldType::mixed(),
             'format'        => FieldType::single('string'),

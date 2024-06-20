@@ -27,6 +27,10 @@ class ForceReply extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'force_reply'             => FieldType::single('boolean'),
             'input_field_placeholder' => FieldType::optional('string'),

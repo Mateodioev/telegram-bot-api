@@ -42,6 +42,10 @@ class ChatMemberUpdated extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'chat'                        => FieldType::single(Chat::class),
             'from'                        => FieldType::single(User::class),

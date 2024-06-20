@@ -21,6 +21,10 @@ class MessageAutoDeleteTimerChanged extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'message_auto_delete_time' => FieldType::single('integer'),
         ];

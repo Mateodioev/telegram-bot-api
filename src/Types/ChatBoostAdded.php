@@ -21,6 +21,10 @@ class ChatBoostAdded extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'boost_count' => FieldType::single('integer'),
         ];

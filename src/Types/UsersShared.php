@@ -24,6 +24,10 @@ class UsersShared extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'request_id' => FieldType::single('integer'),
             'users'      => FieldType::multiple(SharedUser::class),

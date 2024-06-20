@@ -63,6 +63,10 @@ class ChatAdministratorRights extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'is_anonymous'           => FieldType::single('boolean'),
             'can_manage_chat'        => FieldType::single('boolean'),

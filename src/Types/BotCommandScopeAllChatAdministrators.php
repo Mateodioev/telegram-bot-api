@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -21,6 +21,10 @@ class BotCommandScopeAllChatAdministrators extends BotCommandScope
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type' => FieldType::single('string'),
         ];

@@ -30,6 +30,10 @@ class MaskPosition extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'point'   => FieldType::single('string'),
             'x_shift' => FieldType::single('double'),

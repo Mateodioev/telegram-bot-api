@@ -21,6 +21,10 @@ class VideoChatScheduled extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'start_date' => FieldType::single('integer'),
         ];

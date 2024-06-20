@@ -24,6 +24,10 @@ class ChatLocation extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'location' => FieldType::single(Location::class),
             'address'  => FieldType::single('string'),

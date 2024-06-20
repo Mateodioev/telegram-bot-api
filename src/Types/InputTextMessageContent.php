@@ -30,6 +30,10 @@ class InputTextMessageContent extends InputMessageContent
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'message_text'         => FieldType::single('string'),
             'parse_mode'           => FieldType::optional('string'),

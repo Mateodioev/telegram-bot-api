@@ -16,6 +16,10 @@ class Error extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'ok'          => FieldType::single('boolean'),
             'error_code'  => FieldType::single('integer'),

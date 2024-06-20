@@ -21,6 +21,10 @@ class VideoChatEnded extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'duration' => FieldType::single('integer'),
         ];

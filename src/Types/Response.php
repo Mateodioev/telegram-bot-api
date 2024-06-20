@@ -25,7 +25,11 @@ class Response extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
+        $fields = [
             'ok'          => FieldType::single('boolean'),
             'error_code'  => FieldType::single('integer'),
             'description' => FieldType::single('string'),

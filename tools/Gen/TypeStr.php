@@ -46,7 +46,11 @@ class TypeStr
             {
                 protected function boot(): void
                 {
-                    \$this->fields = [
+                    if (static::\$fields !== null) {
+                        // Already booted
+                        return;
+                    }
+                    static::\$fields = [
             %s
                     ];
                 }%s

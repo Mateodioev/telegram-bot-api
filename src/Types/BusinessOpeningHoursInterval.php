@@ -24,6 +24,10 @@ class BusinessOpeningHoursInterval extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'opening_minute' => FieldType::single('integer'),
             'closing_minute' => FieldType::single('integer'),

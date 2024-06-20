@@ -31,6 +31,10 @@ class LoginUrl extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'url'                  => FieldType::single('string'),
             'forward_text'         => FieldType::optional('string'),

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -28,6 +28,10 @@ class KeyboardButtonRequestUser extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'request_id'      => FieldType::single('integer'),
             'user_is_bot'     => FieldType::optional('boolean'),

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -54,6 +54,10 @@ class User extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'id'                          => FieldType::single('integer'),
             'is_bot'                      => FieldType::single('boolean'),

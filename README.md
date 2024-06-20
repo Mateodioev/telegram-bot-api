@@ -53,10 +53,14 @@ class MyCustomType extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'field1'  => FieldType::single('string'),       // Only accept strings
             'id'      => FieldType::optional('integer'),    // only accept integer or null values
-            'users'   => FieldType::multiuple(User::class), // only accept arrays or instances of the User class
+            'users'   => FieldType::multiple(User::class), // only accept arrays or instances of the User class
             'message' => FieldType::mixed(),                // Accept all values
         ];
     }

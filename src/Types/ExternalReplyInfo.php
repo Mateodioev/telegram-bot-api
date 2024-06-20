@@ -87,6 +87,10 @@ class ExternalReplyInfo extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'origin'               => FieldType::single(MessageOrigin::class),
             'chat'                 => FieldType::optional(Chat::class),

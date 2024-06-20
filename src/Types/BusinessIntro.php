@@ -27,6 +27,10 @@ class BusinessIntro extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'title'   => FieldType::optional('string'),
             'message' => FieldType::optional('string'),

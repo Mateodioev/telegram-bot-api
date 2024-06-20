@@ -24,6 +24,10 @@ class WebAppData extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'data'        => FieldType::single('string'),
             'button_text' => FieldType::single('string'),

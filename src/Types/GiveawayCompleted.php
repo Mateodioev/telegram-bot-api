@@ -27,6 +27,10 @@ class GiveawayCompleted extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'winner_count'          => FieldType::single('integer'),
             'unclaimed_prize_count' => FieldType::optional('integer'),

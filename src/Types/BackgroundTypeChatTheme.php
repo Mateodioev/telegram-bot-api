@@ -24,15 +24,13 @@ class BackgroundTypeChatTheme extends BackgroundType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'       => FieldType::single('string'),
             'theme_name' => FieldType::single('string'),
         ];
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('chat_theme');
     }
 }

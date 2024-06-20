@@ -39,6 +39,10 @@ class ReplyParameters extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'message_id'                  => FieldType::single('integer'),
             'chat_id'                     => new FieldType('string', allowArrays: false, allowNull: true, subTypes: ['integer']),

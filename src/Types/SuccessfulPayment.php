@@ -39,6 +39,10 @@ class SuccessfulPayment extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'currency'                   => FieldType::single('string'),
             'total_amount'               => FieldType::single('integer'),

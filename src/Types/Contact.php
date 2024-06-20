@@ -33,6 +33,10 @@ class Contact extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'phone_number' => FieldType::single('string'),
             'first_name'   => FieldType::single('string'),

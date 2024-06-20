@@ -21,6 +21,10 @@ class BotShortDescription extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'short_description' => FieldType::single('string'),
         ];

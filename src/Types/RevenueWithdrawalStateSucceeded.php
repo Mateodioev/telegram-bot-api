@@ -27,15 +27,14 @@ class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type' => FieldType::single('string'),
             'date' => FieldType::single('integer'),
             'url'  => FieldType::single('string'),
         ];
-    }
-
-    public static function default(): static
-    {
-        return (new static)->setType('succeeded');
     }
 }

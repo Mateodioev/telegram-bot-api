@@ -30,6 +30,10 @@ class TextQuote extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'text'      => FieldType::single('string'),
             'entities'  => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),

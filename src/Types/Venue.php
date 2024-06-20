@@ -39,6 +39,10 @@ class Venue extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'location'          => FieldType::single(Location::class),
             'title'             => FieldType::single('string'),

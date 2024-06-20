@@ -24,6 +24,10 @@ class UserProfilePhotos extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'total_count' => FieldType::single('integer'),
             'photos'      => FieldType::multiple(PhotoSize::class),

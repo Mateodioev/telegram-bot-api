@@ -27,6 +27,10 @@ class GameHighScore extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'position' => FieldType::single('integer'),
             'user'     => FieldType::single(User::class),

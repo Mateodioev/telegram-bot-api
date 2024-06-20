@@ -30,6 +30,10 @@ class ChatBoostRemoved extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'chat'        => FieldType::single(Chat::class),
             'boost_id'    => FieldType::single('string'),

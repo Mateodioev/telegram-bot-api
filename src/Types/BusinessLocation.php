@@ -24,6 +24,10 @@ class BusinessLocation extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'address'  => FieldType::single('string'),
             'location' => FieldType::optional(Location::class),

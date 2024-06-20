@@ -24,6 +24,10 @@ class BotCommandScopeChatAdministrators extends BotCommandScope
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'    => FieldType::single('string'),
             'chat_id' => new FieldType('string', allowArrays: false, allowNull: false, subTypes: ['integer']),

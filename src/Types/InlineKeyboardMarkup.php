@@ -22,6 +22,10 @@ class InlineKeyboardMarkup extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'inline_keyboard' => FieldType::multiple('mixed')->withCustomClass(InlineKeyboardButton::class),
         ];

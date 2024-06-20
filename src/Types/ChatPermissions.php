@@ -60,6 +60,10 @@ class ChatPermissions extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'can_send_messages'         => FieldType::optional('boolean'),
             'can_send_audios'           => FieldType::optional('boolean'),

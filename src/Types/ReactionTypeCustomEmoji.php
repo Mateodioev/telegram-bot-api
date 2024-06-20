@@ -24,6 +24,10 @@ class ReactionTypeCustomEmoji extends ReactionType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'            => FieldType::single('string'),
             'custom_emoji_id' => FieldType::single('string'),

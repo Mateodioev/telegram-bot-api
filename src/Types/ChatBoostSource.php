@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -18,9 +18,11 @@ class ChatBoostSource extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [
-
-        ];
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
+        $this->fields = [];
     }
 
     public static function childs(): array

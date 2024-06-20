@@ -40,6 +40,10 @@ class KeyboardButton extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'text'             => FieldType::single('string'),
             'request_users'    => FieldType::optional(KeyboardButtonRequestUsers::class),

@@ -51,6 +51,10 @@ class GiveawayWinners extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'chat'                             => FieldType::single(Chat::class),
             'giveaway_message_id'              => FieldType::single('integer'),

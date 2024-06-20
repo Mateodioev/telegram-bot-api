@@ -45,6 +45,10 @@ class WebhookInfo extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'url'                             => FieldType::single('string'),
             'has_custom_certificate'          => FieldType::single('boolean'),

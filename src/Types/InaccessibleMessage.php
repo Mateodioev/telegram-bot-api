@@ -27,6 +27,10 @@ class InaccessibleMessage extends MaybeInaccessibleMessage
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'chat'       => FieldType::single(Chat::class),
             'message_id' => FieldType::single('integer'),

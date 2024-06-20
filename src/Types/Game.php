@@ -36,6 +36,10 @@ class Game extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'title'         => FieldType::single('string'),
             'description'   => FieldType::single('string'),

@@ -27,6 +27,10 @@ class InlineQueryResultsButton extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'text'            => FieldType::single('string'),
             'web_app'         => FieldType::optional(WebAppInfo::class),

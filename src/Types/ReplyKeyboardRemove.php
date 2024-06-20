@@ -24,6 +24,10 @@ class ReplyKeyboardRemove extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'remove_keyboard' => FieldType::single('boolean'),
             'selective'       => FieldType::optional('boolean'),

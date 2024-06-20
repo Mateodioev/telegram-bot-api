@@ -33,6 +33,10 @@ class SharedUser extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'user_id'    => FieldType::single('integer'),
             'first_name' => FieldType::optional('string'),

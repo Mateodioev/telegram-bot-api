@@ -24,12 +24,15 @@ class BackgroundFillFreeformGradient extends BackgroundFill
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'   => FieldType::single('string'),
             'colors' => FieldType::multiple('integer'),
         ];
     }
-
     public static function default(): static
     {
         return (new static())

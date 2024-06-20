@@ -27,6 +27,10 @@ class WriteAccessAllowed extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'from_request'         => FieldType::optional('boolean'),
             'web_app_name'         => FieldType::optional('string'),

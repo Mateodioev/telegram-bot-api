@@ -9,7 +9,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
 /**
  * Describes a Telegram Star transaction.
  *
- * @property string $id Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with SuccessfulPayment.telegram_payment_charge_id for successful incoming payments from users.
+ * @property string $id Unique identifier of the transaction. Coincides with the identifer of the original transaction for refund transactions. Coincides with SuccessfulPayment.telegram_payment_charge_id for successful incoming payments from users.
  * @property int $amount Number of Telegram Stars transferred by the transaction
  * @property int $date Date the transaction was created in Unix time
  * @property TransactionPartner|null $source Optional. Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions
@@ -33,6 +33,10 @@ class StarTransaction extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'id'       => FieldType::single('string'),
             'amount'   => FieldType::single('integer'),

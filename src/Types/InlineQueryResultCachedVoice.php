@@ -45,6 +45,10 @@ class InlineQueryResultCachedVoice extends InlineQueryResult
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'                  => FieldType::single('string'),
             'id'                    => FieldType::single('string'),

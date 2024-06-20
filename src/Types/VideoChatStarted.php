@@ -13,8 +13,10 @@ class VideoChatStarted extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [
-
-        ];
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
+        $this->fields = [];
     }
 }

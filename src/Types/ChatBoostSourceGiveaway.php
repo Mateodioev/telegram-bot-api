@@ -30,6 +30,10 @@ class ChatBoostSourceGiveaway extends ChatBoostSource
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'source'              => FieldType::single('string'),
             'giveaway_message_id' => FieldType::single('integer'),

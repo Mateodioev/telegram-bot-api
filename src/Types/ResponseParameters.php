@@ -24,6 +24,10 @@ class ResponseParameters extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'migrate_to_chat_id' => FieldType::optional('integer'),
             'retry_after'        => FieldType::optional('integer'),

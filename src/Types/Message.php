@@ -267,6 +267,10 @@ class Message extends MaybeInaccessibleMessage
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'message_id'                        => FieldType::single('integer'),
             'message_thread_id'                 => FieldType::optional('integer'),

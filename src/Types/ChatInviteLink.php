@@ -45,6 +45,10 @@ class ChatInviteLink extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'invite_link'                => FieldType::single('string'),
             'creator'                    => FieldType::single(User::class),

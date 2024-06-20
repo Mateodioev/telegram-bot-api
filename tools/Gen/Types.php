@@ -26,7 +26,7 @@ class Types
         public ?array $subtypeOf  = null,
     ) {
         $this->fields = array_map(
-            fn ($field) => new Field(
+            fn ($field): Field => new Field(
                 $field['name'],
                 $field['types'],
                 $field['required'],

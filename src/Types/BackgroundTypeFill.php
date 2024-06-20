@@ -27,6 +27,10 @@ class BackgroundTypeFill extends BackgroundType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type'               => FieldType::single('string'),
             'fill'               => FieldType::single(BackgroundFill::class),

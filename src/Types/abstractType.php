@@ -20,7 +20,7 @@ abstract class abstractType implements TypesInterface, Stringable, JsonSerializa
     protected array $properties = [];
 
     /** @var array<string, FieldType> $fields Fields rules */
-    protected array $fields = [];
+    protected ?array $fields = null;
 
     private array $legacyProperties = [
         'thumb',

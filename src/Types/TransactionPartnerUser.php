@@ -24,6 +24,10 @@ class TransactionPartnerUser extends TransactionPartner
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'type' => FieldType::single('string'),
             'user' => FieldType::single(User::class),
@@ -32,6 +36,6 @@ class TransactionPartnerUser extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static)->setType('user');
+        return (new static())->setType('user');
     }
 }

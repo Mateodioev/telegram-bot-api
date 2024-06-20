@@ -36,6 +36,10 @@ class ReplyKeyboardMarkup extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'keyboard'                => (new FieldType('mixed', true))->withCustomClass(InlineKeyboardButton::class),
             'is_persistent'           => FieldType::optional('boolean'),

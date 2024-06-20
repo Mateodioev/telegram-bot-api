@@ -30,6 +30,10 @@ class ChatPhoto extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'small_file_id'        => FieldType::single('string'),
             'small_file_unique_id' => FieldType::single('string'),

@@ -24,6 +24,10 @@ class Dice extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'emoji' => FieldType::single('string'),
             'value' => FieldType::single('integer'),

@@ -27,6 +27,10 @@ class ProximityAlertTriggered extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'traveler' => FieldType::single(User::class),
             'watcher'  => FieldType::single(User::class),

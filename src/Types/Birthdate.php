@@ -27,6 +27,10 @@ class Birthdate extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'day'   => FieldType::single('integer'),
             'month' => FieldType::single('integer'),

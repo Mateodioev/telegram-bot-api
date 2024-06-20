@@ -21,6 +21,10 @@ class SentWebAppMessage extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'inline_message_id' => FieldType::optional('string'),
         ];

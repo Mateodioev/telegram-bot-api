@@ -24,6 +24,10 @@ class BusinessOpeningHours extends abstractType
 {
     protected function boot(): void
     {
+        if ($this->fields !== null) {
+            // Already booted
+            return;
+        }
         $this->fields = [
             'time_zone_name' => FieldType::single('string'),
             'opening_hours'  => FieldType::multiple(BusinessOpeningHoursInterval::class),
