@@ -33,4 +33,10 @@ class BackgroundTypeChatTheme extends BackgroundType
             'theme_name' => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('chat_theme');
+    }
 }

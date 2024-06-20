@@ -33,6 +33,7 @@ class BackgroundFillFreeformGradient extends BackgroundFill
             'colors' => FieldType::multiple('integer'),
         ];
     }
+
     public static function default(): static
     {
         return (new static())

@@ -30,7 +30,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method string|null title()
  *
  * @method static setType(string $type)
- * @method static setMedia(stringInputFile $media))
+ * @method static setMedia(string|InputFile $media))
  * @method static setThumbnail(InputFile|string|null $thumbnail)
  * @method static setCaption(string|null $caption)
  * @method static setParseMode(string|null $parseMode)

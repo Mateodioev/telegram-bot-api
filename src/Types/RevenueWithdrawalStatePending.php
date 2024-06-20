@@ -29,4 +29,9 @@ class RevenueWithdrawalStatePending extends RevenueWithdrawalState
             'type' => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static)->setType('pending');
+    }
 }

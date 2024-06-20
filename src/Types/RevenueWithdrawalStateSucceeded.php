@@ -37,4 +37,9 @@ class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState
             'url'  => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static)->setType('succeeded');
+    }
 }

@@ -60,7 +60,7 @@ class InputMediaVideo extends InputMedia
         }
         $this->fields = [
             'type'                     => FieldType::single('string'),
-            'media'                    => FieldType::single('string'),
+            'media'                    => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
             'thumbnail'                => FieldType::mixed(),
             'caption'                  => FieldType::optional('string'),
             'parse_mode'               => FieldType::optional('string'),

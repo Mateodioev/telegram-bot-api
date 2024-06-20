@@ -78,11 +78,16 @@ class InputFile
         return $this->file;
     }
 
-    public function size(): ?int
+    public function size(bool $async = false): ?int
     {
-        if ($this->file instanceof CURLFile) {
-            return filesize($this->file->getFilename());
+        if (($this->file instanceof CURLFile) === false) {
+            return null;
         }
-        return null;
+
+        if ($async) {
+            return \Amp\File\getSize($this->file->getFilename());
+        }
+
+        return filesize($this->file->getFilename());
     }
 }

@@ -18,7 +18,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @property bool|null $has_spoiler Optional. Pass True if the photo needs to be covered with a spoiler animation
  *
  * @method string type()
- * @method string media()
+ * @method string|InputFile media()
  * @method string|null caption()
  * @method string|null parseMode()
  * @method MessageEntity[]|null captionEntities()
@@ -45,7 +45,7 @@ class InputMediaPhoto extends InputMedia
         }
         $this->fields = [
             'type'                     => FieldType::single('string'),
-            'media'                    => FieldType::single('string'),
+            'media'                    => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
             'caption'                  => FieldType::optional('string'),
             'parse_mode'               => FieldType::optional('string'),
             'caption_entities'         => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),

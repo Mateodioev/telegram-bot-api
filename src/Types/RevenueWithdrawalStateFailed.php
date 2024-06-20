@@ -29,4 +29,9 @@ class RevenueWithdrawalStateFailed extends RevenueWithdrawalState
             'type' => FieldType::single('string'),
         ];
     }
+
+    public static function default(): static
+    {
+        return (new static)->setType('failed');
+    }
 }
