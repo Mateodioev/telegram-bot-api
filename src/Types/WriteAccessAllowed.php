@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess.
@@ -27,14 +28,11 @@ class WriteAccessAllowed extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'from_request'         => FieldType::optional('boolean'),
             'web_app_name'         => FieldType::optional('string'),
             'from_attachment_menu' => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains basic information about a successful payment.
@@ -39,10 +40,6 @@ class SuccessfulPayment extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'currency'                   => FieldType::single('string'),
             'total_amount'               => FieldType::single('integer'),
@@ -52,5 +49,6 @@ class SuccessfulPayment extends abstractType
             'telegram_payment_charge_id' => FieldType::single('string'),
             'provider_payment_charge_id' => FieldType::single('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

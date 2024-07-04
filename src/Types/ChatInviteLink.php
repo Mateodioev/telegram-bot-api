@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents an invite link for a chat.
@@ -45,10 +46,6 @@ class ChatInviteLink extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'invite_link'                => FieldType::single('string'),
             'creator'                    => FieldType::single(User::class),
@@ -60,5 +57,6 @@ class ChatInviteLink extends abstractType
             'member_limit'               => FieldType::optional('integer'),
             'pending_join_request_count' => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

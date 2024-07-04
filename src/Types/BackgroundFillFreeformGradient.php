@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * The background is a freeform gradient that rotates after every message in the chat.
@@ -24,14 +25,11 @@ class BackgroundFillFreeformGradient extends BackgroundFill
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'   => FieldType::single('string'),
             'colors' => FieldType::multiple('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

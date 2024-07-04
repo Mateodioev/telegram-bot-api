@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Describes an inline message sent by a Web App on behalf of a user.
@@ -21,12 +22,9 @@ class SentWebAppMessage extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'inline_message_id' => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

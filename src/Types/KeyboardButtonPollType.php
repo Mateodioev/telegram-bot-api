@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.
@@ -21,12 +22,9 @@ class KeyboardButtonPollType extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type' => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

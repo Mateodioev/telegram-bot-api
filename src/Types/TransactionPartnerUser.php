@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Describes a transaction with a user.
@@ -24,14 +25,11 @@ class TransactionPartnerUser extends TransactionPartner
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type' => FieldType::single('string'),
             'user' => FieldType::single(User::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

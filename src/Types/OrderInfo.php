@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents information about an order.
@@ -30,15 +31,12 @@ class OrderInfo extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'name'             => FieldType::optional('string'),
             'phone_number'     => FieldType::optional('string'),
             'email'            => FieldType::optional('string'),
             'shipping_address' => FieldType::optional(ShippingAddress::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

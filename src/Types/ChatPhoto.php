@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a chat photo.
@@ -30,15 +31,12 @@ class ChatPhoto extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'small_file_id'        => FieldType::single('string'),
             'small_file_unique_id' => FieldType::single('string'),
             'big_file_id'          => FieldType::single('string'),
             'big_file_unique_id'   => FieldType::single('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

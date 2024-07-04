@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, String can be used instead of this object to specify the button text.
@@ -40,10 +41,6 @@ class KeyboardButton extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'text'             => FieldType::single('string'),
             'request_users'    => FieldType::optional(KeyboardButtonRequestUsers::class),
@@ -53,5 +50,6 @@ class KeyboardButton extends abstractType
             'request_poll'     => FieldType::optional(KeyboardButtonPollType::class),
             'web_app'          => FieldType::optional(WebAppInfo::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

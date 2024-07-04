@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Describes documents or other Telegram Passport elements shared with the bot by the user.
@@ -48,10 +49,6 @@ class EncryptedPassportElement extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'         => FieldType::single('string'),
             'data'         => FieldType::optional('string'),
@@ -64,5 +61,6 @@ class EncryptedPassportElement extends abstractType
             'translation'  => new FieldType(PassportFile::class, allowArrays: true, allowNull: true, subTypes: []),
             'hash'         => FieldType::single('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

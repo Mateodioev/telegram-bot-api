@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
@@ -36,10 +37,6 @@ class ReplyKeyboardMarkup extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'keyboard'                => (new FieldType('mixed', true))->withCustomClass(InlineKeyboardButton::class),
             'is_persistent'           => FieldType::optional('boolean'),
@@ -48,6 +45,7 @@ class ReplyKeyboardMarkup extends abstractType
             'input_field_placeholder' => FieldType::optional('string'),
             'selective'               => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public function setKeyboard(array $keyboard): static

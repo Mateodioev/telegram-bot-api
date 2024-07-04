@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents an issue with a list of scans. The error is considered resolved when the list of files containing the scans changes.
@@ -30,15 +31,18 @@ class PassportElementErrorFiles extends PassportElementError
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'source'      => FieldType::single('string'),
             'type'        => FieldType::single('string'),
             'file_hashes' => FieldType::multiple('string'),
             'message'     => FieldType::single('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
+    }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setSource('files');
     }
 }

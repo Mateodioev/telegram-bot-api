@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\{FieldType, ParseMode};
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a Telegram user or bot.
@@ -54,10 +55,6 @@ class User extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'id'                          => FieldType::single('integer'),
             'is_bot'                      => FieldType::single('boolean'),
@@ -72,6 +69,7 @@ class User extends abstractType
             'supports_inline_queries'     => FieldType::optional('boolean'),
             'can_connect_to_business'     => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     /**

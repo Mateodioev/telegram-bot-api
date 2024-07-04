@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a sticker.
@@ -63,10 +64,6 @@ class Sticker extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'file_id'           => FieldType::single('string'),
             'file_unique_id'    => FieldType::single('string'),
@@ -84,5 +81,6 @@ class Sticker extends abstractType
             'needs_repainting'  => FieldType::optional('boolean'),
             'file_size'         => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

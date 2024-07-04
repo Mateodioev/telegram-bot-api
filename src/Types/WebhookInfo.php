@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Describes the current status of a webhook.
@@ -45,10 +46,6 @@ class WebhookInfo extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'url'                             => FieldType::single('string'),
             'has_custom_certificate'          => FieldType::single('boolean'),
@@ -60,5 +57,6 @@ class WebhookInfo extends abstractType
             'max_connections'                 => FieldType::optional('integer'),
             'allowed_updates'                 => new FieldType('string', allowArrays: true, allowNull: true, subTypes: []),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

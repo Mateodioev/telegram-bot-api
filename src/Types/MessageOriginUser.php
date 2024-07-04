@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * The message was originally sent by a known user.
@@ -27,14 +28,11 @@ class MessageOriginUser extends MessageOrigin
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'        => FieldType::single('string'),
             'date'        => FieldType::single('integer'),
             'sender_user' => FieldType::single(User::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

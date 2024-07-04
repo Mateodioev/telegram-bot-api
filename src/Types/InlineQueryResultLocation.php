@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location.
@@ -60,10 +61,6 @@ class InlineQueryResultLocation extends InlineQueryResult
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'                   => FieldType::single('string'),
             'id'                     => FieldType::single('string'),
@@ -80,6 +77,7 @@ class InlineQueryResultLocation extends InlineQueryResult
             'thumbnail_width'        => FieldType::optional('integer'),
             'thumbnail_height'       => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

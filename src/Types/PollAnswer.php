@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents an answer of a user in a non-anonymous poll.
@@ -30,15 +31,12 @@ class PollAnswer extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'poll_id'    => FieldType::single('string'),
             'voter_chat' => FieldType::optional(Chat::class),
             'user'       => FieldType::optional(User::class),
             'option_ids' => FieldType::multiple('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

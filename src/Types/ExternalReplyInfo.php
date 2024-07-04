@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about a message that is being replied to, which may come from another chat or forum topic.
@@ -87,10 +88,6 @@ class ExternalReplyInfo extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'origin'               => FieldType::single(MessageOrigin::class),
             'chat'                 => FieldType::optional(Chat::class),
@@ -116,5 +113,6 @@ class ExternalReplyInfo extends abstractType
             'poll'                 => FieldType::optional(Poll::class),
             'venue'                => FieldType::optional(Venue::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

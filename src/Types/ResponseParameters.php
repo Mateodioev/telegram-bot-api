@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Describes why a request was unsuccessful.
@@ -24,13 +25,10 @@ class ResponseParameters extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'migrate_to_chat_id' => FieldType::optional('integer'),
             'retry_after'        => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

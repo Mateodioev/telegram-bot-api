@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field's value changes.
@@ -33,10 +34,6 @@ class PassportElementErrorDataField extends PassportElementError
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'source'     => FieldType::single('string'),
             'type'       => FieldType::single('string'),
@@ -44,6 +41,7 @@ class PassportElementErrorDataField extends PassportElementError
             'data_hash'  => FieldType::single('string'),
             'message'    => FieldType::single('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

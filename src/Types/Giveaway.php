@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a message about a scheduled giveaway.
@@ -42,10 +43,6 @@ class Giveaway extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'chats'                            => FieldType::multiple(Chat::class),
             'winners_selection_date'           => FieldType::single('integer'),
@@ -56,5 +53,6 @@ class Giveaway extends abstractType
             'country_codes'                    => new FieldType('string', allowArrays: true, allowNull: true, subTypes: []),
             'premium_subscription_month_count' => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

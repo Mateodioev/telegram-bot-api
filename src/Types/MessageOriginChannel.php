@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * The message was originally sent to a channel chat.
@@ -33,10 +34,6 @@ class MessageOriginChannel extends MessageOrigin
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'             => FieldType::single('string'),
             'date'             => FieldType::single('integer'),
@@ -44,5 +41,6 @@ class MessageOriginChannel extends MessageOrigin
             'message_id'       => FieldType::single('integer'),
             'author_signature' => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

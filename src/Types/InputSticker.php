@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object describes a sticker to be added to a sticker set.
@@ -33,10 +34,6 @@ class InputSticker extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'sticker'       => FieldType::mixed(),
             'format'        => FieldType::single('string'),
@@ -44,5 +41,6 @@ class InputSticker extends abstractType
             'mask_position' => FieldType::optional(MaskPosition::class),
             'keywords'      => new FieldType('string', allowArrays: true, allowNull: true, subTypes: []),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

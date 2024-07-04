@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. More about requesting users: https://core.telegram.org/bots/features#chat-and-user-selection
@@ -39,10 +40,6 @@ class KeyboardButtonRequestUsers extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'request_id'       => FieldType::single('integer'),
             'user_is_bot'      => FieldType::optional('boolean'),
@@ -52,5 +49,6 @@ class KeyboardButtonRequestUsers extends abstractType
             'request_username' => FieldType::optional('boolean'),
             'request_photo'    => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

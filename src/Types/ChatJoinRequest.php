@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents a join request sent to a chat.
@@ -36,10 +37,6 @@ class ChatJoinRequest extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'chat'         => FieldType::single(Chat::class),
             'from'         => FieldType::single(User::class),
@@ -48,5 +45,6 @@ class ChatJoinRequest extends abstractType
             'bio'          => FieldType::optional('string'),
             'invite_link'  => FieldType::optional(ChatInviteLink::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

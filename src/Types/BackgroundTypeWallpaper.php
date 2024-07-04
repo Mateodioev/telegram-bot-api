@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * The background is a wallpaper in the JPEG format.
@@ -33,10 +34,6 @@ class BackgroundTypeWallpaper extends BackgroundType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'               => FieldType::single('string'),
             'document'           => FieldType::single(Document::class),
@@ -44,6 +41,7 @@ class BackgroundTypeWallpaper extends BackgroundType
             'is_blurred'         => FieldType::optional('boolean'),
             'is_moving'          => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

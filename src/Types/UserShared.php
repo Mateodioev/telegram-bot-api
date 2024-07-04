@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
@@ -24,13 +25,10 @@ class UserShared extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'request_id' => FieldType::single('integer'),
             'user_id'    => FieldType::single('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

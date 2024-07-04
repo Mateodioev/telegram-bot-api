@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents the rights of an administrator in a chat.
@@ -63,10 +64,6 @@ class ChatAdministratorRights extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'is_anonymous'           => FieldType::single('boolean'),
             'can_manage_chat'        => FieldType::single('boolean'),
@@ -84,5 +81,6 @@ class ChatAdministratorRights extends abstractType
             'can_pin_messages'       => FieldType::optional('boolean'),
             'can_manage_topics'      => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

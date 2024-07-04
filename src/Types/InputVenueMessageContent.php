@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents the content of a venue message to be sent as the result of an inline query.
@@ -42,10 +43,6 @@ class InputVenueMessageContent extends InputMessageContent
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'latitude'          => FieldType::single('double'),
             'longitude'         => FieldType::single('double'),
@@ -56,5 +53,6 @@ class InputVenueMessageContent extends InputMessageContent
             'google_place_id'   => FieldType::optional('string'),
             'google_place_type' => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

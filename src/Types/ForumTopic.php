@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a forum topic.
@@ -30,15 +31,12 @@ class ForumTopic extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'message_thread_id'    => FieldType::single('integer'),
             'name'                 => FieldType::single('string'),
             'icon_color'           => FieldType::single('integer'),
             'icon_custom_emoji_id' => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

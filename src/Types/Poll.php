@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about a poll.
@@ -60,10 +61,6 @@ class Poll extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'id'                      => FieldType::single('string'),
             'question'                => FieldType::single('string'),
@@ -80,5 +77,6 @@ class Poll extends abstractType
             'open_period'             => FieldType::optional('integer'),
             'close_date'              => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

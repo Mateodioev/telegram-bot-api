@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents the content of a location message to be sent as the result of an inline query.
@@ -36,10 +37,6 @@ class InputLocationMessageContent extends InputMessageContent
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'latitude'               => FieldType::single('double'),
             'longitude'              => FieldType::single('double'),
@@ -48,5 +45,6 @@ class InputLocationMessageContent extends InputMessageContent
             'heading'                => FieldType::optional('integer'),
             'proximity_alert_radius' => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

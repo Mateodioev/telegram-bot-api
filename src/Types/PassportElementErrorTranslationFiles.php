@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents an issue with the translated version of a document. The error is considered resolved when a file with the document translation change.
@@ -30,21 +31,12 @@ class PassportElementErrorTranslationFiles extends PassportElementError
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'source'      => FieldType::single('string'),
             'type'        => FieldType::single('string'),
             'file_hashes' => FieldType::multiple('string'),
             'message'     => FieldType::single('string'),
         ];
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('translation_files');
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

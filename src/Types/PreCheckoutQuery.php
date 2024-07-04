@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about an incoming pre-checkout query.
@@ -39,10 +40,6 @@ class PreCheckoutQuery extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'id'                 => FieldType::single('string'),
             'from'               => FieldType::single(User::class),
@@ -52,5 +49,6 @@ class PreCheckoutQuery extends abstractType
             'shipping_option_id' => FieldType::optional('string'),
             'order_info'         => FieldType::optional(OrderInfo::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

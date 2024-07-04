@@ -2,7 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\{FieldType, Types, strUtils};
+use Mateodioev\Bots\Telegram\Config\{FieldsStorage, FieldType, Types, strUtils};
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
 use JsonSerializable;
@@ -20,7 +20,7 @@ abstract class abstractType implements TypesInterface, Stringable, JsonSerializa
     protected array $properties = [];
 
     /** @var array<string, FieldType> $fields Fields rules */
-    protected ?array $fields = null;
+    protected array $fields = [];
 
     private array $legacyProperties = [
         'thumb',
@@ -81,7 +81,12 @@ abstract class abstractType implements TypesInterface, Stringable, JsonSerializa
 
     public function __construct(?array $args = null)
     {
-        $this->boot();
+        if ($this->isBooted() === false) {
+            $this->boot();
+        } else {
+            $this->fields = FieldsStorage::instance()->get(static::class);
+        }
+
         $this->cloneFields();
 
         if ($args !== null) {
@@ -93,6 +98,11 @@ abstract class abstractType implements TypesInterface, Stringable, JsonSerializa
      * Init fields
      */
     abstract protected function boot(): void;
+
+    private function isBooted(): bool
+    {
+        return FieldsStorage::instance()->exists(static::class);
+    }
 
     /**
      * Magic setter

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about an incoming shipping query.
@@ -30,15 +31,12 @@ class ShippingQuery extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'id'               => FieldType::single('string'),
             'from'             => FieldType::single(User::class),
             'invoice_payload'  => FieldType::single('string'),
             'shipping_address' => FieldType::single(ShippingAddress::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents changes in the status of a chat member.
@@ -42,10 +43,6 @@ class ChatMemberUpdated extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'chat'                        => FieldType::single(Chat::class),
             'from'                        => FieldType::single(User::class),
@@ -56,5 +53,6 @@ class ChatMemberUpdated extends abstractType
             'via_join_request'            => FieldType::optional('boolean'),
             'via_chat_folder_invite_link' => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

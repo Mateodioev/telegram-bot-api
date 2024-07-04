@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about a chat boost.
@@ -30,15 +31,12 @@ class ChatBoost extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'boost_id'        => FieldType::single('string'),
             'add_date'        => FieldType::single('integer'),
             'expiration_date' => FieldType::single('integer'),
             'source'          => FieldType::single(ChatBoostSource::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

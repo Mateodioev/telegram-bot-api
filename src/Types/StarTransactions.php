@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Contains a list of Telegram Star transactions.
@@ -21,12 +22,9 @@ class StarTransactions extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'transactions' => FieldType::multiple(StarTransaction::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

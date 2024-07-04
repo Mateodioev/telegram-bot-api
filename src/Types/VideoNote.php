@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a video message (available in Telegram apps as of v.4.0).
@@ -36,10 +37,6 @@ class VideoNote extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'file_id'        => FieldType::single('string'),
             'file_unique_id' => FieldType::single('string'),
@@ -48,5 +45,6 @@ class VideoNote extends abstractType
             'thumbnail'      => FieldType::optional(PhotoSize::class),
             'file_size'      => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

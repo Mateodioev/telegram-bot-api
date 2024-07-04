@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
@@ -36,10 +37,6 @@ class Game extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'title'         => FieldType::single('string'),
             'description'   => FieldType::single('string'),
@@ -48,5 +45,6 @@ class Game extends abstractType
             'text_entities' => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'animation'     => FieldType::optional(Animation::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

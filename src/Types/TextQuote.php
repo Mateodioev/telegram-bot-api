@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about the quoted part of a message that is replied to by the given message.
@@ -30,15 +31,12 @@ class TextQuote extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'text'      => FieldType::single('string'),
             'entities'  => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'position'  => FieldType::single('integer'),
             'is_manual' => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

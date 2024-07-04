@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact.
@@ -51,10 +52,6 @@ class InlineQueryResultContact extends InlineQueryResult
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'                  => FieldType::single('string'),
             'id'                    => FieldType::single('string'),
@@ -68,6 +65,7 @@ class InlineQueryResultContact extends InlineQueryResult
             'thumbnail_width'       => FieldType::optional('integer'),
             'thumbnail_height'      => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

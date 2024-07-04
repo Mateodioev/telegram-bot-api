@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents a Game.
@@ -30,16 +31,13 @@ class InlineQueryResultGame extends InlineQueryResult
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'            => FieldType::single('string'),
             'id'              => FieldType::single('string'),
             'game_short_name' => FieldType::single('string'),
             'reply_markup'    => FieldType::optional(InlineKeyboardMarkup::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

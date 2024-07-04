@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Contains information about the start page settings of a Telegram Business account.
@@ -27,14 +28,11 @@ class BusinessIntro extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'title'   => FieldType::optional('string'),
             'message' => FieldType::optional('string'),
             'sticker' => FieldType::optional(Sticker::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

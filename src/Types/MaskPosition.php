@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object describes the position on faces where a mask should be placed by default.
@@ -30,15 +31,12 @@ class MaskPosition extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'point'   => FieldType::single('string'),
             'x_shift' => FieldType::single('double'),
             'y_shift' => FieldType::single('double'),
             'scale'   => FieldType::single('double'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

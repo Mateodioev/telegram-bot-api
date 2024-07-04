@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
@@ -36,10 +37,6 @@ class InlineQuery extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'id'        => FieldType::single('string'),
             'from'      => FieldType::single(User::class),
@@ -48,5 +45,6 @@ class InlineQuery extends abstractType
             'chat_type' => FieldType::optional('string'),
             'location'  => FieldType::optional(Location::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

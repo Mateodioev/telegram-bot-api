@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a point on the map.
@@ -36,10 +37,6 @@ class Location extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'latitude'               => FieldType::single('double'),
             'longitude'              => FieldType::single('double'),
@@ -48,5 +45,6 @@ class Location extends abstractType
             'heading'                => FieldType::optional('integer'),
             'proximity_alert_radius' => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

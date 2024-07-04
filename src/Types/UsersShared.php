@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about the users whose identifiers were shared with the bot using a KeyboardButtonRequestUsers button.
@@ -24,13 +25,10 @@ class UsersShared extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'request_id' => FieldType::single('integer'),
             'users'      => FieldType::multiple(SharedUser::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

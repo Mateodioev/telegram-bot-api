@@ -2,6 +2,7 @@
 
 namespace Mateodioev\Bots\Telegram\Types;
 
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 /**
@@ -16,15 +17,12 @@ class Error extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'ok'          => FieldType::single('boolean'),
             'error_code'  => FieldType::single('integer'),
             'description' => FieldType::single('string'),
             'parameters'  => FieldType::mixed()
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

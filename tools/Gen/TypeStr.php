@@ -46,13 +46,10 @@ class TypeStr
             {
                 protected function boot(): void
                 {
-                    if (static::\$fields !== null) {
-                        // Already booted
-                        return;
-                    }
-                    static::\$fields = [
+                    \$this->fields = [
             %s
                     ];
+                    FieldsStorage::instance()->add(static::class, \$this->fields);
                 }%s
             }
 
@@ -76,9 +73,16 @@ class TypeStr
      */
     private function requireFieldType(): string
     {
-        return !empty($this->type->fields)
-            ? PHP_EOL . PHP_EOL . 'use Mateodioev\Bots\Telegram\Config\FieldType;'
-            : '';
+        $fields = [
+            'use Mateodioev\Bots\Telegram\Config\FieldType;',
+            'use Mateodioev\Bots\Telegram\Config\FieldsStorage;',
+        ];
+
+        if (empty($this->type->fields)) {
+            return PHP_EOL . PHP_EOL . $fields[1];
+        }
+
+        return PHP_EOL . PHP_EOL . \join(PHP_EOL, $fields);
     }
 
     private function generateFields(): string

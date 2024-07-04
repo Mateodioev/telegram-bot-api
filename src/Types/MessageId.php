@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a unique message identifier.
@@ -21,12 +22,9 @@ class MessageId extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'message_id' => FieldType::single('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

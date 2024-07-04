@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
@@ -39,10 +40,6 @@ class MessageEntity extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'            => FieldType::single('string'),
             'offset'          => FieldType::single('integer'),
@@ -52,5 +49,6 @@ class MessageEntity extends abstractType
             'language'        => FieldType::optional('string'),
             'custom_emoji_id' => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

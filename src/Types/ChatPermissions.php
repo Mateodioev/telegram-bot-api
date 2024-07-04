@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Describes actions that a non-administrator user is allowed to take in a chat.
@@ -60,10 +61,6 @@ class ChatPermissions extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'can_send_messages'         => FieldType::optional('boolean'),
             'can_send_audios'           => FieldType::optional('boolean'),
@@ -80,5 +77,6 @@ class ChatPermissions extends abstractType
             'can_pin_messages'          => FieldType::optional('boolean'),
             'can_manage_topics'         => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents one button of an inline keyboard. Exactly one of the optional fields must be used to specify type of the button.
@@ -48,10 +49,6 @@ class InlineKeyboardButton extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'text'                             => FieldType::single('string'),
             'url'                              => FieldType::optional('string'),
@@ -64,5 +61,6 @@ class InlineKeyboardButton extends abstractType
             'callback_game'                    => FieldType::optional(CallbackGame::class),
             'pay'                              => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

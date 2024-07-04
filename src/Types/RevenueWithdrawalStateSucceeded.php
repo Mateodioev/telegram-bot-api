@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * The withdrawal succeeded.
@@ -27,19 +28,16 @@ class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type' => FieldType::single('string'),
             'date' => FieldType::single('integer'),
             'url'  => FieldType::single('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static
     {
-        return (new static)->setType('succeeded');
+        return (new static())->setType('succeeded');
     }
 }

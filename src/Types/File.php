@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 use function sprintf;
 
@@ -32,16 +33,13 @@ class File extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'file_id'        => FieldType::single('string'),
             'file_unique_id' => FieldType::single('string'),
             'file_size'      => FieldType::optional('integer'),
             'file_path'      => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     /**

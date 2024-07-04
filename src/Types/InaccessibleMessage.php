@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object describes a message that was deleted or is otherwise inaccessible to the bot.
@@ -27,14 +28,11 @@ class InaccessibleMessage extends MaybeInaccessibleMessage
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'chat'       => FieldType::single(Chat::class),
             'message_id' => FieldType::single('integer'),
             'date'       => FieldType::single('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

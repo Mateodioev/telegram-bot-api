@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents the content of an invoice message to be sent as the result of an inline query.
@@ -78,10 +79,6 @@ class InputInvoiceMessageContent extends InputMessageContent
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'title'                         => FieldType::single('string'),
             'description'                   => FieldType::single('string'),
@@ -104,5 +101,6 @@ class InputInvoiceMessageContent extends InputMessageContent
             'send_email_to_provider'        => FieldType::optional('boolean'),
             'is_flexible'                   => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represent a user's profile pictures.
@@ -24,13 +25,10 @@ class UserProfilePhotos extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'total_count' => FieldType::single('integer'),
             'photos'      => FieldType::multiple(PhotoSize::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

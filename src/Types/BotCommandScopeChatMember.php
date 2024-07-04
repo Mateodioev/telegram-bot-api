@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents the scope of bot commands, covering a specific member of a group or supergroup chat.
@@ -27,15 +28,12 @@ class BotCommandScopeChatMember extends BotCommandScope
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'    => FieldType::single('string'),
             'chat_id' => new FieldType('string', allowArrays: false, allowNull: false, subTypes: ['integer']),
             'user_id' => FieldType::single('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

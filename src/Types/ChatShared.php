@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.
@@ -33,10 +34,6 @@ class ChatShared extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'request_id' => FieldType::single('integer'),
             'chat_id'    => FieldType::single('integer'),
@@ -44,5 +41,6 @@ class ChatShared extends abstractType
             'username'   => FieldType::optional('string'),
             'photo'      => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

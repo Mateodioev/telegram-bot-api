@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object contains basic information about an invoice.
@@ -33,10 +34,6 @@ class Invoice extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'title'           => FieldType::single('string'),
             'description'     => FieldType::single('string'),
@@ -44,5 +41,6 @@ class Invoice extends abstractType
             'currency'        => FieldType::single('string'),
             'total_amount'    => FieldType::single('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

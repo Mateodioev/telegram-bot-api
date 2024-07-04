@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents an audio file to be treated as music to be sent.
@@ -30,7 +31,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
  * @method string|null title()
  *
  * @method static setType(string $type)
- * @method static setMedia(string|InputFile $media))
+ * @method static setMedia(string|InputFile $media)
  * @method static setThumbnail(InputFile|string|null $thumbnail)
  * @method static setCaption(string|null $caption)
  * @method static setParseMode(string|null $parseMode)
@@ -45,10 +46,6 @@ class InputMediaAudio extends InputMedia
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'             => FieldType::single('string'),
             'media'            => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
@@ -60,6 +57,7 @@ class InputMediaAudio extends InputMedia
             'performer'        => FieldType::optional('string'),
             'title'            => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

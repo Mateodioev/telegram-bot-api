@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a venue.
@@ -39,10 +40,6 @@ class Venue extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'location'          => FieldType::single(Location::class),
             'title'             => FieldType::single('string'),
@@ -52,5 +49,6 @@ class Venue extends abstractType
             'google_place_id'   => FieldType::optional('string'),
             'google_place_type' => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

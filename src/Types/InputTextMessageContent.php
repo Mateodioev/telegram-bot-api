@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents the content of a text message to be sent as the result of an inline query.
@@ -30,15 +31,12 @@ class InputTextMessageContent extends InputMessageContent
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'message_text'         => FieldType::single('string'),
             'parse_mode'           => FieldType::optional('string'),
             'entities'             => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'link_preview_options' => FieldType::optional(LinkPreviewOptions::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

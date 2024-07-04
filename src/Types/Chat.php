@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a chat.
@@ -39,10 +40,6 @@ class Chat extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'id'         => FieldType::single('integer'),
             'type'       => FieldType::single('string'),
@@ -52,5 +49,6 @@ class Chat extends abstractType
             'last_name'  => FieldType::optional('string'),
             'is_forum'   => FieldType::optional('boolean'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

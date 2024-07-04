@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents a phone contact.
@@ -33,10 +34,6 @@ class Contact extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'phone_number' => FieldType::single('string'),
             'first_name'   => FieldType::single('string'),
@@ -44,5 +41,6 @@ class Contact extends abstractType
             'user_id'      => FieldType::optional('integer'),
             'vcard'        => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

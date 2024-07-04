@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
@@ -45,10 +46,6 @@ class Animation extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'file_id'        => FieldType::single('string'),
             'file_unique_id' => FieldType::single('string'),
@@ -61,5 +58,6 @@ class Animation extends abstractType
             'mime_type'      => FieldType::optional('string'),
             'file_size'      => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

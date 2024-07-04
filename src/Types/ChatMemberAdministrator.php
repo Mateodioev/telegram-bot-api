@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents a chat member that has some additional privileges.
@@ -75,10 +76,6 @@ class ChatMemberAdministrator extends ChatMember
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'status'                 => FieldType::single('string'),
             'user'                   => FieldType::single(User::class),
@@ -100,5 +97,6 @@ class ChatMemberAdministrator extends ChatMember
             'can_manage_topics'      => FieldType::optional('boolean'),
             'custom_title'           => FieldType::optional('string'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }

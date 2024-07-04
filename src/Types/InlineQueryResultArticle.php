@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * Represents a link to an article or web page.
@@ -51,10 +52,6 @@ class InlineQueryResultArticle extends InlineQueryResult
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'type'                  => FieldType::single('string'),
             'id'                    => FieldType::single('string'),
@@ -68,6 +65,7 @@ class InlineQueryResultArticle extends InlineQueryResult
             'thumbnail_width'       => FieldType::optional('integer'),
             'thumbnail_height'      => FieldType::optional('integer'),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

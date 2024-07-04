@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
+use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
  * This object represents reaction changes on a message with anonymous reactions.
@@ -30,15 +31,12 @@ class MessageReactionCountUpdated extends abstractType
 {
     protected function boot(): void
     {
-        if ($this->fields !== null) {
-            // Already booted
-            return;
-        }
         $this->fields = [
             'chat'       => FieldType::single(Chat::class),
             'message_id' => FieldType::single('integer'),
             'date'       => FieldType::single('integer'),
             'reactions'  => FieldType::multiple(ReactionCount::class),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 }
