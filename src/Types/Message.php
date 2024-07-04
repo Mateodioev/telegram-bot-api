@@ -39,13 +39,14 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @property Animation|null $animation Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
  * @property Audio|null $audio Optional. Message is an audio file, information about the file
  * @property Document|null $document Optional. Message is a general file, information about the file
+ * @property PaidMediaInfo|null $paid_media Optional. Message contains paid media; information about the paid media
  * @property PhotoSize[]|null $photo Optional. Message is a photo, available sizes of the photo
  * @property Sticker|null $sticker Optional. Message is a sticker, information about the sticker
  * @property Story|null $story Optional. Message is a forwarded story
  * @property Video|null $video Optional. Message is a video, information about the video
  * @property VideoNote|null $video_note Optional. Message is a video note, information about the video message
  * @property Voice|null $voice Optional. Message is a voice message, information about the file
- * @property string|null $caption Optional. Caption for the animation, audio, document, photo, video or voice
+ * @property string|null $caption Optional. Caption for the animation, audio, document, paid media, photo, video or voice
  * @property MessageEntity[]|null $caption_entities Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
  * @property bool|null $show_caption_above_media Optional. True, if the caption must be shown above the message media
  * @property bool|null $has_media_spoiler Optional. True, if the message media is covered by a spoiler animation
@@ -123,6 +124,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method Animation|null animation()
  * @method Audio|null audio()
  * @method Document|null document()
+ * @method PaidMediaInfo|null paidMedia()
  * @method PhotoSize[]|null photo()
  * @method Sticker|null sticker()
  * @method Story|null story()
@@ -207,6 +209,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method static setAnimation(Animation|null $animation)
  * @method static setAudio(Audio|null $audio)
  * @method static setDocument(Document|null $document)
+ * @method static setPaidMedia(PaidMediaInfo|null $paidMedia)
  * @method static setPhoto(PhotoSize[]|null $photo)
  * @method static setSticker(Sticker|null $sticker)
  * @method static setStory(Story|null $story)
@@ -298,6 +301,7 @@ class Message extends MaybeInaccessibleMessage
             'animation'                         => FieldType::optional(Animation::class),
             'audio'                             => FieldType::optional(Audio::class),
             'document'                          => FieldType::optional(Document::class),
+            'paid_media'                        => FieldType::optional(PaidMediaInfo::class),
             'photo'                             => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
             'sticker'                           => FieldType::optional(Sticker::class),
             'story'                             => FieldType::optional(Story::class),

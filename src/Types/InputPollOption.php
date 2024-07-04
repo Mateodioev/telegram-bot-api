@@ -8,7 +8,7 @@ use Mateodioev\Bots\Telegram\Config\FieldType;
 use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 
 /**
- * This object contains information about one answer option in a poll to send.
+ * This object contains information about one answer option in a poll to be sent.
  *
  * @property string $text Option text, 1-100 characters
  * @property string|null $text_parse_mode Optional. Mode for parsing entities in the text. See formatting options for more details. Currently, only custom emoji entities are allowed

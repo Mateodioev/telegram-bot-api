@@ -41,6 +41,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @property string|null $invite_link Optional. Primary invite link, for groups, supergroups and channel chats
  * @property Message|null $pinned_message Optional. The most recent pinned message (by sending date)
  * @property ChatPermissions|null $permissions Optional. Default chat member permissions, for groups and supergroups
+ * @property bool|null $can_send_paid_media Optional. True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.
  * @property int|null $slow_mode_delay Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds
  * @property int|null $unrestrict_boost_count Optional. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions
  * @property int|null $message_auto_delete_time Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds
@@ -85,6 +86,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method string|null inviteLink()
  * @method Message|null pinnedMessage()
  * @method ChatPermissions|null permissions()
+ * @method bool|null canSendPaidMedia()
  * @method int|null slowModeDelay()
  * @method int|null unrestrictBoostCount()
  * @method int|null messageAutoDeleteTime()
@@ -129,6 +131,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method static setInviteLink(string|null $inviteLink)
  * @method static setPinnedMessage(Message|null $pinnedMessage)
  * @method static setPermissions(ChatPermissions|null $permissions)
+ * @method static setCanSendPaidMedia(bool|null $canSendPaidMedia)
  * @method static setSlowModeDelay(int|null $slowModeDelay)
  * @method static setUnrestrictBoostCount(int|null $unrestrictBoostCount)
  * @method static setMessageAutoDeleteTime(int|null $messageAutoDeleteTime)
@@ -180,6 +183,7 @@ class ChatFullInfo extends abstractType
             'invite_link'                             => FieldType::optional('string'),
             'pinned_message'                          => FieldType::optional(Message::class),
             'permissions'                             => FieldType::optional(ChatPermissions::class),
+            'can_send_paid_media'                     => FieldType::optional('boolean'),
             'slow_mode_delay'                         => FieldType::optional('integer'),
             'unrestrict_boost_count'                  => FieldType::optional('integer'),
             'message_auto_delete_time'                => FieldType::optional('integer'),

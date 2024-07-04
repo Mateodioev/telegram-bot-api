@@ -8,15 +8,14 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
 /**
- * This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
- * - TransactionPartnerUser
- * - TransactionPartnerFragment
- * - TransactionPartnerTelegramAds
- * - TransactionPartnerOther
+ * This object describes paid media. Currently, it can be one of
+ * - PaidMediaPreview
+ * - PaidMediaPhoto
+ * - PaidMediaVideo
  *
- * @see https://core.telegram.org/bots/api#transactionpartner
+ * @see https://core.telegram.org/bots/api#paidmedia
  */
-class TransactionPartner extends abstractType
+class PaidMedia extends abstractType
 {
     protected function boot(): void
     {
@@ -27,10 +26,9 @@ class TransactionPartner extends abstractType
     public static function childs(): array
     {
         return [
-            TransactionPartnerUser::class,
-            TransactionPartnerFragment::class,
-            TransactionPartnerTelegramAds::class,
-            TransactionPartnerOther::class,
+            PaidMediaPreview::class,
+            PaidMediaPhoto::class,
+            PaidMediaVideo::class,
         ];
     }
 
@@ -41,10 +39,9 @@ class TransactionPartner extends abstractType
         }
 
         return match ($update['type']) {
-            'user' => TransactionPartnerUser::class,
-            'fragment' => TransactionPartnerFragment::class,
-            'telegram_ads' => TransactionPartnerTelegramAds::class,
-            'other' => TransactionPartnerOther::class,
+            'preview' => PaidMediaPreview::class,
+            'photo' => PaidMediaPhoto::class,
+            'video' => PaidMediaVideo::class,
             default => TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }

@@ -10,8 +10,8 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
 /**
  * This object represents a point on the map.
  *
- * @property double $latitude Latitude as defined by sender
- * @property double $longitude Longitude as defined by sender
+ * @property double $latitude Latitude as defined by the sender
+ * @property double $longitude Longitude as defined by the sender
  * @property double|null $horizontal_accuracy Optional. The radius of uncertainty for the location, measured in meters; 0-1500
  * @property int|null $live_period Optional. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.
  * @property int|null $heading Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.

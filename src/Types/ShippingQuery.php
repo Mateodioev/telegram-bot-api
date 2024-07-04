@@ -12,7 +12,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  *
  * @property string $id Unique query identifier
  * @property User $from User who sent the query
- * @property string $invoice_payload Bot specified invoice payload
+ * @property string $invoice_payload Bot-specified invoice payload
  * @property ShippingAddress $shipping_address User specified shipping address
  *
  * @method string id()
