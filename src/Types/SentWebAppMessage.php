@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * Describes an inline message sent by a Web App on behalf of a user.

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * Represents an issue with one of the files that constitute the translation of a document. The error is considered resolved when the file changes.

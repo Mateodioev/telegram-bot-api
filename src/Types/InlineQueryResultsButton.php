@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * This object represents a button to be shown above inline query results. You must use exactly one of the optional fields.

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.

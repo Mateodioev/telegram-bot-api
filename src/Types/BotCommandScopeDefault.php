@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * Represents the default scope of bot commands. Default commands are used if no commands with a narrower scope are specified for the user.

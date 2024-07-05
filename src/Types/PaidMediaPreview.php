@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * The paid media isn't available before the payment.
@@ -42,6 +41,6 @@ class PaidMediaPreview extends PaidMedia
 
     public static function default(): static
     {
-        return (new static)->setType('preview');
+        return (new static())->setType('preview');
     }
 }

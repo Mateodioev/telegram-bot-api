@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\FieldType;
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * The paid media to send is a video.
@@ -54,6 +53,6 @@ class InputPaidMediaVideo extends InputPaidMedia
 
     public static function default(): static
     {
-        return (new static)->setType('video');
+        return (new static())->setType('video');
     }
 }
