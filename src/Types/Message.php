@@ -69,6 +69,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property MaybeInaccessibleMessage|null $pinned_message Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @property Invoice|null $invoice Optional. Message is an invoice for a payment, information about the invoice. More about payments: https://core.telegram.org/bots/api#payments
  * @property SuccessfulPayment|null $successful_payment Optional. Message is a service message about a successful payment, information about the payment. More about payments: https://core.telegram.org/bots/api#payments
+ * @property RefundedPayment|null $refunded_payment Optional. Message is a service message about a refunded payment, information about the payment. More about payments: https://core.telegram.org/bots/api#payments
  * @property UsersShared|null $users_shared Optional. Service message: users were shared with the bot
  * @property ChatShared|null $chat_shared Optional. Service message: a chat was shared with the bot
  * @property string|null $connected_website Optional. The domain name of the website on which the user has logged in. More about Telegram Login: https://core.telegram.org/widgets/login
@@ -154,6 +155,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method MaybeInaccessibleMessage|null pinnedMessage()
  * @method Invoice|null invoice()
  * @method SuccessfulPayment|null successfulPayment()
+ * @method RefundedPayment|null refundedPayment()
  * @method UsersShared|null usersShared()
  * @method ChatShared|null chatShared()
  * @method string|null connectedWebsite()
@@ -239,6 +241,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setPinnedMessage(MaybeInaccessibleMessage|null $pinnedMessage)
  * @method static setInvoice(Invoice|null $invoice)
  * @method static setSuccessfulPayment(SuccessfulPayment|null $successfulPayment)
+ * @method static setRefundedPayment(RefundedPayment|null $refundedPayment)
  * @method static setUsersShared(UsersShared|null $usersShared)
  * @method static setChatShared(ChatShared|null $chatShared)
  * @method static setConnectedWebsite(string|null $connectedWebsite)
@@ -331,6 +334,7 @@ class Message extends MaybeInaccessibleMessage
             'pinned_message'                    => FieldType::optional(MaybeInaccessibleMessage::class),
             'invoice'                           => FieldType::optional(Invoice::class),
             'successful_payment'                => FieldType::optional(SuccessfulPayment::class),
+            'refunded_payment'                  => FieldType::optional(RefundedPayment::class),
             'users_shared'                      => FieldType::optional(UsersShared::class),
             'chat_shared'                       => FieldType::optional(ChatShared::class),
             'connected_website'                 => FieldType::optional('string'),
@@ -355,16 +359,6 @@ class Message extends MaybeInaccessibleMessage
             'video_chat_participants_invited'   => FieldType::optional(VideoChatParticipantsInvited::class),
             'web_app_data'                      => FieldType::optional(WebAppData::class),
             'reply_markup'                      => FieldType::optional(InlineKeyboardMarkup::class),
-            // Legacy params
-            'left_chat_participant'             => FieldType::optional(User::class),
-            'new_chat_participant'              => FieldType::optional(User::class),
-            'new_chat_member'                   => FieldType::optional(User::class),
-            'forward_from'                      => FieldType::optional(User::class),
-            'forward_from_chat'                 => FieldType::optional(Chat::class),
-            'forward_from_message_id'           => FieldType::optional('integer'),
-            'forward_signature'                 => FieldType::optional('string'),
-            'forward_sender_name'               => FieldType::optional('string'),
-            'forward_date'                      => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
