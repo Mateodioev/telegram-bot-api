@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class KeyboardButtonPollType extends abstractType
 {
+    public function __construct(
+        ?string $type = null,
+    ) {
+        parent::__construct([
+            'type' => $type,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

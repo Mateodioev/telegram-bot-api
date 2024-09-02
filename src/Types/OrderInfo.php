@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class OrderInfo extends abstractType
 {
+    public function __construct(
+        ?string $name = null,
+        ?string $phone_number = null,
+        ?string $email = null,
+        ?ShippingAddress $shipping_address = null,
+    ) {
+        parent::__construct([
+            'name'             => $name,
+            'phone_number'     => $phone_number,
+            'email'            => $email,
+            'shipping_address' => $shipping_address,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

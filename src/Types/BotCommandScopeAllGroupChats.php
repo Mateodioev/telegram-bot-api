@@ -19,17 +19,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BotCommandScopeAllGroupChats extends BotCommandScope
 {
+    public const TYPE = 'all_group_chats';
+
+    public function __construct()
+    {
+        parent::__construct([
+            'type' => self::TYPE,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
             'type' => FieldType::single('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('all_group_chats');
     }
 }

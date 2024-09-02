@@ -28,6 +28,21 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatMemberOwner extends ChatMember
 {
+    public const STATUS = 'creator';
+
+    public function __construct(
+        User $user,
+        bool $is_anonymous,
+        ?string $custom_title = null,
+    ) {
+        parent::__construct([
+            'status'       => self::STATUS,
+            'user'         => $user,
+            'is_anonymous' => $is_anonymous,
+            'custom_title' => $custom_title,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

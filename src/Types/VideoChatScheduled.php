@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class VideoChatScheduled extends abstractType
 {
+    public function __construct(
+        int $start_date,
+    ) {
+        parent::__construct([
+            'start_date' => $start_date,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

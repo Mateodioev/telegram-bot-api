@@ -7,13 +7,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 /**
  * This class is returned when an error occurs.
  *
- * @property int    $ok
+ * @property bool   $ok
  * @property int    $error_code
  * @property string $description
  * @property mixed  $parameters
  */
 class Error extends abstractType
 {
+    public function __construct(
+        public bool $ok,
+        public int $error_code,
+        public string $description,
+        public mixed $parameters = null
+    ) {
+        parent::__construct([
+            'ok'          => $ok,
+            'error_code'  => $error_code,
+            'description' => $description,
+            'parameters'  => $parameters
+        ]);
+    }
     protected function boot(): void
     {
         $this->fields = [

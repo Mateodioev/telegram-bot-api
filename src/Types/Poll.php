@@ -58,6 +58,40 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Poll extends abstractType
 {
+    public function __construct(
+        string $id,
+        string $question,
+        ?array $question_entities = null,
+        array $options = [],
+        int $total_voter_count,
+        bool $is_closed,
+        bool $is_anonymous,
+        string $type,
+        bool $allows_multiple_answers,
+        ?int $correct_option_id = null,
+        ?string $explanation = null,
+        ?array $explanation_entities = null,
+        ?int $open_period = null,
+        ?int $close_date = null,
+    ) {
+        parent::__construct([
+            'id'                      => $id,
+            'question'                => $question,
+            'question_entities'       => $question_entities,
+            'options'                 => $options,
+            'total_voter_count'       => $total_voter_count,
+            'is_closed'               => $is_closed,
+            'is_anonymous'            => $is_anonymous,
+            'type'                    => $type,
+            'allows_multiple_answers' => $allows_multiple_answers,
+            'correct_option_id'       => $correct_option_id,
+            'explanation'             => $explanation,
+            'explanation_entities'    => $explanation_entities,
+            'open_period'             => $open_period,
+            'close_date'              => $close_date,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

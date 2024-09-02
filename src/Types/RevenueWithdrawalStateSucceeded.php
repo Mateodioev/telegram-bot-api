@@ -25,6 +25,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState
 {
+    public const TYPE = 'succeeded';
+
+    public function __construct(
+        int $date,
+        string $url,
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type' => $type,
+            'date' => $date,
+            'url'  => $url,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -33,10 +47,5 @@ class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState
             'url'  => FieldType::single('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('succeeded');
     }
 }

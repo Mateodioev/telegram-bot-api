@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PollAnswer extends abstractType
 {
+    public function __construct(
+        string $poll_id,
+        ?Chat $voter_chat = null,
+        ?User $user = null,
+        array $option_ids = [],
+    ) {
+        parent::__construct([
+            'poll_id'    => $poll_id,
+            'voter_chat' => $voter_chat,
+            'user'       => $user,
+            'option_ids' => $option_ids,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

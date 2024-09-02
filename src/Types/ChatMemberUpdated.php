@@ -40,6 +40,28 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatMemberUpdated extends abstractType
 {
+    public function __construct(
+        Chat $chat,
+        User $from,
+        int $date,
+        ChatMember $old_chat_member,
+        ChatMember $new_chat_member,
+        ?ChatInviteLink $invite_link = null,
+        ?bool $via_join_request = null,
+        ?bool $via_chat_folder_invite_link = null,
+    ) {
+        parent::__construct([
+            'chat'                        => $chat,
+            'from'                        => $from,
+            'date'                        => $date,
+            'old_chat_member'             => $old_chat_member,
+            'new_chat_member'             => $new_chat_member,
+            'invite_link'                 => $invite_link,
+            'via_join_request'            => $via_join_request,
+            'via_chat_folder_invite_link' => $via_chat_folder_invite_link,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

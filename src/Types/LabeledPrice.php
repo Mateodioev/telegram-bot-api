@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class LabeledPrice extends abstractType
 {
+    public function __construct(
+        string $label,
+        int $amount,
+    ) {
+        parent::__construct([
+            'label'  => $label,
+            'amount' => $amount,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

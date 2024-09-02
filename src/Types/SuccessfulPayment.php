@@ -37,6 +37,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class SuccessfulPayment extends abstractType
 {
+    public function __construct(
+        string $currency,
+        int $total_amount,
+        string $invoice_payload,
+        ?string $shipping_option_id = null,
+        ?OrderInfo $order_info = null,
+        string $telegram_payment_charge_id,
+        string $provider_payment_charge_id,
+    ) {
+        parent::__construct([
+            'currency'                   => $currency,
+            'total_amount'               => $total_amount,
+            'invoice_payload'            => $invoice_payload,
+            'shipping_option_id'         => $shipping_option_id,
+            'order_info'                 => $order_info,
+            'telegram_payment_charge_id' => $telegram_payment_charge_id,
+            'provider_payment_charge_id' => $provider_payment_charge_id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

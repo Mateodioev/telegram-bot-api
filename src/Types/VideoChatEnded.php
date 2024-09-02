@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class VideoChatEnded extends abstractType
 {
+    public function __construct(
+        int $duration,
+    ) {
+        parent::__construct([
+            'duration' => $duration,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

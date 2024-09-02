@@ -40,6 +40,28 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputVenueMessageContent extends InputMessageContent
 {
+    public function __construct(
+        float $latitude,
+        float $longitude,
+        string $title,
+        string $address,
+        ?string $foursquare_id = null,
+        ?string $foursquare_type = null,
+        ?string $google_place_id = null,
+        ?string $google_place_type = null,
+    ) {
+        parent::__construct([
+            'latitude'          => $latitude,
+            'longitude'         => $longitude,
+            'title'             => $title,
+            'address'           => $address,
+            'foursquare_id'     => $foursquare_id,
+            'foursquare_type'   => $foursquare_type,
+            'google_place_id'   => $google_place_id,
+            'google_place_type' => $google_place_type,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

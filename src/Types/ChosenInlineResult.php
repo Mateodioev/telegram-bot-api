@@ -32,6 +32,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChosenInlineResult extends abstractType
 {
+    public function __construct(
+        string $result_id,
+        User $from,
+        ?Location $location = null,
+        ?string $inline_message_id = null,
+        string $query,
+    ) {
+        parent::__construct([
+            'result_id'         => $result_id,
+            'from'              => $from,
+            'location'          => $location,
+            'inline_message_id' => $inline_message_id,
+            'query'             => $query,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -34,6 +34,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatJoinRequest extends abstractType
 {
+    public function __construct(
+        Chat $chat,
+        User $from,
+        int $user_chat_id,
+        int $date,
+        ?string $bio = null,
+        ?ChatInviteLink $invite_link = null,
+    ) {
+        parent::__construct([
+            'chat'         => $chat,
+            'from'         => $from,
+            'user_chat_id' => $user_chat_id,
+            'date'         => $date,
+            'bio'          => $bio,
+            'invite_link'  => $invite_link,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

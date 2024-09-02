@@ -76,6 +76,52 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputInvoiceMessageContent extends InputMessageContent
 {
+    public function __construct(
+        string $title,
+        string $description,
+        string $payload,
+        string $currency,
+        array $prices = [],
+        ?string $provider_token = null,
+        ?int $max_tip_amount = null,
+        ?array $suggested_tip_amounts = null,
+        ?string $provider_data = null,
+        ?string $photo_url = null,
+        ?int $photo_size = null,
+        ?int $photo_width = null,
+        ?int $photo_height = null,
+        ?bool $need_name = null,
+        ?bool $need_phone_number = null,
+        ?bool $need_email = null,
+        ?bool $need_shipping_address = null,
+        ?bool $send_phone_number_to_provider = null,
+        ?bool $send_email_to_provider = null,
+        ?bool $is_flexible = null,
+    ) {
+        parent::__construct([
+            'title'                         => $title,
+            'description'                   => $description,
+            'payload'                       => $payload,
+            'provider_token'                => $provider_token,
+            'currency'                      => $currency,
+            'prices'                        => $prices,
+            'max_tip_amount'                => $max_tip_amount,
+            'suggested_tip_amounts'         => $suggested_tip_amounts,
+            'provider_data'                 => $provider_data,
+            'photo_url'                     => $photo_url,
+            'photo_size'                    => $photo_size,
+            'photo_width'                   => $photo_width,
+            'photo_height'                  => $photo_height,
+            'need_name'                     => $need_name,
+            'need_phone_number'             => $need_phone_number,
+            'need_email'                    => $need_email,
+            'need_shipping_address'         => $need_shipping_address,
+            'send_phone_number_to_provider' => $send_phone_number_to_provider,
+            'send_email_to_provider'        => $send_email_to_provider,
+            'is_flexible'                   => $is_flexible,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

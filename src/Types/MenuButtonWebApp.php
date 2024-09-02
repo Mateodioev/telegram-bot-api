@@ -25,6 +25,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MenuButtonWebApp extends MenuButton
 {
+    public const TYPE = 'web_app';
+
+    public function __construct(
+        string $text,
+        WebAppInfo $web_app,
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type'    => $type,
+            'text'    => $text,
+            'web_app' => $web_app,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -33,11 +47,5 @@ class MenuButtonWebApp extends MenuButton
             'web_app' => FieldType::single(WebAppInfo::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('web_app');
     }
 }

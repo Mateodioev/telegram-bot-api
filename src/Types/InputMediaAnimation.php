@@ -49,6 +49,36 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputMediaAnimation extends InputMedia
 {
+    public const TYPE = 'animation';
+
+    public function __construct(
+        string|InputFile $media,
+        string $type = self::TYPE,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?int $width = null,
+        ?int $height = null,
+        ?int $duration = null,
+        ?bool $has_spoiler = null,
+    ) {
+        parent::__construct([
+            'type'                     => $type,
+            'media'                    => $media,
+            'thumbnail'                => $thumbnail,
+            'caption'                  => $caption,
+            'parse_mode'               => $parse_mode,
+            'caption_entities'         => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'width'                    => $width,
+            'height'                   => $height,
+            'duration'                 => $duration,
+            'has_spoiler'              => $has_spoiler,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -65,11 +95,5 @@ class InputMediaAnimation extends InputMedia
             'has_spoiler'              => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('animation');
     }
 }

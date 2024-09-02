@@ -49,6 +49,36 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultAudio extends InlineQueryResult
 {
+    public const TYPE = 'audio';
+
+    public function __construct(
+        string $id,
+        string $audio_url,
+        string $title,
+        string $type = self::TYPE,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?string $performer = null,
+        ?int $audio_duration = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+    ) {
+        parent::__construct([
+            'type'                  => $type,
+            'id'                    => $id,
+            'audio_url'             => $audio_url,
+            'title'                 => $title,
+            'caption'               => $caption,
+            'parse_mode'            => $parse_mode,
+            'caption_entities'      => $caption_entities,
+            'performer'             => $performer,
+            'audio_duration'        => $audio_duration,
+            'reply_markup'          => $reply_markup,
+            'input_message_content' => $input_message_content,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -65,11 +95,5 @@ class InlineQueryResultAudio extends InlineQueryResult
             'input_message_content' => FieldType::optional(InputMessageContent::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('audio');
     }
 }

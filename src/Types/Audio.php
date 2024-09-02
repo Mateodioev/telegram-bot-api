@@ -43,6 +43,30 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Audio extends abstractType
 {
+    public function __construct(
+        string $file_id,
+        string $file_unique_id,
+        int $duration,
+        ?string $performer = null,
+        ?string $title = null,
+        ?string $file_name = null,
+        ?string $mime_type = null,
+        ?int $file_size = null,
+        ?PhotoSize $thumbnail = null,
+    ) {
+        parent::__construct([
+            'file_id'        => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'duration'       => $duration,
+            'performer'      => $performer,
+            'title'          => $title,
+            'file_name'      => $file_name,
+            'mime_type'      => $mime_type,
+            'file_size'      => $file_size,
+            'thumbnail'      => $thumbnail,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

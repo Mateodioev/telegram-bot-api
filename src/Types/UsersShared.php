@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class UsersShared extends abstractType
 {
+    public function __construct(
+        int $request_id,
+        array $users = [],
+    ) {
+        parent::__construct([
+            'request_id' => $request_id,
+            'users'      => $users,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

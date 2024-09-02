@@ -61,6 +61,42 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Sticker extends abstractType
 {
+    public function __construct(
+        string $file_id,
+        string $file_unique_id,
+        string $type,
+        int $width,
+        int $height,
+        bool $is_animated,
+        bool $is_video,
+        ?PhotoSize $thumbnail = null,
+        ?string $emoji = null,
+        ?string $set_name = null,
+        ?File $premium_animation = null,
+        ?MaskPosition $mask_position = null,
+        ?string $custom_emoji_id = null,
+        ?bool $needs_repainting = null,
+        ?int $file_size = null,
+    ) {
+        parent::__construct([
+            'file_id'           => $file_id,
+            'file_unique_id'    => $file_unique_id,
+            'type'              => $type,
+            'width'             => $width,
+            'height'            => $height,
+            'is_animated'       => $is_animated,
+            'is_video'          => $is_video,
+            'thumbnail'         => $thumbnail,
+            'emoji'             => $emoji,
+            'set_name'          => $set_name,
+            'premium_animation' => $premium_animation,
+            'mask_position'     => $mask_position,
+            'custom_emoji_id'   => $custom_emoji_id,
+            'needs_repainting'  => $needs_repainting,
+            'file_size'         => $file_size,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

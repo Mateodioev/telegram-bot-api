@@ -49,6 +49,36 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultContact extends InlineQueryResult
 {
+    public const TYPE = 'contact';
+
+    public function __construct(
+        string $id,
+        string $phone_number,
+        string $first_name,
+        string $type = self::TYPE,
+        ?string $last_name = null,
+        ?string $vcard = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+        ?string $thumbnail_url = null,
+        ?int $thumbnail_width = null,
+        ?int $thumbnail_height = null,
+    ) {
+        parent::__construct([
+            'type'                  => $type,
+            'id'                    => $id,
+            'phone_number'          => $phone_number,
+            'first_name'            => $first_name,
+            'last_name'             => $last_name,
+            'vcard'                 => $vcard,
+            'reply_markup'          => $reply_markup,
+            'input_message_content' => $input_message_content,
+            'thumbnail_url'         => $thumbnail_url,
+            'thumbnail_width'       => $thumbnail_width,
+            'thumbnail_height'      => $thumbnail_height,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -65,11 +95,5 @@ class InlineQueryResultContact extends InlineQueryResult
             'thumbnail_height'      => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('contact');
     }
 }

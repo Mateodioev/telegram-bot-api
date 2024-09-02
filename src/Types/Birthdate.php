@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Birthdate extends abstractType
 {
+    public function __construct(
+        int $day,
+        int $month,
+        ?int $year = null,
+    ) {
+        parent::__construct([
+            'day'   => $day,
+            'month' => $month,
+            'year'  => $year,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

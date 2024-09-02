@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageAutoDeleteTimerChanged extends abstractType
 {
+    public function __construct(
+        int $message_auto_delete_time,
+    ) {
+        parent::__construct([
+            'message_auto_delete_time' => $message_auto_delete_time,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -49,6 +49,34 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class KeyboardButtonRequestChat extends abstractType
 {
+    public function __construct(
+        int $request_id,
+        bool $chat_is_channel,
+        ?bool $chat_is_forum = null,
+        ?bool $chat_has_username = null,
+        ?bool $chat_is_created = null,
+        ?ChatAdministratorRights $user_administrator_rights = null,
+        ?ChatAdministratorRights $bot_administrator_rights = null,
+        ?bool $bot_is_member = null,
+        ?bool $request_title = null,
+        ?bool $request_username = null,
+        ?bool $request_photo = null,
+    ) {
+        parent::__construct([
+            'request_id'                => $request_id,
+            'chat_is_channel'           => $chat_is_channel,
+            'chat_is_forum'             => $chat_is_forum,
+            'chat_has_username'         => $chat_has_username,
+            'chat_is_created'           => $chat_is_created,
+            'user_administrator_rights' => $user_administrator_rights,
+            'bot_administrator_rights'  => $bot_administrator_rights,
+            'bot_is_member'             => $bot_is_member,
+            'request_title'             => $request_title,
+            'request_username'          => $request_username,
+            'request_photo'             => $request_photo,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

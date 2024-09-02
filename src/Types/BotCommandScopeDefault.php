@@ -19,6 +19,15 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BotCommandScopeDefault extends BotCommandScope
 {
+    public const TYPE = 'default';
+
+    public function __construct(array $args = [])
+    {
+        parent::__construct([
+            'type' => self::TYPE,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

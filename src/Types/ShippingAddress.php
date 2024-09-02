@@ -34,6 +34,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ShippingAddress extends abstractType
 {
+    public function __construct(
+        string $country_code,
+        string $state,
+        string $city,
+        string $street_line1,
+        string $street_line2,
+        string $post_code,
+    ) {
+        parent::__construct([
+            'country_code' => $country_code,
+            'state'        => $state,
+            'city'         => $city,
+            'street_line1' => $street_line1,
+            'street_line2' => $street_line2,
+            'post_code'    => $post_code,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

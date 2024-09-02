@@ -34,6 +34,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Location extends abstractType
 {
+    public function __construct(
+        float $latitude,
+        float $longitude,
+        ?float $horizontal_accuracy = null,
+        ?int $live_period = null,
+        ?int $heading = null,
+        ?int $proximity_alert_radius = null,
+    ) {
+        parent::__construct([
+            'latitude'               => $latitude,
+            'longitude'              => $longitude,
+            'horizontal_accuracy'    => $horizontal_accuracy,
+            'live_period'            => $live_period,
+            'heading'                => $heading,
+            'proximity_alert_radius' => $proximity_alert_radius,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

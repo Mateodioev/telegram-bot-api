@@ -86,6 +86,58 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Update extends abstractType
 {
+    public function __construct(
+        int $update_id,
+        ?Message $message = null,
+        ?Message $edited_message = null,
+        ?Message $channel_post = null,
+        ?Message $edited_channel_post = null,
+        ?BusinessConnection $business_connection = null,
+        ?Message $business_message = null,
+        ?Message $edited_business_message = null,
+        ?BusinessMessagesDeleted $deleted_business_messages = null,
+        ?MessageReactionUpdated $message_reaction = null,
+        ?MessageReactionCountUpdated $message_reaction_count = null,
+        ?InlineQuery $inline_query = null,
+        ?ChosenInlineResult $chosen_inline_result = null,
+        ?CallbackQuery $callback_query = null,
+        ?ShippingQuery $shipping_query = null,
+        ?PreCheckoutQuery $pre_checkout_query = null,
+        ?Poll $poll = null,
+        ?PollAnswer $poll_answer = null,
+        ?ChatMemberUpdated $my_chat_member = null,
+        ?ChatMemberUpdated $chat_member = null,
+        ?ChatJoinRequest $chat_join_request = null,
+        ?ChatBoostUpdated $chat_boost = null,
+        ?ChatBoostRemoved $removed_chat_boost = null,
+    ) {
+        parent::__construct([
+            'update_id'                 => $update_id,
+            'message'                   => $message,
+            'edited_message'            => $edited_message,
+            'channel_post'              => $channel_post,
+            'edited_channel_post'       => $edited_channel_post,
+            'business_connection'       => $business_connection,
+            'business_message'          => $business_message,
+            'edited_business_message'   => $edited_business_message,
+            'deleted_business_messages' => $deleted_business_messages,
+            'message_reaction'          => $message_reaction,
+            'message_reaction_count'    => $message_reaction_count,
+            'inline_query'              => $inline_query,
+            'chosen_inline_result'      => $chosen_inline_result,
+            'callback_query'            => $callback_query,
+            'shipping_query'            => $shipping_query,
+            'pre_checkout_query'        => $pre_checkout_query,
+            'poll'                      => $poll,
+            'poll_answer'               => $poll_answer,
+            'my_chat_member'            => $my_chat_member,
+            'chat_member'               => $chat_member,
+            'chat_join_request'         => $chat_join_request,
+            'chat_boost'                => $chat_boost,
+            'removed_chat_boost'        => $removed_chat_boost,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

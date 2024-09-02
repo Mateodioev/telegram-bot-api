@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputTextMessageContent extends InputMessageContent
 {
+    public function __construct(
+        string $message_text,
+        ?string $parse_mode = null,
+        ?array $entities = null,
+        ?LinkPreviewOptions $link_preview_options = null,
+    ) {
+        parent::__construct([
+            'message_text'         => $message_text,
+            'parse_mode'           => $parse_mode,
+            'entities'             => $entities,
+            'link_preview_options' => $link_preview_options,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

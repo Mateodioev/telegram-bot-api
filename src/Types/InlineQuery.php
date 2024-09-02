@@ -34,6 +34,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQuery extends abstractType
 {
+    public function __construct(
+        string $id,
+        User $from,
+        string $query,
+        string $offset,
+        ?string $chat_type = null,
+        ?Location $location = null,
+    ) {
+        parent::__construct([
+            'id'        => $id,
+            'from'      => $from,
+            'query'     => $query,
+            'offset'    => $offset,
+            'chat_type' => $chat_type,
+            'location'  => $location,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

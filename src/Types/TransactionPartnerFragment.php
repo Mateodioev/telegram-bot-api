@@ -22,6 +22,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class TransactionPartnerFragment extends TransactionPartner
 {
+    public const TYPE = 'fragment';
+
+    public function __construct(
+        ?RevenueWithdrawalState $withdrawal_state = null,
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type'             => $type,
+            'withdrawal_state' => $withdrawal_state,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -29,10 +41,5 @@ class TransactionPartnerFragment extends TransactionPartner
             'withdrawal_state' => FieldType::optional(RevenueWithdrawalState::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('fragment');
     }
 }

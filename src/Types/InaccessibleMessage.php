@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InaccessibleMessage extends MaybeInaccessibleMessage
 {
+    public function __construct(
+        Chat $chat,
+        int $message_id,
+        int $date,
+    ) {
+        parent::__construct([
+            'chat'       => $chat,
+            'message_id' => $message_id,
+            'date'       => $date,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

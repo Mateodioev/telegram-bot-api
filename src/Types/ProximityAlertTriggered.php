@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ProximityAlertTriggered extends abstractType
 {
+    public function __construct(
+        User $traveler,
+        User $watcher,
+        int $distance,
+    ) {
+        parent::__construct([
+            'traveler' => $traveler,
+            'watcher'  => $watcher,
+            'distance' => $distance,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatLocation extends abstractType
 {
+    public function __construct(
+        Location $location,
+        string $address,
+    ) {
+        parent::__construct([
+            'location' => $location,
+            'address'  => $address,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

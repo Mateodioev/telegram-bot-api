@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class StarTransactions extends abstractType
 {
+    public function __construct(
+        array $transactions = [],
+    ) {
+        parent::__construct([
+            'transactions' => $transactions,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

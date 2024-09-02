@@ -34,6 +34,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BusinessConnection extends abstractType
 {
+    public function __construct(
+        string $id,
+        User $user,
+        int $user_chat_id,
+        int $date,
+        bool $can_reply,
+        bool $is_enabled,
+    ) {
+        parent::__construct([
+            'id'           => $id,
+            'user'         => $user,
+            'user_chat_id' => $user_chat_id,
+            'date'         => $date,
+            'can_reply'    => $can_reply,
+            'is_enabled'   => $is_enabled,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

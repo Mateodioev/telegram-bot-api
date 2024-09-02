@@ -37,6 +37,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageEntity extends abstractType
 {
+    public function __construct(
+        string $type,
+        int $offset,
+        int $length,
+        ?string $url = null,
+        ?User $user = null,
+        ?string $language = null,
+        ?string $custom_emoji_id = null,
+    ) {
+        parent::__construct([
+            'type'            => $type,
+            'offset'          => $offset,
+            'length'          => $length,
+            'url'             => $url,
+            'user'            => $user,
+            'language'        => $language,
+            'custom_emoji_id' => $custom_emoji_id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

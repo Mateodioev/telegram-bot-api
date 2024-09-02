@@ -46,6 +46,32 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineKeyboardButton extends abstractType
 {
+    public function __construct(
+        string $text,
+        ?string $url = null,
+        ?string $callback_data = null,
+        ?WebAppInfo $web_app = null,
+        ?LoginUrl $login_url = null,
+        ?string $switch_inline_query = null,
+        ?string $switch_inline_query_current_chat = null,
+        ?SwitchInlineQueryChosenChat $switch_inline_query_chosen_chat = null,
+        ?CallbackGame $callback_game = null,
+        ?bool $pay = null,
+    ) {
+        parent::__construct([
+            'text'                             => $text,
+            'url'                              => $url,
+            'callback_data'                    => $callback_data,
+            'web_app'                          => $web_app,
+            'login_url'                        => $login_url,
+            'switch_inline_query'              => $switch_inline_query,
+            'switch_inline_query_current_chat' => $switch_inline_query_current_chat,
+            'switch_inline_query_chosen_chat'  => $switch_inline_query_chosen_chat,
+            'callback_game'                    => $callback_game,
+            'pay'                              => $pay,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -5,6 +5,7 @@ namespace Tools\Gen;
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
 use function str_starts_with;
+use function count;
 
 /**
  * Property of a type.
@@ -63,16 +64,49 @@ class Field
                 $typeStr = $convert[$typeStr] ?? $typeStr;
             }
             if ($type->allowArrays()) {
-                $typeStr = $typeStr . '[]'; // e.g. Type[]
+                $typeStr .= '[]'; // e.g. Type[]
             }
             $types[] = $typeStr;
         }
 
         $type = join('|', $types);
         if ($this->required === false) {
-            return $type . '|null';
+            return "$type|null";
         }
 
+        return $type;
+    }
+
+    /**
+     * Generate safe php code
+     * @see typeStr
+     * @return string
+     */
+    public function safeTypeStr(): string
+    {
+        $types = [];
+        foreach ($this->types as $type) {
+            if ($type->allowArrays()) {
+                $types[] = 'array';
+                break;
+            }
+
+            $typeStr = $type->getType();
+            if (!$type->isScalar()) {
+                $typeStr = str_replace('Mateodioev\Bots\Telegram\Types\\', '', $typeStr);
+            } else {
+                $convert = ['integer' => 'int', 'boolean' => 'bool', 'double' => 'float'];
+                $typeStr = $convert[$typeStr] ?? $typeStr;
+            }
+
+
+            $types[] = $typeStr;
+        }
+
+        $type = join('|', $types);
+        if ($this->required === false) {
+            return count($types) === 1 ? "?$type" : "$type|null";
+        }
         return $type;
     }
 }

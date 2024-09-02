@@ -1236,9 +1236,9 @@ trait availableMethods
         )->result;
 
         return match ($result['type']) {
-            'commands' => MenuButtonCommands::default(),
+            'commands' => new MenuButtonCommands(),
             'web_app'  => MenuButtonWebApp::create($result),
-            default    => MenuButtonDefault::default()
+            default    => new MenuButtonDefault(),
         };
     }
 

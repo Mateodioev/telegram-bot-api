@@ -37,6 +37,28 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputMediaPhoto extends InputMedia
 {
+    public const TYPE = 'photo';
+
+    public function __construct(
+        string|InputFile $media,
+        string $type = self::TYPE,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?bool $has_spoiler = null,
+    ) {
+        parent::__construct([
+            'type'                     => $type,
+            'media'                    => $media,
+            'caption'                  => $caption,
+            'parse_mode'               => $parse_mode,
+            'caption_entities'         => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'has_spoiler'              => $has_spoiler,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -49,11 +71,5 @@ class InputMediaPhoto extends InputMedia
             'has_spoiler'              => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('photo');
     }
 }

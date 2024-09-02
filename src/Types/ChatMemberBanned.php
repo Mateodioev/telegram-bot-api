@@ -25,6 +25,19 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatMemberBanned extends ChatMember
 {
+    public const STATUS = 'kicked';
+
+    public function __construct(
+        User $user,
+        int $until_date,
+    ) {
+        parent::__construct([
+            'status'     => self::STATUS,
+            'user'       => $user,
+            'until_date' => $until_date,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

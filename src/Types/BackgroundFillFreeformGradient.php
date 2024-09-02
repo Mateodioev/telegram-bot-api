@@ -22,6 +22,17 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BackgroundFillFreeformGradient extends BackgroundFill
 {
+    public const TYPE = 'freeform_gradient';
+
+    public function __construct(
+        array $colors = [],
+    ) {
+        parent::__construct([
+            'type'   => self::TYPE,
+            'colors' => $colors,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -29,11 +40,5 @@ class BackgroundFillFreeformGradient extends BackgroundFill
             'colors' => FieldType::multiple('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('freeform_gradient');
     }
 }

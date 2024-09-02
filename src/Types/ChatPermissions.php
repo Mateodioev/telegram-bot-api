@@ -58,6 +58,40 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatPermissions extends abstractType
 {
+    public function __construct(
+        ?bool $can_send_messages = null,
+        ?bool $can_send_audios = null,
+        ?bool $can_send_documents = null,
+        ?bool $can_send_photos = null,
+        ?bool $can_send_videos = null,
+        ?bool $can_send_video_notes = null,
+        ?bool $can_send_voice_notes = null,
+        ?bool $can_send_polls = null,
+        ?bool $can_send_other_messages = null,
+        ?bool $can_add_web_page_previews = null,
+        ?bool $can_change_info = null,
+        ?bool $can_invite_users = null,
+        ?bool $can_pin_messages = null,
+        ?bool $can_manage_topics = null,
+    ) {
+        parent::__construct([
+            'can_send_messages'         => $can_send_messages,
+            'can_send_audios'           => $can_send_audios,
+            'can_send_documents'        => $can_send_documents,
+            'can_send_photos'           => $can_send_photos,
+            'can_send_videos'           => $can_send_videos,
+            'can_send_video_notes'      => $can_send_video_notes,
+            'can_send_voice_notes'      => $can_send_voice_notes,
+            'can_send_polls'            => $can_send_polls,
+            'can_send_other_messages'   => $can_send_other_messages,
+            'can_add_web_page_previews' => $can_add_web_page_previews,
+            'can_change_info'           => $can_change_info,
+            'can_invite_users'          => $can_invite_users,
+            'can_pin_messages'          => $can_pin_messages,
+            'can_manage_topics'         => $can_manage_topics,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

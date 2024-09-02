@@ -46,6 +46,32 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class EncryptedPassportElement extends abstractType
 {
+    public function __construct(
+        string $type,
+        ?string $data = null,
+        ?string $phone_number = null,
+        ?string $email = null,
+        ?array $files = null,
+        ?PassportFile $front_side = null,
+        ?PassportFile $reverse_side = null,
+        ?PassportFile $selfie = null,
+        ?array $translation = null,
+        string $hash,
+    ) {
+        parent::__construct([
+            'type'         => $type,
+            'data'         => $data,
+            'phone_number' => $phone_number,
+            'email'        => $email,
+            'files'        => $files,
+            'front_side'   => $front_side,
+            'reverse_side' => $reverse_side,
+            'selfie'       => $selfie,
+            'translation'  => $translation,
+            'hash'         => $hash,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

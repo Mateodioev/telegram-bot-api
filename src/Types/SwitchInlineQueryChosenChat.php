@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class SwitchInlineQueryChosenChat extends abstractType
 {
+    public function __construct(
+        ?string $query = null,
+        ?bool $allow_user_chats = null,
+        ?bool $allow_bot_chats = null,
+        ?bool $allow_group_chats = null,
+        ?bool $allow_channel_chats = null,
+    ) {
+        parent::__construct([
+            'query'               => $query,
+            'allow_user_chats'    => $allow_user_chats,
+            'allow_bot_chats'     => $allow_bot_chats,
+            'allow_group_chats'   => $allow_group_chats,
+            'allow_channel_chats' => $allow_channel_chats,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

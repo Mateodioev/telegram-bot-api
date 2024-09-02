@@ -25,6 +25,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageOriginUser extends MessageOrigin
 {
+    public const TYPE = 'user';
+
+    public function __construct(
+        int $date,
+        User $sender_user,
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type'        => $type,
+            'date'        => $date,
+            'sender_user' => $sender_user,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

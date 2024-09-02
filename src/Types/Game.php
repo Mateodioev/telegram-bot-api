@@ -34,6 +34,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Game extends abstractType
 {
+    public function __construct(
+        string $title,
+        string $description,
+        array $photo = [],
+        ?string $text = null,
+        ?array $text_entities = null,
+        ?Animation $animation = null,
+    ) {
+        parent::__construct([
+            'title'         => $title,
+            'description'   => $description,
+            'photo'         => $photo,
+            'text'          => $text,
+            'text_entities' => $text_entities,
+            'animation'     => $animation,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

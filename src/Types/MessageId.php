@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageId extends abstractType
 {
+    public function __construct(
+        int $message_id,
+    ) {
+        parent::__construct([
+            'message_id' => $message_id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

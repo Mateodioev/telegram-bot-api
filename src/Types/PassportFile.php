@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PassportFile extends abstractType
 {
+    public function __construct(
+        string $file_id,
+        string $file_unique_id,
+        int $file_size,
+        int $file_date,
+    ) {
+        parent::__construct([
+            'file_id'        => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'file_size'      => $file_size,
+            'file_date'      => $file_date,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

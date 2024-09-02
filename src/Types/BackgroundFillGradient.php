@@ -28,6 +28,21 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BackgroundFillGradient extends BackgroundFill
 {
+    private const TYPE = 'gradient';
+
+    public function __construct(
+        int $top_color,
+        int $bottom_color,
+        int $rotation_angle,
+    ) {
+        parent::__construct([
+            'type'           => self::TYPE,
+            'top_color'      => $top_color,
+            'bottom_color'   => $bottom_color,
+            'rotation_angle' => $rotation_angle,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -37,11 +52,5 @@ class BackgroundFillGradient extends BackgroundFill
             'rotation_angle' => FieldType::single('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('gradient');
     }
 }

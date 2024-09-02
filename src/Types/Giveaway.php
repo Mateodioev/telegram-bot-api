@@ -40,6 +40,28 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Giveaway extends abstractType
 {
+    public function __construct(
+        array $chats = [],
+        int $winners_selection_date,
+        int $winner_count,
+        ?bool $only_new_members = null,
+        ?bool $has_public_winners = null,
+        ?string $prize_description = null,
+        ?array $country_codes = null,
+        ?int $premium_subscription_month_count = null,
+    ) {
+        parent::__construct([
+            'chats'                            => $chats,
+            'winners_selection_date'           => $winners_selection_date,
+            'winner_count'                     => $winner_count,
+            'only_new_members'                 => $only_new_members,
+            'has_public_winners'               => $has_public_winners,
+            'prize_description'                => $prize_description,
+            'country_codes'                    => $country_codes,
+            'premium_subscription_month_count' => $premium_subscription_month_count,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

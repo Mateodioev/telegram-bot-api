@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class TextQuote extends abstractType
 {
+    public function __construct(
+        string $text,
+        ?array $entities = null,
+        int $position,
+        ?bool $is_manual = null,
+    ) {
+        parent::__construct([
+            'text'      => $text,
+            'entities'  => $entities,
+            'position'  => $position,
+            'is_manual' => $is_manual,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

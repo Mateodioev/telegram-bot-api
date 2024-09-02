@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PassportData extends abstractType
 {
+    public function __construct(
+        array $data = [],
+        EncryptedCredentials $credentials,
+    ) {
+        parent::__construct([
+            'data'        => $data,
+            'credentials' => $credentials,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

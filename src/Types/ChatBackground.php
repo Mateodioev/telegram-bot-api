@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatBackground extends abstractType
 {
+    public function __construct(
+        BackgroundType $type,
+    ) {
+        parent::__construct([
+            'type' => $type,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

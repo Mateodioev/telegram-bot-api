@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputSticker extends abstractType
 {
+    public function __construct(
+        InputFile|string $sticker,
+        string $format,
+        array $emoji_list = [],
+        ?MaskPosition $mask_position = null,
+        ?array $keywords = null,
+    ) {
+        parent::__construct([
+            'sticker'       => $sticker,
+            'format'        => $format,
+            'emoji_list'    => $emoji_list,
+            'mask_position' => $mask_position,
+            'keywords'      => $keywords,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

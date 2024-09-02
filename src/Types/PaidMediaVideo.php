@@ -22,6 +22,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PaidMediaVideo extends PaidMedia
 {
+    public const TYPE = 'video';
+
+    public function __construct(
+        Video $video,
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type'  => $type,
+            'video' => $video,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -29,10 +41,5 @@ class PaidMediaVideo extends PaidMedia
             'video' => FieldType::single(Video::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('video');
     }
 }

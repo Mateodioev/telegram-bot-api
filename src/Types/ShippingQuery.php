@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ShippingQuery extends abstractType
 {
+    public function __construct(
+        string $id,
+        User $from,
+        string $invoice_payload,
+        ShippingAddress $shipping_address,
+    ) {
+        parent::__construct([
+            'id'               => $id,
+            'from'             => $from,
+            'invoice_payload'  => $invoice_payload,
+            'shipping_address' => $shipping_address,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -11,7 +11,7 @@ class FieldTypeTest extends TestCase
 {
     public function testSingleScalarType()
     {
-        $type = new FieldType('string'); // Only macth strings
+        $type = new FieldType('string'); // Only match strings
 
         $this->assertFalse($type->match(1));
         $this->assertFalse($type->match(1.1));
@@ -84,7 +84,7 @@ class FieldTypeTest extends TestCase
         $this->assertFalse($type->match(new stdClass()));
         $this->assertFalse($type->match(User::class));
 
-        $this->assertTrue($type->match(new User()));
+        $this->assertTrue($type->match(new User(1, false, '')));
     }
 
     public function testArrayObjectsTypes()
@@ -100,10 +100,10 @@ class FieldTypeTest extends TestCase
 
         $this->assertFalse($type->match(new stdClass()));
         $this->assertFalse($type->match(User::class));
-        $this->assertFalse($type->match(new User()));
-        $this->assertFalse($type->match([new User(), new stdClass()]));
+        $this->assertFalse($type->match(new User(1, false, '')));
+        $this->assertFalse($type->match([new User(1, false, ''), new stdClass()]));
 
-        $this->assertTrue($type->match([new User()]));
-        $this->assertTrue($type->match([new User(), new User()]));
+        $this->assertTrue($type->match([new User(1, false, '')]));
+        $this->assertTrue($type->match([new User(1, false, ''), new User(1, false, '')]));
     }
 }

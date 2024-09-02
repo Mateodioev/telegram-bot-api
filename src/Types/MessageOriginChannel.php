@@ -31,6 +31,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageOriginChannel extends MessageOrigin
 {
+    public const TYPE = 'channel';
+
+    public function __construct(
+        int $date,
+        Chat $chat,
+        int $message_id,
+        string $type = self::TYPE,
+        ?string $author_signature = null,
+    ) {
+        parent::__construct([
+            'type'             => $type,
+            'date'             => $date,
+            'chat'             => $chat,
+            'message_id'       => $message_id,
+            'author_signature' => $author_signature,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

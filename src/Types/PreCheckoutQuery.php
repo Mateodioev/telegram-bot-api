@@ -37,6 +37,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PreCheckoutQuery extends abstractType
 {
+    public function __construct(
+        string $id,
+        User $from,
+        string $currency,
+        int $total_amount,
+        string $invoice_payload,
+        ?string $shipping_option_id = null,
+        ?OrderInfo $order_info = null,
+    ) {
+        parent::__construct([
+            'id'                 => $id,
+            'from'               => $from,
+            'currency'           => $currency,
+            'total_amount'       => $total_amount,
+            'invoice_payload'    => $invoice_payload,
+            'shipping_option_id' => $shipping_option_id,
+            'order_info'         => $order_info,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -34,6 +34,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class VideoNote extends abstractType
 {
+    public function __construct(
+        string $file_id,
+        string $file_unique_id,
+        int $length,
+        int $duration,
+        ?PhotoSize $thumbnail = null,
+        ?int $file_size = null,
+    ) {
+        parent::__construct([
+            'file_id'        => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'length'         => $length,
+            'duration'       => $duration,
+            'thumbnail'      => $thumbnail,
+            'file_size'      => $file_size,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BusinessMessagesDeleted extends abstractType
 {
+    public function __construct(
+        string $business_connection_id,
+        Chat $chat,
+        array $message_ids = [],
+    ) {
+        parent::__construct([
+            'business_connection_id' => $business_connection_id,
+            'chat'                   => $chat,
+            'message_ids'            => $message_ids,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

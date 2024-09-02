@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class GameHighScore extends abstractType
 {
+    public function __construct(
+        int $position,
+        User $user,
+        int $score,
+    ) {
+        parent::__construct([
+            'position' => $position,
+            'user'     => $user,
+            'score'    => $score,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

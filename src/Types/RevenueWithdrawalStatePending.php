@@ -19,16 +19,21 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class RevenueWithdrawalStatePending extends RevenueWithdrawalState
 {
+    public const TYPE = 'pending';
+
+    public function __construct(
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type' => $type,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
             'type' => FieldType::single('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('pending');
     }
 }

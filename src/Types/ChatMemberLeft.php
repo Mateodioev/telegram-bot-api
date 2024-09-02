@@ -22,6 +22,17 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatMemberLeft extends ChatMember
 {
+    public const STATUS = 'left';
+
+    public function __construct(
+        User $user,
+    ) {
+        parent::__construct([
+            'status' => self::STATUS,
+            'user'   => $user,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

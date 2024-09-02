@@ -49,6 +49,36 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultArticle extends InlineQueryResult
 {
+    public const TYPE = 'article';
+
+    public function __construct(
+        string $id,
+        string $title,
+        InputMessageContent $input_message_content,
+        string $type = self::TYPE,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?string $url = null,
+        ?bool $hide_url = null,
+        ?string $description = null,
+        ?string $thumbnail_url = null,
+        ?int $thumbnail_width = null,
+        ?int $thumbnail_height = null,
+    ) {
+        parent::__construct([
+            'type'                  => $type,
+            'id'                    => $id,
+            'title'                 => $title,
+            'input_message_content' => $input_message_content,
+            'reply_markup'          => $reply_markup,
+            'url'                   => $url,
+            'hide_url'              => $hide_url,
+            'description'           => $description,
+            'thumbnail_url'         => $thumbnail_url,
+            'thumbnail_width'       => $thumbnail_width,
+            'thumbnail_height'      => $thumbnail_height,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -65,11 +95,5 @@ class InlineQueryResultArticle extends InlineQueryResult
             'thumbnail_height'      => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('article');
     }
 }

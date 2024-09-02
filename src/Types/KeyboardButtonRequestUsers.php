@@ -37,6 +37,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class KeyboardButtonRequestUsers extends abstractType
 {
+    public function __construct(
+        int $request_id,
+        ?bool $user_is_bot = null,
+        ?bool $user_is_premium = null,
+        ?int $max_quantity = null,
+        ?bool $request_name = null,
+        ?bool $request_username = null,
+        ?bool $request_photo = null,
+    ) {
+        parent::__construct([
+            'request_id'       => $request_id,
+            'user_is_bot'      => $user_is_bot,
+            'user_is_premium'  => $user_is_premium,
+            'max_quantity'     => $max_quantity,
+            'request_name'     => $request_name,
+            'request_username' => $request_username,
+            'request_photo'    => $request_photo,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

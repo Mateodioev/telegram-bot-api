@@ -45,12 +45,12 @@ class ChatMember extends abstractType
         }
 
         return match ($update['status']) {
-            'creator' => ChatMemberOwner::class,
-            'administrator' => ChatMemberAdministrator::class,
-            'member' => ChatMemberMember::class,
-            'restricted' => ChatMemberRestricted::class,
-            'left' => ChatMemberLeft::class,
-            'kicked' => ChatMemberBanned::class,
+            ChatMemberOwner::STATUS => ChatMemberOwner::class,
+            ChatMemberAdministrator::STATUS => ChatMemberAdministrator::class,
+            ChatMemberMember::STATUS => ChatMemberMember::class,
+            ChatMemberRestricted::STATUS => ChatMemberRestricted::class,
+            ChatMemberLeft::STATUS => ChatMemberLeft::class,
+            ChatMemberBanned::STATUS => ChatMemberBanned::class,
             default => throw new TelegramParamException('Invalid status: ' . $update['status'] . ' in ChatMember')
         };
     }

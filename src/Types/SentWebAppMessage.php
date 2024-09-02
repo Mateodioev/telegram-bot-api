@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class SentWebAppMessage extends abstractType
 {
+    public function __construct(
+        ?string $inline_message_id = null,
+    ) {
+        parent::__construct([
+            'inline_message_id' => $inline_message_id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

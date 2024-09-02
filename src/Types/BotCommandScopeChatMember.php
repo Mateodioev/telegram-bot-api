@@ -25,6 +25,19 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BotCommandScopeChatMember extends BotCommandScope
 {
+    public const TYPE = 'chat_member';
+
+    public function __construct(
+        int|string $chat_id,
+        int $user_id,
+    ) {
+        parent::__construct([
+            'type'    => self::TYPE,
+            'chat_id' => $chat_id,
+            'user_id' => $user_id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -33,11 +46,5 @@ class BotCommandScopeChatMember extends BotCommandScope
             'user_id' => FieldType::single('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('chat_member');
     }
 }

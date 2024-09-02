@@ -3,7 +3,7 @@
 /.idea/
 /fn-tests/
 /.devcontainer/
-
+/.vscode/
 
 # files
 .env

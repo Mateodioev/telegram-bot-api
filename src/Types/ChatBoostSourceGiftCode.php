@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatBoostSourceGiftCode extends ChatBoostSource
 {
+    public function __construct(
+        string $source,
+        User $user,
+    ) {
+        parent::__construct([
+            'source' => $source,
+            'user'   => $user,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

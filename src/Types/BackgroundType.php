@@ -41,10 +41,10 @@ class BackgroundType extends abstractType
         }
 
         return match ($update['type']) {
-            'fill' => BackgroundTypeFill::class,
-            'wallpaper' => BackgroundTypeWallpaper::class,
-            'pattern' => BackgroundTypePattern::class,
-            'chat_theme' => BackgroundTypeChatTheme::class,
+            BackgroundTypeFill::TYPE => BackgroundTypeFill::class,
+            BackgroundTypeWallpaper::TYPE => BackgroundTypeWallpaper::class,
+            BackgroundTypePattern::TYPE => BackgroundTypePattern::class,
+            BackgroundTypeChatTheme::TYPE => BackgroundTypeChatTheme::class,
             default => throw TelegramParamException::invalidType(static::class, (string) $update['type'])
         };
     }

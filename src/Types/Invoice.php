@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Invoice extends abstractType
 {
+    public function __construct(
+        string $title,
+        string $description,
+        string $start_parameter,
+        string $currency,
+        int $total_amount,
+    ) {
+        parent::__construct([
+            'title'           => $title,
+            'description'     => $description,
+            'start_parameter' => $start_parameter,
+            'currency'        => $currency,
+            'total_amount'    => $total_amount,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

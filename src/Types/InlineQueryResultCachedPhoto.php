@@ -49,6 +49,36 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultCachedPhoto extends InlineQueryResult
 {
+    public const TYPE = 'photo';
+
+    public function __construct(
+        string $id,
+        string $photo_file_id,
+        string $type = self::TYPE,
+        ?string $title = null,
+        ?string $description = null,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+    ) {
+        parent::__construct([
+            'type'                     => $type,
+            'id'                       => $id,
+            'photo_file_id'            => $photo_file_id,
+            'title'                    => $title,
+            'description'              => $description,
+            'caption'                  => $caption,
+            'parse_mode'               => $parse_mode,
+            'caption_entities'         => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'reply_markup'             => $reply_markup,
+            'input_message_content'    => $input_message_content,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -65,11 +95,5 @@ class InlineQueryResultCachedPhoto extends InlineQueryResult
             'input_message_content'    => FieldType::optional(InputMessageContent::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('photo');
     }
 }

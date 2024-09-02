@@ -33,22 +33,17 @@ abstract class abstractType implements TypesInterface, Stringable, JsonSerializa
         }
 
         if (static::hasChilds() === false) {
-            return new static($update);
+            return new static(...$update);
         }
 
         $className = static::selectChild($update);
 
         // avoid recursion
         if ($className === static::class) {
-            return new static($update);
+            return new static(...$update);
         }
 
-        return new $className($update);
-    }
-
-    public static function default(): static
-    {
-        return new static();
+        return new $className(...$update);
     }
 
     public static function bulkCreate(?array $up): ?array
@@ -75,7 +70,7 @@ abstract class abstractType implements TypesInterface, Stringable, JsonSerializa
     public static function bulkToJson(array $types): string
     {
         return json_encode(
-            array_map(fn (TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
+            array_map(fn(TypesInterface $type) => $type->getReduced(), $types) // Convert types to array
         );
     }
 

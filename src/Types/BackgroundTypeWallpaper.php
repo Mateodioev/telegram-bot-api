@@ -31,6 +31,23 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BackgroundTypeWallpaper extends BackgroundType
 {
+    public const TYPE = 'wallpaper';
+
+    public function __construct(
+        Document $document,
+        int $dark_theme_dimming,
+        ?bool $is_blurred = null,
+        ?bool $is_moving = null,
+    ) {
+        parent::__construct([
+            'type'               => static::TYPE,
+            'document'           => $document,
+            'dark_theme_dimming' => $dark_theme_dimming,
+            'is_blurred'         => $is_blurred,
+            'is_moving'          => $is_moving,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -41,11 +58,5 @@ class BackgroundTypeWallpaper extends BackgroundType
             'is_moving'          => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('wallpaper');
     }
 }

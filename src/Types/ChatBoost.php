@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatBoost extends abstractType
 {
+    public function __construct(
+        string $boost_id,
+        int $add_date,
+        int $expiration_date,
+        ChatBoostSource $source,
+    ) {
+        parent::__construct([
+            'boost_id'        => $boost_id,
+            'add_date'        => $add_date,
+            'expiration_date' => $expiration_date,
+            'source'          => $source,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

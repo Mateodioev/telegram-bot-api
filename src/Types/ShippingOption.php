@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ShippingOption extends abstractType
 {
+    public function __construct(
+        string $id,
+        string $title,
+        array $prices = [],
+    ) {
+        parent::__construct([
+            'id'     => $id,
+            'title'  => $title,
+            'prices' => $prices,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

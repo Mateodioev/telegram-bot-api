@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Voice extends abstractType
 {
+    public function __construct(
+        string $file_id,
+        string $file_unique_id,
+        int $duration,
+        ?string $mime_type = null,
+        ?int $file_size = null,
+    ) {
+        parent::__construct([
+            'file_id'        => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'duration'       => $duration,
+            'mime_type'      => $mime_type,
+            'file_size'      => $file_size,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

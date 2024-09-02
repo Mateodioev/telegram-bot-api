@@ -28,6 +28,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageOriginChat extends MessageOrigin
 {
+    public const TYPE = 'chat';
+
+    public function __construct(
+        int $date,
+        Chat $sender_chat,
+        string $type = self::TYPE,
+        ?string $author_signature = null,
+    ) {
+        parent::__construct([
+            'type'             => $type,
+            'date'             => $date,
+            'sender_chat'      => $sender_chat,
+            'author_signature' => $author_signature,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

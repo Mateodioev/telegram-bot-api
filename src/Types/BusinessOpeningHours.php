@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BusinessOpeningHours extends abstractType
 {
+    public function __construct(
+        string $time_zone_name,
+        array $opening_hours = [],
+    ) {
+        parent::__construct([
+            'time_zone_name' => $time_zone_name,
+            'opening_hours'  => $opening_hours,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

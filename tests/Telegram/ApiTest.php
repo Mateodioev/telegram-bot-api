@@ -114,8 +114,8 @@ class ApiTest extends TestCase
     public function testSendMultipleFiles()
     {
         $media = [
-            InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'),
-            InputMediaDocument::default()->setMedia(InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt'))
+            new InputMediaDocument(media: 'https://github.githubassets.com/favicons/favicon.png'),
+            new InputMediaDocument(media: $this->getMedia()),
         ];
 
         $messages = self::getApi()->sendMediaGroup(
@@ -133,8 +133,8 @@ class ApiTest extends TestCase
     public function testAsyncSendMultipleFiles()
     {
         $media = [
-            InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'),
-            InputMediaDocument::default()->setMedia(InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt'))
+            new InputMediaDocument(media: 'https://github.githubassets.com/favicons/favicon.png'),
+            new InputMediaDocument(media: $this->getMedia()),
         ];
 
         $messages = self::getApi()->setAsync(true)->sendMediaGroup(
@@ -153,8 +153,8 @@ class ApiTest extends TestCase
     {
         // You cant combine documents or audio files with other type of files
         $media = [
-            InputMediaPhoto::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'),
-            InputMediaDocument::default()->setMedia(InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt'))
+            new InputMediaDocument(media: 'https://github.githubassets.com/favicons/favicon.png'),
+            new InputMediaDocument(media: $this->getMedia()),
         ];
 
         $this->expectException(TelegramApiException::class);
@@ -169,7 +169,7 @@ class ApiTest extends TestCase
 
     public function testSendInvalidMediaCount()
     {
-        $media = InputMediaDocument::default()->setMedia('https://github.githubassets.com/favicons/favicon.png'); // Not supported local files
+        $media = new InputMediaDocument(media: 'https://github.githubassets.com/favicons/favicon.png'); // Not supported local files
 
         $this->expectException(TelegramParamException::class);
         $this->expectExceptionMessage('Media group must have at least 2 and at most 10 items');
@@ -178,5 +178,10 @@ class ApiTest extends TestCase
             chatID: $_ENV['TELEGRAM_CHAT_ID'],
             media: [$media]
         );
+    }
+
+    private function getMedia(): InputFile
+    {
+        return InputFile::fromLocal(__DIR__ . '/test.txt', 'test.txt');
     }
 }

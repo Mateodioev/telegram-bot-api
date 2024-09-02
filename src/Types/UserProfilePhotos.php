@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class UserProfilePhotos extends abstractType
 {
+    public function __construct(
+        int $total_count,
+        array $photos = [],
+    ) {
+        parent::__construct([
+            'total_count' => $total_count,
+            'photos'      => $photos,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

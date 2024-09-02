@@ -40,9 +40,9 @@ class MenuButton extends abstractType
         }
 
         return match ($update['type']) {
-            'commands' => MenuButtonCommands::class,
-            'web_app' => MenuButtonWebApp::class,
-            'default' => MenuButtonDefault::class,
+            MenuButtonCommands::TYPE => MenuButtonCommands::class,
+            MenuButtonWebApp::TYPE => MenuButtonWebApp::class,
+            MenuButtonDefault::TYPE => MenuButtonDefault::class,
             default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in MenuButton')
         };
     }

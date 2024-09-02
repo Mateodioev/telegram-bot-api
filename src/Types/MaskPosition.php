@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MaskPosition extends abstractType
 {
+    public function __construct(
+        string $point,
+        float $x_shift,
+        float $y_shift,
+        float $scale,
+    ) {
+        parent::__construct([
+            'point'   => $point,
+            'x_shift' => $x_shift,
+            'y_shift' => $y_shift,
+            'scale'   => $scale,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

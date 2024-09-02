@@ -39,9 +39,9 @@ class RevenueWithdrawalState extends abstractType
         }
 
         return match ($update['type']) {
-            'pending' => RevenueWithdrawalStatePending::class,
-            'succeeded' => RevenueWithdrawalStateSucceeded::class,
-            'failed' => RevenueWithdrawalStateFailed::class,
+            RevenueWithdrawalStatePending::TYPE => RevenueWithdrawalStatePending::class,
+            RevenueWithdrawalStateSucceeded::TYPE => RevenueWithdrawalStateSucceeded::class,
+            RevenueWithdrawalStateFailed::TYPE => RevenueWithdrawalStateFailed::class,
             default => TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }

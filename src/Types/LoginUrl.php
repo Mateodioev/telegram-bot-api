@@ -29,6 +29,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class LoginUrl extends abstractType
 {
+    public function __construct(
+        string $url,
+        ?string $forward_text = null,
+        ?string $bot_username = null,
+        ?bool $request_write_access = null,
+    ) {
+        parent::__construct([
+            'url'                  => $url,
+            'forward_text'         => $forward_text,
+            'bot_username'         => $bot_username,
+            'request_write_access' => $request_write_access,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

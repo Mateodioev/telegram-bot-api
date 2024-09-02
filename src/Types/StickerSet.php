@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class StickerSet extends abstractType
 {
+    public function __construct(
+        string $name,
+        string $title,
+        string $sticker_type,
+        array $stickers = [],
+        ?PhotoSize $thumbnail = null,
+    ) {
+        parent::__construct([
+            'name'         => $name,
+            'title'        => $title,
+            'sticker_type' => $sticker_type,
+            'stickers'     => $stickers,
+            'thumbnail'    => $thumbnail,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

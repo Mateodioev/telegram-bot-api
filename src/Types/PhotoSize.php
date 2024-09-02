@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PhotoSize extends abstractType
 {
+    public function __construct(
+        string $file_id,
+        string $file_unique_id,
+        int $width,
+        int $height,
+        ?int $file_size = null,
+    ) {
+        parent::__construct([
+            'file_id'        => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'width'          => $width,
+            'height'         => $height,
+            'file_size'      => $file_size,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

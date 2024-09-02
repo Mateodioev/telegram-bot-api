@@ -37,8 +37,8 @@ class ReactionType extends abstractType
         }
 
         return match ($update['type']) {
-            'emoji' => ReactionTypeEmoji::class,
-            'custom_emoji' => ReactionTypeCustomEmoji::class,
+            ReactionTypeEmoji::TYPE => ReactionTypeEmoji::class,
+            ReactionTypeCustomEmoji::TYPE => ReactionTypeCustomEmoji::class,
             default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in ReactionType')
         };
     }

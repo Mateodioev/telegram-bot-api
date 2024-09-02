@@ -43,7 +43,7 @@ class TypeStr
 
             %s
             class {$this->type->name} extends {$this->parentClass()}
-            {
+            {%s
                 protected function boot(): void
                 {
                     \$this->fields = [
@@ -156,6 +156,7 @@ class TypeStr
         return sprintf(
             $this->classHeader(),
             $this->generatePhpDoc(),
+            $this->generateConstructor(),
             $this->generateFields(),
             $this->generateChildMethod(),
         );
@@ -183,6 +184,53 @@ class TypeStr
             $childArray[] = $this->tab(3) . $subType . '::class,';
         }
         return sprintf($format, \join(PHP_EOL, $childArray));
+    }
+
+    /**
+     * Generate the constructor for the class.
+     * @return string
+     */
+    private function generateConstructor(): string
+    {
+        if (empty($this->type->fields)) {
+            return '';
+        }
+
+        return PHP_EOL . $this->tab(1) . 'public function __construct('
+            . $this->generateConstructorParams()
+            . PHP_EOL . $this->tab(1) . ') {'
+            . PHP_EOL . $this->tab(2) . 'parent::__construct([' . $this->generateConstructorArray()
+            . PHP_EOL . $this->tab(2) . ']);'
+            . PHP_EOL . $this->tab(1) . '}' . PHP_EOL;
+    }
+
+    private function generateConstructorParams(): string
+    {
+        $params = array_map(function (Field $field) {
+            $type = $field->safeTypeStr();
+            $fieldStr = "$type \${$field->name}";
+
+            if ($field->required == false) {
+                $fieldStr .= ' = null';
+            }
+            if ($type === 'array') {
+                $fieldStr .= ' = []';
+            }
+
+            return $this->tab(2) . $fieldStr;
+        }, $this->type->fields);
+
+        return PHP_EOL . join(',' . PHP_EOL, $params) . ',';
+    }
+
+    private function generateConstructorArray(): string
+    {
+        $fields = array_map(function (Field $field) {
+            $spaces = str_repeat(' ', $this->maxFieldLength - $this->fieldLength($field->name));
+            return $this->tab(3) . '\'' . $field->name . '\' ' . $spaces . '=> $' . $field->name . ',';
+        }, $this->type->fields);
+
+        return PHP_EOL . join(PHP_EOL, $fields);
     }
 
     /**

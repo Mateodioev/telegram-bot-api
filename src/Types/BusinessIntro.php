@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BusinessIntro extends abstractType
 {
+    public function __construct(
+        ?string $title = null,
+        ?string $message = null,
+        ?Sticker $sticker = null,
+    ) {
+        parent::__construct([
+            'title'   => $title,
+            'message' => $message,
+            'sticker' => $sticker,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

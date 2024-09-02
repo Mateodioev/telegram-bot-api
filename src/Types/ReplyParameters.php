@@ -37,6 +37,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ReplyParameters extends abstractType
 {
+    public function __construct(
+        int $message_id,
+        int|string|null $chat_id = null,
+        ?bool $allow_sending_without_reply = null,
+        ?string $quote = null,
+        ?string $quote_parse_mode = null,
+        ?array $quote_entities = null,
+        ?int $quote_position = null,
+    ) {
+        parent::__construct([
+            'message_id'                  => $message_id,
+            'chat_id'                     => $chat_id,
+            'allow_sending_without_reply' => $allow_sending_without_reply,
+            'quote'                       => $quote,
+            'quote_parse_mode'            => $quote_parse_mode,
+            'quote_entities'              => $quote_entities,
+            'quote_position'              => $quote_position,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

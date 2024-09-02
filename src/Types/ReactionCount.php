@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ReactionCount extends abstractType
 {
+    public function __construct(
+        ReactionType $type,
+        int $total_count,
+    ) {
+        parent::__construct([
+            'type'        => $type,
+            'total_count' => $total_count,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

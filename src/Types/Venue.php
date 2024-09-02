@@ -37,6 +37,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Venue extends abstractType
 {
+    public function __construct(
+        Location $location,
+        string $title,
+        string $address,
+        ?string $foursquare_id = null,
+        ?string $foursquare_type = null,
+        ?string $google_place_id = null,
+        ?string $google_place_type = null,
+    ) {
+        parent::__construct([
+            'location'          => $location,
+            'title'             => $title,
+            'address'           => $address,
+            'foursquare_id'     => $foursquare_id,
+            'foursquare_type'   => $foursquare_type,
+            'google_place_id'   => $google_place_id,
+            'google_place_type' => $google_place_type,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

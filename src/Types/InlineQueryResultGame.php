@@ -28,6 +28,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultGame extends InlineQueryResult
 {
+    public const TYPE = 'game';
+
+    public function __construct(
+        string $id,
+        string $game_short_name,
+        string $type = self::TYPE,
+        ?InlineKeyboardMarkup $reply_markup = null,
+    ) {
+        parent::__construct([
+            'type'            => $type,
+            'id'              => $id,
+            'game_short_name' => $game_short_name,
+            'reply_markup'    => $reply_markup,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -37,11 +53,5 @@ class InlineQueryResultGame extends InlineQueryResult
             'reply_markup'    => FieldType::optional(InlineKeyboardMarkup::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('game');
     }
 }

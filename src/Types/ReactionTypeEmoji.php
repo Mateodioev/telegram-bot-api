@@ -22,6 +22,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ReactionTypeEmoji extends ReactionType
 {
+    public const TYPE = 'emoji';
+
+    public function __construct(
+        string $emoji,
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type'  => $type,
+            'emoji' => $emoji,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

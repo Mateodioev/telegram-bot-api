@@ -41,10 +41,10 @@ class MessageOrigin extends abstractType
         }
 
         return match ($update['type']) {
-            'user' => MessageOriginUser::class,
-            'hidden_user' => MessageOriginHiddenUser::class,
-            'chat' => MessageOriginChat::class,
-            'channel' => MessageOriginChannel::class,
+            MessageOriginUser::TYPE => MessageOriginUser::class,
+            MessageOriginHiddenUser::TYPE => MessageOriginHiddenUser::class,
+            MessageOriginChat::TYPE => MessageOriginChat::class,
+            MessageOriginChannel::TYPE => MessageOriginChannel::class,
             default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in MessageOrigin')
         };
     }

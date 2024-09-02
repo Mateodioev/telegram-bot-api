@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageReactionCountUpdated extends abstractType
 {
+    public function __construct(
+        Chat $chat,
+        int $message_id,
+        int $date,
+        array $reactions = [],
+    ) {
+        parent::__construct([
+            'chat'       => $chat,
+            'message_id' => $message_id,
+            'date'       => $date,
+            'reactions'  => $reactions,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

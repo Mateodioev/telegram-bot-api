@@ -30,6 +30,20 @@ use function sprintf;
  */
 class File extends abstractType
 {
+    public function __construct(
+        string $file_id,
+        string $file_unique_id,
+        ?int $file_size = null,
+        ?string $file_path = null,
+    ) {
+        parent::__construct([
+            'file_id'        => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'file_size'      => $file_size,
+            'file_path'      => $file_path,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

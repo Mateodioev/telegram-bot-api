@@ -61,6 +61,44 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultGif extends InlineQueryResult
 {
+    public const TYPE = 'gif';
+
+    public function __construct(
+        string $id,
+        string $gif_url,
+        string $type = self::TYPE,
+        string $thumbnail_url,
+        ?int $gif_width = null,
+        ?int $gif_height = null,
+        ?int $gif_duration = null,
+        ?string $thumbnail_mime_type = null,
+        ?string $title = null,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+    ) {
+        parent::__construct([
+            'type'                     => $type,
+            'id'                       => $id,
+            'gif_url'                  => $gif_url,
+            'gif_width'                => $gif_width,
+            'gif_height'               => $gif_height,
+            'gif_duration'             => $gif_duration,
+            'thumbnail_url'            => $thumbnail_url,
+            'thumbnail_mime_type'      => $thumbnail_mime_type,
+            'title'                    => $title,
+            'caption'                  => $caption,
+            'parse_mode'               => $parse_mode,
+            'caption_entities'         => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'reply_markup'             => $reply_markup,
+            'input_message_content'    => $input_message_content,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -81,11 +119,5 @@ class InlineQueryResultGif extends InlineQueryResult
             'input_message_content'    => FieldType::optional(InputMessageContent::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('gif');
     }
 }

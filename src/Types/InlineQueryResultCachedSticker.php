@@ -31,6 +31,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultCachedSticker extends InlineQueryResult
 {
+    public const TYPE = 'sticker';
+
+    public function __construct(
+        string $id,
+        string $sticker_file_id,
+        string $type = self::TYPE,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+    ) {
+        parent::__construct([
+            'type'                  => $type,
+            'id'                    => $id,
+            'sticker_file_id'       => $sticker_file_id,
+            'reply_markup'          => $reply_markup,
+            'input_message_content' => $input_message_content,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -41,10 +59,5 @@ class InlineQueryResultCachedSticker extends InlineQueryResult
             'input_message_content' => FieldType::optional(InputMessageContent::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('sticker');
     }
 }

@@ -88,6 +88,60 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ExternalReplyInfo extends abstractType
 {
+    public function __construct(
+        MessageOrigin $origin,
+        ?Chat $chat = null,
+        ?int $message_id = null,
+        ?LinkPreviewOptions $link_preview_options = null,
+        ?Animation $animation = null,
+        ?Audio $audio = null,
+        ?Document $document = null,
+        ?PaidMediaInfo $paid_media = null,
+        ?array $photo = null,
+        ?Sticker $sticker = null,
+        ?Story $story = null,
+        ?Video $video = null,
+        ?VideoNote $video_note = null,
+        ?Voice $voice = null,
+        ?bool $has_media_spoiler = null,
+        ?Contact $contact = null,
+        ?Dice $dice = null,
+        ?Game $game = null,
+        ?Giveaway $giveaway = null,
+        ?GiveawayWinners $giveaway_winners = null,
+        ?Invoice $invoice = null,
+        ?Location $location = null,
+        ?Poll $poll = null,
+        ?Venue $venue = null,
+    ) {
+        parent::__construct([
+            'origin'               => $origin,
+            'chat'                 => $chat,
+            'message_id'           => $message_id,
+            'link_preview_options' => $link_preview_options,
+            'animation'            => $animation,
+            'audio'                => $audio,
+            'document'             => $document,
+            'paid_media'           => $paid_media,
+            'photo'                => $photo,
+            'sticker'              => $sticker,
+            'story'                => $story,
+            'video'                => $video,
+            'video_note'           => $video_note,
+            'voice'                => $voice,
+            'has_media_spoiler'    => $has_media_spoiler,
+            'contact'              => $contact,
+            'dice'                 => $dice,
+            'game'                 => $game,
+            'giveaway'             => $giveaway,
+            'giveaway_winners'     => $giveaway_winners,
+            'invoice'              => $invoice,
+            'location'             => $location,
+            'poll'                 => $poll,
+            'venue'                => $venue,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

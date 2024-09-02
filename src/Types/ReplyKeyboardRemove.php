@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ReplyKeyboardRemove extends abstractType
 {
+    public function __construct(
+        bool $remove_keyboard,
+        ?bool $selective = null,
+    ) {
+        parent::__construct([
+            'remove_keyboard' => $remove_keyboard,
+            'selective'       => $selective,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

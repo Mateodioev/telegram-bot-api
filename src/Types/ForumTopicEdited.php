@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ForumTopicEdited extends abstractType
 {
+    public function __construct(
+        ?string $name = null,
+        ?string $icon_custom_emoji_id = null,
+    ) {
+        parent::__construct([
+            'name'                 => $name,
+            'icon_custom_emoji_id' => $icon_custom_emoji_id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

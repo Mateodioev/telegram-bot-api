@@ -43,6 +43,30 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatInviteLink extends abstractType
 {
+    public function __construct(
+        string $invite_link,
+        User $creator,
+        bool $creates_join_request,
+        bool $is_primary,
+        bool $is_revoked,
+        ?string $name = null,
+        ?int $expire_date = null,
+        ?int $member_limit = null,
+        ?int $pending_join_request_count = null,
+    ) {
+        parent::__construct([
+            'invite_link'                => $invite_link,
+            'creator'                    => $creator,
+            'creates_join_request'       => $creates_join_request,
+            'is_primary'                 => $is_primary,
+            'is_revoked'                 => $is_revoked,
+            'name'                       => $name,
+            'expire_date'                => $expire_date,
+            'member_limit'               => $member_limit,
+            'pending_join_request_count' => $pending_join_request_count,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

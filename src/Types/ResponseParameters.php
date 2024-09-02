@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ResponseParameters extends abstractType
 {
+    public function __construct(
+        ?int $migrate_to_chat_id = null,
+        ?int $retry_after = null,
+    ) {
+        parent::__construct([
+            'migrate_to_chat_id' => $migrate_to_chat_id,
+            'retry_after'        => $retry_after,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

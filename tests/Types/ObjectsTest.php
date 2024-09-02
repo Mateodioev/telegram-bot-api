@@ -70,7 +70,7 @@ class ObjectsTest extends TestCase
     {
         $data = compact('id', 'is_bot', 'first_name');
 
-        $user1 = new User($data);
+        $user1 = new User(id: $id, is_bot: $is_bot, first_name: $first_name);
         $user2 = User::create(User::create($data)->get());
 
         $this->assertSame($user1::class, $user2::class);
@@ -95,11 +95,11 @@ class ObjectsTest extends TestCase
      */
     public function testCreateTypeFromConstructor(int $id, bool $is_bot, string $first_name)
     {
-        $user = new User([
-            'id'         => $id,
-            'is_bot'     => $is_bot,
-            'first_name' => $first_name
-        ]);
+        $user = new User(
+            id: $id,
+            is_bot: $is_bot,
+            first_name: $first_name
+        );
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertSame($user->id(), $id);

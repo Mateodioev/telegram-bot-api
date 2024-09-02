@@ -28,6 +28,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PaidMediaPreview extends PaidMedia
 {
+    public const TYPE = 'preview';
+
+    public function __construct(
+        string $type = self::TYPE,
+        ?int $width = null,
+        ?int $height = null,
+        ?int $duration = null,
+    ) {
+        parent::__construct([
+            'type'     => $type,
+            'width'    => $width,
+            'height'   => $height,
+            'duration' => $duration,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -37,10 +53,5 @@ class PaidMediaPreview extends PaidMedia
             'duration' => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('preview');
     }
 }

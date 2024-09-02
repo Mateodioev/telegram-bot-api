@@ -62,7 +62,7 @@ final class FieldType
         $this->isScalar = in_array($this->type, ['integer', 'double', 'string', 'boolean', 'mixed']);
 
         if ($this->isScalar === false && class_exists($this->type) === false) {
-            throw new TelegramParamException('Invalid type ' . $this->type);
+            throw new TelegramParamException("Invalid type {$this->type}");
         }
     }
 

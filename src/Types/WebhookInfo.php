@@ -43,6 +43,30 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class WebhookInfo extends abstractType
 {
+    public function __construct(
+        string $url,
+        bool $has_custom_certificate,
+        int $pending_update_count,
+        ?string $ip_address = null,
+        ?int $last_error_date = null,
+        ?string $last_error_message = null,
+        ?int $last_synchronization_error_date = null,
+        ?int $max_connections = null,
+        ?array $allowed_updates = null,
+    ) {
+        parent::__construct([
+            'url'                             => $url,
+            'has_custom_certificate'          => $has_custom_certificate,
+            'pending_update_count'            => $pending_update_count,
+            'ip_address'                      => $ip_address,
+            'last_error_date'                 => $last_error_date,
+            'last_error_message'              => $last_error_message,
+            'last_synchronization_error_date' => $last_synchronization_error_date,
+            'max_connections'                 => $max_connections,
+            'allowed_updates'                 => $allowed_updates,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

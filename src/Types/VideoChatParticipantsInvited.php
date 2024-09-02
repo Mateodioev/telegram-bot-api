@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class VideoChatParticipantsInvited extends abstractType
 {
+    public function __construct(
+        array $users = [],
+    ) {
+        parent::__construct([
+            'users' => $users,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

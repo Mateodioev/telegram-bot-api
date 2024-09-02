@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultsButton extends abstractType
 {
+    public function __construct(
+        string $text,
+        ?WebAppInfo $web_app = null,
+        ?string $start_parameter = null,
+    ) {
+        parent::__construct([
+            'text'            => $text,
+            'web_app'         => $web_app,
+            'start_parameter' => $start_parameter,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

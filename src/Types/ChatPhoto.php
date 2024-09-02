@@ -28,6 +28,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatPhoto extends abstractType
 {
+    public function __construct(
+        string $small_file_id,
+        string $small_file_unique_id,
+        string $big_file_id,
+        string $big_file_unique_id,
+    ) {
+        parent::__construct([
+            'small_file_id'        => $small_file_id,
+            'small_file_unique_id' => $small_file_unique_id,
+            'big_file_id'          => $big_file_id,
+            'big_file_unique_id'   => $big_file_unique_id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -37,6 +37,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class CallbackQuery extends abstractType
 {
+    public function __construct(
+        string $id,
+        User $from,
+        ?MaybeInaccessibleMessage $message = null,
+        ?string $inline_message_id = null,
+        string $chat_instance,
+        ?string $data = null,
+        ?string $game_short_name = null,
+    ) {
+        parent::__construct([
+            'id'                => $id,
+            'from'              => $from,
+            'message'           => $message,
+            'inline_message_id' => $inline_message_id,
+            'chat_instance'     => $chat_instance,
+            'data'              => $data,
+            'game_short_name'   => $game_short_name,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

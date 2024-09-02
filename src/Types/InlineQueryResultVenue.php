@@ -61,6 +61,44 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultVenue extends InlineQueryResult
 {
+    public const TYPE = 'venue';
+
+    public function __construct(
+        string $id,
+        float $latitude,
+        float $longitude,
+        string $title,
+        string $address,
+        string $type = self::TYPE,
+        ?string $foursquare_id = null,
+        ?string $foursquare_type = null,
+        ?string $google_place_id = null,
+        ?string $google_place_type = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+        ?string $thumbnail_url = null,
+        ?int $thumbnail_width = null,
+        ?int $thumbnail_height = null,
+    ) {
+        parent::__construct([
+            'type'                  => $type,
+            'id'                    => $id,
+            'latitude'              => $latitude,
+            'longitude'             => $longitude,
+            'title'                 => $title,
+            'address'               => $address,
+            'foursquare_id'         => $foursquare_id,
+            'foursquare_type'       => $foursquare_type,
+            'google_place_id'       => $google_place_id,
+            'google_place_type'     => $google_place_type,
+            'reply_markup'          => $reply_markup,
+            'input_message_content' => $input_message_content,
+            'thumbnail_url'         => $thumbnail_url,
+            'thumbnail_width'       => $thumbnail_width,
+            'thumbnail_height'      => $thumbnail_height,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -81,11 +119,5 @@ class InlineQueryResultVenue extends InlineQueryResult
             'thumbnail_height'      => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('venue');
     }
 }

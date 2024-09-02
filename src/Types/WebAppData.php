@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class WebAppData extends abstractType
 {
+    public function __construct(
+        string $data,
+        string $button_text,
+    ) {
+        parent::__construct([
+            'data'        => $data,
+            'button_text' => $button_text,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Dice extends abstractType
 {
+    public function __construct(
+        string $emoji,
+        int $value,
+    ) {
+        parent::__construct([
+            'emoji' => $emoji,
+            'value' => $value,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -39,9 +39,9 @@ class PaidMedia extends abstractType
         }
 
         return match ($update['type']) {
-            'preview' => PaidMediaPreview::class,
-            'photo' => PaidMediaPhoto::class,
-            'video' => PaidMediaVideo::class,
+            PaidMediaPreview::TYPE => PaidMediaPreview::class,
+            PaidMediaPhoto::TYPE => PaidMediaPhoto::class,
+            PaidMediaVideo::TYPE => PaidMediaVideo::class,
             default => TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }

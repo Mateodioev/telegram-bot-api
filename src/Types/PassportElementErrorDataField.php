@@ -31,6 +31,24 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PassportElementErrorDataField extends PassportElementError
 {
+    public const SOURCE = 'data';
+
+    public function __construct(
+        string $type,
+        string $field_name,
+        string $data_hash,
+        string $message,
+        string $source = self::SOURCE,
+    ) {
+        parent::__construct([
+            'source'     => $source,
+            'type'       => $type,
+            'field_name' => $field_name,
+            'data_hash'  => $data_hash,
+            'message'    => $message,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -41,11 +59,5 @@ class PassportElementErrorDataField extends PassportElementError
             'message'    => FieldType::single('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setSource('data');
     }
 }

@@ -22,6 +22,17 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BackgroundFillSolid extends BackgroundFill
 {
+    public const TYPE = 'solid';
+
+    public function __construct(
+        int $color,
+    ) {
+        parent::__construct([
+            'type'  => self::TYPE,
+            'color' => $color,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -29,11 +40,5 @@ class BackgroundFillSolid extends BackgroundFill
             'color' => FieldType::single('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('solid');
     }
 }

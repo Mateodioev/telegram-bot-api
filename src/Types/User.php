@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\{FieldType, ParseMode};
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, ParseMode, FieldsStorage};
 
 /**
  * This object represents a Telegram user or bot.
@@ -22,6 +21,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @property bool|null $can_read_all_group_messages Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
  * @property bool|null $supports_inline_queries Optional. True, if the bot supports inline queries. Returned only in getMe.
  * @property bool|null $can_connect_to_business Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
+ * @property bool|null $has_main_web_app Optional. True, if the bot has a main Web App. Returned only in getMe.
  *
  * @method int id()
  * @method bool isBot()
@@ -35,6 +35,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method bool|null canReadAllGroupMessages()
  * @method bool|null supportsInlineQueries()
  * @method bool|null canConnectToBusiness()
+ * @method bool|null hasMainWebApp()
  *
  * @method static setId(int $id)
  * @method static setIsBot(bool $isBot)
@@ -48,11 +49,44 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method static setCanReadAllGroupMessages(bool|null $canReadAllGroupMessages)
  * @method static setSupportsInlineQueries(bool|null $supportsInlineQueries)
  * @method static setCanConnectToBusiness(bool|null $canConnectToBusiness)
+ * @method static hasMainWebApp(bool|null $hasMainWebApp)
  *
  * @see https://core.telegram.org/bots/api#user
  */
 class User extends abstractType
 {
+    public function __construct(
+        int $id,
+        bool $is_bot,
+        string $first_name,
+        ?string $last_name = null,
+        ?string $username = null,
+        ?string $language_code = null,
+        ?bool $is_premium = null,
+        ?bool $added_to_attachment_menu = null,
+        ?bool $can_join_groups = null,
+        ?bool $can_read_all_group_messages = null,
+        ?bool $supports_inline_queries = null,
+        ?bool $can_connect_to_business = null,
+        ?bool $has_main_web_app = null,
+    ) {
+        parent::__construct([
+            'id'                          => $id,
+            'is_bot'                      => $is_bot,
+            'first_name'                  => $first_name,
+            'last_name'                   => $last_name,
+            'username'                    => $username,
+            'language_code'               => $language_code,
+            'is_premium'                  => $is_premium,
+            'added_to_attachment_menu'    => $added_to_attachment_menu,
+            'can_join_groups'             => $can_join_groups,
+            'can_read_all_group_messages' => $can_read_all_group_messages,
+            'supports_inline_queries'     => $supports_inline_queries,
+            'can_connect_to_business'     => $can_connect_to_business,
+            'has_main_web_app'            => $has_main_web_app,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -68,6 +102,7 @@ class User extends abstractType
             'can_read_all_group_messages' => FieldType::optional('boolean'),
             'supports_inline_queries'     => FieldType::optional('boolean'),
             'can_connect_to_business'     => FieldType::optional('boolean'),
+            'has_main_web_app'            => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

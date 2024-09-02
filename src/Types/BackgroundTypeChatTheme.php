@@ -22,6 +22,17 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BackgroundTypeChatTheme extends BackgroundType
 {
+    public const TYPE = 'chat_theme';
+
+    public function __construct(
+        string $theme_name,
+    ) {
+        parent::__construct([
+            'type'       => self::TYPE,
+            'theme_name' => $theme_name,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -29,11 +40,5 @@ class BackgroundTypeChatTheme extends BackgroundType
             'theme_name' => FieldType::single('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('chat_theme');
     }
 }

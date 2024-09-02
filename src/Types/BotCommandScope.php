@@ -47,13 +47,13 @@ class BotCommandScope extends abstractType
         }
 
         return match ($update['type']) {
-            'default' => BotCommandScopeDefault::class,
-            'all_private_chats' => BotCommandScopeAllPrivateChats::class,
-            'all_group_chats' => BotCommandScopeAllGroupChats::class,
-            'all_chat_administrators' => BotCommandScopeAllChatAdministrators::class,
-            'chat' => BotCommandScopeChat::class,
-            'chat_administrators' => BotCommandScopeChatAdministrators::class,
-            'chat_member' => BotCommandScopeChatMember::class,
+            BotCommandScopeDefault::TYPE => BotCommandScopeDefault::class,
+            BotCommandScopeAllPrivateChats::TYPE => BotCommandScopeAllPrivateChats::class,
+            BotCommandScopeAllGroupChats::TYPE => BotCommandScopeAllGroupChats::class,
+            BotCommandScopeAllChatAdministrators::TYPE => BotCommandScopeAllChatAdministrators::class,
+            BotCommandScopeChat::TYPE => BotCommandScopeChat::class,
+            BotCommandScopeChatAdministrators::TYPE => BotCommandScopeChatAdministrators::class,
+            BotCommandScopeChatMember::TYPE => BotCommandScopeChatMember::class,
             default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in BotCommandScope')
         };
     }

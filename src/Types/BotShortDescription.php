@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BotShortDescription extends abstractType
 {
+    public function __construct(
+        string $short_description,
+    ) {
+        parent::__construct([
+            'short_description' => $short_description,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

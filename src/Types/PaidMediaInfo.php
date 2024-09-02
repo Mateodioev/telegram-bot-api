@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PaidMediaInfo extends abstractType
 {
+    public function __construct(
+        int $star_count,
+        array $paid_media = [],
+    ) {
+        parent::__construct([
+            'star_count' => $star_count,
+            'paid_media' => $paid_media,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

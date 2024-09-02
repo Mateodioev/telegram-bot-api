@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ForceReply extends abstractType
 {
+    public function __construct(
+        bool $force_reply,
+        ?string $input_field_placeholder = null,
+        ?bool $selective = null,
+    ) {
+        parent::__construct([
+            'force_reply'             => $force_reply,
+            'input_field_placeholder' => $input_field_placeholder,
+            'selective'               => $selective,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

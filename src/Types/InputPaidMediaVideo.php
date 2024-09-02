@@ -37,6 +37,28 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputPaidMediaVideo extends InputPaidMedia
 {
+    public const TYPE = 'video';
+
+    public function __construct(
+        string|InputFile $media,
+        string $type = self::TYPE,
+        InputFile|string|null $thumbnail = null,
+        ?int $width = null,
+        ?int $height = null,
+        ?int $duration = null,
+        ?bool $supports_streaming = null,
+    ) {
+        parent::__construct([
+            'type'               => $type,
+            'media'              => $media,
+            'thumbnail'          => $thumbnail,
+            'width'              => $width,
+            'height'             => $height,
+            'duration'           => $duration,
+            'supports_streaming' => $supports_streaming,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -49,10 +71,5 @@ class InputPaidMediaVideo extends InputPaidMedia
             'supports_streaming' => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('video');
     }
 }

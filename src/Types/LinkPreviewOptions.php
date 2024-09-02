@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class LinkPreviewOptions extends abstractType
 {
+    public function __construct(
+        ?bool $is_disabled = null,
+        ?string $url = null,
+        ?bool $prefer_small_media = null,
+        ?bool $prefer_large_media = null,
+        ?bool $show_above_text = null,
+    ) {
+        parent::__construct([
+            'is_disabled'        => $is_disabled,
+            'url'                => $url,
+            'prefer_small_media' => $prefer_small_media,
+            'prefer_large_media' => $prefer_large_media,
+            'show_above_text'    => $show_above_text,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

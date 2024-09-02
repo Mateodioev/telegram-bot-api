@@ -73,6 +73,51 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class ChatMemberAdministrator extends ChatMember
 {
+    public const STATUS = 'administrator';
+
+    public function __construct(
+        User $user,
+        bool $can_be_edited,
+        bool $is_anonymous,
+        bool $can_manage_chat,
+        bool $can_delete_messages,
+        bool $can_manage_video_chats,
+        bool $can_restrict_members,
+        bool $can_promote_members,
+        bool $can_change_info,
+        bool $can_invite_users,
+        bool $can_post_stories,
+        bool $can_edit_stories,
+        bool $can_delete_stories,
+        ?bool $can_post_messages = null,
+        ?bool $can_edit_messages = null,
+        ?bool $can_pin_messages = null,
+        ?bool $can_manage_topics = null,
+        ?string $custom_title = null,
+    ) {
+        parent::__construct([
+            'status'                 => self::STATUS,
+            'user'                   => $user,
+            'can_be_edited'          => $can_be_edited,
+            'is_anonymous'           => $is_anonymous,
+            'can_manage_chat'        => $can_manage_chat,
+            'can_delete_messages'    => $can_delete_messages,
+            'can_manage_video_chats' => $can_manage_video_chats,
+            'can_restrict_members'   => $can_restrict_members,
+            'can_promote_members'    => $can_promote_members,
+            'can_change_info'        => $can_change_info,
+            'can_invite_users'       => $can_invite_users,
+            'can_post_stories'       => $can_post_stories,
+            'can_edit_stories'       => $can_edit_stories,
+            'can_delete_stories'     => $can_delete_stories,
+            'can_post_messages'      => $can_post_messages,
+            'can_edit_messages'      => $can_edit_messages,
+            'can_pin_messages'       => $can_pin_messages,
+            'can_manage_topics'      => $can_manage_topics,
+            'custom_title'           => $custom_title,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

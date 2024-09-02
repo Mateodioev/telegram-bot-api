@@ -19,6 +19,14 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class WebAppInfo extends abstractType
 {
+    public function __construct(
+        string $url,
+    ) {
+        parent::__construct([
+            'url' => $url,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

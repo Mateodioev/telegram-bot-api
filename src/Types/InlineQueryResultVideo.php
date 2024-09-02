@@ -64,6 +64,46 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultVideo extends InlineQueryResult
 {
+    public const TYPE = 'video';
+
+    public function __construct(
+        string $id,
+        string $video_url,
+        string $mime_type,
+        string $thumbnail_url,
+        string $title,
+        string $type = self::TYPE,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?int $video_width = null,
+        ?int $video_height = null,
+        ?int $video_duration = null,
+        ?string $description = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+    ) {
+        parent::__construct([
+            'type'                     => $type,
+            'id'                       => $id,
+            'video_url'                => $video_url,
+            'mime_type'                => $mime_type,
+            'thumbnail_url'            => $thumbnail_url,
+            'title'                    => $title,
+            'caption'                  => $caption,
+            'parse_mode'               => $parse_mode,
+            'caption_entities'         => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'video_width'              => $video_width,
+            'video_height'             => $video_height,
+            'video_duration'           => $video_duration,
+            'description'              => $description,
+            'reply_markup'             => $reply_markup,
+            'input_message_content'    => $input_message_content,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -85,11 +125,5 @@ class InlineQueryResultVideo extends InlineQueryResult
             'input_message_content'    => FieldType::optional(InputMessageContent::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('video');
     }
 }

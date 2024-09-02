@@ -22,6 +22,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputPaidMediaPhoto extends InputPaidMedia
 {
+    public const TYPE = 'photo';
+
+    public function __construct(
+        string $type = self::TYPE,
+        string|InputFile $media,
+    ) {
+        parent::__construct([
+            'type'  => $type,
+            'media' => $media,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -29,10 +41,5 @@ class InputPaidMediaPhoto extends InputPaidMedia
             'media' => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('photo');
     }
 }

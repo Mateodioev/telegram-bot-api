@@ -25,6 +25,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class MessageOriginHiddenUser extends MessageOrigin
 {
+    public const TYPE = 'hidden_user';
+
+    public function __construct(
+        int $date,
+        string $sender_user_name,
+        string $type = self::TYPE,
+    ) {
+        parent::__construct([
+            'type'             => $type,
+            'date'             => $date,
+            'sender_user_name' => $sender_user_name,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class WriteAccessAllowed extends abstractType
 {
+    public function __construct(
+        ?bool $from_request = null,
+        ?string $web_app_name = null,
+        ?bool $from_attachment_menu = null,
+    ) {
+        parent::__construct([
+            'from_request'         => $from_request,
+            'web_app_name'         => $web_app_name,
+            'from_attachment_menu' => $from_attachment_menu,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

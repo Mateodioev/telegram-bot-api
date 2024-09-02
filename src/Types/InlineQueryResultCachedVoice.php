@@ -43,6 +43,32 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultCachedVoice extends InlineQueryResult
 {
+    public const TYPE = 'voice';
+
+    public function __construct(
+        string $id,
+        string $voice_file_id,
+        string $title,
+        string $type = self::TYPE,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+    ) {
+        parent::__construct([
+            'type'                  => $type,
+            'id'                    => $id,
+            'voice_file_id'         => $voice_file_id,
+            'title'                 => $title,
+            'caption'               => $caption,
+            'parse_mode'            => $parse_mode,
+            'caption_entities'      => $caption_entities,
+            'reply_markup'          => $reply_markup,
+            'input_message_content' => $input_message_content,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -57,11 +83,5 @@ class InlineQueryResultCachedVoice extends InlineQueryResult
             'input_message_content' => FieldType::optional(InputMessageContent::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('voice');
     }
 }

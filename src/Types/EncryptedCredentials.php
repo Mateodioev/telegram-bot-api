@@ -25,6 +25,18 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class EncryptedCredentials extends abstractType
 {
+    public function __construct(
+        string $data,
+        string $hash,
+        string $secret,
+    ) {
+        parent::__construct([
+            'data'   => $data,
+            'hash'   => $hash,
+            'secret' => $secret,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

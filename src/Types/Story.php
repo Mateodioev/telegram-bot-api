@@ -22,6 +22,16 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Story extends abstractType
 {
+    public function __construct(
+        Chat $chat,
+        int $id,
+    ) {
+        parent::__construct([
+            'chat' => $chat,
+            'id'   => $id,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

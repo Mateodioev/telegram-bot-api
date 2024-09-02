@@ -18,7 +18,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool|null $disable_content_type_detection Optional. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always True, if the document is sent as part of an album.
  *
  * @method string type()
- * @method InputFile|string media()
+ * @method string|InputFile media()
  * @method InputFile|string|null thumbnail()
  * @method string|null caption()
  * @method string|null parseMode()
@@ -37,6 +37,28 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputMediaDocument extends InputMedia
 {
+    public const TYPE = 'document';
+
+    public function __construct(
+        InputFile|string $media,
+        string $type = self::TYPE,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $disable_content_type_detection = null,
+    ) {
+        parent::__construct([
+            'type'                           => $type,
+            'media'                          => $media,
+            'thumbnail'                      => $thumbnail,
+            'caption'                        => $caption,
+            'parse_mode'                     => $parse_mode,
+            'caption_entities'               => $caption_entities,
+            'disable_content_type_detection' => $disable_content_type_detection,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -49,11 +71,5 @@ class InputMediaDocument extends InputMedia
             'disable_content_type_detection' => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('document');
     }
 }

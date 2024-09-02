@@ -43,11 +43,11 @@ class InputMedia extends abstractType
         }
 
         return match ($update['type']) {
-            'photo' => InputMediaPhoto::class,
-            'video' => InputMediaVideo::class,
-            'animation' => InputMediaAnimation::class,
-            'audio' => InputMediaAudio::class,
-            'document' => InputMediaDocument::class,
+            InputMediaPhoto::TYPE => InputMediaPhoto::class,
+            InputMediaVideo::TYPE => InputMediaVideo::class,
+            InputMediaAnimation::TYPE => InputMediaAnimation::class,
+            InputMediaAudio::TYPE => InputMediaAudio::class,
+            InputMediaDocument::TYPE => InputMediaDocument::class,
             default => throw TelegramParamException::invalidType(static::class, 'type'),
         };
     }

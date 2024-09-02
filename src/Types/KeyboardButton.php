@@ -38,6 +38,26 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class KeyboardButton extends abstractType
 {
+    public function __construct(
+        string $text,
+        ?KeyboardButtonRequestUsers $request_users = null,
+        ?KeyboardButtonRequestChat $request_chat = null,
+        ?bool $request_contact = null,
+        ?bool $request_location = null,
+        ?KeyboardButtonPollType $request_poll = null,
+        ?WebAppInfo $web_app = null,
+    ) {
+        parent::__construct([
+            'text'             => $text,
+            'request_users'    => $request_users,
+            'request_chat'     => $request_chat,
+            'request_contact'  => $request_contact,
+            'request_location' => $request_location,
+            'request_poll'     => $request_poll,
+            'web_app'          => $web_app,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

@@ -41,10 +41,10 @@ class TransactionPartner extends abstractType
         }
 
         return match ($update['type']) {
-            'user' => TransactionPartnerUser::class,
-            'fragment' => TransactionPartnerFragment::class,
-            'telegram_ads' => TransactionPartnerTelegramAds::class,
-            'other' => TransactionPartnerOther::class,
+            TransactionPartnerUser::TYPE => TransactionPartnerUser::class,
+            TransactionPartnerFragment::TYPE => TransactionPartnerFragment::class,
+            TransactionPartnerTelegramAds::TYPE => TransactionPartnerTelegramAds::class,
+            TransactionPartnerOther::TYPE => TransactionPartnerOther::class,
             default => TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }

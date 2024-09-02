@@ -58,6 +58,42 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InlineQueryResultLocation extends InlineQueryResult
 {
+    public const TYPE = 'location';
+
+    public function __construct(
+        string $id,
+        float $latitude,
+        float $longitude,
+        string $title,
+        string $type = self::TYPE,
+        ?float $horizontal_accuracy = null,
+        ?int $live_period = null,
+        ?int $heading = null,
+        ?int $proximity_alert_radius = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+        ?InputMessageContent $input_message_content = null,
+        ?string $thumbnail_url = null,
+        ?int $thumbnail_width = null,
+        ?int $thumbnail_height = null,
+    ) {
+        parent::__construct([
+            'type'                   => $type,
+            'id'                     => $id,
+            'latitude'               => $latitude,
+            'longitude'              => $longitude,
+            'title'                  => $title,
+            'horizontal_accuracy'    => $horizontal_accuracy,
+            'live_period'            => $live_period,
+            'heading'                => $heading,
+            'proximity_alert_radius' => $proximity_alert_radius,
+            'reply_markup'           => $reply_markup,
+            'input_message_content'  => $input_message_content,
+            'thumbnail_url'          => $thumbnail_url,
+            'thumbnail_width'        => $thumbnail_width,
+            'thumbnail_height'       => $thumbnail_height,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -77,11 +113,5 @@ class InlineQueryResultLocation extends InlineQueryResult
             'thumbnail_height'       => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('location');
     }
 }

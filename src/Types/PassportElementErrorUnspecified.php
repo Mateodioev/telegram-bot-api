@@ -28,6 +28,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class PassportElementErrorUnspecified extends PassportElementError
 {
+    public const SOURCE = 'unspecified';
+
+    public function __construct(
+        string $type,
+        string $element_hash,
+        string $message,
+        string $source = self::SOURCE,
+    ) {
+        parent::__construct([
+            'source'       => $source,
+            'type'         => $type,
+            'element_hash' => $element_hash,
+            'message'      => $message,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -37,11 +53,5 @@ class PassportElementErrorUnspecified extends PassportElementError
             'message'      => FieldType::single('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setSource('unspecified');
     }
 }

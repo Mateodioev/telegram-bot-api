@@ -25,6 +25,19 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class BackgroundTypeFill extends BackgroundType
 {
+    public const TYPE = 'fill';
+
+    public function __construct(
+        BackgroundFill $fill,
+        int $dark_theme_dimming,
+    ) {
+        parent::__construct([
+            'type'               => self::TYPE,
+            'fill'               => $fill,
+            'dark_theme_dimming' => $dark_theme_dimming,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -33,11 +46,5 @@ class BackgroundTypeFill extends BackgroundType
             'dark_theme_dimming' => FieldType::single('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('fill');
     }
 }

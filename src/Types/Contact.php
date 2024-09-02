@@ -31,6 +31,22 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class Contact extends abstractType
 {
+    public function __construct(
+        string $phone_number,
+        string $first_name,
+        ?string $last_name = null,
+        ?int $user_id = null,
+        ?string $vcard = null,
+    ) {
+        parent::__construct([
+            'phone_number' => $phone_number,
+            'first_name'   => $first_name,
+            'last_name'    => $last_name,
+            'user_id'      => $user_id,
+            'vcard'        => $vcard,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [

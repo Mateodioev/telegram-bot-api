@@ -25,6 +25,20 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class TransactionPartnerUser extends TransactionPartner
 {
+    public const TYPE = 'user';
+
+    public function __construct(
+        User $user,
+        string $type = self::TYPE,
+        ?string $invoice_payload = null,
+    ) {
+        parent::__construct([
+            'type'            => $type,
+            'user'            => $user,
+            'invoice_payload' => $invoice_payload,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -33,10 +47,5 @@ class TransactionPartnerUser extends TransactionPartner
             'invoice_payload' => FieldType::optional('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())->setType('user');
     }
 }

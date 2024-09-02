@@ -20,7 +20,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property string|null $title Optional. Title of the audio
  *
  * @method string type()
- * @method string media()
+ * @method string|InputFile media()
  * @method InputFile|string|null thumbnail()
  * @method string|null caption()
  * @method string|null parseMode()
@@ -43,6 +43,32 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  */
 class InputMediaAudio extends InputMedia
 {
+    public const TYPE = 'audio';
+
+    public function __construct(
+        string|InputFile $media,
+        string $type = self::TYPE,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?int $duration = null,
+        ?string $performer = null,
+        ?string $title = null,
+    ) {
+        parent::__construct([
+            'type'             => $type,
+            'media'            => $media,
+            'thumbnail'        => $thumbnail,
+            'caption'          => $caption,
+            'parse_mode'       => $parse_mode,
+            'caption_entities' => $caption_entities,
+            'duration'         => $duration,
+            'performer'        => $performer,
+            'title'            => $title,
+        ]);
+    }
+
     protected function boot(): void
     {
         $this->fields = [
@@ -57,11 +83,5 @@ class InputMediaAudio extends InputMedia
             'title'            => FieldType::optional('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
-    }
-
-    public static function default(): static
-    {
-        return (new static())
-            ->setType('audio');
     }
 }
