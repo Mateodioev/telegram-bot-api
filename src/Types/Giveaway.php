@@ -16,7 +16,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool|null $has_public_winners Optional. True, if the list of giveaway winners will be visible to everyone
  * @property string|null $prize_description Optional. Description of additional giveaway prize
  * @property string[]|null $country_codes Optional. A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.
- * @property int|null $premium_subscription_month_count Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for
+ * @property int|null $prize_star_count Optional. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
+ * @property int|null $premium_subscription_month_count Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only
  *
  * @method Chat[] chats()
  * @method int winnersSelectionDate()
@@ -25,6 +26,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method bool|null hasPublicWinners()
  * @method string|null prizeDescription()
  * @method string[]|null countryCodes()
+ * @method int|null prizeStarCount()
  * @method int|null premiumSubscriptionMonthCount()
  *
  * @method static setChats(Chat[] $chats)
@@ -34,6 +36,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setHasPublicWinners(bool|null $hasPublicWinners)
  * @method static setPrizeDescription(string|null $prizeDescription)
  * @method static setCountryCodes(string[]|null $countryCodes)
+ * @method static setPrizeStarCount(int|null $prizeStarCount)
  * @method static setPremiumSubscriptionMonthCount(int|null $premiumSubscriptionMonthCount)
  *
  * @see https://core.telegram.org/bots/api#giveaway
@@ -50,6 +53,7 @@ class Giveaway extends abstractType
             'has_public_winners'               => FieldType::optional('boolean'),
             'prize_description'                => FieldType::optional('string'),
             'country_codes'                    => new FieldType('string', allowArrays: true, allowNull: true, subTypes: []),
+            'prize_star_count'                 => FieldType::optional('integer'),
             'premium_subscription_month_count' => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);

@@ -18,6 +18,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property int|null $expire_date Optional. Point in time (Unix timestamp) when the link will expire or has been expired
  * @property int|null $member_limit Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
  * @property int|null $pending_join_request_count Optional. Number of pending join requests created using this link
+ * @property int|null $subscription_period Optional. The number of seconds the subscription will be active for before the next payment
+ * @property int|null $subscription_price Optional. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link
  *
  * @method string inviteLink()
  * @method User creator()
@@ -28,6 +30,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method int|null expireDate()
  * @method int|null memberLimit()
  * @method int|null pendingJoinRequestCount()
+ * @method int|null subscriptionPeriod()
+ * @method int|null subscriptionPrice()
  *
  * @method static setInviteLink(string $inviteLink)
  * @method static setCreator(User $creator)
@@ -38,6 +42,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setExpireDate(int|null $expireDate)
  * @method static setMemberLimit(int|null $memberLimit)
  * @method static setPendingJoinRequestCount(int|null $pendingJoinRequestCount)
+ * @method static setSubscriptionPeriod(int|null $subscriptionPeriod)
+ * @method static setSubscriptionPrice(int|null $subscriptionPrice)
  *
  * @see https://core.telegram.org/bots/api#chatinvitelink
  */
@@ -55,6 +61,8 @@ class ChatInviteLink extends abstractType
             'expire_date'                => FieldType::optional('integer'),
             'member_limit'               => FieldType::optional('integer'),
             'pending_join_request_count' => FieldType::optional('integer'),
+            'subscription_period'        => FieldType::optional('integer'),
+            'subscription_price'         => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

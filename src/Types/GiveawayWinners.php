@@ -15,7 +15,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property int $winner_count Total number of winners in the giveaway
  * @property User[] $winners List of up to 100 winners of the giveaway
  * @property int|null $additional_chat_count Optional. The number of other chats the user had to join in order to be eligible for the giveaway
- * @property int|null $premium_subscription_month_count Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for
+ * @property int|null $prize_star_count Optional. The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only
+ * @property int|null $premium_subscription_month_count Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only
  * @property int|null $unclaimed_prize_count Optional. Number of undistributed prizes
  * @property bool|null $only_new_members Optional. True, if only users who had joined the chats after the giveaway started were eligible to win
  * @property bool|null $was_refunded Optional. True, if the giveaway was canceled because the payment for it was refunded
@@ -27,6 +28,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method int winnerCount()
  * @method User[] winners()
  * @method int|null additionalChatCount()
+ * @method int|null prizeStarCount()
  * @method int|null premiumSubscriptionMonthCount()
  * @method int|null unclaimedPrizeCount()
  * @method bool|null onlyNewMembers()
@@ -39,6 +41,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setWinnerCount(int $winnerCount)
  * @method static setWinners(User[] $winners)
  * @method static setAdditionalChatCount(int|null $additionalChatCount)
+ * @method static setPrizeStarCount(int|null $prizeStarCount)
  * @method static setPremiumSubscriptionMonthCount(int|null $premiumSubscriptionMonthCount)
  * @method static setUnclaimedPrizeCount(int|null $unclaimedPrizeCount)
  * @method static setOnlyNewMembers(bool|null $onlyNewMembers)
@@ -58,6 +61,7 @@ class GiveawayWinners extends abstractType
             'winner_count'                     => FieldType::single('integer'),
             'winners'                          => FieldType::multiple(User::class),
             'additional_chat_count'            => FieldType::optional('integer'),
+            'prize_star_count'                 => FieldType::optional('integer'),
             'premium_subscription_month_count' => FieldType::optional('integer'),
             'unclaimed_prize_count'            => FieldType::optional('integer'),
             'only_new_members'                 => FieldType::optional('boolean'),

@@ -26,6 +26,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property CallbackQuery|null $callback_query Optional. New incoming callback query
  * @property ShippingQuery|null $shipping_query Optional. New incoming shipping query. Only for invoices with flexible price
  * @property PreCheckoutQuery|null $pre_checkout_query Optional. New incoming pre-checkout query. Contains full information about checkout
+ * @property PaidMediaPurchased|null $purchased_paid_media Optional. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat
  * @property Poll|null $poll Optional. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot
  * @property PollAnswer|null $poll_answer Optional. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.
  * @property ChatMemberUpdated|null $my_chat_member Optional. The bot's chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
@@ -50,6 +51,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method CallbackQuery|null callbackQuery()
  * @method ShippingQuery|null shippingQuery()
  * @method PreCheckoutQuery|null preCheckoutQuery()
+ * @method PaidMediaPurchased|null purchasedPaidMedia()
  * @method Poll|null poll()
  * @method PollAnswer|null pollAnswer()
  * @method ChatMemberUpdated|null myChatMember()
@@ -74,6 +76,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setCallbackQuery(CallbackQuery|null $callbackQuery)
  * @method static setShippingQuery(ShippingQuery|null $shippingQuery)
  * @method static setPreCheckoutQuery(PreCheckoutQuery|null $preCheckoutQuery)
+ * @method static setPurchasedPaidMedia(PaidMediaPurchased|null $purchasedPaidMedia)
  * @method static setPoll(Poll|null $poll)
  * @method static setPollAnswer(PollAnswer|null $pollAnswer)
  * @method static setMyChatMember(ChatMemberUpdated|null $myChatMember)
@@ -105,6 +108,7 @@ class Update extends abstractType
             'callback_query'            => FieldType::optional(CallbackQuery::class),
             'shipping_query'            => FieldType::optional(ShippingQuery::class),
             'pre_checkout_query'        => FieldType::optional(PreCheckoutQuery::class),
+            'purchased_paid_media'      => FieldType::optional(PaidMediaPurchased::class),
             'poll'                      => FieldType::optional(Poll::class),
             'poll_answer'               => FieldType::optional(PollAnswer::class),
             'my_chat_member'            => FieldType::optional(ChatMemberUpdated::class),

@@ -27,19 +27,21 @@ class ReactionType extends abstractType
         return [
             ReactionTypeEmoji::class,
             ReactionTypeCustomEmoji::class,
+            ReactionTypePaid::class,
         ];
     }
 
     public static function selectChild(array $update): string
     {
         if (isset($update['type']) === false) {
-            throw new TelegramParamException('Missing type field in ReactionType');
+            throw TelegramParamException::missingField(static::class, 'type');
         }
 
         return match ($update['type']) {
             'emoji' => ReactionTypeEmoji::class,
             'custom_emoji' => ReactionTypeCustomEmoji::class,
-            default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in ReactionType')
+            'paid' => ReactionTypePaid::class,
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

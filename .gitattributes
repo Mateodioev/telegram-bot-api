@@ -5,3 +5,4 @@ tools/ export-ignore
 .php-cs-fixer.dist.php export-ignore
 .editorconfig export-ignore
 phpunit.xml export-ignore
+.vscode/ export-ignore

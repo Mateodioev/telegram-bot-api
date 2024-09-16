@@ -11,7 +11,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @property string $title Product name, 1-32 characters
  * @property string $description Product description, 1-255 characters
- * @property string $payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
+ * @property string $payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.
  * @property string|null $provider_token Optional. Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars.
  * @property string $currency Three-letter ISO 4217 currency code, see more on currencies. Pass "XTR" for payments in Telegram Stars.
  * @property LabeledPrice[] $prices Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in Telegram Stars.

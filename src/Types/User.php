@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\{FieldType, ParseMode};
-use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage, ParseMode};
 
 /**
  * This object represents a Telegram user or bot.
@@ -22,6 +21,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @property bool|null $can_read_all_group_messages Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
  * @property bool|null $supports_inline_queries Optional. True, if the bot supports inline queries. Returned only in getMe.
  * @property bool|null $can_connect_to_business Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
+ * @property bool|null $has_main_web_app Optional. True, if the bot has a main Web App. Returned only in getMe.
  *
  * @method int id()
  * @method bool isBot()
@@ -35,6 +35,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method bool|null canReadAllGroupMessages()
  * @method bool|null supportsInlineQueries()
  * @method bool|null canConnectToBusiness()
+ * @method bool|null hasMainWebApp()
  *
  * @method static setId(int $id)
  * @method static setIsBot(bool $isBot)
@@ -48,6 +49,7 @@ use Mateodioev\Bots\Telegram\Config\FieldsStorage;
  * @method static setCanReadAllGroupMessages(bool|null $canReadAllGroupMessages)
  * @method static setSupportsInlineQueries(bool|null $supportsInlineQueries)
  * @method static setCanConnectToBusiness(bool|null $canConnectToBusiness)
+ * @method static setHasMainWebApp(bool|null $hasMainWebApp)
  *
  * @see https://core.telegram.org/bots/api#user
  */
@@ -68,26 +70,28 @@ class User extends abstractType
             'can_read_all_group_messages' => FieldType::optional('boolean'),
             'supports_inline_queries'     => FieldType::optional('boolean'),
             'can_connect_to_business'     => FieldType::optional('boolean'),
+            'has_main_web_app'            => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     /**
-     * Get inline mention for this user. See {@see self::getName()} for name syntax.
+     * Get inline mention for this user. See {@see self::getName()} for name formatting.
      */
     public function mention(ParseMode $mode = ParseMode::HTML, ?string $customName = null): string
     {
         $name = $mode->scapeTags($customName ?? $this->getName());
+        $id = $this->properties['id'];
 
-        if ($mode == ParseMode::HTML) {
-            return '<a href="tg://user?id=' . $this->properties['id'] . '">' . $name . '</a>';
+        if ($mode === ParseMode::HTML) {
+            return "<a href=\"tg://user?id=$id\">$name</a>";
         }
 
-        return '[' . $name . '](tg://user?id=' . $this->properties['id'] . ')';
+        return "[$name](tg://user?id=$id)";
     }
 
     /**
-     * Get first name and last name of this user.
+     * Get first name and last name for this user.
      */
     public function getName(): string
     {

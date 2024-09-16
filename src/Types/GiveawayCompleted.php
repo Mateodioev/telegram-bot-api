@@ -12,14 +12,17 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property int $winner_count Number of winners in the giveaway
  * @property int|null $unclaimed_prize_count Optional. Number of undistributed prizes
  * @property Message|null $giveaway_message Optional. Message with the giveaway that was completed, if it wasn't deleted
+ * @property bool|null $is_star_giveaway Optional. True, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.
  *
  * @method int winnerCount()
  * @method int|null unclaimedPrizeCount()
  * @method Message|null giveawayMessage()
+ * @method bool|null isStarGiveaway()
  *
  * @method static setWinnerCount(int $winnerCount)
  * @method static setUnclaimedPrizeCount(int|null $unclaimedPrizeCount)
  * @method static setGiveawayMessage(Message|null $giveawayMessage)
+ * @method static setIsStarGiveaway(bool|null $isStarGiveaway)
  *
  * @see https://core.telegram.org/bots/api#giveawaycompleted
  */
@@ -31,6 +34,7 @@ class GiveawayCompleted extends abstractType
             'winner_count'          => FieldType::single('integer'),
             'unclaimed_prize_count' => FieldType::optional('integer'),
             'giveaway_message'      => FieldType::optional(Message::class),
+            'is_star_giveaway'      => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
