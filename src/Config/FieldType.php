@@ -17,6 +17,9 @@ use function is_a;
  */
 final class FieldType
 {
+    /**
+     * @var class-string<Mateodioev\Bots\Telegram\Interfaces\TypesInterface>|null $customType
+     */
     public ?string $customType = null;
 
     private bool $isScalar = false;
@@ -24,6 +27,19 @@ final class FieldType
 
     private array $cachedSubFields = [];
     private ?Closure $matcher = null;
+
+    private const string TYPE_MIXED = 'mixed';
+    private const string TYPE_INT = 'integer';
+    private const string TYPE_FLOAT = 'double';
+    private const string TYPE_STRING = 'string';
+    private const string TYPE_BOOL = 'boolean';
+    private const SCALAR_TYPES = [
+        self::TYPE_INT,
+        self::TYPE_FLOAT,
+        self::TYPE_STRING,
+        self::TYPE_BOOL,
+        self::TYPE_MIXED,
+    ];
 
     public static function single(string $type): FieldType
     {
@@ -42,7 +58,7 @@ final class FieldType
 
     public static function mixed(): FieldType
     {
-        return new FieldType('mixed');
+        return new FieldType(self::TYPE_MIXED);
     }
 
     public function __construct(
@@ -51,7 +67,7 @@ final class FieldType
         private readonly bool   $allowNull = false,
         private readonly array  $subTypes = []
     ) {
-        if ($this->type === 'mixed') {
+        if ($this->type === self::TYPE_MIXED) {
             $this->isMixed = true;
         }
 
@@ -59,7 +75,7 @@ final class FieldType
             $this->getSubFields();
         }
 
-        $this->isScalar = in_array($this->type, ['integer', 'double', 'string', 'boolean', 'mixed']);
+        $this->isScalar = in_array($this->type, self::SCALAR_TYPES);
 
         if ($this->isScalar === false && class_exists($this->type) === false) {
             throw new TelegramParamException('Invalid type ' . $this->type);
@@ -127,7 +143,7 @@ final class FieldType
      */
     public function allowBooleans(): bool
     {
-        return in_array('boolean', $this->types());
+        return in_array(self::TYPE_BOOL, $this->types());
     }
 
     /**
