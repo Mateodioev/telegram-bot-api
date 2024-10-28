@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Config;
 
-use function strtolower;
+use function lcfirst;
 use function preg_replace;
 use function str_replace;
+use function strtolower;
 use function ucwords;
-use function lcfirst;
 
 class strUtils
 {

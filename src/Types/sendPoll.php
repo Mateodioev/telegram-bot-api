@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
-use function strlen;
 use function count;
 use function json_encode;
+use function strlen;
 
 /**
  * Create new poll

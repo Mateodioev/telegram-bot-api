@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Methods\{
+    Method,
+    Stickers,
     availableMethods,
     gettingUpdates,
     inlineMode,
-    Method,
-    Stickers,
-    updatingMessages,
-    payments
+    payments,
+    updatingMessages
 };
 
-use function method_exists;
 use function call_user_func_array;
+use function method_exists;
 
 class Api extends Core
 {

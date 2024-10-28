@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Http;
 
 use OpenSwoole\Coroutine\HTTP\Client;

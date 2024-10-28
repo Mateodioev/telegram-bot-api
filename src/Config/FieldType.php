@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Config;
 
-use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Closure;
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
-use function in_array;
-use function is_array;
 use function gettype;
+use function in_array;
 use function is_a;
+use function is_array;
 
 /**
  * @internal Used to define the type of field in a class

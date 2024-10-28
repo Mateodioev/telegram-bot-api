@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Methods;
 
+use CURLFile;
 use Mateodioev\Bots\Telegram\Config\ParseMode;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
+
 use Mateodioev\Bots\Telegram\Types\{
     BotCommand,
     BotCommandScope,
@@ -15,6 +19,7 @@ use Mateodioev\Bots\Telegram\Types\{
     ChatInviteLink,
     ChatMember,
     ChatPermissions,
+    Error,
     File,
     ForumTopic,
     InputFile,
@@ -25,14 +30,11 @@ use Mateodioev\Bots\Telegram\Types\{
     MenuButtonWebApp,
     Message,
     MessageId,
-    sendPoll,
     Sticker,
     User,
     UserProfilePhotos,
-    Error
+    sendPoll
 };
-
-use CURLFile;
 
 use function count;
 use function json_encode;

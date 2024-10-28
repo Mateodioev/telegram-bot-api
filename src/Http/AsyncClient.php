@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Http;
 
+use Amp\ByteStream\{BufferException, Payload, StreamException};
+use Amp\Cancellation;
 use Amp\File\{File, FilesystemException};
 use Amp\Http\Client\{
+    Form,
     HttpClient,
     HttpClientBuilder,
     HttpContent,
-    Request as AsyncRequest,
-    Form
+    Request as AsyncRequest
 };
-use Amp\ByteStream\{BufferException, Payload, StreamException};
-use Amp\Cancellation;
-use Stringable;
-use stdClass;
 use CURLFile;
+use stdClass;
+use Stringable;
 use Throwable;
 
 use function Amp\File\openFile;

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\{FieldsStorage, FieldType, Types, strUtils};
+use JsonSerializable;
+use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage, Types, strUtils};
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-use JsonSerializable;
 use Stringable;
 
 use function array_filter;

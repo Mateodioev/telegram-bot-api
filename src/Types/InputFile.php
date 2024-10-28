@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Types;
 
 use CURLFile;
 use Mateodioev\Bots\Telegram\Exception\InvalidFileException;
-use Mateodioev\Utils\{Network, Files};
+use Mateodioev\Utils\{Files, Network};
 
 use function basename;
-use function realpath;
-use function mime_content_type;
 use function filesize;
+use function mime_content_type;
+use function realpath;
 
 /**
  * Use this object to send files to Telegram.

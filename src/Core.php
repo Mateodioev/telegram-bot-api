@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram;
 
 use Mateodioev\Bots\Telegram\Config\Types as TypesConfig;
-use Mateodioev\Bots\Telegram\Http\{AsyncClient, HttpException, Request as HttpClient, SyncClient};
-use Mateodioev\Bots\Telegram\Types\{Error, File, Response};
 use Mateodioev\Bots\Telegram\Exception\{TelegramApiException, TelegramParamException};
+use Mateodioev\Bots\Telegram\Http\{AsyncClient, HttpException, Request as HttpClient, SyncClient};
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TelegramInterface, TypesInterface};
+use Mateodioev\Bots\Telegram\Types\{Error, File, Response};
 use Mateodioev\Utils\Exceptions\RequestException;
 use Mateodioev\Utils\Network;
 use stdClass;

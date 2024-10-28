@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Config\ParseMode;
@@ -7,9 +9,9 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\{MethodInterface, TypesInterface};
 use Mateodioev\Bots\Telegram\Types\{InputFile, Response};
 
-use function array_merge;
-use function array_map;
 use function array_filter;
+use function array_map;
+use function array_merge;
 
 class Method implements MethodInterface
 {

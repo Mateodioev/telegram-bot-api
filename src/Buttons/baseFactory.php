@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mateodioev\Bots\Telegram\Buttons;
 
 use Mateodioev\Bots\Telegram\Interfaces\{
