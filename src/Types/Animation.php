@@ -52,10 +52,11 @@ class Animation extends abstractType
             'height'         => FieldType::single('integer'),
             'duration'       => FieldType::single('integer'),
             'thumbnail'      => FieldType::optional(PhotoSize::class),
-            'thumb'          => FieldType::optional(PhotoSize::class),
             'file_name'      => FieldType::optional('string'),
             'mime_type'      => FieldType::optional('string'),
             'file_size'      => FieldType::optional('integer'),
+            // Legacy params
+            'thumb'          => FieldType::optional(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

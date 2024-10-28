@@ -39,6 +39,8 @@ class StickerSet extends abstractType
             'sticker_type' => FieldType::single('string'),
             'stickers'     => FieldType::multiple(Sticker::class),
             'thumbnail'    => FieldType::optional(PhotoSize::class),
+            // Legacy params
+            'thumb'        => FieldType::optional(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

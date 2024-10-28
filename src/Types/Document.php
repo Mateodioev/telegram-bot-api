@@ -40,10 +40,11 @@ class Document extends abstractType
             'file_id'        => FieldType::single('string'),
             'file_unique_id' => FieldType::single('string'),
             'thumbnail'      => FieldType::optional(PhotoSize::class),
-            'thumb'          => FieldType::optional(PhotoSize::class), // Legacy param
             'file_name'      => FieldType::optional('string'),
             'mime_type'      => FieldType::optional('string'),
             'file_size'      => FieldType::optional('integer'),
+            // Legacy param
+            'thumb'          => FieldType::optional(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

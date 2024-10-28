@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
-use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
+use Mateodioev\Bots\Telegram\Config\{FieldType};
 
 /**
  * Represents a general file to be sent.
@@ -47,8 +47,9 @@ class InputMediaDocument extends InputMedia
             'parse_mode'                     => FieldType::optional('string'),
             'caption_entities'               => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'disable_content_type_detection' => FieldType::optional('boolean'),
+            // Legacy params
+            'thumb'                          => FieldType::mixed(),
         ];
-        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

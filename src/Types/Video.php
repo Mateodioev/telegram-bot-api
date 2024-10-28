@@ -55,6 +55,8 @@ class Video extends abstractType
             'file_name'      => FieldType::optional('string'),
             'mime_type'      => FieldType::optional('string'),
             'file_size'      => FieldType::optional('integer'),
+            // Legacy params
+            'thumb'          => FieldType::optional(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

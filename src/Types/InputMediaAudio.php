@@ -55,6 +55,8 @@ class InputMediaAudio extends InputMedia
             'duration'         => FieldType::optional('integer'),
             'performer'        => FieldType::optional('string'),
             'title'            => FieldType::optional('string'),
+            // Legacy params
+            'thumb'            => FieldType::mixed(),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

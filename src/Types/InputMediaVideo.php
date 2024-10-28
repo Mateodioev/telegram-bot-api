@@ -67,6 +67,8 @@ class InputMediaVideo extends InputMedia
             'duration'                 => FieldType::optional('integer'),
             'supports_streaming'       => FieldType::optional('boolean'),
             'has_spoiler'              => FieldType::optional('boolean'),
+            // Legacy params
+            'thumb'                    => FieldType::mixed(),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

@@ -79,6 +79,8 @@ class Sticker extends abstractType
             'custom_emoji_id'   => FieldType::optional('string'),
             'needs_repainting'  => FieldType::optional('boolean'),
             'file_size'         => FieldType::optional('integer'),
+            // Legacy params
+            'thumb'             => FieldType::optional(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

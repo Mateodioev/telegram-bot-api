@@ -359,6 +359,16 @@ class Message extends MaybeInaccessibleMessage
             'video_chat_participants_invited'   => FieldType::optional(VideoChatParticipantsInvited::class),
             'web_app_data'                      => FieldType::optional(WebAppData::class),
             'reply_markup'                      => FieldType::optional(InlineKeyboardMarkup::class),
+            // Legacy params
+            'left_chat_participant'             => FieldType::optional(User::class),
+            'new_chat_participant'              => FieldType::optional(User::class),
+            'new_chat_member'                   => FieldType::optional(User::class),
+            'forward_from'                      => FieldType::optional(User::class),
+            'forward_from_chat'                 => FieldType::optional(Chat::class),
+            'forward_from_message_id'           => FieldType::optional('integer'),
+            'forward_signature'                 => FieldType::optional('string'),
+            'forward_sender_name'               => FieldType::optional('string'),
+            'forward_date'                      => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

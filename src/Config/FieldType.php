@@ -18,7 +18,7 @@ use function is_a;
 final class FieldType
 {
     /**
-     * @var class-string<Mateodioev\Bots\Telegram\Interfaces\TypesInterface>|null $customType
+     * @var class-string<\Mateodioev\Bots\Telegram\Interfaces\TypesInterface>|null $customType
      */
     public ?string $customType = null;
 

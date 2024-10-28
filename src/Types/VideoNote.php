@@ -43,6 +43,8 @@ class VideoNote extends abstractType
             'duration'       => FieldType::single('integer'),
             'thumbnail'      => FieldType::optional(PhotoSize::class),
             'file_size'      => FieldType::optional('integer'),
+            // Legacy params
+            'thumb'          => FieldType::optional(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
