@@ -12,6 +12,7 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
  * - TransactionPartnerUser
  * - TransactionPartnerFragment
  * - TransactionPartnerTelegramAds
+ * - TransactionPartnerTelegramApi
  * - TransactionPartnerOther
  *
  * @see https://core.telegram.org/bots/api#transactionpartner
@@ -30,6 +31,7 @@ class TransactionPartner extends abstractType
             TransactionPartnerUser::class,
             TransactionPartnerFragment::class,
             TransactionPartnerTelegramAds::class,
+            TransactionPartnerTelegramApi::class,
             TransactionPartnerOther::class,
         ];
     }
@@ -44,6 +46,7 @@ class TransactionPartner extends abstractType
             'user' => TransactionPartnerUser::class,
             'fragment' => TransactionPartnerFragment::class,
             'telegram_ads' => TransactionPartnerTelegramAds::class,
+            'telegram_api' => TransactionPartnerTelegramApi::class,
             'other' => TransactionPartnerOther::class,
             default => TelegramParamException::invalidType(static::class, (string) $update['type']),
         };

@@ -9,7 +9,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 /**
  * This object represents a message.
  *
- * @property int $message_id Unique message identifier inside this chat
+ * @property int $message_id Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent
  * @property int|null $message_thread_id Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
  * @property User|null $from Optional. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats
  * @property Chat|null $sender_chat Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats.
