@@ -96,7 +96,10 @@ class Method implements MethodInterface
     private function normalizeParams(): array
     {
         $params = array_map(function ($value) {
-            if ($value instanceof TypesInterface || $value instanceof InputFile) {
+            if ($value instanceof TypesInterface) {
+                return $value->getReduced();
+            }
+            if ($value instanceof InputFile) {
                 return $value->get();
             }
             if ($value instanceof ParseMode) {

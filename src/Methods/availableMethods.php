@@ -8,7 +8,6 @@ use CURLFile;
 use Mateodioev\Bots\Telegram\Config\ParseMode;
 use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-
 use Mateodioev\Bots\Telegram\Types\{
     BotCommand,
     BotCommandScope,

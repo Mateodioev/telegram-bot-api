@@ -6,7 +6,6 @@ namespace Mateodioev\Bots\Telegram\Methods;
 
 use Mateodioev\Bots\Telegram\Inline\InlineQueryResultsFactory;
 use Mateodioev\Bots\Telegram\Interfaces\TypesInterface;
-
 use Mateodioev\Bots\Telegram\Types\SentWebAppMessage;
 
 trait inlineMode
