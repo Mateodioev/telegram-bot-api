@@ -256,7 +256,7 @@ abstract class abstractType implements TypesInterface, Stringable, JsonSerializa
 
             $field = $this->fields[$key] ?? FieldType::mixed();
 
-            if ($field->allowArrays() && is_array($value) && is_array($value[0]) && in_array($key, ['inline_keyboard', 'keyboard'])) {
+            if ($field->allowArrays() && is_array($value) && is_array($value[0] ?? null) && in_array($key, ['inline_keyboard', 'keyboard'])) {
                 $className = $field->customType ?? $field->getType();
 
                 $value = array_map(function ($val) use ($className) {
