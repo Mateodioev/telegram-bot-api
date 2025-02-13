@@ -7,7 +7,7 @@ namespace Mateodioev\Bots\Telegram\Config;
 class Types
 {
     public static bool $returnNullParams = true;
-    public static bool $throwOnFail = true;
+    public static bool $throwOnFail = false;
 
     public static function setReturnNullParams(bool $return = false): bool
     {
