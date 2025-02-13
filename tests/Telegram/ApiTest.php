@@ -20,7 +20,7 @@ class ApiTest extends TestCase
             self::markTestSkipped('BOT_TOKEN not found in env');
         }
 
-
+        ApiConfig::setThrowExceptionOnFail(true);
         self::getApi();
     }
 

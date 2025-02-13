@@ -23,15 +23,8 @@ use function Amp\File\openFile;
 
 class AsyncClient implements Request
 {
-    protected HttpClient $client;
-
     private AsyncRequest $request;
     private ?Cancellation $cancellation = null;
-
-    public function __construct()
-    {
-        $this->client = HttpClientBuilder::buildDefault();
-    }
 
     /**
      * @throws HttpException|\Amp\Http\Client\HttpException
@@ -89,14 +82,15 @@ class AsyncClient implements Request
 
     public function setCancellation(Cancellation $cancellation): static
     {
-        $this->cancellation =  $cancellation;
+        $this->cancellation = $cancellation;
         return $this;
     }
 
     private function executeRequest(AsyncRequest $request): \Amp\Http\Client\Response
     {
+        $client = HttpClientBuilder::buildDefault();
         try {
-            return $this->client->request($request, $this->cancellation);
+            return $client->request($request, $this->cancellation);
         } catch (Throwable $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -126,7 +120,7 @@ class AsyncClient implements Request
         $request->setUri(
             $this->request
                 ->getUri()
-                . $path
+            . $path
         );
 
         $request->setMethod('GET');

@@ -8,7 +8,7 @@
 </testsuites>
 
 <php>
-  <env name="BOT_TOKEN" value="5024814045:AAH6S3g8HFoU9SwCRGnhD5WgZm1yjb01LNI"/>
+  <env name="BOT_TOKEN" value="MODIFY THIS"/>
   <env name="TELEGRAM_CHAT_ID" value="996202950"/>
 </php>
 </phpunit>

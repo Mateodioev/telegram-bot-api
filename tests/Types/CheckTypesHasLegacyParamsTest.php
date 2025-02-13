@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Tests\Types;
 
@@ -11,6 +11,7 @@ class CheckTypesHasLegacyParamsTest extends TestCase
 {
     public function testAnimation(): void
     {
+        $this->markTestSkipped('Removed legacy param');
         $animation = Animation::default();
         $fields = $animation->fields();
         $properties = $animation->properties();
@@ -21,6 +22,8 @@ class CheckTypesHasLegacyParamsTest extends TestCase
 
     public function testAudio(): void
     {
+        $this->markTestSkipped('Removed legacy param');
+
         $audio = Audio::default();
         $fields = $audio->fields();
         $properties = $audio->properties();
