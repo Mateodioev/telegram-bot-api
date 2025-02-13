@@ -6,7 +6,7 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
 final class Schema
 {
-    public const JSON_SCHEMA = 'https://raw.githubusercontent.com/PaulSonOfLars/telegram-bot-api-spec/main/api.json';
+    public const string JSON_SCHEMA = 'https://raw.githubusercontent.com/PaulSonOfLars/telegram-bot-api-spec/main/api.json';
 
     private array $json;
     private array $ignoreTypes = [
@@ -44,7 +44,7 @@ final class Schema
             unset($this->json['types'][$ignored]);
         }
 
-        $builder = static fn (array $type): Types => new Types(
+        $builder = static fn(array $type): Types => new Types(
             $type['name'],
             $type['href'], // Link to bot api docs
             $type['description'] ?? [], // Description
@@ -91,7 +91,7 @@ final class Schema
      */
     public function methods(): array
     {
-        $builder = static fn (array $method): Method => new Method(
+        $builder = static fn(array $method): Method => new Method(
             $method['name'],
             $method['href'],
             $method['description'],
@@ -106,7 +106,7 @@ final class Schema
      */
     private function fetch(): void
     {
-        $content    = file_get_contents(self::JSON_SCHEMA);
+        $content = file_get_contents(self::JSON_SCHEMA);
         $this->json = json_decode($content, true, flags: JSON_THROW_ON_ERROR);
     }
 }

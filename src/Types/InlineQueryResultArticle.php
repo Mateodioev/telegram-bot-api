@@ -15,7 +15,6 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property InputMessageContent $input_message_content Content of the message to be sent
  * @property InlineKeyboardMarkup|null $reply_markup Optional. Inline keyboard attached to the message
  * @property string|null $url Optional. URL of the result
- * @property bool|null $hide_url Optional. Pass True if you don't want the URL to be shown in the message
  * @property string|null $description Optional. Short description of the result
  * @property string|null $thumbnail_url Optional. Url of the thumbnail for the result
  * @property int|null $thumbnail_width Optional. Thumbnail width
@@ -27,7 +26,6 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method InputMessageContent inputMessageContent()
  * @method InlineKeyboardMarkup|null replyMarkup()
  * @method string|null url()
- * @method bool|null hideUrl()
  * @method string|null description()
  * @method string|null thumbnailUrl()
  * @method int|null thumbnailWidth()
@@ -39,7 +37,6 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setInputMessageContent(InputMessageContent $inputMessageContent)
  * @method static setReplyMarkup(InlineKeyboardMarkup|null $replyMarkup)
  * @method static setUrl(string|null $url)
- * @method static setHideUrl(bool|null $hideUrl)
  * @method static setDescription(string|null $description)
  * @method static setThumbnailUrl(string|null $thumbnailUrl)
  * @method static setThumbnailWidth(int|null $thumbnailWidth)
@@ -66,6 +63,7 @@ class InlineQueryResultArticle extends InlineQueryResult
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
+
 
     public static function default(): static
     {

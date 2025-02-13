@@ -15,7 +15,7 @@ use function strlen;
  */
 class TypeStr
 {
-    public const TAB_SIZE = 4; // spaces
+    public const int TAB_SIZE = 4; // spaces
 
     /**
      * Max length of the fields
@@ -140,7 +140,7 @@ class TypeStr
             }
 
             if ($multiple === 'true' && $optional === 'false') {
-                return 'FieldType::multiple(' . $firstType . ')';
+                return 'FieldType::array(' . $firstType . ')';
             }
 
             if ($multiple === 'false' && $optional === 'true') {

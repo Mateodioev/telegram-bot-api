@@ -55,8 +55,6 @@ class Audio extends abstractType
             'mime_type'      => FieldType::optional('string'),
             'file_size'      => FieldType::optional('integer'),
             'thumbnail'      => FieldType::optional(PhotoSize::class),
-            // Legacy param
-            'thumb'      => FieldType::optional(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

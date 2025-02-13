@@ -95,6 +95,8 @@ class ChatMemberAdministrator extends ChatMember
             'can_pin_messages'       => FieldType::optional('boolean'),
             'can_manage_topics'      => FieldType::optional('boolean'),
             'custom_title'           => FieldType::optional('string'),
+            // Legacy params
+            'can_manage_voice_chats' => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

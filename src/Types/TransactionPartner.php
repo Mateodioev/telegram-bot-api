@@ -10,6 +10,8 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 /**
  * This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
  * - TransactionPartnerUser
+ * - TransactionPartnerChat
+ * - TransactionPartnerAffiliateProgram
  * - TransactionPartnerFragment
  * - TransactionPartnerTelegramAds
  * - TransactionPartnerTelegramApi
@@ -21,7 +23,9 @@ class TransactionPartner extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -29,6 +33,8 @@ class TransactionPartner extends abstractType
     {
         return [
             TransactionPartnerUser::class,
+            TransactionPartnerChat::class,
+            TransactionPartnerAffiliateProgram::class,
             TransactionPartnerFragment::class,
             TransactionPartnerTelegramAds::class,
             TransactionPartnerTelegramApi::class,
@@ -44,6 +50,8 @@ class TransactionPartner extends abstractType
 
         return match ($update['type']) {
             'user' => TransactionPartnerUser::class,
+            'chat' => TransactionPartnerChat::class,
+            'affiliate_program' => TransactionPartnerAffiliateProgram::class,
             'fragment' => TransactionPartnerFragment::class,
             'telegram_ads' => TransactionPartnerTelegramAds::class,
             'telegram_api' => TransactionPartnerTelegramApi::class,

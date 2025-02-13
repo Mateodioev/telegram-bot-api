@@ -46,9 +46,14 @@ final class FieldType
         return new FieldType($type);
     }
 
-    public static function multiple(string $type): FieldType
+    public static function array(string $type): FieldType
     {
         return new FieldType($type, allowArrays: true);
+    }
+
+    public static function multiple(string $type): FieldType
+    {
+        return self::array($type);
     }
 
     public static function optional(string $type): FieldType
@@ -78,7 +83,7 @@ final class FieldType
         $this->isScalar = in_array($this->type, self::SCALAR_TYPES);
 
         if ($this->isScalar === false && class_exists($this->type) === false) {
-            throw new TelegramParamException('Invalid type ' . $this->type);
+            throw new TelegramParamException("Invalid type {$this->type}");
         }
     }
 

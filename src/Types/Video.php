@@ -15,6 +15,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property int $height Video height as defined by the sender
  * @property int $duration Duration of the video in seconds as defined by the sender
  * @property PhotoSize|null $thumbnail Optional. Video thumbnail
+ * @property PhotoSize[]|null $cover Optional. Available sizes of the cover of the video in the message
+ * @property int|null $start_timestamp Optional. Timestamp in seconds from which the video will play in the message
  * @property string|null $file_name Optional. Original filename as defined by the sender
  * @property string|null $mime_type Optional. MIME type of the file as defined by the sender
  * @property int|null $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
@@ -25,6 +27,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method int height()
  * @method int duration()
  * @method PhotoSize|null thumbnail()
+ * @method PhotoSize[]|null cover()
+ * @method int|null startTimestamp()
  * @method string|null fileName()
  * @method string|null mimeType()
  * @method int|null fileSize()
@@ -35,6 +39,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setHeight(int $height)
  * @method static setDuration(int $duration)
  * @method static setThumbnail(PhotoSize|null $thumbnail)
+ * @method static setCover(PhotoSize[]|null $cover)
+ * @method static setStartTimestamp(int|null $startTimestamp)
  * @method static setFileName(string|null $fileName)
  * @method static setMimeType(string|null $mimeType)
  * @method static setFileSize(int|null $fileSize)
@@ -46,15 +52,17 @@ class Video extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'file_id'        => FieldType::single('string'),
-            'file_unique_id' => FieldType::single('string'),
-            'width'          => FieldType::single('integer'),
-            'height'         => FieldType::single('integer'),
-            'duration'       => FieldType::single('integer'),
-            'thumbnail'      => FieldType::optional(PhotoSize::class),
-            'file_name'      => FieldType::optional('string'),
-            'mime_type'      => FieldType::optional('string'),
-            'file_size'      => FieldType::optional('integer'),
+            'file_id'         => FieldType::single('string'),
+            'file_unique_id'  => FieldType::single('string'),
+            'width'           => FieldType::single('integer'),
+            'height'          => FieldType::single('integer'),
+            'duration'        => FieldType::single('integer'),
+            'thumbnail'       => FieldType::optional(PhotoSize::class),
+            'cover'           => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
+            'start_timestamp' => FieldType::optional('integer'),
+            'file_name'       => FieldType::optional('string'),
+            'mime_type'       => FieldType::optional('string'),
+            'file_size'       => FieldType::optional('integer'),
             // Legacy params
             'thumb'          => FieldType::optional(PhotoSize::class),
         ];

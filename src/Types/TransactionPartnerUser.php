@@ -11,6 +11,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @property string $type Type of the transaction partner, always "user"
  * @property User $user Information about the user
+ * @property AffiliateInfo|null $affiliate Optional. Information about the affiliate that received a commission via this transaction
  * @property string|null $invoice_payload Optional. Bot-specified invoice payload
  * @property int|null $subscription_period Optional. The duration of the paid subscription
  * @property PaidMedia[]|null $paid_media Optional. Information about the paid media bought by the user
@@ -19,6 +20,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @method string type()
  * @method User user()
+ * @method AffiliateInfo|null affiliate()
  * @method string|null invoicePayload()
  * @method int|null subscriptionPeriod()
  * @method PaidMedia[]|null paidMedia()
@@ -27,6 +29,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @method static setType(string $type)
  * @method static setUser(User $user)
+ * @method static setAffiliate(AffiliateInfo|null $affiliate)
  * @method static setInvoicePayload(string|null $invoicePayload)
  * @method static setSubscriptionPeriod(int|null $subscriptionPeriod)
  * @method static setPaidMedia(PaidMedia[]|null $paidMedia)
@@ -42,6 +45,7 @@ class TransactionPartnerUser extends TransactionPartner
         $this->fields = [
             'type'                => FieldType::single('string'),
             'user'                => FieldType::single(User::class),
+            'affiliate'           => FieldType::optional(AffiliateInfo::class),
             'invoice_payload'     => FieldType::optional('string'),
             'subscription_period' => FieldType::optional('integer'),
             'paid_media'          => new FieldType(PaidMedia::class, allowArrays: true, allowNull: true, subTypes: []),
