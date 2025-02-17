@@ -40,13 +40,15 @@ class Chat extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'id'         => FieldType::single('integer'),
-            'type'       => FieldType::single('string'),
-            'title'      => FieldType::optional('string'),
-            'username'   => FieldType::optional('string'),
-            'first_name' => FieldType::optional('string'),
-            'last_name'  => FieldType::optional('string'),
-            'is_forum'   => FieldType::optional('boolean'),
+            'id'                             => FieldType::single('integer'),
+            'type'                           => FieldType::single('string'),
+            'title'                          => FieldType::optional('string'),
+            'username'                       => FieldType::optional('string'),
+            'first_name'                     => FieldType::optional('string'),
+            'last_name'                      => FieldType::optional('string'),
+            'is_forum'                       => FieldType::optional('boolean'),
+            // Legacy fields
+            'all_members_are_administrators' => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
