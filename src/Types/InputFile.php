@@ -41,13 +41,13 @@ class InputFile
     /**
      * Upload local file
      */
-    public static function fromLocal(string $filePath, ?string $fileName = ''): self
+    public static function fromLocal(string $filePath, ?string $fileName = '', ?string $mimeType = null): self
     {
         if (!Files::isFile($filePath)) {
             throw new InvalidFileException('Can\'t find file "' . basename($filePath) . '"');
         }
 
-        $file = new CurlFile(realpath($filePath), mime_content_type($filePath), $fileName);
+        $file = new CurlFile(realpath($filePath), $mimeType ?? mime_content_type($filePath), $fileName);
         return new self($file);
     }
 

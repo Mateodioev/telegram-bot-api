@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Http;
 
-use Mateodioev\Bots\Telegram\Types\File;
-
 /**
  * HTTP request interface
  */
