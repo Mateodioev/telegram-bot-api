@@ -1,5 +1,7 @@
 # Telegram bot api
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Mateodioev/telegram-bot-api)
+
 ## Install
 
 ```bash
