@@ -9,7 +9,6 @@ use Amp\Cancellation;
 use Amp\File\{File, FilesystemException};
 use Amp\Http\Client\{
     Form,
-    HttpClient,
     HttpClientBuilder,
     HttpContent,
     Request as AsyncRequest
