@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Pre-commit hook to run php-cs-fixer on staged PHP files
+# This hook will automatically fix code style issues before committing
+
+# Get list of staged PHP files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.php$')
+
+# Exit early if no PHP files are staged
+if [ -z "$STAGED_FILES" ]; then
+    exit 0
+fi
+
+# Check if php-cs-fixer is available
+if ! command -v php-cs-fixer &> /dev/null; then
+    echo "php-cs-fixer is not installed or not in PATH"
+    echo "Please install php-cs-fixer or run: composer install"
+    exit 1
+fi
+
+# Check if .php-cs-fixer.dist.php config file exists
+if [ ! -f ".php-cs-fixer.dist.php" ]; then
+    echo ".php-cs-fixer.dist.php config file not found"
+    exit 1
+fi
+
+echo "Running php-cs-fixer on staged PHP files..."
+
+# Run php-cs-fixer on staged files
+php-cs-fixer fix --config=.php-cs-fixer.dist.php $STAGED_FILES
+
+# Check if php-cs-fixer made any changes
+MODIFIED_FILES=$(git diff --name-only $STAGED_FILES)
+
+# If files were modified, add them back to staging
+if [ -n "$MODIFIED_FILES" ]; then
+    echo "php-cs-fixer made changes to the following files:"
+    echo "$MODIFIED_FILES"
+    echo "Adding fixed files back to staging area..."
+    git add $MODIFIED_FILES
+fi
+
+echo "php-cs-fixer completed successfully"
+exit 0
