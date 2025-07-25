@@ -11,7 +11,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @property string $type Type of the result, must be gif
  * @property string $id Unique identifier for this result, 1-64 bytes
- * @property string $gif_url A valid URL for the GIF file. File size must not exceed 1MB
+ * @property string $gif_url A valid URL for the GIF file
  * @property int|null $gif_width Optional. Width of the GIF
  * @property int|null $gif_height Optional. Height of the GIF
  * @property int|null $gif_duration Optional. Duration of the GIF in seconds

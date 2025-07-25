@@ -30,7 +30,7 @@ class ShippingOption extends abstractType
         $this->fields = [
             'id'     => FieldType::single('string'),
             'title'  => FieldType::single('string'),
-            'prices' => FieldType::multiple(LabeledPrice::class),
+            'prices' => FieldType::array(LabeledPrice::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

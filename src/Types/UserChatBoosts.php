@@ -22,7 +22,7 @@ class UserChatBoosts extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'boosts' => FieldType::multiple(ChatBoost::class),
+            'boosts' => FieldType::array(ChatBoost::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

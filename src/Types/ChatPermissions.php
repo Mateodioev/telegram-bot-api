@@ -16,7 +16,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool|null $can_send_videos Optional. True, if the user is allowed to send videos
  * @property bool|null $can_send_video_notes Optional. True, if the user is allowed to send video notes
  * @property bool|null $can_send_voice_notes Optional. True, if the user is allowed to send voice notes
- * @property bool|null $can_send_polls Optional. True, if the user is allowed to send polls
+ * @property bool|null $can_send_polls Optional. True, if the user is allowed to send polls and checklists
  * @property bool|null $can_send_other_messages Optional. True, if the user is allowed to send animations, games, stickers and use inline bots
  * @property bool|null $can_add_web_page_previews Optional. True, if the user is allowed to add web page previews to their messages
  * @property bool|null $can_change_info Optional. True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups

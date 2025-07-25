@@ -84,7 +84,7 @@ class InputInvoiceMessageContent extends InputMessageContent
             'payload'                       => FieldType::single('string'),
             'provider_token'                => FieldType::optional('string'),
             'currency'                      => FieldType::single('string'),
-            'prices'                        => FieldType::multiple(LabeledPrice::class),
+            'prices'                        => FieldType::array(LabeledPrice::class),
             'max_tip_amount'                => FieldType::optional('integer'),
             'suggested_tip_amounts'         => new FieldType('integer', allowArrays: true, allowNull: true, subTypes: []),
             'provider_data'                 => FieldType::optional('string'),

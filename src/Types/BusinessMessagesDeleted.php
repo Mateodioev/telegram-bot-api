@@ -30,7 +30,7 @@ class BusinessMessagesDeleted extends abstractType
         $this->fields = [
             'business_connection_id' => FieldType::single('string'),
             'chat'                   => FieldType::single(Chat::class),
-            'message_ids'            => FieldType::multiple('integer'),
+            'message_ids'            => FieldType::array('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

@@ -26,7 +26,7 @@ class BusinessOpeningHours extends abstractType
     {
         $this->fields = [
             'time_zone_name' => FieldType::single('string'),
-            'opening_hours'  => FieldType::multiple(BusinessOpeningHoursInterval::class),
+            'opening_hours'  => FieldType::array(BusinessOpeningHoursInterval::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

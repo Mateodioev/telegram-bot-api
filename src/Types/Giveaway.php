@@ -46,7 +46,7 @@ class Giveaway extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'chats'                            => FieldType::multiple(Chat::class),
+            'chats'                            => FieldType::array(Chat::class),
             'winners_selection_date'           => FieldType::single('integer'),
             'winner_count'                     => FieldType::single('integer'),
             'only_new_members'                 => FieldType::optional('boolean'),

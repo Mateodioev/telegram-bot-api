@@ -45,7 +45,6 @@ class PassportElementErrorDataField extends PassportElementError
 
     public static function default(): static
     {
-        return (new static())
-            ->setSource('data');
+        return (new static())->setSource('data');
     }
 }

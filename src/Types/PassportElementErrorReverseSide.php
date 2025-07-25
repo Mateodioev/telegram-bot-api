@@ -41,7 +41,6 @@ class PassportElementErrorReverseSide extends PassportElementError
 
     public static function default(): static
     {
-        return (new static())
-            ->setSource('reverse_side');
+        return (new static())->setSource('reverse_side');
     }
 }

@@ -50,6 +50,7 @@ class InputMediaDocument extends InputMedia
             // Legacy params
             'thumb'                          => FieldType::mixed(),
         ];
+        FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function default(): static

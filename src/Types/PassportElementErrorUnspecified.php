@@ -41,7 +41,6 @@ class PassportElementErrorUnspecified extends PassportElementError
 
     public static function default(): static
     {
-        return (new static())
-            ->setSource('unspecified');
+        return (new static())->setSource('unspecified');
     }
 }

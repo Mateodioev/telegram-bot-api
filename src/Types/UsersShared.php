@@ -26,7 +26,7 @@ class UsersShared extends abstractType
     {
         $this->fields = [
             'request_id' => FieldType::single('integer'),
-            'users'      => FieldType::multiple(SharedUser::class),
+            'users'      => FieldType::array(SharedUser::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

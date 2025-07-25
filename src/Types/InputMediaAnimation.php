@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Mateodioev\Bots\Telegram\Types;
 
@@ -52,19 +52,19 @@ class InputMediaAnimation extends InputMedia
     protected function boot(): void
     {
         $this->fields = [
-            'type' => FieldType::single('string'),
-            'media' => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
-            'thumbnail' => FieldType::mixed(),
-            'caption' => FieldType::optional('string'),
-            'parse_mode' => FieldType::optional('string'),
-            'caption_entities' => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
+            'type'                     => FieldType::single('string'),
+            'media'                    => new FieldType(InputFile::class, allowArrays: false, allowNull: false, subTypes: ['string']),
+            'thumbnail'                => FieldType::mixed(),
+            'caption'                  => FieldType::optional('string'),
+            'parse_mode'               => FieldType::optional('string'),
+            'caption_entities'         => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'show_caption_above_media' => FieldType::optional('boolean'),
-            'width' => FieldType::optional('integer'),
-            'height' => FieldType::optional('integer'),
-            'duration' => FieldType::optional('integer'),
-            'has_spoiler' => FieldType::optional('boolean'),
+            'width'                    => FieldType::optional('integer'),
+            'height'                   => FieldType::optional('integer'),
+            'duration'                 => FieldType::optional('integer'),
+            'has_spoiler'              => FieldType::optional('boolean'),
             // Legacy params
-            'thumb' => FieldType::mixed(),
+            'thumb'                    => FieldType::mixed(),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

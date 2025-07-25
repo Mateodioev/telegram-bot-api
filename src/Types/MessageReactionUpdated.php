@@ -45,8 +45,8 @@ class MessageReactionUpdated extends abstractType
             'user'         => FieldType::optional(User::class),
             'actor_chat'   => FieldType::optional(Chat::class),
             'date'         => FieldType::single('integer'),
-            'old_reaction' => FieldType::multiple(ReactionType::class),
-            'new_reaction' => FieldType::multiple(ReactionType::class),
+            'old_reaction' => FieldType::array(ReactionType::class),
+            'new_reaction' => FieldType::array(ReactionType::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

@@ -25,7 +25,7 @@ class PassportData extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'data'        => FieldType::multiple(EncryptedPassportElement::class),
+            'data'        => FieldType::array(EncryptedPassportElement::class),
             'credentials' => FieldType::single(EncryptedCredentials::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);

@@ -22,7 +22,7 @@ class VideoChatParticipantsInvited extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'users' => FieldType::multiple(User::class),
+            'users' => FieldType::array(User::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

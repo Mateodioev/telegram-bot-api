@@ -26,7 +26,7 @@ class UserProfilePhotos extends abstractType
     {
         $this->fields = [
             'total_count' => FieldType::single('integer'),
-            'photos'      => FieldType::multiple(PhotoSize::class),
+            'photos'      => FieldType::array(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

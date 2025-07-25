@@ -34,7 +34,7 @@ class MessageReactionCountUpdated extends abstractType
             'chat'       => FieldType::single(Chat::class),
             'message_id' => FieldType::single('integer'),
             'date'       => FieldType::single('integer'),
-            'reactions'  => FieldType::multiple(ReactionCount::class),
+            'reactions'  => FieldType::array(ReactionCount::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

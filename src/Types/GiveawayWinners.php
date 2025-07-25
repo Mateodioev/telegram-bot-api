@@ -59,7 +59,7 @@ class GiveawayWinners extends abstractType
             'giveaway_message_id'              => FieldType::single('integer'),
             'winners_selection_date'           => FieldType::single('integer'),
             'winner_count'                     => FieldType::single('integer'),
-            'winners'                          => FieldType::multiple(User::class),
+            'winners'                          => FieldType::array(User::class),
             'additional_chat_count'            => FieldType::optional('integer'),
             'prize_star_count'                 => FieldType::optional('integer'),
             'premium_subscription_month_count' => FieldType::optional('integer'),

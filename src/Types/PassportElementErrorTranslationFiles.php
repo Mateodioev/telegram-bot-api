@@ -33,9 +33,14 @@ class PassportElementErrorTranslationFiles extends PassportElementError
         $this->fields = [
             'source'      => FieldType::single('string'),
             'type'        => FieldType::single('string'),
-            'file_hashes' => FieldType::multiple('string'),
+            'file_hashes' => FieldType::array('string'),
             'message'     => FieldType::single('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
+    }
+
+    public static function default(): static
+    {
+        return (new static())->setSource('translation_files');
     }
 }

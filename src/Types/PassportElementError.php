@@ -51,16 +51,16 @@ class PassportElementError extends abstractType
         }
 
         return match ($update['source']) {
-            'data' => PassportElementErrorDataField::class,
-            'front_side' => PassportElementErrorFrontSide::class,
-            'reverse_side' => PassportElementErrorReverseSide::class,
-            'selfie' => PassportElementErrorSelfie::class,
-            'file' => PassportElementErrorFile::class,
-            'files' => PassportElementErrorFiles::class,
-            'translation_file' => PassportElementErrorTranslationFile::class,
+            'data'              => PassportElementErrorDataField::class,
+            'front_side'        => PassportElementErrorFrontSide::class,
+            'reverse_side'      => PassportElementErrorReverseSide::class,
+            'selfie'            => PassportElementErrorSelfie::class,
+            'file'              => PassportElementErrorFile::class,
+            'files'             => PassportElementErrorFiles::class,
+            'translation_file'  => PassportElementErrorTranslationFile::class,
             'translation_files' => PassportElementErrorTranslationFiles::class,
-            'unspecified' => PassportElementErrorUnspecified::class,
-            default => throw new TelegramParamException('Invalid source: ' . $update['source'] . ' in PassportElementError')
+            'unspecified'       => PassportElementErrorUnspecified::class,
+            default             => throw new TelegramParamException('Invalid source: ' . $update['source'] . ' in PassportElementError')
         };
     }
 }

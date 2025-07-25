@@ -24,6 +24,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property VideoNote|null $video_note Optional. Message is a video note, information about the video message
  * @property Voice|null $voice Optional. Message is a voice message, information about the file
  * @property bool|null $has_media_spoiler Optional. True, if the message media is covered by a spoiler animation
+ * @property Checklist|null $checklist Optional. Message is a checklist
  * @property Contact|null $contact Optional. Message is a shared contact, information about the contact
  * @property Dice|null $dice Optional. Message is a dice with random value
  * @property Game|null $game Optional. Message is a game, information about the game. More about games: https://core.telegram.org/bots/api#games
@@ -49,6 +50,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method VideoNote|null videoNote()
  * @method Voice|null voice()
  * @method bool|null hasMediaSpoiler()
+ * @method Checklist|null checklist()
  * @method Contact|null contact()
  * @method Dice|null dice()
  * @method Game|null game()
@@ -74,6 +76,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setVideoNote(VideoNote|null $videoNote)
  * @method static setVoice(Voice|null $voice)
  * @method static setHasMediaSpoiler(bool|null $hasMediaSpoiler)
+ * @method static setChecklist(Checklist|null $checklist)
  * @method static setContact(Contact|null $contact)
  * @method static setDice(Dice|null $dice)
  * @method static setGame(Game|null $game)
@@ -106,6 +109,7 @@ class ExternalReplyInfo extends abstractType
             'video_note'           => FieldType::optional(VideoNote::class),
             'voice'                => FieldType::optional(Voice::class),
             'has_media_spoiler'    => FieldType::optional('boolean'),
+            'checklist'            => FieldType::optional(Checklist::class),
             'contact'              => FieldType::optional(Contact::class),
             'dice'                 => FieldType::optional(Dice::class),
             'game'                 => FieldType::optional(Game::class),

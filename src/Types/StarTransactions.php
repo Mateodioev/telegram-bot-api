@@ -22,7 +22,7 @@ class StarTransactions extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'transactions' => FieldType::multiple(StarTransaction::class),
+            'transactions' => FieldType::array(StarTransaction::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

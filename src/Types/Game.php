@@ -39,7 +39,7 @@ class Game extends abstractType
         $this->fields = [
             'title'         => FieldType::single('string'),
             'description'   => FieldType::single('string'),
-            'photo'         => FieldType::multiple(PhotoSize::class),
+            'photo'         => FieldType::array(PhotoSize::class),
             'text'          => FieldType::optional('string'),
             'text_entities' => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'animation'     => FieldType::optional(Animation::class),

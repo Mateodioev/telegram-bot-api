@@ -11,7 +11,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @property string $type Type of the result, must be mpeg4_gif
  * @property string $id Unique identifier for this result, 1-64 bytes
- * @property string $mpeg4_url A valid URL for the MPEG4 file. File size must not exceed 1MB
+ * @property string $mpeg4_url A valid URL for the MPEG4 file
  * @property int|null $mpeg4_width Optional. Video width
  * @property int|null $mpeg4_height Optional. Video height
  * @property int|null $mpeg4_duration Optional. Video duration in seconds

@@ -30,4 +30,9 @@ class TransactionPartnerTelegramApi extends TransactionPartner
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
+
+    public static function default(): static
+    {
+        return (new static())->setType('telegram_api');
+    }
 }

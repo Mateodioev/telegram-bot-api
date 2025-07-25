@@ -37,7 +37,6 @@ class TransactionPartnerAffiliateProgram extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static())
-            ->setType('affiliate_program');
+        return (new static())->setType('affiliate_program');
     }
 }

@@ -64,7 +64,7 @@ class Poll extends abstractType
             'id'                      => FieldType::single('string'),
             'question'                => FieldType::single('string'),
             'question_entities'       => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
-            'options'                 => FieldType::multiple(PollOption::class),
+            'options'                 => FieldType::array(PollOption::class),
             'total_voter_count'       => FieldType::single('integer'),
             'is_closed'               => FieldType::single('boolean'),
             'is_anonymous'            => FieldType::single('boolean'),

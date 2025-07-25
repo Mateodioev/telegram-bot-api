@@ -22,7 +22,7 @@ class Gifts extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'gifts' => FieldType::multiple(Gift::class),
+            'gifts' => FieldType::array(Gift::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

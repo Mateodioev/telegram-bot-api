@@ -34,7 +34,7 @@ class PollAnswer extends abstractType
             'poll_id'    => FieldType::single('string'),
             'voter_chat' => FieldType::optional(Chat::class),
             'user'       => FieldType::optional(User::class),
-            'option_ids' => FieldType::multiple('integer'),
+            'option_ids' => FieldType::array('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
