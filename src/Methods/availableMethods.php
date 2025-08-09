@@ -43,8 +43,8 @@ use function json_encode;
  */
 trait availableMethods
 {
-    private int $photoSizeLimit = 1250000;
-    private int $fileSizeLimit = 1250000;
+    private int $photoSizeLimit = 10_000_000;
+    private int $fileSizeLimit  = 50_000_000;
 
     /**
      * A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a User object.
@@ -112,9 +112,9 @@ trait availableMethods
             $chatID,
             $text,
             [
-                'parse_mode' => $parseMode,
+                'parse_mode'          => $parseMode,
                 'reply_to_message_id' => $replyToMessageID,
-                ...$params
+                ...$params,
             ]
         );
     }
@@ -363,7 +363,7 @@ trait availableMethods
 
         return [
             json_encode($items),
-            $files
+            $files,
         ];
     }
 
@@ -372,7 +372,7 @@ trait availableMethods
      */
     private function checkIfReachedFileSizeLimit(InputFile $file, string $type): void
     {
-        $limit = ($type === 'Photo' ? $this->photoSizeLimit : $this->fileSizeLimit);
+        $limit = $type === 'Photo' ? $this->photoSizeLimit : $this->fileSizeLimit;
 
         if ($file->size() > $limit) {
             throw new TelegramParamException($type . ' file is too big');
@@ -438,7 +438,7 @@ trait availableMethods
                 'question'          => $question,
                 'options'           => $options->get(),
                 'correct_option_id' => $options->getCorrectId(),
-                ...$params
+                ...$params,
             ])
                 ->setMethod('sendPoll')
                 ->setReturnType(Message::class)
@@ -1080,7 +1080,7 @@ trait availableMethods
         return $this->answerCallbackQuery($callbackQueryID, [
             'text'       => $text,
             'show_alert' => $showAlert,
-            ...$params
+            ...$params,
         ]);
     }
 
