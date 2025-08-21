@@ -16,6 +16,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property string|null $first_name Optional. First name of the other party in a private chat
  * @property string|null $last_name Optional. Last name of the other party in a private chat
  * @property bool|null $is_forum Optional. True, if the supergroup chat is a forum (has topics enabled)
+ * @property bool|null $is_direct_messages Optional. True, if the chat is the direct messages chat of a channel
  *
  * @method int id()
  * @method string type()
@@ -24,6 +25,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method string|null firstName()
  * @method string|null lastName()
  * @method bool|null isForum()
+ * @method bool|null isDirectMessages()
  *
  * @method static setId(int $id)
  * @method static setType(string $type)
@@ -32,6 +34,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setFirstName(string|null $firstName)
  * @method static setLastName(string|null $lastName)
  * @method static setIsForum(bool|null $isForum)
+ * @method static setIsDirectMessages(bool|null $isDirectMessages)
  *
  * @see https://core.telegram.org/bots/api#chat
  */
@@ -47,6 +50,7 @@ class Chat extends abstractType
             'first_name'                     => FieldType::optional('string'),
             'last_name'                      => FieldType::optional('string'),
             'is_forum'                       => FieldType::optional('boolean'),
+            'is_direct_messages'             => FieldType::optional('boolean'),
             // Legacy fields
             'all_members_are_administrators' => FieldType::optional('boolean'),
         ];

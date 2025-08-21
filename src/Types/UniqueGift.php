@@ -15,6 +15,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property UniqueGiftModel $model Model of the gift
  * @property UniqueGiftSymbol $symbol Symbol of the gift
  * @property UniqueGiftBackdrop $backdrop Backdrop of the gift
+ * @property Chat|null $publisher_chat Optional. Information about the chat that published the gift
  *
  * @method string baseName()
  * @method string name()
@@ -22,6 +23,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method UniqueGiftModel model()
  * @method UniqueGiftSymbol symbol()
  * @method UniqueGiftBackdrop backdrop()
+ * @method Chat|null publisherChat()
  *
  * @method static setBaseName(string $baseName)
  * @method static setName(string $name)
@@ -29,6 +31,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setModel(UniqueGiftModel $model)
  * @method static setSymbol(UniqueGiftSymbol $symbol)
  * @method static setBackdrop(UniqueGiftBackdrop $backdrop)
+ * @method static setPublisherChat(Chat|null $publisherChat)
  *
  * @see https://core.telegram.org/bots/api#uniquegift
  */
@@ -37,12 +40,13 @@ class UniqueGift extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'base_name' => FieldType::single('string'),
-            'name'      => FieldType::single('string'),
-            'number'    => FieldType::single('integer'),
-            'model'     => FieldType::single(UniqueGiftModel::class),
-            'symbol'    => FieldType::single(UniqueGiftSymbol::class),
-            'backdrop'  => FieldType::single(UniqueGiftBackdrop::class),
+            'base_name'      => FieldType::single('string'),
+            'name'           => FieldType::single('string'),
+            'number'         => FieldType::single('integer'),
+            'model'          => FieldType::single(UniqueGiftModel::class),
+            'symbol'         => FieldType::single(UniqueGiftSymbol::class),
+            'backdrop'       => FieldType::single(UniqueGiftBackdrop::class),
+            'publisher_chat' => FieldType::optional(Chat::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

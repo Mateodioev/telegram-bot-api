@@ -26,7 +26,7 @@ class PaidMediaInfo extends abstractType
     {
         $this->fields = [
             'star_count' => FieldType::single('integer'),
-            'paid_media' => FieldType::multiple(PaidMedia::class),
+            'paid_media' => FieldType::array(PaidMedia::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

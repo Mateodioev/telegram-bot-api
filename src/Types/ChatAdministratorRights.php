@@ -24,6 +24,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool|null $can_edit_messages Optional. True, if the administrator can edit messages of other users and can pin messages; for channels only
  * @property bool|null $can_pin_messages Optional. True, if the user is allowed to pin messages; for groups and supergroups only
  * @property bool|null $can_manage_topics Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+ * @property bool|null $can_manage_direct_messages Optional. True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
  *
  * @method bool isAnonymous()
  * @method bool canManageChat()
@@ -40,6 +41,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method bool|null canEditMessages()
  * @method bool|null canPinMessages()
  * @method bool|null canManageTopics()
+ * @method bool|null canManageDirectMessages()
  *
  * @method static setIsAnonymous(bool $isAnonymous)
  * @method static setCanManageChat(bool $canManageChat)
@@ -56,6 +58,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setCanEditMessages(bool|null $canEditMessages)
  * @method static setCanPinMessages(bool|null $canPinMessages)
  * @method static setCanManageTopics(bool|null $canManageTopics)
+ * @method static setCanManageDirectMessages(bool|null $canManageDirectMessages)
  *
  * @see https://core.telegram.org/bots/api#chatadministratorrights
  */
@@ -64,21 +67,22 @@ class ChatAdministratorRights extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'is_anonymous'           => FieldType::single('boolean'),
-            'can_manage_chat'        => FieldType::single('boolean'),
-            'can_delete_messages'    => FieldType::single('boolean'),
-            'can_manage_video_chats' => FieldType::single('boolean'),
-            'can_restrict_members'   => FieldType::single('boolean'),
-            'can_promote_members'    => FieldType::single('boolean'),
-            'can_change_info'        => FieldType::single('boolean'),
-            'can_invite_users'       => FieldType::single('boolean'),
-            'can_post_stories'       => FieldType::single('boolean'),
-            'can_edit_stories'       => FieldType::single('boolean'),
-            'can_delete_stories'     => FieldType::single('boolean'),
-            'can_post_messages'      => FieldType::optional('boolean'),
-            'can_edit_messages'      => FieldType::optional('boolean'),
-            'can_pin_messages'       => FieldType::optional('boolean'),
-            'can_manage_topics'      => FieldType::optional('boolean'),
+            'is_anonymous'               => FieldType::single('boolean'),
+            'can_manage_chat'            => FieldType::single('boolean'),
+            'can_delete_messages'        => FieldType::single('boolean'),
+            'can_manage_video_chats'     => FieldType::single('boolean'),
+            'can_restrict_members'       => FieldType::single('boolean'),
+            'can_promote_members'        => FieldType::single('boolean'),
+            'can_change_info'            => FieldType::single('boolean'),
+            'can_invite_users'           => FieldType::single('boolean'),
+            'can_post_stories'           => FieldType::single('boolean'),
+            'can_edit_stories'           => FieldType::single('boolean'),
+            'can_delete_stories'         => FieldType::single('boolean'),
+            'can_post_messages'          => FieldType::optional('boolean'),
+            'can_edit_messages'          => FieldType::optional('boolean'),
+            'can_pin_messages'           => FieldType::optional('boolean'),
+            'can_manage_topics'          => FieldType::optional('boolean'),
+            'can_manage_direct_messages' => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

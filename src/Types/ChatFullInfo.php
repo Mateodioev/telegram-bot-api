@@ -16,6 +16,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property string|null $first_name Optional. First name of the other party in a private chat
  * @property string|null $last_name Optional. Last name of the other party in a private chat
  * @property bool|null $is_forum Optional. True, if the supergroup chat is a forum (has topics enabled)
+ * @property bool|null $is_direct_messages Optional. True, if the chat is the direct messages chat of a channel
  * @property int $accent_color_id Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details.
  * @property int $max_reaction_count The maximum number of reactions that can be set on a message in the chat
  * @property ChatPhoto|null $photo Optional. Chat photo
@@ -25,6 +26,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property BusinessLocation|null $business_location Optional. For private chats with business accounts, the location of the business
  * @property BusinessOpeningHours|null $business_opening_hours Optional. For private chats with business accounts, the opening hours of the business
  * @property Chat|null $personal_chat Optional. For private chats, the personal channel of the user
+ * @property Chat|null $parent_chat Optional. Information about the corresponding channel chat; for direct messages chats only
  * @property ReactionType[]|null $available_reactions Optional. List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed.
  * @property string|null $background_custom_emoji_id Optional. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background
  * @property int|null $profile_accent_color_id Optional. Identifier of the accent color for the chat's profile background. See profile accent colors for more details.
@@ -62,6 +64,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method string|null firstName()
  * @method string|null lastName()
  * @method bool|null isForum()
+ * @method bool|null isDirectMessages()
  * @method int accentColorId()
  * @method int maxReactionCount()
  * @method ChatPhoto|null photo()
@@ -71,6 +74,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method BusinessLocation|null businessLocation()
  * @method BusinessOpeningHours|null businessOpeningHours()
  * @method Chat|null personalChat()
+ * @method Chat|null parentChat()
  * @method ReactionType[]|null availableReactions()
  * @method string|null backgroundCustomEmojiId()
  * @method int|null profileAccentColorId()
@@ -108,6 +112,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setFirstName(string|null $firstName)
  * @method static setLastName(string|null $lastName)
  * @method static setIsForum(bool|null $isForum)
+ * @method static setIsDirectMessages(bool|null $isDirectMessages)
  * @method static setAccentColorId(int $accentColorId)
  * @method static setMaxReactionCount(int $maxReactionCount)
  * @method static setPhoto(ChatPhoto|null $photo)
@@ -117,6 +122,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setBusinessLocation(BusinessLocation|null $businessLocation)
  * @method static setBusinessOpeningHours(BusinessOpeningHours|null $businessOpeningHours)
  * @method static setPersonalChat(Chat|null $personalChat)
+ * @method static setParentChat(Chat|null $parentChat)
  * @method static setAvailableReactions(ReactionType[]|null $availableReactions)
  * @method static setBackgroundCustomEmojiId(string|null $backgroundCustomEmojiId)
  * @method static setProfileAccentColorId(int|null $profileAccentColorId)
@@ -161,6 +167,7 @@ class ChatFullInfo extends abstractType
             'first_name'                              => FieldType::optional('string'),
             'last_name'                               => FieldType::optional('string'),
             'is_forum'                                => FieldType::optional('boolean'),
+            'is_direct_messages'                      => FieldType::optional('boolean'),
             'accent_color_id'                         => FieldType::single('integer'),
             'max_reaction_count'                      => FieldType::single('integer'),
             'photo'                                   => FieldType::optional(ChatPhoto::class),
@@ -170,6 +177,7 @@ class ChatFullInfo extends abstractType
             'business_location'                       => FieldType::optional(BusinessLocation::class),
             'business_opening_hours'                  => FieldType::optional(BusinessOpeningHours::class),
             'personal_chat'                           => FieldType::optional(Chat::class),
+            'parent_chat'                             => FieldType::optional(Chat::class),
             'available_reactions'                     => new FieldType(ReactionType::class, allowArrays: true, allowNull: true, subTypes: []),
             'background_custom_emoji_id'              => FieldType::optional('string'),
             'profile_accent_color_id'                 => FieldType::optional('integer'),

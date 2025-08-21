@@ -11,6 +11,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @property int $message_id Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent
  * @property int|null $message_thread_id Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
+ * @property DirectMessagesTopic|null $direct_messages_topic Optional. Information about the direct messages chat topic that contains the message
  * @property User|null $from Optional. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats
  * @property Chat|null $sender_chat Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats.
  * @property int|null $sender_boost_count Optional. If the sender of the message boosted the chat, the number of boosts added by the user
@@ -25,16 +26,19 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property ExternalReplyInfo|null $external_reply Optional. Information about the message that is being replied to, which may come from another chat or forum topic
  * @property TextQuote|null $quote Optional. For replies that quote part of the original message, the quoted part of the message
  * @property Story|null $reply_to_story Optional. For replies to a story, the original story
+ * @property int|null $reply_to_checklist_task_id Optional. Identifier of the specific checklist task that is being replied to
  * @property User|null $via_bot Optional. Bot through which the message was sent
  * @property int|null $edit_date Optional. Date the message was last edited in Unix time
  * @property bool|null $has_protected_content Optional. True, if the message can't be forwarded
  * @property bool|null $is_from_offline Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
+ * @property bool|null $is_paid_post Optional. True, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can't be edited.
  * @property string|null $media_group_id Optional. The unique identifier of a media message group this message belongs to
  * @property string|null $author_signature Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
  * @property int|null $paid_star_count Optional. The number of Telegram Stars that were paid by the sender of the message to send it
  * @property string|null $text Optional. For text messages, the actual UTF-8 text of the message
  * @property MessageEntity[]|null $entities Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
  * @property LinkPreviewOptions|null $link_preview_options Optional. Options used for link preview generation for the message, if it is a text message and link preview options were changed
+ * @property SuggestedPostInfo|null $suggested_post_info Optional. Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can't be edited.
  * @property string|null $effect_id Optional. Unique identifier of the message effect added to the message
  * @property Animation|null $animation Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
  * @property Audio|null $audio Optional. Message is an audio file, information about the file
@@ -96,6 +100,11 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property GiveawayWinners|null $giveaway_winners Optional. A giveaway with public winners was completed
  * @property GiveawayCompleted|null $giveaway_completed Optional. Service message: a giveaway without public winners was completed
  * @property PaidMessagePriceChanged|null $paid_message_price_changed Optional. Service message: the price for paid messages has changed in the chat
+ * @property SuggestedPostApproved|null $suggested_post_approved Optional. Service message: a suggested post was approved
+ * @property SuggestedPostApprovalFailed|null $suggested_post_approval_failed Optional. Service message: approval of a suggested post has failed
+ * @property SuggestedPostDeclined|null $suggested_post_declined Optional. Service message: a suggested post was declined
+ * @property SuggestedPostPaid|null $suggested_post_paid Optional. Service message: payment for a suggested post was received
+ * @property SuggestedPostRefunded|null $suggested_post_refunded Optional. Service message: payment for a suggested post was refunded
  * @property VideoChatScheduled|null $video_chat_scheduled Optional. Service message: video chat scheduled
  * @property VideoChatStarted|null $video_chat_started Optional. Service message: video chat started
  * @property VideoChatEnded|null $video_chat_ended Optional. Service message: video chat ended
@@ -105,6 +114,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @method int messageId()
  * @method int|null messageThreadId()
+ * @method DirectMessagesTopic|null directMessagesTopic()
  * @method User|null from()
  * @method Chat|null senderChat()
  * @method int|null senderBoostCount()
@@ -119,16 +129,19 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method ExternalReplyInfo|null externalReply()
  * @method TextQuote|null quote()
  * @method Story|null replyToStory()
+ * @method int|null replyToChecklistTaskId()
  * @method User|null viaBot()
  * @method int|null editDate()
  * @method bool|null hasProtectedContent()
  * @method bool|null isFromOffline()
+ * @method bool|null isPaidPost()
  * @method string|null mediaGroupId()
  * @method string|null authorSignature()
  * @method int|null paidStarCount()
  * @method string|null text()
  * @method MessageEntity[]|null entities()
  * @method LinkPreviewOptions|null linkPreviewOptions()
+ * @method SuggestedPostInfo|null suggestedPostInfo()
  * @method string|null effectId()
  * @method Animation|null animation()
  * @method Audio|null audio()
@@ -190,6 +203,11 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method GiveawayWinners|null giveawayWinners()
  * @method GiveawayCompleted|null giveawayCompleted()
  * @method PaidMessagePriceChanged|null paidMessagePriceChanged()
+ * @method SuggestedPostApproved|null suggestedPostApproved()
+ * @method SuggestedPostApprovalFailed|null suggestedPostApprovalFailed()
+ * @method SuggestedPostDeclined|null suggestedPostDeclined()
+ * @method SuggestedPostPaid|null suggestedPostPaid()
+ * @method SuggestedPostRefunded|null suggestedPostRefunded()
  * @method VideoChatScheduled|null videoChatScheduled()
  * @method VideoChatStarted|null videoChatStarted()
  * @method VideoChatEnded|null videoChatEnded()
@@ -199,6 +217,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  *
  * @method static setMessageId(int $messageId)
  * @method static setMessageThreadId(int|null $messageThreadId)
+ * @method static setDirectMessagesTopic(DirectMessagesTopic|null $directMessagesTopic)
  * @method static setFrom(User|null $from)
  * @method static setSenderChat(Chat|null $senderChat)
  * @method static setSenderBoostCount(int|null $senderBoostCount)
@@ -213,16 +232,19 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setExternalReply(ExternalReplyInfo|null $externalReply)
  * @method static setQuote(TextQuote|null $quote)
  * @method static setReplyToStory(Story|null $replyToStory)
+ * @method static setReplyToChecklistTaskId(int|null $replyToChecklistTaskId)
  * @method static setViaBot(User|null $viaBot)
  * @method static setEditDate(int|null $editDate)
  * @method static setHasProtectedContent(bool|null $hasProtectedContent)
  * @method static setIsFromOffline(bool|null $isFromOffline)
+ * @method static setIsPaidPost(bool|null $isPaidPost)
  * @method static setMediaGroupId(string|null $mediaGroupId)
  * @method static setAuthorSignature(string|null $authorSignature)
  * @method static setPaidStarCount(int|null $paidStarCount)
  * @method static setText(string|null $text)
  * @method static setEntities(MessageEntity[]|null $entities)
  * @method static setLinkPreviewOptions(LinkPreviewOptions|null $linkPreviewOptions)
+ * @method static setSuggestedPostInfo(SuggestedPostInfo|null $suggestedPostInfo)
  * @method static setEffectId(string|null $effectId)
  * @method static setAnimation(Animation|null $animation)
  * @method static setAudio(Audio|null $audio)
@@ -284,6 +306,11 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setGiveawayWinners(GiveawayWinners|null $giveawayWinners)
  * @method static setGiveawayCompleted(GiveawayCompleted|null $giveawayCompleted)
  * @method static setPaidMessagePriceChanged(PaidMessagePriceChanged|null $paidMessagePriceChanged)
+ * @method static setSuggestedPostApproved(SuggestedPostApproved|null $suggestedPostApproved)
+ * @method static setSuggestedPostApprovalFailed(SuggestedPostApprovalFailed|null $suggestedPostApprovalFailed)
+ * @method static setSuggestedPostDeclined(SuggestedPostDeclined|null $suggestedPostDeclined)
+ * @method static setSuggestedPostPaid(SuggestedPostPaid|null $suggestedPostPaid)
+ * @method static setSuggestedPostRefunded(SuggestedPostRefunded|null $suggestedPostRefunded)
  * @method static setVideoChatScheduled(VideoChatScheduled|null $videoChatScheduled)
  * @method static setVideoChatStarted(VideoChatStarted|null $videoChatStarted)
  * @method static setVideoChatEnded(VideoChatEnded|null $videoChatEnded)
@@ -300,6 +327,7 @@ class Message extends MaybeInaccessibleMessage
         $this->fields = [
             'message_id'                        => FieldType::single('integer'),
             'message_thread_id'                 => FieldType::optional('integer'),
+            'direct_messages_topic'             => FieldType::optional(DirectMessagesTopic::class),
             'from'                              => FieldType::optional(User::class),
             'sender_chat'                       => FieldType::optional(Chat::class),
             'sender_boost_count'                => FieldType::optional('integer'),
@@ -314,16 +342,19 @@ class Message extends MaybeInaccessibleMessage
             'external_reply'                    => FieldType::optional(ExternalReplyInfo::class),
             'quote'                             => FieldType::optional(TextQuote::class),
             'reply_to_story'                    => FieldType::optional(Story::class),
+            'reply_to_checklist_task_id'        => FieldType::optional('integer'),
             'via_bot'                           => FieldType::optional(User::class),
             'edit_date'                         => FieldType::optional('integer'),
             'has_protected_content'             => FieldType::optional('boolean'),
             'is_from_offline'                   => FieldType::optional('boolean'),
+            'is_paid_post'                      => FieldType::optional('boolean'),
             'media_group_id'                    => FieldType::optional('string'),
             'author_signature'                  => FieldType::optional('string'),
             'paid_star_count'                   => FieldType::optional('integer'),
             'text'                              => FieldType::optional('string'),
             'entities'                          => new FieldType(MessageEntity::class, allowArrays: true, allowNull: true, subTypes: []),
             'link_preview_options'              => FieldType::optional(LinkPreviewOptions::class),
+            'suggested_post_info'               => FieldType::optional(SuggestedPostInfo::class),
             'effect_id'                         => FieldType::optional('string'),
             'animation'                         => FieldType::optional(Animation::class),
             'audio'                             => FieldType::optional(Audio::class),
@@ -385,6 +416,11 @@ class Message extends MaybeInaccessibleMessage
             'giveaway_winners'                  => FieldType::optional(GiveawayWinners::class),
             'giveaway_completed'                => FieldType::optional(GiveawayCompleted::class),
             'paid_message_price_changed'        => FieldType::optional(PaidMessagePriceChanged::class),
+            'suggested_post_approved'           => FieldType::optional(SuggestedPostApproved::class),
+            'suggested_post_approval_failed'    => FieldType::optional(SuggestedPostApprovalFailed::class),
+            'suggested_post_declined'           => FieldType::optional(SuggestedPostDeclined::class),
+            'suggested_post_paid'               => FieldType::optional(SuggestedPostPaid::class),
+            'suggested_post_refunded'           => FieldType::optional(SuggestedPostRefunded::class),
             'video_chat_scheduled'              => FieldType::optional(VideoChatScheduled::class),
             'video_chat_started'                => FieldType::optional(VideoChatStarted::class),
             'video_chat_ended'                  => FieldType::optional(VideoChatEnded::class),
