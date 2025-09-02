@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Exception\{TelegramException, TelegramParamException};
 
 /**
  * This object describes the source of a chat boost. It can be one of
@@ -31,5 +32,19 @@ class ChatBoostSource extends abstractType
             ChatBoostSourceGiftCode::class,
             ChatBoostSourceGiveaway::class,
         ];
+    }
+
+    public static function selectChild(array $update): string
+    {
+        if (isset($update['source']) === false) {
+            throw TelegramParamException::missingField(static::class, 'source');
+        }
+
+        return match ($update['source']) {
+            'premium'   => ChatBoostSourcePremium::class,
+            'gift_code' => ChatBoostSourceGiftCode::class,
+            'giveaway'  => ChatBoostSourceGiveaway::class,
+            default     => throw new TelegramException('Invalid source: ' . $update['source'] . ' in ChatBoostSource'),
+        };
     }
 }

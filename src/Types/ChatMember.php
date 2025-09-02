@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mateodioev\Bots\Telegram\Types;
 
 use Mateodioev\Bots\Telegram\Config\FieldsStorage;
+use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
 /**
  * This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
@@ -37,5 +38,22 @@ class ChatMember extends abstractType
             ChatMemberLeft::class,
             ChatMemberBanned::class,
         ];
+    }
+
+    public static function selectChild(array $update): string
+    {
+        if (isset($update['status']) === false) {
+            throw TelegramParamException::missingField(static::class, 'status');
+        }
+
+        return match ($update['status']) {
+            'creator'       => ChatMemberOwner::class,
+            'administrator' => ChatMemberAdministrator::class,
+            'member'        => ChatMemberMember::class,
+            'restricted'    => ChatMemberRestricted::class,
+            'left'          => ChatMemberLeft::class,
+            'kicked'        => ChatMemberBanned::class,
+            default         => throw new TelegramParamException('Invalid status: ' . $update['status'] . ' in ChatMember'),
+        };
     }
 }
