@@ -56,6 +56,9 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property string|null $custom_emoji_sticker_set_name Optional. For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.
  * @property int|null $linked_chat_id Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
  * @property ChatLocation|null $location Optional. For supergroups, the location to which the supergroup is connected
+ * @property UserRating|null $rating Optional. For private chats, the rating of the user if any
+ * @property UniqueGiftColors|null $unique_gift_colors Optional. The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
+ * @property int|null $paid_message_star_count Optional. The number of Telegram Stars a general user have to pay to send a message to the chat
  *
  * @method int id()
  * @method string type()
@@ -104,6 +107,9 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method string|null customEmojiStickerSetName()
  * @method int|null linkedChatId()
  * @method ChatLocation|null location()
+ * @method UserRating|null rating()
+ * @method UniqueGiftColors|null uniqueGiftColors()
+ * @method int|null paidMessageStarCount()
  *
  * @method static setId(int $id)
  * @method static setType(string $type)
@@ -152,6 +158,9 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setCustomEmojiStickerSetName(string|null $customEmojiStickerSetName)
  * @method static setLinkedChatId(int|null $linkedChatId)
  * @method static setLocation(ChatLocation|null $location)
+ * @method static setRating(UserRating|null $rating)
+ * @method static setUniqueGiftColors(UniqueGiftColors|null $uniqueGiftColors)
+ * @method static setPaidMessageStarCount(int|null $paidMessageStarCount)
  *
  * @see https://core.telegram.org/bots/api#chatfullinfo
  */
@@ -207,6 +216,9 @@ class ChatFullInfo extends abstractType
             'custom_emoji_sticker_set_name'           => FieldType::optional('string'),
             'linked_chat_id'                          => FieldType::optional('integer'),
             'location'                                => FieldType::optional(ChatLocation::class),
+            'rating'                                  => FieldType::optional(UserRating::class),
+            'unique_gift_colors'                      => FieldType::optional(UniqueGiftColors::class),
+            'paid_message_star_count'                 => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

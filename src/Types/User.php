@@ -22,6 +22,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage, ParseMode};
  * @property bool|null $supports_inline_queries Optional. True, if the bot supports inline queries. Returned only in getMe.
  * @property bool|null $can_connect_to_business Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
  * @property bool|null $has_main_web_app Optional. True, if the bot has a main Web App. Returned only in getMe.
+ * @property bool|null $has_topics_enabled Optional. True, if the bot has forum topic mode enabled in private chats. Returned only in getMe.
  *
  * @method int id()
  * @method bool isBot()
@@ -36,6 +37,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage, ParseMode};
  * @method bool|null supportsInlineQueries()
  * @method bool|null canConnectToBusiness()
  * @method bool|null hasMainWebApp()
+ * @method bool|null hasTopicsEnabled()
  *
  * @method static setId(int $id)
  * @method static setIsBot(bool $isBot)
@@ -50,6 +52,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage, ParseMode};
  * @method static setSupportsInlineQueries(bool|null $supportsInlineQueries)
  * @method static setCanConnectToBusiness(bool|null $canConnectToBusiness)
  * @method static setHasMainWebApp(bool|null $hasMainWebApp)
+ * @method static setHasTopicsEnabled(bool|null $hasTopicsEnabled)
  *
  * @see https://core.telegram.org/bots/api#user
  */
@@ -71,6 +74,7 @@ class User extends abstractType
             'supports_inline_queries'     => FieldType::optional('boolean'),
             'can_connect_to_business'     => FieldType::optional('boolean'),
             'has_main_web_app'            => FieldType::optional('boolean'),
+            'has_topics_enabled'          => FieldType::optional('boolean'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
@@ -81,7 +85,7 @@ class User extends abstractType
     public function mention(ParseMode $mode = ParseMode::HTML, ?string $customName = null): string
     {
         $name = $mode->scapeTags($customName ?? $this->getName());
-        $id = $this->properties['id'];
+        $id   = $this->properties['id'];
 
         if ($mode === ParseMode::HTML) {
             return "<a href=\"tg://user?id=$id\">$name</a>";

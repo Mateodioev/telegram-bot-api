@@ -20,8 +20,10 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool|null $is_saved Optional. True, if the gift is displayed on the account's profile page; for gifts received on behalf of business accounts only
  * @property bool|null $can_be_upgraded Optional. True, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only
  * @property bool|null $was_refunded Optional. True, if the gift was refunded and isn't available anymore
- * @property int|null $convert_star_count Optional. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars
- * @property int|null $prepaid_upgrade_star_count Optional. Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift
+ * @property int|null $convert_star_count Optional. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars; for gifts received on behalf of business accounts only
+ * @property int|null $prepaid_upgrade_star_count Optional. Number of Telegram Stars that were paid for the ability to upgrade the gift
+ * @property bool|null $is_upgrade_separate Optional. True, if the gift's upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only
+ * @property int|null $unique_gift_number Optional. Unique number reserved for this gift when upgraded. See the number field in UniqueGift
  *
  * @method string type()
  * @method Gift gift()
@@ -36,6 +38,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method bool|null wasRefunded()
  * @method int|null convertStarCount()
  * @method int|null prepaidUpgradeStarCount()
+ * @method bool|null isUpgradeSeparate()
+ * @method int|null uniqueGiftNumber()
  *
  * @method static setType(string $type)
  * @method static setGift(Gift $gift)
@@ -50,6 +54,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setWasRefunded(bool|null $wasRefunded)
  * @method static setConvertStarCount(int|null $convertStarCount)
  * @method static setPrepaidUpgradeStarCount(int|null $prepaidUpgradeStarCount)
+ * @method static setIsUpgradeSeparate(bool|null $isUpgradeSeparate)
+ * @method static setUniqueGiftNumber(int|null $uniqueGiftNumber)
  *
  * @see https://core.telegram.org/bots/api#ownedgiftregular
  */
@@ -71,6 +77,8 @@ class OwnedGiftRegular extends OwnedGift
             'was_refunded'               => FieldType::optional('boolean'),
             'convert_star_count'         => FieldType::optional('integer'),
             'prepaid_upgrade_star_count' => FieldType::optional('integer'),
+            'is_upgrade_separate'        => FieldType::optional('boolean'),
+            'unique_gift_number'         => FieldType::optional('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

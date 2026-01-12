@@ -10,7 +10,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * This object represents a message.
  *
  * @property int $message_id Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent
- * @property int|null $message_thread_id Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
+ * @property int|null $message_thread_id Optional. Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only
  * @property DirectMessagesTopic|null $direct_messages_topic Optional. Information about the direct messages chat topic that contains the message
  * @property User|null $from Optional. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats
  * @property Chat|null $sender_chat Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats.
@@ -20,7 +20,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property string|null $business_connection_id Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
  * @property Chat $chat Chat the message belongs to
  * @property MessageOrigin|null $forward_origin Optional. Information about the original message for forwarded messages
- * @property bool|null $is_topic_message Optional. True, if the message is sent to a forum topic
+ * @property bool|null $is_topic_message Optional. True, if the message is sent to a topic in a forum supergroup or a private chat with the bot
  * @property bool|null $is_automatic_forward Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group
  * @property Message|null $reply_to_message Optional. For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @property ExternalReplyInfo|null $external_reply Optional. Information about the message that is being replied to, which may come from another chat or forum topic
@@ -80,6 +80,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property ChatShared|null $chat_shared Optional. Service message: a chat was shared with the bot
  * @property GiftInfo|null $gift Optional. Service message: a regular gift was sent or received
  * @property UniqueGiftInfo|null $unique_gift Optional. Service message: a unique gift was sent or received
+ * @property GiftInfo|null $gift_upgrade_sent Optional. Service message: upgrade of a gift was purchased after the gift was sent
  * @property string|null $connected_website Optional. The domain name of the website on which the user has logged in. More about Telegram Login: https://core.telegram.org/widgets/login
  * @property WriteAccessAllowed|null $write_access_allowed Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess
  * @property PassportData|null $passport_data Optional. Telegram Passport data
@@ -183,6 +184,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method ChatShared|null chatShared()
  * @method GiftInfo|null gift()
  * @method UniqueGiftInfo|null uniqueGift()
+ * @method GiftInfo|null giftUpgradeSent()
  * @method string|null connectedWebsite()
  * @method WriteAccessAllowed|null writeAccessAllowed()
  * @method PassportData|null passportData()
@@ -286,6 +288,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setChatShared(ChatShared|null $chatShared)
  * @method static setGift(GiftInfo|null $gift)
  * @method static setUniqueGift(UniqueGiftInfo|null $uniqueGift)
+ * @method static setGiftUpgradeSent(GiftInfo|null $giftUpgradeSent)
  * @method static setConnectedWebsite(string|null $connectedWebsite)
  * @method static setWriteAccessAllowed(WriteAccessAllowed|null $writeAccessAllowed)
  * @method static setPassportData(PassportData|null $passportData)
@@ -396,6 +399,7 @@ class Message extends MaybeInaccessibleMessage
             'chat_shared'                       => FieldType::optional(ChatShared::class),
             'gift'                              => FieldType::optional(GiftInfo::class),
             'unique_gift'                       => FieldType::optional(UniqueGiftInfo::class),
+            'gift_upgrade_sent'                 => FieldType::optional(GiftInfo::class),
             'connected_website'                 => FieldType::optional('string'),
             'write_access_allowed'              => FieldType::optional(WriteAccessAllowed::class),
             'passport_data'                     => FieldType::optional(PassportData::class),
