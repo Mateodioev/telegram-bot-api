@@ -2,6 +2,8 @@
 
 namespace Tools\Gen;
 
+use Mateodioev\Bots\Telegram\Config\strUtils;
+
 use function array_pop;
 use function in_array;
 use function max;
@@ -50,7 +52,7 @@ class TypeStr
             %s
                     ];
                     FieldsStorage::instance()->add(static::class, \$this->fields);
-                }%s
+                }%s%s
             }
 
             PHP;
@@ -158,7 +160,34 @@ class TypeStr
             $this->generatePhpDoc(),
             $this->generateFields(),
             $this->generateChildMethod(),
+            $this->generateDefaultMethod(),
         );
+    }
+
+    private function generateDefaultMethod(): string
+    {
+        if ($this->type->subtypeOf === null) {
+            return '';
+        }
+
+        foreach ($this->type->fields as $field) {
+            $constant = $field->constantValue();
+            if ($constant !== null) {
+                $setter = 'set' . strUtils::toPascalCase($field->name);
+
+                return <<<PHP
+
+
+                    public static function default(): static
+                    {
+                        return (new static())
+                            ->{$setter}('{$constant}');
+                    }
+                PHP;
+            }
+        }
+
+        return '';
     }
 
     private function generateChildMethod(): string

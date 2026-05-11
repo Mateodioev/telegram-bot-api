@@ -41,6 +41,7 @@ class PaidMediaPreview extends PaidMedia
 
     public static function default(): static
     {
-        return (new static())->setType('preview');
+        return (new static())
+            ->setType('preview');
     }
 }

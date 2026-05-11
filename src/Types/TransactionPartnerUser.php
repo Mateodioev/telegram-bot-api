@@ -65,6 +65,7 @@ class TransactionPartnerUser extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static())->setType('user');
+        return (new static())
+            ->setType('user');
     }
 }

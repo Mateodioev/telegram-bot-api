@@ -33,6 +33,7 @@ class PaidMediaPhoto extends PaidMedia
 
     public static function default(): static
     {
-        return (new static())->setType('photo');
+        return (new static())
+            ->setType('photo');
     }
 }

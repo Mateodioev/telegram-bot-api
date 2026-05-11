@@ -30,4 +30,10 @@ class ChatBoostSourcePremium extends ChatBoostSource
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setSource('premium');
+    }
 }

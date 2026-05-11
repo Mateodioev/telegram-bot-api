@@ -37,6 +37,7 @@ class TransactionPartnerChat extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static())->setType('chat');
+        return (new static())
+            ->setType('chat');
     }
 }

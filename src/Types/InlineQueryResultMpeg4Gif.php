@@ -83,7 +83,6 @@ class InlineQueryResultMpeg4Gif extends InlineQueryResult
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
-
     public static function default(): static
     {
         return (new static())

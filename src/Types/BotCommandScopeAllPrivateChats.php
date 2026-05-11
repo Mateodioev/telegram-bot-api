@@ -29,8 +29,7 @@ class BotCommandScopeAllPrivateChats extends BotCommandScope
 
     public static function default(): static
     {
-        return new static([
-            'type' => 'all_private_chats',
-        ]);
+        return (new static())
+            ->setType('all_private_chats');
     }
 }

@@ -30,4 +30,10 @@ class ReactionTypeEmoji extends ReactionType
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setType('emoji');
+    }
 }

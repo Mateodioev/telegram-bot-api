@@ -41,6 +41,7 @@ class PassportElementErrorFile extends PassportElementError
 
     public static function default(): static
     {
-        return (new static())->setSource('file');
+        return (new static())
+            ->setSource('file');
     }
 }

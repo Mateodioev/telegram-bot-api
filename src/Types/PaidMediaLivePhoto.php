@@ -33,6 +33,7 @@ class PaidMediaLivePhoto extends PaidMedia
 
     public static function default(): static
     {
-        return new static(['type' => 'live_photo']);
+        return (new static())
+            ->setType('live_photo');
     }
 }

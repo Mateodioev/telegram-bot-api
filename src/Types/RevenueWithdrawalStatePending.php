@@ -29,6 +29,7 @@ class RevenueWithdrawalStatePending extends RevenueWithdrawalState
 
     public static function default(): static
     {
-        return (new static())->setType('pending');
+        return (new static())
+            ->setType('pending');
     }
 }

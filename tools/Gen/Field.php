@@ -4,6 +4,8 @@ namespace Tools\Gen;
 
 use Mateodioev\Bots\Telegram\Config\FieldType;
 
+use function in_array;
+use function preg_match;
 use function str_starts_with;
 
 /**
@@ -46,6 +48,20 @@ class Field
             $parsedTypes[] = new FieldType(self::genType($type), $allowArrays);
         }
         return $parsedTypes;
+    }
+
+    public function constantValue(): ?string
+    {
+        if (preg_match('/(?:always|must be)\s+["\']([\w_]+)["\']/i', $this->description, $m)) {
+            return $m[1];
+        }
+
+        if (in_array($this->name, ['type', 'status', 'source'], true)
+            && preg_match('/must\s+be\s+([\w_]+)/i', $this->description, $m)) {
+            return $m[1];
+        }
+
+        return null;
     }
 
     /**

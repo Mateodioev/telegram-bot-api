@@ -29,6 +29,7 @@ class TransactionPartnerTelegramAds extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static())->setType('telegram_ads');
+        return (new static())
+            ->setType('telegram_ads');
     }
 }

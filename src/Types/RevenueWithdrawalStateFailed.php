@@ -29,6 +29,7 @@ class RevenueWithdrawalStateFailed extends RevenueWithdrawalState
 
     public static function default(): static
     {
-        return (new static())->setType('failed');
+        return (new static())
+            ->setType('failed');
     }
 }

@@ -41,6 +41,7 @@ class PassportElementErrorSelfie extends PassportElementError
 
     public static function default(): static
     {
-        return (new static())->setSource('selfie');
+        return (new static())
+            ->setSource('selfie');
     }
 }

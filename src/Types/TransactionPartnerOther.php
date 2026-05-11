@@ -29,6 +29,7 @@ class TransactionPartnerOther extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static())->setType('other');
+        return (new static())
+            ->setType('other');
     }
 }

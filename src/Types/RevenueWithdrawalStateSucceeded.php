@@ -37,6 +37,7 @@ class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState
 
     public static function default(): static
     {
-        return (new static())->setType('succeeded');
+        return (new static())
+            ->setType('succeeded');
     }
 }

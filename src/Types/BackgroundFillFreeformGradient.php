@@ -26,7 +26,7 @@ class BackgroundFillFreeformGradient extends BackgroundFill
     {
         $this->fields = [
             'type'   => FieldType::single('string'),
-            'colors' => FieldType::multiple('integer'),
+            'colors' => FieldType::array('integer'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

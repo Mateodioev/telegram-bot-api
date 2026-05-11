@@ -34,4 +34,10 @@ class ChatMemberBanned extends ChatMember
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
+
+    public static function default(): static
+    {
+        return (new static())
+            ->setStatus('kicked');
+    }
 }

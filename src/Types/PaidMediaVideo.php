@@ -33,6 +33,7 @@ class PaidMediaVideo extends PaidMedia
 
     public static function default(): static
     {
-        return (new static())->setType('video');
+        return (new static())
+            ->setType('video');
     }
 }

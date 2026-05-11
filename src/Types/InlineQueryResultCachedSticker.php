@@ -45,6 +45,7 @@ class InlineQueryResultCachedSticker extends InlineQueryResult
 
     public static function default(): static
     {
-        return (new static())->setType('sticker');
+        return (new static())
+            ->setType('sticker');
     }
 }

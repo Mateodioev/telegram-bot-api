@@ -33,6 +33,7 @@ class TransactionPartnerTelegramApi extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static())->setType('telegram_api');
+        return (new static())
+            ->setType('telegram_api');
     }
 }

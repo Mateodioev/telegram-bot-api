@@ -33,6 +33,7 @@ class TransactionPartnerFragment extends TransactionPartner
 
     public static function default(): static
     {
-        return (new static())->setType('fragment');
+        return (new static())
+            ->setType('fragment');
     }
 }
