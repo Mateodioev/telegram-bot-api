@@ -8,7 +8,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
  * This object represents an incoming update.
- * At most one of the optional parameters can be present in any given update.
+ * At most one of the optional fields can be present in any given update.
  *
  * @property int $update_id The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you're using webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
  * @property Message|null $message Optional. New incoming message of any kind - text, photo, sticker, etc.
@@ -19,6 +19,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property Message|null $business_message Optional. New message from a connected business account
  * @property Message|null $edited_business_message Optional. New version of a message from a connected business account
  * @property BusinessMessagesDeleted|null $deleted_business_messages Optional. Messages were deleted from a connected business account
+ * @property Message|null $guest_message Optional. New guest message. The bot can use the field Message.guest_query_id and the method answerGuestQuery to send a message in response.
  * @property MessageReactionUpdated|null $message_reaction Optional. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots.
  * @property MessageReactionCountUpdated|null $message_reaction_count Optional. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
  * @property InlineQuery|null $inline_query Optional. New incoming inline query
@@ -34,6 +35,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property ChatJoinRequest|null $chat_join_request Optional. A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates.
  * @property ChatBoostUpdated|null $chat_boost Optional. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.
  * @property ChatBoostRemoved|null $removed_chat_boost Optional. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
+ * @property ManagedBotUpdated|null $managed_bot Optional. A new bot was created to be managed by the bot, or token or owner of a managed bot was changed
  *
  * @method int updateId()
  * @method Message|null message()
@@ -44,6 +46,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method Message|null businessMessage()
  * @method Message|null editedBusinessMessage()
  * @method BusinessMessagesDeleted|null deletedBusinessMessages()
+ * @method Message|null guestMessage()
  * @method MessageReactionUpdated|null messageReaction()
  * @method MessageReactionCountUpdated|null messageReactionCount()
  * @method InlineQuery|null inlineQuery()
@@ -59,6 +62,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method ChatJoinRequest|null chatJoinRequest()
  * @method ChatBoostUpdated|null chatBoost()
  * @method ChatBoostRemoved|null removedChatBoost()
+ * @method ManagedBotUpdated|null managedBot()
  *
  * @method static setUpdateId(int $updateId)
  * @method static setMessage(Message|null $message)
@@ -69,6 +73,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setBusinessMessage(Message|null $businessMessage)
  * @method static setEditedBusinessMessage(Message|null $editedBusinessMessage)
  * @method static setDeletedBusinessMessages(BusinessMessagesDeleted|null $deletedBusinessMessages)
+ * @method static setGuestMessage(Message|null $guestMessage)
  * @method static setMessageReaction(MessageReactionUpdated|null $messageReaction)
  * @method static setMessageReactionCount(MessageReactionCountUpdated|null $messageReactionCount)
  * @method static setInlineQuery(InlineQuery|null $inlineQuery)
@@ -84,6 +89,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setChatJoinRequest(ChatJoinRequest|null $chatJoinRequest)
  * @method static setChatBoost(ChatBoostUpdated|null $chatBoost)
  * @method static setRemovedChatBoost(ChatBoostRemoved|null $removedChatBoost)
+ * @method static setManagedBot(ManagedBotUpdated|null $managedBot)
  *
  * @see https://core.telegram.org/bots/api#update
  */
@@ -101,6 +107,7 @@ class Update extends abstractType
             'business_message'          => FieldType::optional(Message::class),
             'edited_business_message'   => FieldType::optional(Message::class),
             'deleted_business_messages' => FieldType::optional(BusinessMessagesDeleted::class),
+            'guest_message'             => FieldType::optional(Message::class),
             'message_reaction'          => FieldType::optional(MessageReactionUpdated::class),
             'message_reaction_count'    => FieldType::optional(MessageReactionCountUpdated::class),
             'inline_query'              => FieldType::optional(InlineQuery::class),
@@ -116,6 +123,7 @@ class Update extends abstractType
             'chat_join_request'         => FieldType::optional(ChatJoinRequest::class),
             'chat_boost'                => FieldType::optional(ChatBoostUpdated::class),
             'removed_chat_boost'        => FieldType::optional(ChatBoostRemoved::class),
+            'managed_bot'               => FieldType::optional(ManagedBotUpdated::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

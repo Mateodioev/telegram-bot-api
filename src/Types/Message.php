@@ -16,7 +16,9 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property Chat|null $sender_chat Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats.
  * @property int|null $sender_boost_count Optional. If the sender of the message boosted the chat, the number of boosts added by the user
  * @property User|null $sender_business_bot Optional. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.
+ * @property string|null $sender_tag Optional. Tag or custom title of the sender of the message; for supergroups only
  * @property int $date Date the message was sent in Unix time. It is always a positive number, representing a valid date.
+ * @property string|null $guest_query_id Optional. The unique identifier for the guest query. Use this identifier with the method answerGuestQuery to send a response message. If non-empty, the message belongs to the chat where the guest bot was summoned, which may not coincide with other existing bot chats sharing the same identifier.
  * @property string|null $business_connection_id Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
  * @property Chat $chat Chat the message belongs to
  * @property MessageOrigin|null $forward_origin Optional. Information about the original message for forwarded messages
@@ -27,12 +29,15 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property TextQuote|null $quote Optional. For replies that quote part of the original message, the quoted part of the message
  * @property Story|null $reply_to_story Optional. For replies to a story, the original story
  * @property int|null $reply_to_checklist_task_id Optional. Identifier of the specific checklist task that is being replied to
+ * @property string|null $reply_to_poll_option_id Optional. Persistent identifier of the specific poll option that is being replied to
  * @property User|null $via_bot Optional. Bot through which the message was sent
+ * @property User|null $guest_bot_caller_user Optional. For a message sent by a guest bot, this is the user whose original message triggered the bot's response
+ * @property Chat|null $guest_bot_caller_chat Optional. For a message sent by a guest bot, this is the chat whose original message triggered the bot's response
  * @property int|null $edit_date Optional. Date the message was last edited in Unix time
  * @property bool|null $has_protected_content Optional. True, if the message can't be forwarded
  * @property bool|null $is_from_offline Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
  * @property bool|null $is_paid_post Optional. True, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can't be edited.
- * @property string|null $media_group_id Optional. The unique identifier of a media message group this message belongs to
+ * @property string|null $media_group_id Optional. The unique identifier inside this chat of a media message group this message belongs to
  * @property string|null $author_signature Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
  * @property int|null $paid_star_count Optional. The number of Telegram Stars that were paid by the sender of the message to send it
  * @property string|null $text Optional. For text messages, the actual UTF-8 text of the message
@@ -43,6 +48,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property Animation|null $animation Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
  * @property Audio|null $audio Optional. Message is an audio file, information about the file
  * @property Document|null $document Optional. Message is a general file, information about the file
+ * @property LivePhoto|null $live_photo Optional. Message is a live photo, information about the live photo. For backward compatibility, when this field is set, the photo field will also be set
  * @property PaidMediaInfo|null $paid_media Optional. Message contains paid media; information about the paid media
  * @property PhotoSize[]|null $photo Optional. Message is a photo, available sizes of the photo
  * @property Sticker|null $sticker Optional. Message is a sticker, information about the sticker
@@ -63,6 +69,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property Location|null $location Optional. Message is a shared location, information about the location
  * @property User[]|null $new_chat_members Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
  * @property User|null $left_chat_member Optional. A member was removed from the group, information about them (this member may be the bot itself)
+ * @property ChatOwnerLeft|null $chat_owner_left Optional. Service message: chat owner has left
+ * @property ChatOwnerChanged|null $chat_owner_changed Optional. Service message: chat owner has changed
  * @property string|null $new_chat_title Optional. A chat title was changed to this value
  * @property PhotoSize[]|null $new_chat_photo Optional. A chat photo was change to this value
  * @property bool|null $delete_chat_photo Optional. Service message: the chat photo was deleted
@@ -100,7 +108,10 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property Giveaway|null $giveaway Optional. The message is a scheduled giveaway message
  * @property GiveawayWinners|null $giveaway_winners Optional. A giveaway with public winners was completed
  * @property GiveawayCompleted|null $giveaway_completed Optional. Service message: a giveaway without public winners was completed
+ * @property ManagedBotCreated|null $managed_bot_created Optional. Service message: user created a bot that will be managed by the current bot
  * @property PaidMessagePriceChanged|null $paid_message_price_changed Optional. Service message: the price for paid messages has changed in the chat
+ * @property PollOptionAdded|null $poll_option_added Optional. Service message: answer option was added to a poll
+ * @property PollOptionDeleted|null $poll_option_deleted Optional. Service message: answer option was deleted from a poll
  * @property SuggestedPostApproved|null $suggested_post_approved Optional. Service message: a suggested post was approved
  * @property SuggestedPostApprovalFailed|null $suggested_post_approval_failed Optional. Service message: approval of a suggested post has failed
  * @property SuggestedPostDeclined|null $suggested_post_declined Optional. Service message: a suggested post was declined
@@ -120,7 +131,9 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method Chat|null senderChat()
  * @method int|null senderBoostCount()
  * @method User|null senderBusinessBot()
+ * @method string|null senderTag()
  * @method int date()
+ * @method string|null guestQueryId()
  * @method string|null businessConnectionId()
  * @method Chat chat()
  * @method MessageOrigin|null forwardOrigin()
@@ -131,7 +144,10 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method TextQuote|null quote()
  * @method Story|null replyToStory()
  * @method int|null replyToChecklistTaskId()
+ * @method string|null replyToPollOptionId()
  * @method User|null viaBot()
+ * @method User|null guestBotCallerUser()
+ * @method Chat|null guestBotCallerChat()
  * @method int|null editDate()
  * @method bool|null hasProtectedContent()
  * @method bool|null isFromOffline()
@@ -147,6 +163,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method Animation|null animation()
  * @method Audio|null audio()
  * @method Document|null document()
+ * @method LivePhoto|null livePhoto()
  * @method PaidMediaInfo|null paidMedia()
  * @method PhotoSize[]|null photo()
  * @method Sticker|null sticker()
@@ -167,6 +184,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method Location|null location()
  * @method User[]|null newChatMembers()
  * @method User|null leftChatMember()
+ * @method ChatOwnerLeft|null chatOwnerLeft()
+ * @method ChatOwnerChanged|null chatOwnerChanged()
  * @method string|null newChatTitle()
  * @method PhotoSize[]|null newChatPhoto()
  * @method bool|null deleteChatPhoto()
@@ -204,7 +223,10 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method Giveaway|null giveaway()
  * @method GiveawayWinners|null giveawayWinners()
  * @method GiveawayCompleted|null giveawayCompleted()
+ * @method ManagedBotCreated|null managedBotCreated()
  * @method PaidMessagePriceChanged|null paidMessagePriceChanged()
+ * @method PollOptionAdded|null pollOptionAdded()
+ * @method PollOptionDeleted|null pollOptionDeleted()
  * @method SuggestedPostApproved|null suggestedPostApproved()
  * @method SuggestedPostApprovalFailed|null suggestedPostApprovalFailed()
  * @method SuggestedPostDeclined|null suggestedPostDeclined()
@@ -224,7 +246,9 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setSenderChat(Chat|null $senderChat)
  * @method static setSenderBoostCount(int|null $senderBoostCount)
  * @method static setSenderBusinessBot(User|null $senderBusinessBot)
+ * @method static setSenderTag(string|null $senderTag)
  * @method static setDate(int $date)
+ * @method static setGuestQueryId(string|null $guestQueryId)
  * @method static setBusinessConnectionId(string|null $businessConnectionId)
  * @method static setChat(Chat $chat)
  * @method static setForwardOrigin(MessageOrigin|null $forwardOrigin)
@@ -235,7 +259,10 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setQuote(TextQuote|null $quote)
  * @method static setReplyToStory(Story|null $replyToStory)
  * @method static setReplyToChecklistTaskId(int|null $replyToChecklistTaskId)
+ * @method static setReplyToPollOptionId(string|null $replyToPollOptionId)
  * @method static setViaBot(User|null $viaBot)
+ * @method static setGuestBotCallerUser(User|null $guestBotCallerUser)
+ * @method static setGuestBotCallerChat(Chat|null $guestBotCallerChat)
  * @method static setEditDate(int|null $editDate)
  * @method static setHasProtectedContent(bool|null $hasProtectedContent)
  * @method static setIsFromOffline(bool|null $isFromOffline)
@@ -251,6 +278,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setAnimation(Animation|null $animation)
  * @method static setAudio(Audio|null $audio)
  * @method static setDocument(Document|null $document)
+ * @method static setLivePhoto(LivePhoto|null $livePhoto)
  * @method static setPaidMedia(PaidMediaInfo|null $paidMedia)
  * @method static setPhoto(PhotoSize[]|null $photo)
  * @method static setSticker(Sticker|null $sticker)
@@ -271,6 +299,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setLocation(Location|null $location)
  * @method static setNewChatMembers(User[]|null $newChatMembers)
  * @method static setLeftChatMember(User|null $leftChatMember)
+ * @method static setChatOwnerLeft(ChatOwnerLeft|null $chatOwnerLeft)
+ * @method static setChatOwnerChanged(ChatOwnerChanged|null $chatOwnerChanged)
  * @method static setNewChatTitle(string|null $newChatTitle)
  * @method static setNewChatPhoto(PhotoSize[]|null $newChatPhoto)
  * @method static setDeleteChatPhoto(bool|null $deleteChatPhoto)
@@ -308,7 +338,10 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setGiveaway(Giveaway|null $giveaway)
  * @method static setGiveawayWinners(GiveawayWinners|null $giveawayWinners)
  * @method static setGiveawayCompleted(GiveawayCompleted|null $giveawayCompleted)
+ * @method static setManagedBotCreated(ManagedBotCreated|null $managedBotCreated)
  * @method static setPaidMessagePriceChanged(PaidMessagePriceChanged|null $paidMessagePriceChanged)
+ * @method static setPollOptionAdded(PollOptionAdded|null $pollOptionAdded)
+ * @method static setPollOptionDeleted(PollOptionDeleted|null $pollOptionDeleted)
  * @method static setSuggestedPostApproved(SuggestedPostApproved|null $suggestedPostApproved)
  * @method static setSuggestedPostApprovalFailed(SuggestedPostApprovalFailed|null $suggestedPostApprovalFailed)
  * @method static setSuggestedPostDeclined(SuggestedPostDeclined|null $suggestedPostDeclined)
@@ -335,7 +368,9 @@ class Message extends MaybeInaccessibleMessage
             'sender_chat'                       => FieldType::optional(Chat::class),
             'sender_boost_count'                => FieldType::optional('integer'),
             'sender_business_bot'               => FieldType::optional(User::class),
+            'sender_tag'                        => FieldType::optional('string'),
             'date'                              => FieldType::single('integer'),
+            'guest_query_id'                    => FieldType::optional('string'),
             'business_connection_id'            => FieldType::optional('string'),
             'chat'                              => FieldType::single(Chat::class),
             'forward_origin'                    => FieldType::optional(MessageOrigin::class),
@@ -346,7 +381,10 @@ class Message extends MaybeInaccessibleMessage
             'quote'                             => FieldType::optional(TextQuote::class),
             'reply_to_story'                    => FieldType::optional(Story::class),
             'reply_to_checklist_task_id'        => FieldType::optional('integer'),
+            'reply_to_poll_option_id'           => FieldType::optional('string'),
             'via_bot'                           => FieldType::optional(User::class),
+            'guest_bot_caller_user'             => FieldType::optional(User::class),
+            'guest_bot_caller_chat'             => FieldType::optional(Chat::class),
             'edit_date'                         => FieldType::optional('integer'),
             'has_protected_content'             => FieldType::optional('boolean'),
             'is_from_offline'                   => FieldType::optional('boolean'),
@@ -362,6 +400,7 @@ class Message extends MaybeInaccessibleMessage
             'animation'                         => FieldType::optional(Animation::class),
             'audio'                             => FieldType::optional(Audio::class),
             'document'                          => FieldType::optional(Document::class),
+            'live_photo'                        => FieldType::optional(LivePhoto::class),
             'paid_media'                        => FieldType::optional(PaidMediaInfo::class),
             'photo'                             => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
             'sticker'                           => FieldType::optional(Sticker::class),
@@ -382,6 +421,8 @@ class Message extends MaybeInaccessibleMessage
             'location'                          => FieldType::optional(Location::class),
             'new_chat_members'                  => new FieldType(User::class, allowArrays: true, allowNull: true, subTypes: []),
             'left_chat_member'                  => FieldType::optional(User::class),
+            'chat_owner_left'                   => FieldType::optional(ChatOwnerLeft::class),
+            'chat_owner_changed'                => FieldType::optional(ChatOwnerChanged::class),
             'new_chat_title'                    => FieldType::optional('string'),
             'new_chat_photo'                    => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
             'delete_chat_photo'                 => FieldType::optional('boolean'),
@@ -419,7 +460,10 @@ class Message extends MaybeInaccessibleMessage
             'giveaway'                          => FieldType::optional(Giveaway::class),
             'giveaway_winners'                  => FieldType::optional(GiveawayWinners::class),
             'giveaway_completed'                => FieldType::optional(GiveawayCompleted::class),
+            'managed_bot_created'               => FieldType::optional(ManagedBotCreated::class),
             'paid_message_price_changed'        => FieldType::optional(PaidMessagePriceChanged::class),
+            'poll_option_added'                 => FieldType::optional(PollOptionAdded::class),
+            'poll_option_deleted'               => FieldType::optional(PollOptionDeleted::class),
             'suggested_post_approved'           => FieldType::optional(SuggestedPostApproved::class),
             'suggested_post_approval_failed'    => FieldType::optional(SuggestedPostApprovalFailed::class),
             'suggested_post_declined'           => FieldType::optional(SuggestedPostDeclined::class),

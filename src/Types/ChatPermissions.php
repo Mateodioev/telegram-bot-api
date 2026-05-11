@@ -19,6 +19,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool|null $can_send_polls Optional. True, if the user is allowed to send polls and checklists
  * @property bool|null $can_send_other_messages Optional. True, if the user is allowed to send animations, games, stickers and use inline bots
  * @property bool|null $can_add_web_page_previews Optional. True, if the user is allowed to add web page previews to their messages
+ * @property bool|null $can_react_to_messages Optional. True, if the user is allowed to react to messages. If omitted, defaults to the value of can_send_messages.
+ * @property bool|null $can_edit_tag Optional. True, if the user is allowed to edit their own tag. If omitted, defaults to the value of can_pin_messages.
  * @property bool|null $can_change_info Optional. True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups
  * @property bool|null $can_invite_users Optional. True, if the user is allowed to invite new users to the chat
  * @property bool|null $can_pin_messages Optional. True, if the user is allowed to pin messages. Ignored in public supergroups
@@ -34,6 +36,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method bool|null canSendPolls()
  * @method bool|null canSendOtherMessages()
  * @method bool|null canAddWebPagePreviews()
+ * @method bool|null canReactToMessages()
+ * @method bool|null canEditTag()
  * @method bool|null canChangeInfo()
  * @method bool|null canInviteUsers()
  * @method bool|null canPinMessages()
@@ -49,6 +53,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setCanSendPolls(bool|null $canSendPolls)
  * @method static setCanSendOtherMessages(bool|null $canSendOtherMessages)
  * @method static setCanAddWebPagePreviews(bool|null $canAddWebPagePreviews)
+ * @method static setCanReactToMessages(bool|null $canReactToMessages)
+ * @method static setCanEditTag(bool|null $canEditTag)
  * @method static setCanChangeInfo(bool|null $canChangeInfo)
  * @method static setCanInviteUsers(bool|null $canInviteUsers)
  * @method static setCanPinMessages(bool|null $canPinMessages)
@@ -71,6 +77,8 @@ class ChatPermissions extends abstractType
             'can_send_polls'            => FieldType::optional('boolean'),
             'can_send_other_messages'   => FieldType::optional('boolean'),
             'can_add_web_page_previews' => FieldType::optional('boolean'),
+            'can_react_to_messages'     => FieldType::optional('boolean'),
+            'can_edit_tag'              => FieldType::optional('boolean'),
             'can_change_info'           => FieldType::optional('boolean'),
             'can_invite_users'          => FieldType::optional('boolean'),
             'can_pin_messages'          => FieldType::optional('boolean'),

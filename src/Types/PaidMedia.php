@@ -9,8 +9,9 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
 /**
  * This object describes paid media. Currently, it can be one of
- * - PaidMediaPreview
+ * - PaidMediaLivePhoto
  * - PaidMediaPhoto
+ * - PaidMediaPreview
  * - PaidMediaVideo
  *
  * @see https://core.telegram.org/bots/api#paidmedia
@@ -19,15 +20,18 @@ class PaidMedia extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
     public static function childs(): array
     {
         return [
-            PaidMediaPreview::class,
+            PaidMediaLivePhoto::class,
             PaidMediaPhoto::class,
+            PaidMediaPreview::class,
             PaidMediaVideo::class,
         ];
     }
@@ -39,8 +43,9 @@ class PaidMedia extends abstractType
         }
 
         return match ($update['type']) {
-            'preview' => PaidMediaPreview::class,
+            'live_photo' => PaidMediaLivePhoto::class,
             'photo' => PaidMediaPhoto::class,
+            'preview' => PaidMediaPreview::class,
             'video' => PaidMediaVideo::class,
             default => TelegramParamException::invalidType(static::class, (string) $update['type']),
         };

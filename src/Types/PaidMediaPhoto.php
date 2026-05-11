@@ -26,7 +26,7 @@ class PaidMediaPhoto extends PaidMedia
     {
         $this->fields = [
             'type'  => FieldType::single('string'),
-            'photo' => FieldType::multiple(PhotoSize::class),
+            'photo' => FieldType::array(PhotoSize::class),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

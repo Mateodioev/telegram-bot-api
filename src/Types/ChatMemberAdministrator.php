@@ -28,6 +28,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool|null $can_pin_messages Optional. True, if the user is allowed to pin messages; for groups and supergroups only
  * @property bool|null $can_manage_topics Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
  * @property bool|null $can_manage_direct_messages Optional. True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
+ * @property bool|null $can_manage_tags Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
  * @property string|null $custom_title Optional. Custom title for this user
  *
  * @method string status()
@@ -49,6 +50,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method bool|null canPinMessages()
  * @method bool|null canManageTopics()
  * @method bool|null canManageDirectMessages()
+ * @method bool|null canManageTags()
  * @method string|null customTitle()
  *
  * @method static setStatus(string $status)
@@ -70,6 +72,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setCanPinMessages(bool|null $canPinMessages)
  * @method static setCanManageTopics(bool|null $canManageTopics)
  * @method static setCanManageDirectMessages(bool|null $canManageDirectMessages)
+ * @method static setCanManageTags(bool|null $canManageTags)
  * @method static setCustomTitle(string|null $customTitle)
  *
  * @see https://core.telegram.org/bots/api#chatmemberadministrator
@@ -98,6 +101,7 @@ class ChatMemberAdministrator extends ChatMember
             'can_pin_messages'           => FieldType::optional('boolean'),
             'can_manage_topics'          => FieldType::optional('boolean'),
             'can_manage_direct_messages' => FieldType::optional('boolean'),
+            'can_manage_tags'            => FieldType::optional('boolean'),
             'custom_title'               => FieldType::optional('string'),
             // Legacy params
             'can_manage_voice_chats'     => FieldType::optional('boolean'),

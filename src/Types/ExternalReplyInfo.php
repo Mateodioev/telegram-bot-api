@@ -16,6 +16,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property Animation|null $animation Optional. Message is an animation, information about the animation
  * @property Audio|null $audio Optional. Message is an audio file, information about the file
  * @property Document|null $document Optional. Message is a general file, information about the file
+ * @property LivePhoto|null $live_photo Optional. Message is a live photo, information about the live photo
  * @property PaidMediaInfo|null $paid_media Optional. Message contains paid media; information about the paid media
  * @property PhotoSize[]|null $photo Optional. Message is a photo, available sizes of the photo
  * @property Sticker|null $sticker Optional. Message is a sticker, information about the sticker
@@ -42,6 +43,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method Animation|null animation()
  * @method Audio|null audio()
  * @method Document|null document()
+ * @method LivePhoto|null livePhoto()
  * @method PaidMediaInfo|null paidMedia()
  * @method PhotoSize[]|null photo()
  * @method Sticker|null sticker()
@@ -68,6 +70,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setAnimation(Animation|null $animation)
  * @method static setAudio(Audio|null $audio)
  * @method static setDocument(Document|null $document)
+ * @method static setLivePhoto(LivePhoto|null $livePhoto)
  * @method static setPaidMedia(PaidMediaInfo|null $paidMedia)
  * @method static setPhoto(PhotoSize[]|null $photo)
  * @method static setSticker(Sticker|null $sticker)
@@ -101,6 +104,7 @@ class ExternalReplyInfo extends abstractType
             'animation'            => FieldType::optional(Animation::class),
             'audio'                => FieldType::optional(Audio::class),
             'document'             => FieldType::optional(Document::class),
+            'live_photo'           => FieldType::optional(LivePhoto::class),
             'paid_media'           => FieldType::optional(PaidMediaInfo::class),
             'photo'                => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
             'sticker'              => FieldType::optional(Sticker::class),

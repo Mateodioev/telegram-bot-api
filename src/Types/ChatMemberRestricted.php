@@ -10,6 +10,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * Represents a chat member that is under certain restrictions in the chat. Supergroups only.
  *
  * @property string $status The member's status in the chat, always "restricted"
+ * @property string|null $tag Optional. Tag of the member
  * @property User $user Information about the user
  * @property bool $is_member True, if the user is a member of the chat at the moment of the request
  * @property bool $can_send_messages True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues
@@ -22,6 +23,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property bool $can_send_polls True, if the user is allowed to send polls and checklists
  * @property bool $can_send_other_messages True, if the user is allowed to send animations, games, stickers and use inline bots
  * @property bool $can_add_web_page_previews True, if the user is allowed to add web page previews to their messages
+ * @property bool $can_react_to_messages True, if the user is allowed to react to messages
+ * @property bool $can_edit_tag True, if the user is allowed to edit their own tag
  * @property bool $can_change_info True, if the user is allowed to change the chat title, photo and other settings
  * @property bool $can_invite_users True, if the user is allowed to invite new users to the chat
  * @property bool $can_pin_messages True, if the user is allowed to pin messages
@@ -29,6 +32,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property int $until_date Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever
  *
  * @method string status()
+ * @method string|null tag()
  * @method User user()
  * @method bool isMember()
  * @method bool canSendMessages()
@@ -41,6 +45,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method bool canSendPolls()
  * @method bool canSendOtherMessages()
  * @method bool canAddWebPagePreviews()
+ * @method bool canReactToMessages()
+ * @method bool canEditTag()
  * @method bool canChangeInfo()
  * @method bool canInviteUsers()
  * @method bool canPinMessages()
@@ -48,6 +54,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method int untilDate()
  *
  * @method static setStatus(string $status)
+ * @method static setTag(string|null $tag)
  * @method static setUser(User $user)
  * @method static setIsMember(bool $isMember)
  * @method static setCanSendMessages(bool $canSendMessages)
@@ -60,6 +67,8 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setCanSendPolls(bool $canSendPolls)
  * @method static setCanSendOtherMessages(bool $canSendOtherMessages)
  * @method static setCanAddWebPagePreviews(bool $canAddWebPagePreviews)
+ * @method static setCanReactToMessages(bool $canReactToMessages)
+ * @method static setCanEditTag(bool $canEditTag)
  * @method static setCanChangeInfo(bool $canChangeInfo)
  * @method static setCanInviteUsers(bool $canInviteUsers)
  * @method static setCanPinMessages(bool $canPinMessages)
@@ -74,6 +83,7 @@ class ChatMemberRestricted extends ChatMember
     {
         $this->fields = [
             'status'                    => FieldType::single('string'),
+            'tag'                       => FieldType::optional('string'),
             'user'                      => FieldType::single(User::class),
             'is_member'                 => FieldType::single('boolean'),
             'can_send_messages'         => FieldType::single('boolean'),
@@ -86,6 +96,8 @@ class ChatMemberRestricted extends ChatMember
             'can_send_polls'            => FieldType::single('boolean'),
             'can_send_other_messages'   => FieldType::single('boolean'),
             'can_add_web_page_previews' => FieldType::single('boolean'),
+            'can_react_to_messages'     => FieldType::single('boolean'),
+            'can_edit_tag'              => FieldType::single('boolean'),
             'can_change_info'           => FieldType::single('boolean'),
             'can_invite_users'          => FieldType::single('boolean'),
             'can_pin_messages'          => FieldType::single('boolean'),

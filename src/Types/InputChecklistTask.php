@@ -12,7 +12,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property int $id Unique identifier of the task; must be positive and unique among all task identifiers currently present in the checklist
  * @property string $text Text of the task; 1-100 characters after entities parsing
  * @property string|null $parse_mode Optional. Mode for parsing entities in the text. See formatting options for more details.
- * @property MessageEntity[]|null $text_entities Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are allowed.
+ * @property MessageEntity[]|null $text_entities Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are allowed.
  *
  * @method int id()
  * @method string text()

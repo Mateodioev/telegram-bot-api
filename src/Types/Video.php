@@ -17,6 +17,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property PhotoSize|null $thumbnail Optional. Video thumbnail
  * @property PhotoSize[]|null $cover Optional. Available sizes of the cover of the video in the message
  * @property int|null $start_timestamp Optional. Timestamp in seconds from which the video will play in the message
+ * @property VideoQuality[]|null $qualities Optional. List of available qualities of the video
  * @property string|null $file_name Optional. Original filename as defined by the sender
  * @property string|null $mime_type Optional. MIME type of the file as defined by the sender
  * @property int|null $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
@@ -29,6 +30,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method PhotoSize|null thumbnail()
  * @method PhotoSize[]|null cover()
  * @method int|null startTimestamp()
+ * @method VideoQuality[]|null qualities()
  * @method string|null fileName()
  * @method string|null mimeType()
  * @method int|null fileSize()
@@ -41,6 +43,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setThumbnail(PhotoSize|null $thumbnail)
  * @method static setCover(PhotoSize[]|null $cover)
  * @method static setStartTimestamp(int|null $startTimestamp)
+ * @method static setQualities(VideoQuality[]|null $qualities)
  * @method static setFileName(string|null $fileName)
  * @method static setMimeType(string|null $mimeType)
  * @method static setFileSize(int|null $fileSize)
@@ -60,6 +63,7 @@ class Video extends abstractType
             'thumbnail'       => FieldType::optional(PhotoSize::class),
             'cover'           => new FieldType(PhotoSize::class, allowArrays: true, allowNull: true, subTypes: []),
             'start_timestamp' => FieldType::optional('integer'),
+            'qualities'       => new FieldType(VideoQuality::class, allowArrays: true, allowNull: true, subTypes: []),
             'file_name'       => FieldType::optional('string'),
             'mime_type'       => FieldType::optional('string'),
             'file_size'       => FieldType::optional('integer'),

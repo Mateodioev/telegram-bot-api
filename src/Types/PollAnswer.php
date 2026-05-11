@@ -13,16 +13,19 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property Chat|null $voter_chat Optional. The chat that changed the answer to the poll, if the voter is anonymous
  * @property User|null $user Optional. The user that changed the answer to the poll, if the voter isn't anonymous
  * @property int[] $option_ids 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
+ * @property string[] $option_persistent_ids Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.
  *
  * @method string pollId()
  * @method Chat|null voterChat()
  * @method User|null user()
  * @method int[] optionIds()
+ * @method string[] optionPersistentIds()
  *
  * @method static setPollId(string $pollId)
  * @method static setVoterChat(Chat|null $voterChat)
  * @method static setUser(User|null $user)
  * @method static setOptionIds(int[] $optionIds)
+ * @method static setOptionPersistentIds(string[] $optionPersistentIds)
  *
  * @see https://core.telegram.org/bots/api#pollanswer
  */
@@ -31,10 +34,11 @@ class PollAnswer extends abstractType
     protected function boot(): void
     {
         $this->fields = [
-            'poll_id'    => FieldType::single('string'),
-            'voter_chat' => FieldType::optional(Chat::class),
-            'user'       => FieldType::optional(User::class),
-            'option_ids' => FieldType::array('integer'),
+            'poll_id'               => FieldType::single('string'),
+            'voter_chat'            => FieldType::optional(Chat::class),
+            'user'                  => FieldType::optional(User::class),
+            'option_ids'            => FieldType::array('integer'),
+            'option_persistent_ids' => FieldType::array('string'),
         ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }

@@ -7,7 +7,7 @@ namespace Mateodioev\Bots\Telegram\Types;
 use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
 
 /**
- * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a Telegram Business account.
+ * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a user account.
  *
  * @property bool $force_reply Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
  * @property string|null $input_field_placeholder Optional. The placeholder to be shown in the input field when the reply is active; 1-64 characters

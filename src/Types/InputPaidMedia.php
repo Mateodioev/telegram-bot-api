@@ -9,6 +9,7 @@ use Mateodioev\Bots\Telegram\Exception\TelegramParamException;
 
 /**
  * This object describes the paid media to be sent. Currently, it can be one of
+ * - InputPaidMediaLivePhoto
  * - InputPaidMediaPhoto
  * - InputPaidMediaVideo
  *
@@ -25,6 +26,7 @@ class InputPaidMedia extends abstractType
     public static function childs(): array
     {
         return [
+            InputPaidMediaLivePhoto::class,
             InputPaidMediaPhoto::class,
             InputPaidMediaVideo::class,
         ];
@@ -37,6 +39,7 @@ class InputPaidMedia extends abstractType
         }
 
         return match ($update['type']) {
+            'live_photo' => InputPaidMediaLivePhoto::class,
             'photo' => InputPaidMediaPhoto::class,
             'video' => InputPaidMediaVideo::class,
             default => TelegramParamException::invalidType(static::class, (string) $update['type']),

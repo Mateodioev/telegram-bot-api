@@ -57,6 +57,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @property int|null $linked_chat_id Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
  * @property ChatLocation|null $location Optional. For supergroups, the location to which the supergroup is connected
  * @property UserRating|null $rating Optional. For private chats, the rating of the user if any
+ * @property Audio|null $first_profile_audio Optional. For private chats, the first audio added to the profile of the user
  * @property UniqueGiftColors|null $unique_gift_colors Optional. The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
  * @property int|null $paid_message_star_count Optional. The number of Telegram Stars a general user have to pay to send a message to the chat
  *
@@ -108,6 +109,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method int|null linkedChatId()
  * @method ChatLocation|null location()
  * @method UserRating|null rating()
+ * @method Audio|null firstProfileAudio()
  * @method UniqueGiftColors|null uniqueGiftColors()
  * @method int|null paidMessageStarCount()
  *
@@ -159,6 +161,7 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * @method static setLinkedChatId(int|null $linkedChatId)
  * @method static setLocation(ChatLocation|null $location)
  * @method static setRating(UserRating|null $rating)
+ * @method static setFirstProfileAudio(Audio|null $firstProfileAudio)
  * @method static setUniqueGiftColors(UniqueGiftColors|null $uniqueGiftColors)
  * @method static setPaidMessageStarCount(int|null $paidMessageStarCount)
  *
@@ -217,6 +220,7 @@ class ChatFullInfo extends abstractType
             'linked_chat_id'                          => FieldType::optional('integer'),
             'location'                                => FieldType::optional(ChatLocation::class),
             'rating'                                  => FieldType::optional(UserRating::class),
+            'first_profile_audio'                     => FieldType::optional(Audio::class),
             'unique_gift_colors'                      => FieldType::optional(UniqueGiftColors::class),
             'paid_message_star_count'                 => FieldType::optional('integer'),
         ];

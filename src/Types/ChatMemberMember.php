@@ -10,14 +10,17 @@ use Mateodioev\Bots\Telegram\Config\{FieldType, FieldsStorage};
  * Represents a chat member that has no additional privileges or restrictions.
  *
  * @property string $status The member's status in the chat, always "member"
+ * @property string|null $tag Optional. Tag of the member
  * @property User $user Information about the user
  * @property int|null $until_date Optional. Date when the user's subscription will expire; Unix time
  *
  * @method string status()
+ * @method string|null tag()
  * @method User user()
  * @method int|null untilDate()
  *
  * @method static setStatus(string $status)
+ * @method static setTag(string|null $tag)
  * @method static setUser(User $user)
  * @method static setUntilDate(int|null $untilDate)
  *
@@ -29,6 +32,7 @@ class ChatMemberMember extends ChatMember
     {
         $this->fields = [
             'status'     => FieldType::single('string'),
+            'tag'        => FieldType::optional('string'),
             'user'       => FieldType::single(User::class),
             'until_date' => FieldType::optional('integer'),
         ];
