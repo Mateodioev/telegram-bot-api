@@ -20,7 +20,9 @@ class MenuButton extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -43,7 +45,7 @@ class MenuButton extends abstractType
             'commands' => MenuButtonCommands::class,
             'web_app' => MenuButtonWebApp::class,
             'default' => MenuButtonDefault::class,
-            default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in MenuButton')
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

@@ -20,7 +20,9 @@ class MessageOrigin extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -37,7 +39,7 @@ class MessageOrigin extends abstractType
     public static function selectChild(array $update): string
     {
         if (isset($update['type']) === false) {
-            throw new TelegramParamException('Missing type field in MessageOrigin');
+            throw TelegramParamException::missingField(static::class, 'type');
         }
 
         return match ($update['type']) {
@@ -45,7 +47,7 @@ class MessageOrigin extends abstractType
             'hidden_user' => MessageOriginHiddenUser::class,
             'chat' => MessageOriginChat::class,
             'channel' => MessageOriginChannel::class,
-            default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in MessageOrigin')
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

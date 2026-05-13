@@ -19,7 +19,9 @@ class BackgroundFill extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -42,7 +44,7 @@ class BackgroundFill extends abstractType
             'solid' => BackgroundFillSolid::class,
             'gradient' => BackgroundFillGradient::class,
             'freeform_gradient' => BackgroundFillFreeformGradient::class,
-            default => throw TelegramParamException::invalidType(static::class, (string) $update['type'])
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

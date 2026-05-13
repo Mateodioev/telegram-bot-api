@@ -39,7 +39,7 @@ class PaidMedia extends abstractType
     public static function selectChild(array $update): string
     {
         if (isset($update['type']) === false) {
-            TelegramParamException::missingField(static::class, 'type');
+            throw TelegramParamException::missingField(static::class, 'type');
         }
 
         return match ($update['type']) {
@@ -47,7 +47,7 @@ class PaidMedia extends abstractType
             'photo' => PaidMediaPhoto::class,
             'preview' => PaidMediaPreview::class,
             'video' => PaidMediaVideo::class,
-            default => TelegramParamException::invalidType(static::class, (string) $update['type']),
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

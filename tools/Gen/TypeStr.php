@@ -52,7 +52,7 @@ class TypeStr
             %s
                     ];
                     FieldsStorage::instance()->add(static::class, \$this->fields);
-                }%s%s
+                }%s%s%s
             }
 
             PHP;
@@ -80,11 +80,19 @@ class TypeStr
             'use Mateodioev\Bots\Telegram\Config\FieldsStorage;',
         ];
 
-        if (empty($this->type->fields)) {
-            return PHP_EOL . PHP_EOL . $fields[1];
+        $imports = [];
+
+        if (!empty($this->type->fields)) {
+            $imports[] = $fields[0];
         }
 
-        return PHP_EOL . PHP_EOL . \join(PHP_EOL, $fields);
+        $imports[] = $fields[1];
+
+        if ($this->type->hasDiscriminator()) {
+            $imports[] = 'use Mateodioev\Bots\Telegram\Exception\TelegramParamException;';
+        }
+
+        return PHP_EOL . PHP_EOL . \join(PHP_EOL, $imports);
     }
 
     private function generateFields(): string
@@ -161,6 +169,7 @@ class TypeStr
             $this->generateFields(),
             $this->generateChildMethod(),
             $this->generateDefaultMethod(),
+            $this->generateSelectChildMethod(),
         );
     }
 
@@ -188,6 +197,38 @@ class TypeStr
         }
 
         return '';
+    }
+
+    private function generateSelectChildMethod(): string
+    {
+        if (!$this->type->hasDiscriminator()) {
+            return '';
+        }
+
+        $field = $this->type->discriminatorField();
+        $map = $this->type->discriminatorMap();
+
+        $matchArms = [];
+        foreach ($map as $value => $childClass) {
+            $matchArms[] = $this->tab(3) . "'{$value}' => {$childClass}::class,";
+        }
+
+        $matchArmsStr = PHP_EOL . \join(PHP_EOL, $matchArms);
+
+        return <<<PHP
+
+
+            public static function selectChild(array \$update): string
+            {
+                if (isset(\$update['{$field}']) === false) {
+                    throw TelegramParamException::missingField(static::class, '{$field}');
+                }
+
+                return match (\$update['{$field}']) {{$matchArmsStr}
+                    default => throw TelegramParamException::invalidType(static::class, (string) \$update['{$field}']),
+                };
+            }
+        PHP;
     }
 
     private function generateChildMethod(): string

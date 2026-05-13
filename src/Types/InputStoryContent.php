@@ -18,7 +18,9 @@ class InputStoryContent extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -39,6 +41,7 @@ class InputStoryContent extends abstractType
         return match ($update['type']) {
             'photo' => InputStoryContentPhoto::class,
             'video' => InputStoryContentVideo::class,
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

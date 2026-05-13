@@ -20,7 +20,9 @@ class BackgroundType extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -45,7 +47,7 @@ class BackgroundType extends abstractType
             'wallpaper' => BackgroundTypeWallpaper::class,
             'pattern' => BackgroundTypePattern::class,
             'chat_theme' => BackgroundTypeChatTheme::class,
-            default => throw TelegramParamException::invalidType(static::class, (string) $update['type'])
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

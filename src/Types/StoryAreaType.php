@@ -21,7 +21,9 @@ class StoryAreaType extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -48,6 +50,7 @@ class StoryAreaType extends abstractType
             'link'               => StoryAreaTypeLink::class,
             'weather'            => StoryAreaTypeWeather::class,
             'unique_gift'        => StoryAreaTypeUniqueGift::class,
+            default              => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

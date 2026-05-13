@@ -18,7 +18,9 @@ class OwnedGift extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -38,7 +40,8 @@ class OwnedGift extends abstractType
 
         return match ($update['type']) {
             'regular' => OwnedGiftRegular::class,
-            'unique'  => OwnedGiftUnique::class,
+            'unique' => OwnedGiftUnique::class,
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

@@ -36,6 +36,30 @@ class Types
         );
     }
 
+    private ?string $discriminatorField = null;
+    private array $discriminatorMap = [];
+
+    public function setDiscriminator(string $field, array $map): void
+    {
+        $this->discriminatorField = $field;
+        $this->discriminatorMap = $map;
+    }
+
+    public function hasDiscriminator(): bool
+    {
+        return $this->discriminatorField !== null;
+    }
+
+    public function discriminatorField(): ?string
+    {
+        return $this->discriminatorField;
+    }
+
+    public function discriminatorMap(): array
+    {
+        return $this->discriminatorMap;
+    }
+
     /**
      * Return true if the type has subtypes (child).
      */

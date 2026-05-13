@@ -9,29 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class CheckTypesHasLegacyParamsTest extends TestCase
 {
-    public function testAnimation(): void
-    {
-        $this->markTestSkipped('Removed legacy param');
-        $animation = Animation::default();
-        $fields = $animation->fields();
-        $properties = $animation->properties();
-
-        $this->assertArrayHasKey('thumb', $fields);
-        $this->assertArrayHasKey('thumb', $properties);
-    }
-
-    public function testAudio(): void
-    {
-        $this->markTestSkipped('Removed legacy param');
-
-        $audio = Audio::default();
-        $fields = $audio->fields();
-        $properties = $audio->properties();
-
-        $this->assertArrayHasKey('thumb', $fields);
-        $this->assertArrayHasKey('thumb', $properties);
-    }
-
     public function testDocument(): void
     {
         $document = Document::default();

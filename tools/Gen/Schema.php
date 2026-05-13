@@ -46,14 +46,65 @@ final class Schema
 
         $builder = static fn(array $type): Types => new Types(
             $type['name'],
-            $type['href'], // Link to bot api docs
-            $type['description'] ?? [], // Description
-            $type['fields'] ?? [], // Type properties
-            $type['subtypes'] ?? null, // Child classes
-            $type['subtype_of'] ?? null, // Parent class
+            $type['href'],
+            $type['description'] ?? [],
+            $type['fields'] ?? [],
+            $type['subtypes'] ?? null,
+            $type['subtype_of'] ?? null,
         );
 
-        return array_map($builder, $this->json['types']);
+        $types = \array_map($builder, $this->json['types']);
+
+        $this->populateDiscriminators($types);
+
+        return $types;
+    }
+
+    /**
+     * For each parent type with subtypes, find the discriminator field
+     * and value-to-child mapping by inspecting constant values in child fields.
+     */
+    private function populateDiscriminators(array &$types): void
+    {
+        foreach ($types as $name => $type) {
+            if ($type->subtypes === null) {
+                continue;
+            }
+
+            $discriminatorField = null;
+            $discriminatorMap = [];
+
+            foreach ($type->subtypes as $childName) {
+                if (!isset($types[$childName])) {
+                    continue;
+                }
+
+                $childFound = false;
+                foreach ($types[$childName]->fields as $field) {
+                    $constant = $field->constantValue();
+                    if ($constant !== null) {
+                        if ($discriminatorField === null) {
+                            $discriminatorField = $field->name;
+                        }
+                        if ($field->name === $discriminatorField) {
+                            $discriminatorMap[$constant] = $childName;
+                        }
+                        $childFound = true;
+                        break;
+                    }
+                }
+
+                if (!$childFound) {
+                    break;
+                }
+            }
+
+            if ($discriminatorField !== null
+                && \count($discriminatorMap) === count($type->subtypes)
+                && \count(array_unique($discriminatorMap)) === \count($discriminatorMap)) {
+                $type->setDiscriminator($discriminatorField, $discriminatorMap);
+            }
+        }
     }
 
     /**

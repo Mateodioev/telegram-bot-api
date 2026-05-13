@@ -44,19 +44,19 @@ class InputPollOptionMedia extends abstractType
 
     public static function selectChild(array $update): string
     {
-        if (($update["type"] ?? null) === null) {
-            throw TelegramParamException::missingField(static::class, "type");
+        if (isset($update['type']) === false) {
+            throw TelegramParamException::missingField(static::class, 'type');
         }
 
-        return match ($update["type"]) {
-            "animation"  => InputMediaAnimation::class,
-            "live_photo" => InputMediaLivePhoto::class,
-            'location'   => InputMediaLocation::class,
-            "photo"      => InputMediaPhoto::class,
-            "sticker"    => InputMediaSticker::class,
-            "venue"      => InputMediaVenue::class,
-            "video"      => InputMediaVideo::class,
-            default      => throw TelegramParamException::invalidType(static::class, "type"),
+        return match ($update['type']) {
+            'animation' => InputMediaAnimation::class,
+            'live_photo' => InputMediaLivePhoto::class,
+            'location' => InputMediaLocation::class,
+            'photo' => InputMediaPhoto::class,
+            'sticker' => InputMediaSticker::class,
+            'venue' => InputMediaVenue::class,
+            'video' => InputMediaVideo::class,
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

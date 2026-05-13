@@ -22,7 +22,9 @@ class InputMedia extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -40,18 +42,18 @@ class InputMedia extends abstractType
 
     public static function selectChild(array $update): string
     {
-        if (($update["type"] ?? null) === null) {
-            throw TelegramParamException::missingField(static::class, "type");
+        if (isset($update['type']) === false) {
+            throw TelegramParamException::missingField(static::class, 'type');
         }
 
-        return match ($update["type"]) {
-            "photo"      => InputMediaPhoto::class,
-            "live_photo" => InputMediaLivePhoto::class,
-            "video"      => InputMediaVideo::class,
-            "animation"  => InputMediaAnimation::class,
-            "audio"      => InputMediaAudio::class,
-            "document"   => InputMediaDocument::class,
-            default      => throw TelegramParamException::invalidType(static::class, "type"),
+        return match ($update['type']) {
+            'animation' => InputMediaAnimation::class,
+            'audio' => InputMediaAudio::class,
+            'document' => InputMediaDocument::class,
+            'live_photo' => InputMediaLivePhoto::class,
+            'photo' => InputMediaPhoto::class,
+            'video' => InputMediaVideo::class,
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

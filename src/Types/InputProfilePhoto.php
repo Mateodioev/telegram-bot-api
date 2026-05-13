@@ -18,7 +18,9 @@ class InputProfilePhoto extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -37,8 +39,9 @@ class InputProfilePhoto extends abstractType
         }
 
         return match ($update['type']) {
-            'static'   => InputProfilePhotoStatic::class,
+            'static' => InputProfilePhotoStatic::class,
             'animated' => InputProfilePhotoAnimated::class,
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }

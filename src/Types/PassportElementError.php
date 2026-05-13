@@ -25,7 +25,9 @@ class PassportElementError extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -47,20 +49,20 @@ class PassportElementError extends abstractType
     public static function selectChild(array $update): string
     {
         if (isset($update['source']) === false) {
-            throw new TelegramParamException('Missing source field in PassportElementError');
+            throw TelegramParamException::missingField(static::class, 'source');
         }
 
         return match ($update['source']) {
-            'data'              => PassportElementErrorDataField::class,
-            'front_side'        => PassportElementErrorFrontSide::class,
-            'reverse_side'      => PassportElementErrorReverseSide::class,
-            'selfie'            => PassportElementErrorSelfie::class,
-            'file'              => PassportElementErrorFile::class,
-            'files'             => PassportElementErrorFiles::class,
-            'translation_file'  => PassportElementErrorTranslationFile::class,
+            'data' => PassportElementErrorDataField::class,
+            'front_side' => PassportElementErrorFrontSide::class,
+            'reverse_side' => PassportElementErrorReverseSide::class,
+            'selfie' => PassportElementErrorSelfie::class,
+            'file' => PassportElementErrorFile::class,
+            'files' => PassportElementErrorFiles::class,
+            'translation_file' => PassportElementErrorTranslationFile::class,
             'translation_files' => PassportElementErrorTranslationFiles::class,
-            'unspecified'       => PassportElementErrorUnspecified::class,
-            default             => throw new TelegramParamException('Invalid source: ' . $update['source'] . ' in PassportElementError')
+            'unspecified' => PassportElementErrorUnspecified::class,
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['source']),
         };
     }
 }

@@ -23,7 +23,9 @@ class BotCommandScope extends abstractType
 {
     protected function boot(): void
     {
-        $this->fields = [];
+        $this->fields = [
+
+        ];
         FieldsStorage::instance()->add(static::class, $this->fields);
     }
 
@@ -54,7 +56,7 @@ class BotCommandScope extends abstractType
             'chat' => BotCommandScopeChat::class,
             'chat_administrators' => BotCommandScopeChatAdministrators::class,
             'chat_member' => BotCommandScopeChatMember::class,
-            default => throw new TelegramParamException('Invalid type: ' . $update['type'] . ' in BotCommandScope')
+            default => throw TelegramParamException::invalidType(static::class, (string) $update['type']),
         };
     }
 }
