@@ -343,6 +343,7 @@ trait availableMethods
         $files = [];
 
         foreach ($medias as $media) {
+            $media = clone $media;
             $mediaFile = $media->media;
 
             if ($mediaFile instanceof InputFile) {
@@ -350,7 +351,7 @@ trait availableMethods
 
                 // The media is a local file
                 if ($file instanceof CURLFile) {
-                    $fileName         = $file->getPostFilename();
+                    $fileName         = $file->getPostFilename() ?: basename($file->getFilename());
                     $media->media     = 'attach://' . $fileName;
                     $files[$fileName] = $file;
                 } else {
